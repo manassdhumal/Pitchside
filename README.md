@@ -1,32 +1,37 @@
-# React + TypeScript + Vite
+# PitchSide
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A browser-based football draft and season-simulation game.
 
-Currently, two official plugins are available:
+Spin a wheel to land on a **real club from a real season** — across the Premier League, Bundesliga,
+La Liga, Serie A, and Ligue 1 — then draft a player who actually played for that club that season
+into your formation. Repeat until your XI is complete, then simulate a full 38-game season with a
+transparent xG/win-probability match engine and see how close you can get to a perfect unbeaten run.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- **Five leagues, decades of seasons** — squad data covers real top-flight club-seasons, growing via a resumable data pipeline
+- **12 formations** with an interactive pitch: pick a player, then choose which compatible slot to place them in
+- **Difficulty modes** (rerolls, hidden ratings), squad-first or position-first drafting, season vs. career-prime ratings, and an era range filter
+- **Statistical match engine** (Dixon-Coles model) with visible expected goals and win probabilities for every simulated match
+- **Shareable result card** for your final season record
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech
 
-## Expanding the Oxlint configuration
+React 19 + TypeScript + Vite, Tailwind CSS v4, IndexedDB persistence, Web Worker simulation, Vitest.
+No backend — everything runs client-side against pre-built static squad data.
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```
+npm install
+npm run dev        # start the dev server
+npm run build      # production build
+npx vitest run     # tests
+npm run scrape     # extend/refresh the squad dataset
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Disclaimer
+
+PitchSide is an independent, fan-made project. It is not affiliated with, endorsed by, or licensed
+by any football club, league, or governing body. Club and player names are used factually; all
+player ratings are this project's own independent estimates derived from public appearance and goal
+data — not sourced from any official or proprietary ratings database. Squad data is sourced from
+Wikipedia (CC BY-SA). No official logos, crests, or player likenesses are used.

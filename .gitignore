@@ -10,6 +10,10 @@ lerna-debug.log*
 # Scraper runtime output (regenerate with npm run scrape)
 scripts/scrape/*.out
 
+# Markdown docs stay local; only the README is published
+*.md
+!README.md
+
 node_modules
 dist
 dist-ssr
