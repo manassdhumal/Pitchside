@@ -1,0 +1,402 @@
+{
+  "leagueId": "premier-league",
+  "clubId": "aston-villa",
+  "season": "2015-16",
+  "division": "top-flight",
+  "squad": [
+    {
+      "id": "jordan-ayew-gha",
+      "name": "Jordan Ayew",
+      "nationality": "GHA",
+      "broadPosition": "FW",
+      "stats": {
+        "appearances": 7,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 67,
+        "pace": 69,
+        "shooting": 75,
+        "passing": 57,
+        "dribbling": 69,
+        "defending": 44,
+        "physical": 62
+      },
+      "primeRatings": {
+        "overall": 84,
+        "pace": 88,
+        "shooting": 93,
+        "passing": 78,
+        "dribbling": 88,
+        "defending": 56,
+        "physical": 83
+      }
+    },
+    {
+      "id": "rudy-gestede-ben",
+      "name": "Rudy Gestede",
+      "nationality": "BEN",
+      "broadPosition": "FW",
+      "stats": {
+        "appearances": 6,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 65,
+        "pace": 69,
+        "shooting": 72,
+        "passing": 56,
+        "dribbling": 71,
+        "defending": 37,
+        "physical": 64
+      },
+      "primeRatings": {
+        "overall": 66,
+        "pace": 70,
+        "shooting": 71,
+        "passing": 56,
+        "dribbling": 69,
+        "defending": 44,
+        "physical": 65
+      }
+    },
+    {
+      "id": "scott-sinclair-eng",
+      "name": "Scott Sinclair",
+      "nationality": "ENG",
+      "broadPosition": "MF",
+      "stats": {
+        "appearances": 6,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 64,
+        "pace": 61,
+        "shooting": 55,
+        "passing": 67,
+        "dribbling": 65,
+        "defending": 57,
+        "physical": 63
+      },
+      "primeRatings": {
+        "overall": 65,
+        "pace": 65,
+        "shooting": 57,
+        "passing": 67,
+        "dribbling": 67,
+        "defending": 57,
+        "physical": 62
+      }
+    },
+    {
+      "id": "ciaran-clark-irl",
+      "name": "Ciaran Clark",
+      "nationality": "IRL",
+      "broadPosition": "DF",
+      "stats": {
+        "appearances": 2,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 63,
+        "pace": 59,
+        "shooting": 44,
+        "passing": 56,
+        "dribbling": 54,
+        "defending": 69,
+        "physical": 67
+      },
+      "primeRatings": {
+        "overall": 76,
+        "pace": 73,
+        "shooting": 57,
+        "passing": 72,
+        "dribbling": 66,
+        "defending": 84,
+        "physical": 78
+      }
+    },
+    {
+      "id": "micah-richards-eng",
+      "name": "Micah Richards",
+      "nationality": "ENG",
+      "broadPosition": "DF",
+      "stats": {
+        "appearances": 2,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 60,
+        "pace": 52,
+        "shooting": 42,
+        "passing": 53,
+        "dribbling": 48,
+        "defending": 66,
+        "physical": 64
+      },
+      "primeRatings": {
+        "overall": 63,
+        "pace": 58,
+        "shooting": 45,
+        "passing": 56,
+        "dribbling": 50,
+        "defending": 70,
+        "physical": 67
+      }
+    },
+    {
+      "id": "ashley-westwood-eng",
+      "name": "Ashley Westwood",
+      "nationality": "ENG",
+      "broadPosition": "MF",
+      "stats": {
+        "appearances": 2,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 63,
+        "pace": 63,
+        "shooting": 57,
+        "passing": 66,
+        "dribbling": 65,
+        "defending": 51,
+        "physical": 58
+      },
+      "primeRatings": {
+        "overall": 64,
+        "pace": 62,
+        "shooting": 59,
+        "passing": 67,
+        "dribbling": 64,
+        "defending": 54,
+        "physical": 62
+      }
+    },
+    {
+      "id": "carles-gil-esp",
+      "name": "Carles Gil",
+      "nationality": "ESP",
+      "broadPosition": "MF",
+      "stats": {
+        "appearances": 2,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 62,
+        "pace": 60,
+        "shooting": 55,
+        "passing": 70,
+        "dribbling": 61,
+        "defending": 53,
+        "physical": 62
+      },
+      "primeRatings": {
+        "overall": 71,
+        "pace": 69,
+        "shooting": 66,
+        "passing": 74,
+        "dribbling": 70,
+        "defending": 58,
+        "physical": 68
+      }
+    },
+    {
+      "id": "joe-bennett-eng",
+      "name": "Joe Bennett",
+      "nationality": "ENG",
+      "broadPosition": "DF",
+      "stats": {
+        "appearances": 1,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 61,
+        "pace": 57,
+        "shooting": 42,
+        "passing": 56,
+        "dribbling": 52,
+        "defending": 66,
+        "physical": 66
+      },
+      "primeRatings": {
+        "overall": 62,
+        "pace": 59,
+        "shooting": 45,
+        "passing": 59,
+        "dribbling": 52,
+        "defending": 69,
+        "physical": 65
+      }
+    },
+    {
+      "id": "joleon-lescott-eng",
+      "name": "Joleon Lescott",
+      "nationality": "ENG",
+      "broadPosition": "DF",
+      "stats": {
+        "appearances": 1,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 61,
+        "pace": 57,
+        "shooting": 43,
+        "passing": 57,
+        "dribbling": 52,
+        "defending": 66,
+        "physical": 64
+      },
+      "primeRatings": {
+        "overall": 64,
+        "pace": 58,
+        "shooting": 46,
+        "passing": 58,
+        "dribbling": 54,
+        "defending": 74,
+        "physical": 64
+      }
+    },
+    {
+      "id": "idrissa-gueye-sen",
+      "name": "Idrissa Gueye",
+      "nationality": "SEN",
+      "broadPosition": "MF",
+      "stats": {
+        "appearances": 1,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 64,
+        "pace": 61,
+        "shooting": 55,
+        "passing": 68,
+        "dribbling": 65,
+        "defending": 54,
+        "physical": 64
+      },
+      "primeRatings": {
+        "overall": 79,
+        "pace": 76,
+        "shooting": 69,
+        "passing": 87,
+        "dribbling": 82,
+        "defending": 71,
+        "physical": 75
+      }
+    },
+    {
+      "id": "adama-traor-esp",
+      "name": "Adama Traoré",
+      "nationality": "ESP",
+      "broadPosition": "MF",
+      "stats": {
+        "appearances": 1,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 60,
+        "pace": 57,
+        "shooting": 51,
+        "passing": 66,
+        "dribbling": 61,
+        "defending": 52,
+        "physical": 58
+      },
+      "primeRatings": {
+        "overall": 74,
+        "pace": 68,
+        "shooting": 66,
+        "passing": 82,
+        "dribbling": 76,
+        "defending": 61,
+        "physical": 72
+      }
+    },
+    {
+      "id": "jack-grealish-eng",
+      "name": "Jack Grealish",
+      "nationality": "ENG",
+      "broadPosition": "MF",
+      "stats": {
+        "appearances": 1,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 69,
+        "pace": 68,
+        "shooting": 62,
+        "passing": 71,
+        "dribbling": 70,
+        "defending": 62,
+        "physical": 69
+      },
+      "primeRatings": {
+        "overall": 85,
+        "pace": 79,
+        "shooting": 76,
+        "passing": 93,
+        "dribbling": 88,
+        "defending": 77,
+        "physical": 82
+      }
+    },
+    {
+      "id": "gabriel-agbonlahor-eng",
+      "name": "Gabriel Agbonlahor",
+      "nationality": "ENG",
+      "broadPosition": "FW",
+      "stats": {
+        "appearances": 1,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 60,
+        "pace": 61,
+        "shooting": 67,
+        "passing": 50,
+        "dribbling": 63,
+        "defending": 34,
+        "physical": 54
+      },
+      "primeRatings": {
+        "overall": 69,
+        "pace": 72,
+        "shooting": 74,
+        "passing": 64,
+        "dribbling": 70,
+        "defending": 46,
+        "physical": 64
+      }
+    },
+    {
+      "id": "leandro-bacuna-cuw",
+      "name": "Leandro Bacuna",
+      "nationality": "CUW",
+      "broadPosition": "MF",
+      "stats": {
+        "appearances": 1,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 60,
+        "pace": 55,
+        "shooting": 54,
+        "passing": 62,
+        "dribbling": 59,
+        "defending": 52,
+        "physical": 59
+      },
+      "primeRatings": {
+        "overall": 61,
+        "pace": 60,
+        "shooting": 55,
+        "passing": 66,
+        "dribbling": 59,
+        "defending": 51,
+        "physical": 57
+      }
+    }
+  ],
+  "sourceUrl": "https://en.wikipedia.org/wiki/2015%E2%80%9316_Aston_Villa_F.C._season",
+  "scrapedAt": "2026-07-08T16:16:15.378Z"
+}

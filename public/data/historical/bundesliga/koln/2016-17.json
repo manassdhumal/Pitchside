@@ -1,0 +1,712 @@
+{
+  "leagueId": "bundesliga",
+  "clubId": "koln",
+  "season": "2016-17",
+  "division": "top-flight",
+  "squad": [
+    {
+      "id": "timo-horn-ger",
+      "name": "Timo Horn",
+      "nationality": "GER",
+      "broadPosition": "GK",
+      "shirtNumber": 1,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 68,
+        "pace": 46,
+        "shooting": 19,
+        "passing": 54,
+        "dribbling": 38,
+        "defending": 46,
+        "physical": 63,
+        "goalkeeping": 75
+      },
+      "primeRatings": {
+        "overall": 78,
+        "pace": 48,
+        "shooting": 20,
+        "passing": 60,
+        "dribbling": 46,
+        "defending": 57,
+        "physical": 73,
+        "goalkeeping": 85
+      }
+    },
+    {
+      "id": "neven-suboti-ser",
+      "name": "Neven Subotić",
+      "nationality": "SER",
+      "broadPosition": "DF",
+      "shirtNumber": 2,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 68,
+        "pace": 64,
+        "shooting": 47,
+        "passing": 61,
+        "dribbling": 57,
+        "defending": 76,
+        "physical": 71
+      },
+      "primeRatings": {
+        "overall": 84,
+        "pace": 80,
+        "shooting": 64,
+        "passing": 78,
+        "dribbling": 73,
+        "defending": 92,
+        "physical": 86
+      }
+    },
+    {
+      "id": "dominique-heintz-ger",
+      "name": "Dominique Heintz",
+      "nationality": "GER",
+      "broadPosition": "DF",
+      "shirtNumber": 3,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 63,
+        "pace": 56,
+        "shooting": 45,
+        "passing": 56,
+        "dribbling": 54,
+        "defending": 73,
+        "physical": 68
+      },
+      "primeRatings": {
+        "overall": 73,
+        "pace": 66,
+        "shooting": 53,
+        "passing": 67,
+        "dribbling": 65,
+        "defending": 78,
+        "physical": 79
+      }
+    },
+    {
+      "id": "frederik-s-rensen-den",
+      "name": "Frederik Sørensen",
+      "nationality": "DEN",
+      "broadPosition": "DF",
+      "shirtNumber": 4,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 70,
+        "pace": 67,
+        "shooting": 49,
+        "passing": 65,
+        "dribbling": 63,
+        "defending": 77,
+        "physical": 70
+      },
+      "primeRatings": {
+        "overall": 74,
+        "pace": 69,
+        "shooting": 52,
+        "passing": 71,
+        "dribbling": 66,
+        "defending": 81,
+        "physical": 77
+      }
+    },
+    {
+      "id": "dominic-maroh-svn",
+      "name": "Dominic Maroh",
+      "nationality": "SVN",
+      "broadPosition": "DF",
+      "shirtNumber": 5,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 64,
+        "pace": 58,
+        "shooting": 45,
+        "passing": 62,
+        "dribbling": 53,
+        "defending": 75,
+        "physical": 70
+      },
+      "primeRatings": {
+        "overall": 72,
+        "pace": 64,
+        "shooting": 54,
+        "passing": 69,
+        "dribbling": 60,
+        "defending": 80,
+        "physical": 73
+      }
+    },
+    {
+      "id": "marco-h-ger-ger",
+      "name": "Marco Höger",
+      "nationality": "GER",
+      "broadPosition": "MF",
+      "shirtNumber": 6,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 69,
+        "pace": 68,
+        "shooting": 61,
+        "passing": 74,
+        "dribbling": 67,
+        "defending": 62,
+        "physical": 65
+      },
+      "primeRatings": {
+        "overall": 74,
+        "pace": 71,
+        "shooting": 68,
+        "passing": 81,
+        "dribbling": 72,
+        "defending": 64,
+        "physical": 69
+      }
+    },
+    {
+      "id": "marcel-risse-ger",
+      "name": "Marcel Risse",
+      "nationality": "GER",
+      "broadPosition": "MF",
+      "shirtNumber": 7,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 68,
+        "pace": 66,
+        "shooting": 60,
+        "passing": 75,
+        "dribbling": 70,
+        "defending": 59,
+        "physical": 63
+      },
+      "primeRatings": {
+        "overall": 77,
+        "pace": 72,
+        "shooting": 68,
+        "passing": 84,
+        "dribbling": 75,
+        "defending": 68,
+        "physical": 73
+      }
+    },
+    {
+      "id": "milo-joji-srb",
+      "name": "Miloš Jojić",
+      "nationality": "SRB",
+      "broadPosition": "MF",
+      "shirtNumber": 8,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 61,
+        "pace": 55,
+        "shooting": 50,
+        "passing": 65,
+        "dribbling": 59,
+        "defending": 49,
+        "physical": 57
+      },
+      "primeRatings": {
+        "overall": 75,
+        "pace": 72,
+        "shooting": 64,
+        "passing": 83,
+        "dribbling": 77,
+        "defending": 66,
+        "physical": 70
+      }
+    },
+    {
+      "id": "artjoms-rud-evs-lat",
+      "name": "Artjoms Rudņevs",
+      "nationality": "LAT",
+      "broadPosition": "FW",
+      "shirtNumber": 9,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 68,
+        "pace": 72,
+        "shooting": 76,
+        "passing": 59,
+        "dribbling": 69,
+        "defending": 42,
+        "physical": 67
+      },
+      "primeRatings": {
+        "overall": 86,
+        "pace": 87,
+        "shooting": 95,
+        "passing": 77,
+        "dribbling": 90,
+        "defending": 59,
+        "physical": 82
+      }
+    },
+    {
+      "id": "simon-zoller-ger",
+      "name": "Simon Zoller",
+      "nationality": "GER",
+      "broadPosition": "FW",
+      "shirtNumber": 11,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 63,
+        "pace": 64,
+        "shooting": 73,
+        "passing": 54,
+        "dribbling": 68,
+        "defending": 40,
+        "physical": 57
+      },
+      "primeRatings": {
+        "overall": 89,
+        "pace": 90,
+        "shooting": 98,
+        "passing": 82,
+        "dribbling": 95,
+        "defending": 67,
+        "physical": 83
+      }
+    },
+    {
+      "id": "yuya-osako-jpn",
+      "name": "Yuya Osako",
+      "nationality": "JPN",
+      "broadPosition": "FW",
+      "shirtNumber": 13,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 63,
+        "pace": 64,
+        "shooting": 74,
+        "passing": 53,
+        "dribbling": 63,
+        "defending": 36,
+        "physical": 58
+      },
+      "primeRatings": {
+        "overall": 84,
+        "pace": 90,
+        "shooting": 95,
+        "passing": 78,
+        "dribbling": 84,
+        "defending": 60,
+        "physical": 81
+      }
+    },
+    {
+      "id": "jonas-hector-ger",
+      "name": "Jonas Hector",
+      "nationality": "GER",
+      "broadPosition": "DF",
+      "shirtNumber": 14,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 64,
+        "pace": 58,
+        "shooting": 44,
+        "passing": 57,
+        "dribbling": 52,
+        "defending": 75,
+        "physical": 67
+      },
+      "primeRatings": {
+        "overall": 81,
+        "pace": 74,
+        "shooting": 59,
+        "passing": 75,
+        "dribbling": 70,
+        "defending": 90,
+        "physical": 85
+      }
+    },
+    {
+      "id": "pawe-olkowski-pol",
+      "name": "Paweł Olkowski",
+      "nationality": "POL",
+      "broadPosition": "DF",
+      "shirtNumber": 16,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 68,
+        "pace": 64,
+        "shooting": 47,
+        "passing": 64,
+        "dribbling": 59,
+        "defending": 79,
+        "physical": 71
+      },
+      "primeRatings": {
+        "overall": 71,
+        "pace": 66,
+        "shooting": 49,
+        "passing": 64,
+        "dribbling": 62,
+        "defending": 80,
+        "physical": 71
+      }
+    },
+    {
+      "id": "christian-clemens-ger",
+      "name": "Christian Clemens",
+      "nationality": "GER",
+      "broadPosition": "FW",
+      "shirtNumber": 17,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 62,
+        "pace": 62,
+        "shooting": 71,
+        "passing": 52,
+        "dribbling": 68,
+        "defending": 36,
+        "physical": 56
+      },
+      "primeRatings": {
+        "overall": 69,
+        "pace": 69,
+        "shooting": 76,
+        "passing": 61,
+        "dribbling": 72,
+        "defending": 41,
+        "physical": 63
+      }
+    },
+    {
+      "id": "thomas-kessler-ger",
+      "name": "Thomas Kessler",
+      "nationality": "GER",
+      "broadPosition": "GK",
+      "shirtNumber": 18,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 66,
+        "pace": 45,
+        "shooting": 18,
+        "passing": 53,
+        "dribbling": 37,
+        "defending": 48,
+        "physical": 59,
+        "goalkeeping": 76
+      },
+      "primeRatings": {
+        "overall": 70,
+        "pace": 45,
+        "shooting": 16,
+        "passing": 55,
+        "dribbling": 39,
+        "defending": 52,
+        "physical": 66,
+        "goalkeeping": 77
+      }
+    },
+    {
+      "id": "serhou-guirassy-fra",
+      "name": "Serhou Guirassy",
+      "nationality": "FRA",
+      "broadPosition": "FW",
+      "shirtNumber": 19,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 69,
+        "pace": 73,
+        "shooting": 75,
+        "passing": 60,
+        "dribbling": 73,
+        "defending": 46,
+        "physical": 65
+      },
+      "primeRatings": {
+        "overall": 85,
+        "pace": 86,
+        "shooting": 96,
+        "passing": 79,
+        "dribbling": 85,
+        "defending": 62,
+        "physical": 81
+      }
+    },
+    {
+      "id": "salih-zcan-ger",
+      "name": "Salih Özcan",
+      "nationality": "GER",
+      "broadPosition": "MF",
+      "shirtNumber": 20,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 62,
+        "pace": 57,
+        "shooting": 56,
+        "passing": 70,
+        "dribbling": 62,
+        "defending": 53,
+        "physical": 60
+      },
+      "primeRatings": {
+        "overall": 80,
+        "pace": 80,
+        "shooting": 70,
+        "passing": 86,
+        "dribbling": 82,
+        "defending": 69,
+        "physical": 80
+      }
+    },
+    {
+      "id": "leonardo-bittencourt-ger",
+      "name": "Leonardo Bittencourt",
+      "nationality": "GER",
+      "broadPosition": "MF",
+      "shirtNumber": 21,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 66,
+        "pace": 63,
+        "shooting": 57,
+        "passing": 68,
+        "dribbling": 64,
+        "defending": 54,
+        "physical": 65
+      },
+      "primeRatings": {
+        "overall": 85,
+        "pace": 81,
+        "shooting": 80,
+        "passing": 90,
+        "dribbling": 88,
+        "defending": 73,
+        "physical": 84
+      }
+    },
+    {
+      "id": "lukas-kl-nter-ger",
+      "name": "Lukas Klünter",
+      "nationality": "GER",
+      "broadPosition": "DF",
+      "shirtNumber": 24,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 65,
+        "pace": 60,
+        "shooting": 42,
+        "passing": 59,
+        "dribbling": 52,
+        "defending": 72,
+        "physical": 65
+      },
+      "primeRatings": {
+        "overall": 71,
+        "pace": 63,
+        "shooting": 54,
+        "passing": 67,
+        "dribbling": 59,
+        "defending": 76,
+        "physical": 76
+      }
+    },
+    {
+      "id": "anthony-modeste-fra",
+      "name": "Anthony Modeste",
+      "nationality": "FRA",
+      "broadPosition": "FW",
+      "shirtNumber": 27,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 65,
+        "pace": 71,
+        "shooting": 73,
+        "passing": 55,
+        "dribbling": 65,
+        "defending": 38,
+        "physical": 63
+      },
+      "primeRatings": {
+        "overall": 81,
+        "pace": 84,
+        "shooting": 89,
+        "passing": 76,
+        "dribbling": 85,
+        "defending": 59,
+        "physical": 77
+      }
+    },
+    {
+      "id": "marcel-hartel-ger",
+      "name": "Marcel Hartel",
+      "nationality": "GER",
+      "broadPosition": "MF",
+      "shirtNumber": 30,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 68,
+        "pace": 66,
+        "shooting": 63,
+        "passing": 73,
+        "dribbling": 70,
+        "defending": 56,
+        "physical": 63
+      },
+      "primeRatings": {
+        "overall": 69,
+        "pace": 64,
+        "shooting": 60,
+        "passing": 73,
+        "dribbling": 70,
+        "defending": 60,
+        "physical": 63
+      }
+    },
+    {
+      "id": "matthias-lehmann-ger",
+      "name": "Matthias Lehmann",
+      "nationality": "GER",
+      "broadPosition": "MF",
+      "shirtNumber": 33,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 64,
+        "pace": 60,
+        "shooting": 56,
+        "passing": 70,
+        "dribbling": 65,
+        "defending": 53,
+        "physical": 63
+      },
+      "primeRatings": {
+        "overall": 73,
+        "pace": 67,
+        "shooting": 67,
+        "passing": 79,
+        "dribbling": 72,
+        "defending": 62,
+        "physical": 73
+      }
+    },
+    {
+      "id": "konstantin-rausch-ger",
+      "name": "Konstantin Rausch",
+      "nationality": "GER",
+      "broadPosition": "DF",
+      "shirtNumber": 34,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 63,
+        "pace": 56,
+        "shooting": 44,
+        "passing": 55,
+        "dribbling": 53,
+        "defending": 69,
+        "physical": 64
+      },
+      "primeRatings": {
+        "overall": 67,
+        "pace": 63,
+        "shooting": 45,
+        "passing": 62,
+        "dribbling": 57,
+        "defending": 72,
+        "physical": 70
+      }
+    },
+    {
+      "id": "sven-m-ller-ger",
+      "name": "Sven Müller",
+      "nationality": "GER",
+      "broadPosition": "GK",
+      "shirtNumber": 35,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 70,
+        "pace": 48,
+        "shooting": 17,
+        "passing": 55,
+        "dribbling": 43,
+        "defending": 48,
+        "physical": 66,
+        "goalkeeping": 77
+      },
+      "primeRatings": {
+        "overall": 71,
+        "pace": 45,
+        "shooting": 16,
+        "passing": 56,
+        "dribbling": 41,
+        "defending": 49,
+        "physical": 64,
+        "goalkeeping": 79
+      }
+    }
+  ],
+  "sourceUrl": "https://en.wikipedia.org/wiki/2016%E2%80%9317_1._FC_K%C3%B6ln_season",
+  "scrapedAt": "2026-07-08T17:06:05.778Z"
+}

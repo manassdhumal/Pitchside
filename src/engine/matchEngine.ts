@@ -1,0 +1,251 @@
+import type { Player, EraRuleConfig } from '../types';
+
+export const DIXON_COLES_RHO = -0.13;
+export const LEAGUE_AVG_GOALS = 1.2;
+export const HOME_ADVANTAGE = 1.35;
+const MAX_GOALS = 10;
+
+const ATTACK_WEIGHT: Partial<Record<Player['position'], number>> = {
+  GK: 0.1, CB: 0.3, LB: 0.6, RB: 0.6, LWB: 0.7, RWB: 0.7, CDM: 0.6, CM: 1, CAM: 1.4,
+  LM: 1.2, RM: 1.2, LW: 1.5, RW: 1.5, ST: 1.8,
+};
+
+const DEFENCE_WEIGHT: Partial<Record<Player['position'], number>> = {
+  GK: 2, CB: 1.8, LB: 1.3, RB: 1.3, LWB: 1.1, RWB: 1.1, CDM: 1.4, CM: 0.9, CAM: 0.5,
+  LM: 0.6, RM: 0.6, LW: 0.4, RW: 0.4, ST: 0.2,
+};
+
+function weightedAverage(players: Player[], weights: Partial<Record<Player['position'], number>>, pick: (p: Player) => number): number {
+  let totalWeight = 0;
+  let sum = 0;
+  for (const player of players) {
+    const weight = weights[player.position] ?? 1;
+    sum += pick(player) * weight;
+    totalWeight += weight;
+  }
+  return totalWeight > 0 ? sum / totalWeight : 50;
+}
+
+export function weightedAttackRating(startingXI: Player[]): number {
+  return weightedAverage(startingXI, ATTACK_WEIGHT, (p) => (p.ratings.shooting + p.ratings.dribbling + p.ratings.passing) / 3);
+}
+
+export function weightedDefenceRating(startingXI: Player[]): number {
+  return weightedAverage(startingXI, DEFENCE_WEIGHT, (p) => p.ratings.goalkeeping ?? p.ratings.defending);
+}
+
+function factorial(n: number): number {
+  let result = 1;
+  for (let i = 2; i <= n; i++) result *= i;
+  return result;
+}
+
+export function poissonPmf(k: number, lambda: number): number {
+  return (Math.exp(-lambda) * Math.pow(lambda, k)) / factorial(k);
+}
+
+export function dixonColesTau(x: number, y: number, lambda: number, mu: number, rho: number): number {
+  if (x === 0 && y === 0) return 1 - lambda * mu * rho;
+  if (x === 0 && y === 1) return 1 + lambda * rho;
+  if (x === 1 && y === 0) return 1 + mu * rho;
+  if (x === 1 && y === 1) return 1 - rho;
+  return 1;
+}
+
+/** Joint scoreline probability matrix, rows = home goals, cols = away goals, normalized to sum to 1. */
+export function scorelineDistribution(lambdaHome: number, lambdaAway: number, rho = DIXON_COLES_RHO): number[][] {
+  const matrix: number[][] = [];
+  let total = 0;
+  for (let x = 0; x <= MAX_GOALS; x++) {
+    const row: number[] = [];
+    for (let y = 0; y <= MAX_GOALS; y++) {
+      const p = poissonPmf(x, lambdaHome) * poissonPmf(y, lambdaAway) * dixonColesTau(x, y, lambdaHome, lambdaAway, rho);
+      row.push(Math.max(p, 0));
+      total += Math.max(p, 0);
+    }
+    matrix.push(row);
+  }
+  if (total > 0) {
+    for (let x = 0; x <= MAX_GOALS; x++) {
+      for (let y = 0; y <= MAX_GOALS; y++) {
+        matrix[x][y] /= total;
+      }
+    }
+  }
+  return matrix;
+}
+
+export function sampleDixonColesScoreline(lambdaHome: number, lambdaAway: number, rho = DIXON_COLES_RHO): { homeGoals: number; awayGoals: number } {
+  const matrix = scorelineDistribution(lambdaHome, lambdaAway, rho);
+  let roll = Math.random();
+  for (let x = 0; x <= MAX_GOALS; x++) {
+    for (let y = 0; y <= MAX_GOALS; y++) {
+      roll -= matrix[x][y];
+      if (roll <= 0) return { homeGoals: x, awayGoals: y };
+    }
+  }
+  return { homeGoals: MAX_GOALS, awayGoals: MAX_GOALS };
+}
+
+export interface MatchOutcomeProbabilities {
+  homeWinProbability: number;
+  drawProbability: number;
+  awayWinProbability: number;
+}
+
+export function computeOutcomeProbabilities(lambdaHome: number, lambdaAway: number, rho = DIXON_COLES_RHO): MatchOutcomeProbabilities {
+  const matrix = scorelineDistribution(lambdaHome, lambdaAway, rho);
+  let homeWin = 0, draw = 0, awayWin = 0;
+  for (let x = 0; x <= MAX_GOALS; x++) {
+    for (let y = 0; y <= MAX_GOALS; y++) {
+      if (x > y) homeWin += matrix[x][y];
+      else if (x === y) draw += matrix[x][y];
+      else awayWin += matrix[x][y];
+    }
+  }
+  return { homeWinProbability: homeWin, drawProbability: draw, awayWinProbability: awayWin };
+}
+
+export interface MatchResult {
+  homeGoals: number;
+  awayGoals: number;
+  xgHome: number;
+  xgAway: number;
+  homeWinProbability: number;
+  drawProbability: number;
+  awayWinProbability: number;
+  wentToExtraTime: boolean;
+  penalties?: { home: number; away: number };
+}
+
+export function computeExpectedGoals(homeXI: Player[], awayXI: Player[], homeAdvantage = HOME_ADVANTAGE): { lambdaHome: number; lambdaAway: number } {
+  const homeAttack = weightedAttackRating(homeXI);
+  const homeDefence = weightedDefenceRating(homeXI);
+  const awayAttack = weightedAttackRating(awayXI);
+  const awayDefence = weightedDefenceRating(awayXI);
+
+  const lambdaHome = (homeAttack / awayDefence) * LEAGUE_AVG_GOALS * homeAdvantage;
+  const lambdaAway = (awayAttack / homeDefence) * LEAGUE_AVG_GOALS;
+  return { lambdaHome, lambdaAway };
+}
+
+function simulatePenaltyShootout(): { home: number; away: number } {
+  const takeKick = () => (Math.random() < 0.76 ? 1 : 0);
+  let home = 0, away = 0;
+  for (let round = 0; round < 5; round++) {
+    home += takeKick();
+    away += takeKick();
+  }
+  while (home === away) {
+    home += takeKick();
+    away += takeKick();
+  }
+  return { home, away };
+}
+
+/** Sudden-goals style extra time approximation: 30 extra minutes scaled from the 90-minute expected goals. */
+function simulateExtraTime(lambdaHome: number, lambdaAway: number, rho: number): { homeGoals: number; awayGoals: number } {
+  const etScale = 30 / 90;
+  return sampleDixonColesScoreline(lambdaHome * etScale, lambdaAway * etScale, rho);
+}
+
+export function simulateMatch(homeXI: Player[], awayXI: Player[], eraRules: EraRuleConfig, requiresDecisiveResult = false): MatchResult {
+  const { lambdaHome, lambdaAway } = computeExpectedGoals(homeXI, awayXI);
+  const { homeGoals, awayGoals } = sampleDixonColesScoreline(lambdaHome, lambdaAway);
+  const probabilities = computeOutcomeProbabilities(lambdaHome, lambdaAway);
+
+  let finalHome = homeGoals;
+  let finalAway = awayGoals;
+  let wentToExtraTime = false;
+  let penalties: { home: number; away: number } | undefined;
+
+  if (requiresDecisiveResult && finalHome === finalAway) {
+    if (eraRules.extraTimeMinutes > 0) {
+      wentToExtraTime = true;
+      const et = simulateExtraTime(lambdaHome, lambdaAway, DIXON_COLES_RHO);
+      finalHome += et.homeGoals;
+      finalAway += et.awayGoals;
+    }
+    if (finalHome === finalAway && eraRules.penaltyShootout) {
+      penalties = simulatePenaltyShootout();
+    }
+  }
+
+  return {
+    homeGoals: finalHome,
+    awayGoals: finalAway,
+    xgHome: lambdaHome,
+    xgAway: lambdaAway,
+    ...probabilities,
+    wentToExtraTime,
+    penalties,
+  };
+}
+
+export interface TwoLegTieResult extends MatchResult {
+  aggregateHome: number;
+  aggregateAway: number;
+  winnerIsFirstLegHome: boolean;
+}
+
+export function simulateTwoLegTie(teamAXI: Player[], teamBXI: Player[], eraRules: EraRuleConfig): TwoLegTieResult {
+  const leg1 = simulateMatch(teamAXI, teamBXI, eraRules, false);
+  const leg2 = simulateMatch(teamBXI, teamAXI, eraRules, false);
+
+  const aggregateA = leg1.homeGoals + leg2.awayGoals;
+  const aggregateB = leg1.awayGoals + leg2.homeGoals;
+
+  let winnerIsFirstLegHome = aggregateA > aggregateB;
+  let wentToExtraTime = false;
+  let penalties: { home: number; away: number } | undefined;
+
+  if (aggregateA === aggregateB) {
+    if (eraRules.awayGoalsRule) {
+      const awayGoalsA = leg2.awayGoals;
+      const awayGoalsB = leg1.awayGoals;
+      if (awayGoalsA !== awayGoalsB) {
+        winnerIsFirstLegHome = awayGoalsA > awayGoalsB;
+      } else {
+        ({ winnerIsFirstLegHome, wentToExtraTime, penalties } = resolveTiedAggregate(teamAXI, teamBXI, eraRules));
+      }
+    } else {
+      ({ winnerIsFirstLegHome, wentToExtraTime, penalties } = resolveTiedAggregate(teamAXI, teamBXI, eraRules));
+    }
+  }
+
+  return {
+    ...leg2,
+    aggregateHome: aggregateA,
+    aggregateAway: aggregateB,
+    winnerIsFirstLegHome,
+    wentToExtraTime,
+    penalties,
+  };
+}
+
+function resolveTiedAggregate(teamAXI: Player[], teamBXI: Player[], eraRules: EraRuleConfig): { winnerIsFirstLegHome: boolean; wentToExtraTime: boolean; penalties?: { home: number; away: number } } {
+  const { lambdaHome, lambdaAway } = computeExpectedGoals(teamBXI, teamAXI);
+  let wentToExtraTime = false;
+  let penalties: { home: number; away: number } | undefined;
+  let aWins: boolean;
+
+  if (eraRules.extraTimeMinutes > 0) {
+    wentToExtraTime = true;
+    const et = simulateExtraTime(lambdaHome, lambdaAway, DIXON_COLES_RHO);
+    if (et.homeGoals !== et.awayGoals) {
+      aWins = et.awayGoals > et.homeGoals;
+    } else if (eraRules.penaltyShootout) {
+      penalties = simulatePenaltyShootout();
+      aWins = penalties.away > penalties.home;
+    } else {
+      aWins = Math.random() < 0.5;
+    }
+  } else if (eraRules.penaltyShootout) {
+    penalties = simulatePenaltyShootout();
+    aWins = penalties.away > penalties.home;
+  } else {
+    aWins = Math.random() < 0.5;
+  }
+
+  return { winnerIsFirstLegHome: aWins, wentToExtraTime, penalties };
+}

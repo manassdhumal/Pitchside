@@ -1,0 +1,886 @@
+{
+  "leagueId": "la-liga",
+  "clubId": "real-madrid",
+  "season": "2023-24",
+  "division": "top-flight",
+  "squad": [
+    {
+      "id": "thibaut-courtois-bel",
+      "name": "Thibaut Courtois",
+      "nationality": "BEL",
+      "broadPosition": "GK",
+      "shirtNumber": 1,
+      "stats": {
+        "appearances": 5,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 75,
+        "pace": 43,
+        "shooting": 20,
+        "passing": 61,
+        "dribbling": 43,
+        "defending": 57,
+        "physical": 71,
+        "goalkeeping": 86
+      },
+      "primeRatings": {
+        "overall": 91,
+        "pace": 43,
+        "shooting": 21,
+        "passing": 77,
+        "dribbling": 63,
+        "defending": 72,
+        "physical": 88,
+        "goalkeeping": 99
+      }
+    },
+    {
+      "id": "dani-carvajal-esp",
+      "name": "Dani Carvajal",
+      "nationality": "ESP",
+      "broadPosition": "DF",
+      "shirtNumber": 2,
+      "stats": {
+        "appearances": 41,
+        "goals": 6
+      },
+      "seasonRatings": {
+        "overall": 87,
+        "pace": 83,
+        "shooting": 69,
+        "passing": 83,
+        "dribbling": 78,
+        "defending": 95,
+        "physical": 88
+      },
+      "primeRatings": {
+        "overall": 87,
+        "pace": 85,
+        "shooting": 65,
+        "passing": 82,
+        "dribbling": 75,
+        "defending": 94,
+        "physical": 88
+      }
+    },
+    {
+      "id": "der-milit-o-bra",
+      "name": "Éder Militão",
+      "nationality": "BRA",
+      "broadPosition": "DF",
+      "shirtNumber": 3,
+      "stats": {
+        "appearances": 13,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 67,
+        "pace": 64,
+        "shooting": 46,
+        "passing": 64,
+        "dribbling": 55,
+        "defending": 73,
+        "physical": 69
+      },
+      "primeRatings": {
+        "overall": 84,
+        "pace": 78,
+        "shooting": 66,
+        "passing": 81,
+        "dribbling": 73,
+        "defending": 93,
+        "physical": 84
+      }
+    },
+    {
+      "id": "david-alaba-aut",
+      "name": "David Alaba",
+      "nationality": "AUT",
+      "broadPosition": "DF",
+      "shirtNumber": 4,
+      "stats": {
+        "appearances": 17,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 72,
+        "pace": 64,
+        "shooting": 55,
+        "passing": 65,
+        "dribbling": 63,
+        "defending": 81,
+        "physical": 74
+      },
+      "primeRatings": {
+        "overall": 88,
+        "pace": 85,
+        "shooting": 67,
+        "passing": 84,
+        "dribbling": 77,
+        "defending": 93,
+        "physical": 89
+      }
+    },
+    {
+      "id": "jude-bellingham-eng",
+      "name": "Jude Bellingham",
+      "nationality": "ENG",
+      "broadPosition": "MF",
+      "shirtNumber": 5,
+      "stats": {
+        "appearances": 42,
+        "goals": 23
+      },
+      "seasonRatings": {
+        "overall": 85,
+        "pace": 83,
+        "shooting": 77,
+        "passing": 90,
+        "dribbling": 83,
+        "defending": 77,
+        "physical": 80
+      },
+      "primeRatings": {
+        "overall": 90,
+        "pace": 85,
+        "shooting": 84,
+        "passing": 92,
+        "dribbling": 89,
+        "defending": 80,
+        "physical": 86
+      }
+    },
+    {
+      "id": "nacho-esp",
+      "name": "Nacho",
+      "nationality": "ESP",
+      "broadPosition": "DF",
+      "shirtNumber": 6,
+      "stats": {
+        "appearances": 45,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 81,
+        "pace": 78,
+        "shooting": 60,
+        "passing": 74,
+        "dribbling": 71,
+        "defending": 91,
+        "physical": 83
+      },
+      "primeRatings": {
+        "overall": 83,
+        "pace": 75,
+        "shooting": 64,
+        "passing": 76,
+        "dribbling": 75,
+        "defending": 93,
+        "physical": 84
+      }
+    },
+    {
+      "id": "vin-cius-j-nior-bra",
+      "name": "Vinícius Júnior",
+      "nationality": "BRA",
+      "broadPosition": "FW",
+      "shirtNumber": 7,
+      "stats": {
+        "appearances": 39,
+        "goals": 24
+      },
+      "seasonRatings": {
+        "overall": 89,
+        "pace": 94,
+        "shooting": 99,
+        "passing": 78,
+        "dribbling": 89,
+        "defending": 61,
+        "physical": 84
+      },
+      "primeRatings": {
+        "overall": 92,
+        "pace": 97,
+        "shooting": 99,
+        "passing": 83,
+        "dribbling": 92,
+        "defending": 66,
+        "physical": 91
+      }
+    },
+    {
+      "id": "toni-kroos-ger",
+      "name": "Toni Kroos",
+      "nationality": "GER",
+      "broadPosition": "MF",
+      "shirtNumber": 8,
+      "stats": {
+        "appearances": 48,
+        "goals": 1
+      },
+      "seasonRatings": {
+        "overall": 87,
+        "pace": 85,
+        "shooting": 77,
+        "passing": 89,
+        "dribbling": 88,
+        "defending": 75,
+        "physical": 83
+      },
+      "primeRatings": {
+        "overall": 91,
+        "pace": 90,
+        "shooting": 84,
+        "passing": 95,
+        "dribbling": 94,
+        "defending": 80,
+        "physical": 86
+      }
+    },
+    {
+      "id": "luka-modri-cro",
+      "name": "Luka Modrić",
+      "nationality": "CRO",
+      "broadPosition": "MF",
+      "shirtNumber": 10,
+      "stats": {
+        "appearances": 46,
+        "goals": 2
+      },
+      "seasonRatings": {
+        "overall": 88,
+        "pace": 84,
+        "shooting": 81,
+        "passing": 94,
+        "dribbling": 87,
+        "defending": 80,
+        "physical": 84
+      },
+      "primeRatings": {
+        "overall": 92,
+        "pace": 90,
+        "shooting": 81,
+        "passing": 97,
+        "dribbling": 90,
+        "defending": 80,
+        "physical": 91
+      }
+    },
+    {
+      "id": "rodrygo-bra",
+      "name": "Rodrygo",
+      "nationality": "BRA",
+      "broadPosition": "FW",
+      "shirtNumber": 11,
+      "stats": {
+        "appearances": 51,
+        "goals": 17
+      },
+      "seasonRatings": {
+        "overall": 86,
+        "pace": 87,
+        "shooting": 92,
+        "passing": 78,
+        "dribbling": 89,
+        "defending": 60,
+        "physical": 81
+      },
+      "primeRatings": {
+        "overall": 87,
+        "pace": 90,
+        "shooting": 96,
+        "passing": 80,
+        "dribbling": 90,
+        "defending": 60,
+        "physical": 85
+      }
+    },
+    {
+      "id": "eduardo-camavinga-fra",
+      "name": "Eduardo Camavinga",
+      "nationality": "FRA",
+      "broadPosition": "MF",
+      "shirtNumber": 12,
+      "stats": {
+        "appearances": 46,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 81,
+        "pace": 79,
+        "shooting": 73,
+        "passing": 84,
+        "dribbling": 79,
+        "defending": 71,
+        "physical": 77
+      },
+      "primeRatings": {
+        "overall": 83,
+        "pace": 77,
+        "shooting": 76,
+        "passing": 89,
+        "dribbling": 81,
+        "defending": 76,
+        "physical": 82
+      }
+    },
+    {
+      "id": "andriy-lunin-ukr",
+      "name": "Andriy Lunin",
+      "nationality": "UKR",
+      "broadPosition": "GK",
+      "shirtNumber": 13,
+      "stats": {
+        "appearances": 31,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 73,
+        "pace": 47,
+        "shooting": 16,
+        "passing": 56,
+        "dribbling": 45,
+        "defending": 50,
+        "physical": 69,
+        "goalkeeping": 80
+      },
+      "primeRatings": {
+        "overall": 74,
+        "pace": 44,
+        "shooting": 17,
+        "passing": 57,
+        "dribbling": 41,
+        "defending": 52,
+        "physical": 70,
+        "goalkeeping": 80
+      }
+    },
+    {
+      "id": "joselu-esp",
+      "name": "Joselu",
+      "nationality": "ESP",
+      "broadPosition": "FW",
+      "shirtNumber": 14,
+      "stats": {
+        "appearances": 49,
+        "goals": 18
+      },
+      "seasonRatings": {
+        "overall": 93,
+        "pace": 99,
+        "shooting": 99,
+        "passing": 84,
+        "dribbling": 97,
+        "defending": 69,
+        "physical": 89
+      },
+      "primeRatings": {
+        "overall": 94,
+        "pace": 98,
+        "shooting": 99,
+        "passing": 88,
+        "dribbling": 99,
+        "defending": 72,
+        "physical": 90
+      }
+    },
+    {
+      "id": "federico-valverde-uru",
+      "name": "Federico Valverde",
+      "nationality": "URU",
+      "broadPosition": "MF",
+      "shirtNumber": 15,
+      "stats": {
+        "appearances": 54,
+        "goals": 3
+      },
+      "seasonRatings": {
+        "overall": 81,
+        "pace": 75,
+        "shooting": 72,
+        "passing": 88,
+        "dribbling": 83,
+        "defending": 74,
+        "physical": 76
+      },
+      "primeRatings": {
+        "overall": 88,
+        "pace": 84,
+        "shooting": 81,
+        "passing": 94,
+        "dribbling": 89,
+        "defending": 76,
+        "physical": 82
+      }
+    },
+    {
+      "id": "lvaro-odriozola-esp",
+      "name": "Álvaro Odriozola",
+      "nationality": "ESP",
+      "broadPosition": "DF",
+      "shirtNumber": 16,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 61,
+        "pace": 57,
+        "shooting": 40,
+        "passing": 54,
+        "dribbling": 52,
+        "defending": 68,
+        "physical": 65
+      },
+      "primeRatings": {
+        "overall": 75,
+        "pace": 72,
+        "shooting": 57,
+        "passing": 72,
+        "dribbling": 64,
+        "defending": 80,
+        "physical": 75
+      }
+    },
+    {
+      "id": "lucas-v-zquez-esp",
+      "name": "Lucas Vázquez",
+      "nationality": "ESP",
+      "broadPosition": "FW",
+      "shirtNumber": 17,
+      "stats": {
+        "appearances": 38,
+        "goals": 3
+      },
+      "seasonRatings": {
+        "overall": 79,
+        "pace": 82,
+        "shooting": 87,
+        "passing": 68,
+        "dribbling": 82,
+        "defending": 56,
+        "physical": 74
+      },
+      "primeRatings": {
+        "overall": 86,
+        "pace": 88,
+        "shooting": 95,
+        "passing": 77,
+        "dribbling": 92,
+        "defending": 62,
+        "physical": 80
+      }
+    },
+    {
+      "id": "aur-lien-tchouam-ni-fra",
+      "name": "Aurélien Tchouaméni",
+      "nationality": "FRA",
+      "broadPosition": "MF",
+      "shirtNumber": 18,
+      "stats": {
+        "appearances": 38,
+        "goals": 3
+      },
+      "seasonRatings": {
+        "overall": 81,
+        "pace": 80,
+        "shooting": 75,
+        "passing": 88,
+        "dribbling": 84,
+        "defending": 73,
+        "physical": 76
+      },
+      "primeRatings": {
+        "overall": 85,
+        "pace": 82,
+        "shooting": 74,
+        "passing": 93,
+        "dribbling": 86,
+        "defending": 75,
+        "physical": 79
+      }
+    },
+    {
+      "id": "dani-ceballos-esp",
+      "name": "Dani Ceballos",
+      "nationality": "ESP",
+      "broadPosition": "MF",
+      "shirtNumber": 19,
+      "stats": {
+        "appearances": 27,
+        "goals": 1
+      },
+      "seasonRatings": {
+        "overall": 73,
+        "pace": 68,
+        "shooting": 64,
+        "passing": 79,
+        "dribbling": 71,
+        "defending": 61,
+        "physical": 68
+      },
+      "primeRatings": {
+        "overall": 80,
+        "pace": 78,
+        "shooting": 70,
+        "passing": 84,
+        "dribbling": 81,
+        "defending": 68,
+        "physical": 76
+      }
+    },
+    {
+      "id": "fran-garc-a-esp",
+      "name": "Fran García",
+      "nationality": "ESP",
+      "broadPosition": "DF",
+      "shirtNumber": 20,
+      "stats": {
+        "appearances": 31,
+        "goals": 1
+      },
+      "seasonRatings": {
+        "overall": 74,
+        "pace": 69,
+        "shooting": 56,
+        "passing": 68,
+        "dribbling": 64,
+        "defending": 84,
+        "physical": 76
+      },
+      "primeRatings": {
+        "overall": 78,
+        "pace": 74,
+        "shooting": 57,
+        "passing": 74,
+        "dribbling": 70,
+        "defending": 89,
+        "physical": 84
+      }
+    },
+    {
+      "id": "brahim-d-az-mar",
+      "name": "Brahim Díaz",
+      "nationality": "MAR",
+      "broadPosition": "FW",
+      "shirtNumber": 21,
+      "stats": {
+        "appearances": 44,
+        "goals": 12
+      },
+      "seasonRatings": {
+        "overall": 84,
+        "pace": 84,
+        "shooting": 91,
+        "passing": 73,
+        "dribbling": 85,
+        "defending": 58,
+        "physical": 81
+      },
+      "primeRatings": {
+        "overall": 85,
+        "pace": 87,
+        "shooting": 92,
+        "passing": 80,
+        "dribbling": 87,
+        "defending": 62,
+        "physical": 82
+      }
+    },
+    {
+      "id": "antonio-r-diger-ger",
+      "name": "Antonio Rüdiger",
+      "nationality": "GER",
+      "broadPosition": "DF",
+      "shirtNumber": 22,
+      "stats": {
+        "appearances": 48,
+        "goals": 2
+      },
+      "seasonRatings": {
+        "overall": 86,
+        "pace": 81,
+        "shooting": 65,
+        "passing": 81,
+        "dribbling": 75,
+        "defending": 91,
+        "physical": 90
+      },
+      "primeRatings": {
+        "overall": 87,
+        "pace": 84,
+        "shooting": 66,
+        "passing": 80,
+        "dribbling": 78,
+        "defending": 97,
+        "physical": 88
+      }
+    },
+    {
+      "id": "ferland-mendy-fra",
+      "name": "Ferland Mendy",
+      "nationality": "FRA",
+      "broadPosition": "DF",
+      "shirtNumber": 23,
+      "stats": {
+        "appearances": 37,
+        "goals": 1
+      },
+      "seasonRatings": {
+        "overall": 76,
+        "pace": 69,
+        "shooting": 54,
+        "passing": 71,
+        "dribbling": 67,
+        "defending": 85,
+        "physical": 80
+      },
+      "primeRatings": {
+        "overall": 80,
+        "pace": 77,
+        "shooting": 58,
+        "passing": 77,
+        "dribbling": 69,
+        "defending": 87,
+        "physical": 84
+      }
+    },
+    {
+      "id": "arda-g-ler-tur",
+      "name": "Arda Güler",
+      "nationality": "TUR",
+      "broadPosition": "MF",
+      "shirtNumber": 24,
+      "stats": {
+        "appearances": 12,
+        "goals": 6
+      },
+      "seasonRatings": {
+        "overall": 73,
+        "pace": 68,
+        "shooting": 66,
+        "passing": 78,
+        "dribbling": 72,
+        "defending": 61,
+        "physical": 71
+      },
+      "primeRatings": {
+        "overall": 84,
+        "pace": 79,
+        "shooting": 77,
+        "passing": 89,
+        "dribbling": 84,
+        "defending": 76,
+        "physical": 79
+      }
+    },
+    {
+      "id": "kepa-arrizabalaga-esp",
+      "name": "Kepa Arrizabalaga",
+      "nationality": "ESP",
+      "broadPosition": "GK",
+      "shirtNumber": 25,
+      "stats": {
+        "appearances": 20,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 66,
+        "pace": 43,
+        "shooting": 20,
+        "passing": 54,
+        "dribbling": 35,
+        "defending": 49,
+        "physical": 62,
+        "goalkeeping": 71
+      },
+      "primeRatings": {
+        "overall": 82,
+        "pace": 44,
+        "shooting": 19,
+        "passing": 70,
+        "dribbling": 50,
+        "defending": 65,
+        "physical": 80,
+        "goalkeeping": 88
+      }
+    },
+    {
+      "id": "mario-mart-n-esp",
+      "name": "Mario Martín",
+      "nationality": "ESP",
+      "broadPosition": "MF",
+      "shirtNumber": 28,
+      "stats": {
+        "appearances": 3,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 63,
+        "pace": 63,
+        "shooting": 57,
+        "passing": 69,
+        "dribbling": 65,
+        "defending": 54,
+        "physical": 58
+      },
+      "primeRatings": {
+        "overall": 64,
+        "pace": 59,
+        "shooting": 54,
+        "passing": 69,
+        "dribbling": 65,
+        "defending": 57,
+        "physical": 63
+      }
+    },
+    {
+      "id": "lvaro-rodr-guez-uru",
+      "name": "Álvaro Rodríguez",
+      "nationality": "URU",
+      "broadPosition": "FW",
+      "shirtNumber": 29,
+      "stats": {
+        "appearances": 2,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 60,
+        "pace": 60,
+        "shooting": 69,
+        "passing": 50,
+        "dribbling": 64,
+        "defending": 34,
+        "physical": 57
+      },
+      "primeRatings": {
+        "overall": 69,
+        "pace": 73,
+        "shooting": 76,
+        "passing": 58,
+        "dribbling": 73,
+        "defending": 45,
+        "physical": 64
+      }
+    },
+    {
+      "id": "nico-paz-arg",
+      "name": "Nico Paz",
+      "nationality": "ARG",
+      "broadPosition": "MF",
+      "shirtNumber": 32,
+      "stats": {
+        "appearances": 8,
+        "goals": 1
+      },
+      "seasonRatings": {
+        "overall": 66,
+        "pace": 60,
+        "shooting": 59,
+        "passing": 72,
+        "dribbling": 66,
+        "defending": 59,
+        "physical": 64
+      },
+      "primeRatings": {
+        "overall": 67,
+        "pace": 64,
+        "shooting": 62,
+        "passing": 71,
+        "dribbling": 66,
+        "defending": 57,
+        "physical": 63
+      }
+    },
+    {
+      "id": "gonzalo-garc-a-esp",
+      "name": "Gonzalo García",
+      "nationality": "ESP",
+      "broadPosition": "FW",
+      "shirtNumber": 33,
+      "stats": {
+        "appearances": 2,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 60,
+        "pace": 62,
+        "shooting": 69,
+        "passing": 51,
+        "dribbling": 64,
+        "defending": 32,
+        "physical": 54
+      },
+      "primeRatings": {
+        "overall": 83,
+        "pace": 86,
+        "shooting": 92,
+        "passing": 74,
+        "dribbling": 85,
+        "defending": 60,
+        "physical": 80
+      }
+    },
+    {
+      "id": "lvaro-carrillo-esp",
+      "name": "Álvaro Carrillo",
+      "nationality": "ESP",
+      "broadPosition": "DF",
+      "shirtNumber": 34,
+      "stats": {
+        "appearances": 1,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 60,
+        "pace": 53,
+        "shooting": 41,
+        "passing": 53,
+        "dribbling": 50,
+        "defending": 66,
+        "physical": 60
+      },
+      "primeRatings": {
+        "overall": 61,
+        "pace": 53,
+        "shooting": 41,
+        "passing": 55,
+        "dribbling": 50,
+        "defending": 71,
+        "physical": 63
+      }
+    },
+    {
+      "id": "vinicius-tobias-bra",
+      "name": "Vinicius Tobias",
+      "nationality": "BRA",
+      "broadPosition": "DF",
+      "shirtNumber": 36,
+      "stats": {
+        "appearances": 1,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 61,
+        "pace": 57,
+        "shooting": 42,
+        "passing": 57,
+        "dribbling": 52,
+        "defending": 72,
+        "physical": 62
+      },
+      "primeRatings": {
+        "overall": 62,
+        "pace": 58,
+        "shooting": 40,
+        "passing": 59,
+        "dribbling": 52,
+        "defending": 69,
+        "physical": 66
+      }
+    }
+  ],
+  "sourceUrl": "https://en.wikipedia.org/wiki/2023%E2%80%9324_Real_Madrid_CF_season",
+  "scrapedAt": "2026-07-08T17:14:08.929Z"
+}

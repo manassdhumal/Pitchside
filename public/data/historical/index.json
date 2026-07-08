@@ -1,0 +1,4321 @@
+{
+  "leagues": [
+    {
+      "id": "premier-league",
+      "name": "Premier League",
+      "country": "England",
+      "earliestSeason": "1992-93",
+      "latestSeason": "2025-26"
+    },
+    {
+      "id": "bundesliga",
+      "name": "Bundesliga",
+      "country": "Germany",
+      "earliestSeason": "1990-91",
+      "latestSeason": "2025-26"
+    },
+    {
+      "id": "la-liga",
+      "name": "La Liga",
+      "country": "Spain",
+      "earliestSeason": "1990-91",
+      "latestSeason": "2025-26"
+    },
+    {
+      "id": "serie-a",
+      "name": "Serie A",
+      "country": "Italy",
+      "earliestSeason": "1990-91",
+      "latestSeason": "2025-26"
+    },
+    {
+      "id": "ligue-1",
+      "name": "Ligue 1",
+      "country": "France",
+      "earliestSeason": "1990-91",
+      "latestSeason": "2025-26"
+    }
+  ],
+  "clubs": [
+    {
+      "id": "arsenal",
+      "name": "Arsenal",
+      "shortName": "ARS",
+      "leagueId": "premier-league",
+      "wikiTitle": "Arsenal F.C.",
+      "colors": {
+        "primary": "#EF0107",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "cannon",
+      "tier": 1
+    },
+    {
+      "id": "aston-villa",
+      "name": "Aston Villa",
+      "shortName": "AVL",
+      "leagueId": "premier-league",
+      "wikiTitle": "Aston Villa F.C.",
+      "colors": {
+        "primary": "#95BFE5",
+        "secondary": "#670E36"
+      },
+      "crestIcon": "lion",
+      "tier": 3
+    },
+    {
+      "id": "chelsea",
+      "name": "Chelsea",
+      "shortName": "CHE",
+      "leagueId": "premier-league",
+      "wikiTitle": "Chelsea F.C.",
+      "colors": {
+        "primary": "#034694",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "lion",
+      "tier": 1
+    },
+    {
+      "id": "everton",
+      "name": "Everton",
+      "shortName": "EVE",
+      "leagueId": "premier-league",
+      "wikiTitle": "Everton F.C.",
+      "colors": {
+        "primary": "#003399",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "tower",
+      "tier": 3
+    },
+    {
+      "id": "leeds-united",
+      "name": "Leeds United",
+      "shortName": "LEE",
+      "leagueId": "premier-league",
+      "wikiTitle": "Leeds United F.C.",
+      "colors": {
+        "primary": "#FFFFFF",
+        "secondary": "#1D428A"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "leicester-city",
+      "name": "Leicester City",
+      "shortName": "LEI",
+      "leagueId": "premier-league",
+      "wikiTitle": "Leicester City F.C.",
+      "colors": {
+        "primary": "#003090",
+        "secondary": "#FDBE11"
+      },
+      "crestIcon": "fox",
+      "tier": 3
+    },
+    {
+      "id": "liverpool",
+      "name": "Liverpool",
+      "shortName": "LIV",
+      "leagueId": "premier-league",
+      "wikiTitle": "Liverpool F.C.",
+      "colors": {
+        "primary": "#C8102E",
+        "secondary": "#00B2A9"
+      },
+      "crestIcon": "liver-bird",
+      "tier": 1
+    },
+    {
+      "id": "manchester-city",
+      "name": "Manchester City",
+      "shortName": "MCI",
+      "leagueId": "premier-league",
+      "wikiTitle": "Manchester City F.C.",
+      "colors": {
+        "primary": "#6CABDD",
+        "secondary": "#1C2C5B"
+      },
+      "crestIcon": "shield",
+      "tier": 1
+    },
+    {
+      "id": "manchester-united",
+      "name": "Manchester United",
+      "shortName": "MUN",
+      "leagueId": "premier-league",
+      "wikiTitle": "Manchester United F.C.",
+      "colors": {
+        "primary": "#DA291C",
+        "secondary": "#FBE122"
+      },
+      "crestIcon": "devil",
+      "tier": 1
+    },
+    {
+      "id": "newcastle-united",
+      "name": "Newcastle United",
+      "shortName": "NEW",
+      "leagueId": "premier-league",
+      "wikiTitle": "Newcastle United F.C.",
+      "colors": {
+        "primary": "#241F20",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "magpie",
+      "tier": 2
+    },
+    {
+      "id": "southampton",
+      "name": "Southampton",
+      "shortName": "SOU",
+      "leagueId": "premier-league",
+      "wikiTitle": "Southampton F.C.",
+      "colors": {
+        "primary": "#D71920",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "tottenham-hotspur",
+      "name": "Tottenham Hotspur",
+      "shortName": "TOT",
+      "leagueId": "premier-league",
+      "wikiTitle": "Tottenham Hotspur F.C.",
+      "colors": {
+        "primary": "#FFFFFF",
+        "secondary": "#132257"
+      },
+      "crestIcon": "cockerel",
+      "tier": 2
+    },
+    {
+      "id": "west-ham-united",
+      "name": "West Ham United",
+      "shortName": "WHU",
+      "leagueId": "premier-league",
+      "wikiTitle": "West Ham United F.C.",
+      "colors": {
+        "primary": "#7A263A",
+        "secondary": "#1BB1E7"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "wolverhampton-wanderers",
+      "name": "Wolverhampton Wanderers",
+      "shortName": "WOL",
+      "leagueId": "premier-league",
+      "wikiTitle": "Wolverhampton Wanderers F.C.",
+      "colors": {
+        "primary": "#FDB913",
+        "secondary": "#231F20"
+      },
+      "crestIcon": "wolf",
+      "tier": 3
+    },
+    {
+      "id": "fulham",
+      "name": "Fulham",
+      "shortName": "FUL",
+      "leagueId": "premier-league",
+      "wikiTitle": "Fulham F.C.",
+      "colors": {
+        "primary": "#FFFFFF",
+        "secondary": "#000000"
+      },
+      "crestIcon": "shield",
+      "tier": 4
+    },
+    {
+      "id": "crystal-palace",
+      "name": "Crystal Palace",
+      "shortName": "CRY",
+      "leagueId": "premier-league",
+      "wikiTitle": "Crystal Palace F.C.",
+      "colors": {
+        "primary": "#1B458F",
+        "secondary": "#C4122E"
+      },
+      "crestIcon": "eagle",
+      "tier": 3
+    },
+    {
+      "id": "sunderland",
+      "name": "Sunderland",
+      "shortName": "SUN",
+      "leagueId": "premier-league",
+      "wikiTitle": "Sunderland A.F.C.",
+      "colors": {
+        "primary": "#EB172B",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 4
+    },
+    {
+      "id": "blackburn-rovers",
+      "name": "Blackburn Rovers",
+      "shortName": "BLB",
+      "leagueId": "premier-league",
+      "wikiTitle": "Blackburn Rovers F.C.",
+      "colors": {
+        "primary": "#009EE0",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 4
+    },
+    {
+      "id": "middlesbrough",
+      "name": "Middlesbrough",
+      "shortName": "MID",
+      "leagueId": "premier-league",
+      "wikiTitle": "Middlesbrough F.C.",
+      "colors": {
+        "primary": "#CC0000",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "lion",
+      "tier": 4
+    },
+    {
+      "id": "bolton-wanderers",
+      "name": "Bolton Wanderers",
+      "shortName": "BOL",
+      "leagueId": "premier-league",
+      "wikiTitle": "Bolton Wanderers F.C.",
+      "colors": {
+        "primary": "#FFFFFF",
+        "secondary": "#00285E"
+      },
+      "crestIcon": "shield",
+      "tier": 4
+    },
+    {
+      "id": "bayern-munich",
+      "name": "Bayern Munich",
+      "shortName": "FCB",
+      "leagueId": "bundesliga",
+      "wikiTitle": "FC Bayern Munich",
+      "colors": {
+        "primary": "#DC052D",
+        "secondary": "#0066B2"
+      },
+      "crestIcon": "shield",
+      "tier": 1
+    },
+    {
+      "id": "borussia-dortmund",
+      "name": "Borussia Dortmund",
+      "shortName": "BVB",
+      "leagueId": "bundesliga",
+      "wikiTitle": "Borussia Dortmund",
+      "colors": {
+        "primary": "#FDE100",
+        "secondary": "#000000"
+      },
+      "crestIcon": "shield",
+      "tier": 1
+    },
+    {
+      "id": "bayer-leverkusen",
+      "name": "Bayer Leverkusen",
+      "shortName": "B04",
+      "leagueId": "bundesliga",
+      "wikiTitle": "Bayer 04 Leverkusen",
+      "colors": {
+        "primary": "#E32221",
+        "secondary": "#000000"
+      },
+      "crestIcon": "shield",
+      "tier": 2
+    },
+    {
+      "id": "rb-leipzig",
+      "name": "RB Leipzig",
+      "shortName": "RBL",
+      "leagueId": "bundesliga",
+      "wikiTitle": "RB Leipzig",
+      "colors": {
+        "primary": "#DD0741",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "bull",
+      "tier": 2
+    },
+    {
+      "id": "borussia-monchengladbach",
+      "name": "Borussia Monchengladbach",
+      "shortName": "BMG",
+      "leagueId": "bundesliga",
+      "wikiTitle": "Borussia Monchengladbach",
+      "colors": {
+        "primary": "#00A650",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "vfb-stuttgart",
+      "name": "VfB Stuttgart",
+      "shortName": "VFB",
+      "leagueId": "bundesliga",
+      "wikiTitle": "VfB Stuttgart",
+      "colors": {
+        "primary": "#FFFFFF",
+        "secondary": "#E32219"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "schalke-04",
+      "name": "Schalke 04",
+      "shortName": "S04",
+      "leagueId": "bundesliga",
+      "wikiTitle": "FC Schalke 04",
+      "colors": {
+        "primary": "#004D9D",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "werder-bremen",
+      "name": "Werder Bremen",
+      "shortName": "SVW",
+      "leagueId": "bundesliga",
+      "wikiTitle": "SV Werder Bremen",
+      "colors": {
+        "primary": "#1D9053",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "wolfsburg",
+      "name": "Wolfsburg",
+      "shortName": "WOB",
+      "leagueId": "bundesliga",
+      "wikiTitle": "VfL Wolfsburg",
+      "colors": {
+        "primary": "#65B32E",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "wolf",
+      "tier": 3
+    },
+    {
+      "id": "hertha-berlin",
+      "name": "Hertha Berlin",
+      "shortName": "BSC",
+      "leagueId": "bundesliga",
+      "wikiTitle": "Hertha BSC",
+      "colors": {
+        "primary": "#005CA9",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 4
+    },
+    {
+      "id": "eintracht-frankfurt",
+      "name": "Eintracht Frankfurt",
+      "shortName": "SGE",
+      "leagueId": "bundesliga",
+      "wikiTitle": "Eintracht Frankfurt",
+      "colors": {
+        "primary": "#E1000F",
+        "secondary": "#000000"
+      },
+      "crestIcon": "eagle",
+      "tier": 3
+    },
+    {
+      "id": "hoffenheim",
+      "name": "Hoffenheim",
+      "shortName": "TSG",
+      "leagueId": "bundesliga",
+      "wikiTitle": "TSG 1899 Hoffenheim",
+      "colors": {
+        "primary": "#1961B5",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "koln",
+      "name": "1. FC Koln",
+      "shortName": "KOE",
+      "leagueId": "bundesliga",
+      "wikiTitle": "1. FC Koln",
+      "colors": {
+        "primary": "#ED1C24",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "goat",
+      "tier": 4
+    },
+    {
+      "id": "hamburger-sv",
+      "name": "Hamburger SV",
+      "shortName": "HSV",
+      "leagueId": "bundesliga",
+      "wikiTitle": "Hamburger SV",
+      "colors": {
+        "primary": "#004B87",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "vfl-bochum",
+      "name": "VfL Bochum",
+      "shortName": "BOC",
+      "leagueId": "bundesliga",
+      "wikiTitle": "VfL Bochum",
+      "colors": {
+        "primary": "#1C63B7",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 4
+    },
+    {
+      "id": "mainz-05",
+      "name": "Mainz 05",
+      "shortName": "M05",
+      "leagueId": "bundesliga",
+      "wikiTitle": "1. FSV Mainz 05",
+      "colors": {
+        "primary": "#C4122E",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "real-madrid",
+      "name": "Real Madrid",
+      "shortName": "RMA",
+      "leagueId": "la-liga",
+      "wikiTitle": "Real Madrid CF",
+      "colors": {
+        "primary": "#FFFFFF",
+        "secondary": "#FEBE10"
+      },
+      "crestIcon": "crown",
+      "tier": 1
+    },
+    {
+      "id": "barcelona",
+      "name": "Barcelona",
+      "shortName": "BAR",
+      "leagueId": "la-liga",
+      "wikiTitle": "FC Barcelona",
+      "colors": {
+        "primary": "#A50044",
+        "secondary": "#004D98"
+      },
+      "crestIcon": "shield",
+      "tier": 1
+    },
+    {
+      "id": "atletico-madrid",
+      "name": "Atletico Madrid",
+      "shortName": "ATM",
+      "leagueId": "la-liga",
+      "wikiTitle": "Atletico Madrid",
+      "colors": {
+        "primary": "#CB3524",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "bear",
+      "tier": 1
+    },
+    {
+      "id": "valencia",
+      "name": "Valencia",
+      "shortName": "VAL",
+      "leagueId": "la-liga",
+      "wikiTitle": "Valencia CF",
+      "colors": {
+        "primary": "#FF8800",
+        "secondary": "#000000"
+      },
+      "crestIcon": "bat",
+      "tier": 2
+    },
+    {
+      "id": "sevilla",
+      "name": "Sevilla",
+      "shortName": "SEV",
+      "leagueId": "la-liga",
+      "wikiTitle": "Sevilla FC",
+      "colors": {
+        "primary": "#FFFFFF",
+        "secondary": "#D2001C"
+      },
+      "crestIcon": "shield",
+      "tier": 2
+    },
+    {
+      "id": "real-sociedad",
+      "name": "Real Sociedad",
+      "shortName": "RSO",
+      "leagueId": "la-liga",
+      "wikiTitle": "Real Sociedad",
+      "colors": {
+        "primary": "#0067B1",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "athletic-bilbao",
+      "name": "Athletic Bilbao",
+      "shortName": "ATH",
+      "leagueId": "la-liga",
+      "wikiTitle": "Athletic Bilbao",
+      "colors": {
+        "primary": "#EE2523",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "villarreal",
+      "name": "Villarreal",
+      "shortName": "VIL",
+      "leagueId": "la-liga",
+      "wikiTitle": "Villarreal CF",
+      "colors": {
+        "primary": "#FFE667",
+        "secondary": "#005187"
+      },
+      "crestIcon": "shield",
+      "tier": 2
+    },
+    {
+      "id": "real-betis",
+      "name": "Real Betis",
+      "shortName": "BET",
+      "leagueId": "la-liga",
+      "wikiTitle": "Real Betis",
+      "colors": {
+        "primary": "#00954C",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "celta-vigo",
+      "name": "Celta Vigo",
+      "shortName": "CEL",
+      "leagueId": "la-liga",
+      "wikiTitle": "Celta de Vigo",
+      "colors": {
+        "primary": "#8AC3EE",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "espanyol",
+      "name": "Espanyol",
+      "shortName": "ESP",
+      "leagueId": "la-liga",
+      "wikiTitle": "RCD Espanyol",
+      "colors": {
+        "primary": "#0A61A5",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 4
+    },
+    {
+      "id": "deportivo-la-coruna",
+      "name": "Deportivo La Coruna",
+      "shortName": "DEP",
+      "leagueId": "la-liga",
+      "wikiTitle": "Deportivo de La Coruna",
+      "colors": {
+        "primary": "#0450A1",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 4
+    },
+    {
+      "id": "malaga",
+      "name": "Malaga",
+      "shortName": "MAL",
+      "leagueId": "la-liga",
+      "wikiTitle": "Malaga CF",
+      "colors": {
+        "primary": "#0060AA",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "real-valladolid",
+      "name": "Real Valladolid",
+      "shortName": "VLL",
+      "leagueId": "la-liga",
+      "wikiTitle": "Real Valladolid",
+      "colors": {
+        "primary": "#663399",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 4
+    },
+    {
+      "id": "real-zaragoza",
+      "name": "Real Zaragoza",
+      "shortName": "ZAR",
+      "leagueId": "la-liga",
+      "wikiTitle": "Real Zaragoza",
+      "colors": {
+        "primary": "#004B9B",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 4
+    },
+    {
+      "id": "getafe",
+      "name": "Getafe",
+      "shortName": "GET",
+      "leagueId": "la-liga",
+      "wikiTitle": "Getafe CF",
+      "colors": {
+        "primary": "#005CA9",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 4
+    },
+    {
+      "id": "juventus",
+      "name": "Juventus",
+      "shortName": "JUV",
+      "leagueId": "serie-a",
+      "wikiTitle": "Juventus FC",
+      "colors": {
+        "primary": "#000000",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "zebra",
+      "tier": 1
+    },
+    {
+      "id": "ac-milan",
+      "name": "AC Milan",
+      "shortName": "MIL",
+      "leagueId": "serie-a",
+      "wikiTitle": "A.C. Milan",
+      "colors": {
+        "primary": "#FB090B",
+        "secondary": "#000000"
+      },
+      "crestIcon": "shield",
+      "tier": 1
+    },
+    {
+      "id": "inter-milan",
+      "name": "Inter Milan",
+      "shortName": "INT",
+      "leagueId": "serie-a",
+      "wikiTitle": "Inter Milan",
+      "colors": {
+        "primary": "#0068A8",
+        "secondary": "#000000"
+      },
+      "crestIcon": "shield",
+      "tier": 1
+    },
+    {
+      "id": "as-roma",
+      "name": "AS Roma",
+      "shortName": "ROM",
+      "leagueId": "serie-a",
+      "wikiTitle": "AS Roma",
+      "colors": {
+        "primary": "#8E1F2F",
+        "secondary": "#F0BC42"
+      },
+      "crestIcon": "wolf",
+      "tier": 2
+    },
+    {
+      "id": "lazio",
+      "name": "Lazio",
+      "shortName": "LAZ",
+      "leagueId": "serie-a",
+      "wikiTitle": "S.S. Lazio",
+      "colors": {
+        "primary": "#87D8F7",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "eagle",
+      "tier": 2
+    },
+    {
+      "id": "napoli",
+      "name": "Napoli",
+      "shortName": "NAP",
+      "leagueId": "serie-a",
+      "wikiTitle": "S.S.C. Napoli",
+      "colors": {
+        "primary": "#087FC4",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 2
+    },
+    {
+      "id": "fiorentina",
+      "name": "Fiorentina",
+      "shortName": "FIO",
+      "leagueId": "serie-a",
+      "wikiTitle": "ACF Fiorentina",
+      "colors": {
+        "primary": "#652C90",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "lily",
+      "tier": 3
+    },
+    {
+      "id": "atalanta",
+      "name": "Atalanta",
+      "shortName": "ATA",
+      "leagueId": "serie-a",
+      "wikiTitle": "Atalanta B.C.",
+      "colors": {
+        "primary": "#1E71B8",
+        "secondary": "#000000"
+      },
+      "crestIcon": "shield",
+      "tier": 2
+    },
+    {
+      "id": "torino",
+      "name": "Torino",
+      "shortName": "TOR",
+      "leagueId": "serie-a",
+      "wikiTitle": "Torino F.C.",
+      "colors": {
+        "primary": "#881C1C",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "bull",
+      "tier": 3
+    },
+    {
+      "id": "udinese",
+      "name": "Udinese",
+      "shortName": "UDI",
+      "leagueId": "serie-a",
+      "wikiTitle": "Udinese Calcio",
+      "colors": {
+        "primary": "#000000",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "sampdoria",
+      "name": "Sampdoria",
+      "shortName": "SAM",
+      "leagueId": "serie-a",
+      "wikiTitle": "UC Sampdoria",
+      "colors": {
+        "primary": "#1B2A63",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 4
+    },
+    {
+      "id": "genoa",
+      "name": "Genoa",
+      "shortName": "GEN",
+      "leagueId": "serie-a",
+      "wikiTitle": "Genoa CFC",
+      "colors": {
+        "primary": "#AD1D25",
+        "secondary": "#00205B"
+      },
+      "crestIcon": "shield",
+      "tier": 4
+    },
+    {
+      "id": "parma",
+      "name": "Parma",
+      "shortName": "PAR",
+      "leagueId": "serie-a",
+      "wikiTitle": "Parma Calcio 1913",
+      "colors": {
+        "primary": "#FFE667",
+        "secondary": "#002F6C"
+      },
+      "crestIcon": "shield",
+      "tier": 4
+    },
+    {
+      "id": "bologna",
+      "name": "Bologna",
+      "shortName": "BOL",
+      "leagueId": "serie-a",
+      "wikiTitle": "Bologna F.C. 1909",
+      "colors": {
+        "primary": "#8C1D40",
+        "secondary": "#1E3A8A"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "cagliari",
+      "name": "Cagliari",
+      "shortName": "CAG",
+      "leagueId": "serie-a",
+      "wikiTitle": "Cagliari Calcio",
+      "colors": {
+        "primary": "#B71234",
+        "secondary": "#00205B"
+      },
+      "crestIcon": "shield",
+      "tier": 4
+    },
+    {
+      "id": "hellas-verona",
+      "name": "Hellas Verona",
+      "shortName": "VER",
+      "leagueId": "serie-a",
+      "wikiTitle": "Hellas Verona F.C.",
+      "colors": {
+        "primary": "#FFE667",
+        "secondary": "#00205B"
+      },
+      "crestIcon": "shield",
+      "tier": 4
+    },
+    {
+      "id": "paris-saint-germain",
+      "name": "Paris Saint-Germain",
+      "shortName": "PSG",
+      "leagueId": "ligue-1",
+      "wikiTitle": "Paris Saint-Germain F.C.",
+      "colors": {
+        "primary": "#004170",
+        "secondary": "#DA291C"
+      },
+      "crestIcon": "shield",
+      "tier": 1
+    },
+    {
+      "id": "marseille",
+      "name": "Marseille",
+      "shortName": "OM",
+      "leagueId": "ligue-1",
+      "wikiTitle": "Olympique de Marseille",
+      "colors": {
+        "primary": "#2FAEE0",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 2
+    },
+    {
+      "id": "lyon",
+      "name": "Lyon",
+      "shortName": "OL",
+      "leagueId": "ligue-1",
+      "wikiTitle": "Olympique Lyonnais",
+      "colors": {
+        "primary": "#DA291C",
+        "secondary": "#0033A0"
+      },
+      "crestIcon": "shield",
+      "tier": 2
+    },
+    {
+      "id": "monaco",
+      "name": "Monaco",
+      "shortName": "ASM",
+      "leagueId": "ligue-1",
+      "wikiTitle": "AS Monaco FC",
+      "colors": {
+        "primary": "#E8112D",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 2
+    },
+    {
+      "id": "lille",
+      "name": "Lille",
+      "shortName": "LIL",
+      "leagueId": "ligue-1",
+      "wikiTitle": "LOSC Lille",
+      "colors": {
+        "primary": "#C8102E",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 2
+    },
+    {
+      "id": "rennes",
+      "name": "Rennes",
+      "shortName": "REN",
+      "leagueId": "ligue-1",
+      "wikiTitle": "Stade Rennais F.C.",
+      "colors": {
+        "primary": "#E2001A",
+        "secondary": "#000000"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "lens",
+      "name": "Lens",
+      "shortName": "LEN",
+      "leagueId": "ligue-1",
+      "wikiTitle": "RC Lens",
+      "colors": {
+        "primary": "#FFD200",
+        "secondary": "#C8102E"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "bordeaux",
+      "name": "Bordeaux",
+      "shortName": "BOR",
+      "leagueId": "ligue-1",
+      "wikiTitle": "FC Girondins de Bordeaux",
+      "colors": {
+        "primary": "#001E62",
+        "secondary": "#8AC3EE"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "saint-etienne",
+      "name": "Saint-Etienne",
+      "shortName": "ASSE",
+      "leagueId": "ligue-1",
+      "wikiTitle": "AS Saint-Etienne",
+      "colors": {
+        "primary": "#00A651",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "nice",
+      "name": "Nice",
+      "shortName": "OGCN",
+      "leagueId": "ligue-1",
+      "wikiTitle": "OGC Nice",
+      "colors": {
+        "primary": "#C8102E",
+        "secondary": "#000000"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "montpellier",
+      "name": "Montpellier",
+      "shortName": "MHSC",
+      "leagueId": "ligue-1",
+      "wikiTitle": "Montpellier HSC",
+      "colors": {
+        "primary": "#004B87",
+        "secondary": "#FF8200"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "toulouse",
+      "name": "Toulouse",
+      "shortName": "TFC",
+      "leagueId": "ligue-1",
+      "wikiTitle": "Toulouse FC",
+      "colors": {
+        "primary": "#5A2D81",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 4
+    },
+    {
+      "id": "strasbourg",
+      "name": "Strasbourg",
+      "shortName": "RCS",
+      "leagueId": "ligue-1",
+      "wikiTitle": "RC Strasbourg Alsace",
+      "colors": {
+        "primary": "#0072CE",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 4
+    },
+    {
+      "id": "reims",
+      "name": "Reims",
+      "shortName": "SDR",
+      "leagueId": "ligue-1",
+      "wikiTitle": "Stade de Reims",
+      "colors": {
+        "primary": "#E2001A",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 4
+    },
+    {
+      "id": "nantes",
+      "name": "Nantes",
+      "shortName": "FCN",
+      "leagueId": "ligue-1",
+      "wikiTitle": "FC Nantes",
+      "colors": {
+        "primary": "#FFD200",
+        "secondary": "#00A651"
+      },
+      "crestIcon": "shield",
+      "tier": 4
+    },
+    {
+      "id": "angers",
+      "name": "Angers",
+      "shortName": "SCO",
+      "leagueId": "ligue-1",
+      "wikiTitle": "Angers SCO",
+      "colors": {
+        "primary": "#000000",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 4
+    }
+  ],
+  "entries": [
+    {
+      "leagueId": "premier-league",
+      "clubId": "arsenal",
+      "season": "2011-12",
+      "playerCount": 40
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "arsenal",
+      "season": "2012-13",
+      "playerCount": 38
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "arsenal",
+      "season": "2013-14",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "arsenal",
+      "season": "2015-16",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "arsenal",
+      "season": "2016-17",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "arsenal",
+      "season": "2020-21",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "arsenal",
+      "season": "2021-22",
+      "playerCount": 28
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "arsenal",
+      "season": "2022-23",
+      "playerCount": 28
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "arsenal",
+      "season": "2023-24",
+      "playerCount": 12
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "arsenal",
+      "season": "2024-25",
+      "playerCount": 12
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "aston-villa",
+      "season": "2011-12",
+      "playerCount": 38
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "aston-villa",
+      "season": "2012-13",
+      "playerCount": 13
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "aston-villa",
+      "season": "2015-16",
+      "playerCount": 14
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "aston-villa",
+      "season": "2019-20",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "aston-villa",
+      "season": "2020-21",
+      "playerCount": 48
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "aston-villa",
+      "season": "2021-22",
+      "playerCount": 39
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "aston-villa",
+      "season": "2022-23",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "aston-villa",
+      "season": "2023-24",
+      "playerCount": 41
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "aston-villa",
+      "season": "2024-25",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "aston-villa",
+      "season": "2025-26",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "chelsea",
+      "season": "2011-12",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "chelsea",
+      "season": "2012-13",
+      "playerCount": 23
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "chelsea",
+      "season": "2013-14",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "chelsea",
+      "season": "2014-15",
+      "playerCount": 28
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "chelsea",
+      "season": "2015-16",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "chelsea",
+      "season": "2016-17",
+      "playerCount": 28
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "chelsea",
+      "season": "2017-18",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "chelsea",
+      "season": "2018-19",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "chelsea",
+      "season": "2019-20",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "chelsea",
+      "season": "2020-21",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "chelsea",
+      "season": "2021-22",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "chelsea",
+      "season": "2022-23",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "chelsea",
+      "season": "2023-24",
+      "playerCount": 39
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "chelsea",
+      "season": "2024-25",
+      "playerCount": 50
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "chelsea",
+      "season": "2025-26",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "everton",
+      "season": "2011-12",
+      "playerCount": 36
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "everton",
+      "season": "2012-13",
+      "playerCount": 28
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "everton",
+      "season": "2013-14",
+      "playerCount": 43
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "everton",
+      "season": "2014-15",
+      "playerCount": 39
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "everton",
+      "season": "2015-16",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "everton",
+      "season": "2016-17",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "everton",
+      "season": "2017-18",
+      "playerCount": 40
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "everton",
+      "season": "2018-19",
+      "playerCount": 26
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "everton",
+      "season": "2019-20",
+      "playerCount": 28
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "everton",
+      "season": "2020-21",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "everton",
+      "season": "2021-22",
+      "playerCount": 41
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "everton",
+      "season": "2022-23",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "everton",
+      "season": "2023-24",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "everton",
+      "season": "2024-25",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "everton",
+      "season": "2025-26",
+      "playerCount": 26
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "leeds-united",
+      "season": "2013-14",
+      "playerCount": 40
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "leeds-united",
+      "season": "2014-15",
+      "playerCount": 39
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "leeds-united",
+      "season": "2020-21",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "leeds-united",
+      "season": "2021-22",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "leeds-united",
+      "season": "2022-23",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "leeds-united",
+      "season": "2025-26",
+      "playerCount": 24
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "leicester-city",
+      "season": "2014-15",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "leicester-city",
+      "season": "2015-16",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "leicester-city",
+      "season": "2016-17",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "leicester-city",
+      "season": "2017-18",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "leicester-city",
+      "season": "2018-19",
+      "playerCount": 37
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "leicester-city",
+      "season": "2019-20",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "leicester-city",
+      "season": "2020-21",
+      "playerCount": 43
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "leicester-city",
+      "season": "2021-22",
+      "playerCount": 41
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "leicester-city",
+      "season": "2022-23",
+      "playerCount": 39
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "leicester-city",
+      "season": "2024-25",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "liverpool",
+      "season": "2012-13",
+      "playerCount": 36
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "liverpool",
+      "season": "2013-14",
+      "playerCount": 13
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "liverpool",
+      "season": "2014-15",
+      "playerCount": 18
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "liverpool",
+      "season": "2015-16",
+      "playerCount": 22
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "liverpool",
+      "season": "2016-17",
+      "playerCount": 15
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "liverpool",
+      "season": "2017-18",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "liverpool",
+      "season": "2018-19",
+      "playerCount": 26
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "liverpool",
+      "season": "2019-20",
+      "playerCount": 45
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "liverpool",
+      "season": "2020-21",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "liverpool",
+      "season": "2021-22",
+      "playerCount": 20
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "liverpool",
+      "season": "2022-23",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "liverpool",
+      "season": "2023-24",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "liverpool",
+      "season": "2024-25",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "liverpool",
+      "season": "2025-26",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "manchester-city",
+      "season": "2012-13",
+      "playerCount": 16
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "manchester-city",
+      "season": "2013-14",
+      "playerCount": 26
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "manchester-city",
+      "season": "2014-15",
+      "playerCount": 17
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "manchester-city",
+      "season": "2015-16",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "manchester-city",
+      "season": "2016-17",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "manchester-city",
+      "season": "2017-18",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "manchester-city",
+      "season": "2018-19",
+      "playerCount": 18
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "manchester-city",
+      "season": "2019-20",
+      "playerCount": 16
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "manchester-city",
+      "season": "2020-21",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "manchester-city",
+      "season": "2021-22",
+      "playerCount": 18
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "manchester-city",
+      "season": "2022-23",
+      "playerCount": 16
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "manchester-city",
+      "season": "2023-24",
+      "playerCount": 18
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "manchester-city",
+      "season": "2024-25",
+      "playerCount": 22
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "manchester-city",
+      "season": "2025-26",
+      "playerCount": 19
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "manchester-united",
+      "season": "2011-12",
+      "playerCount": 51
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "manchester-united",
+      "season": "2012-13",
+      "playerCount": 45
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "manchester-united",
+      "season": "2013-14",
+      "playerCount": 44
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "manchester-united",
+      "season": "2014-15",
+      "playerCount": 45
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "manchester-united",
+      "season": "2015-16",
+      "playerCount": 45
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "manchester-united",
+      "season": "2016-17",
+      "playerCount": 40
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "manchester-united",
+      "season": "2017-18",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "manchester-united",
+      "season": "2018-19",
+      "playerCount": 39
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "manchester-united",
+      "season": "2019-20",
+      "playerCount": 47
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "manchester-united",
+      "season": "2020-21",
+      "playerCount": 44
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "manchester-united",
+      "season": "2021-22",
+      "playerCount": 40
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "manchester-united",
+      "season": "2022-23",
+      "playerCount": 45
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "manchester-united",
+      "season": "2023-24",
+      "playerCount": 41
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "manchester-united",
+      "season": "2024-25",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "manchester-united",
+      "season": "2025-26",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "newcastle-united",
+      "season": "2011-12",
+      "playerCount": 28
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "newcastle-united",
+      "season": "2012-13",
+      "playerCount": 36
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "newcastle-united",
+      "season": "2013-14",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "newcastle-united",
+      "season": "2014-15",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "newcastle-united",
+      "season": "2015-16",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "newcastle-united",
+      "season": "2017-18",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "newcastle-united",
+      "season": "2018-19",
+      "playerCount": 28
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "newcastle-united",
+      "season": "2019-20",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "newcastle-united",
+      "season": "2020-21",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "newcastle-united",
+      "season": "2021-22",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "newcastle-united",
+      "season": "2022-23",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "newcastle-united",
+      "season": "2023-24",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "newcastle-united",
+      "season": "2024-25",
+      "playerCount": 26
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "newcastle-united",
+      "season": "2025-26",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "southampton",
+      "season": "2012-13",
+      "playerCount": 39
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "southampton",
+      "season": "2013-14",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "southampton",
+      "season": "2014-15",
+      "playerCount": 37
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "tottenham-hotspur",
+      "season": "2011-12",
+      "playerCount": 40
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "tottenham-hotspur",
+      "season": "2012-13",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "tottenham-hotspur",
+      "season": "2013-14",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "tottenham-hotspur",
+      "season": "2014-15",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "tottenham-hotspur",
+      "season": "2015-16",
+      "playerCount": 26
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "tottenham-hotspur",
+      "season": "2016-17",
+      "playerCount": 28
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "tottenham-hotspur",
+      "season": "2017-18",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "tottenham-hotspur",
+      "season": "2018-19",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "tottenham-hotspur",
+      "season": "2019-20",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "tottenham-hotspur",
+      "season": "2020-21",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "tottenham-hotspur",
+      "season": "2021-22",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "tottenham-hotspur",
+      "season": "2022-23",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "tottenham-hotspur",
+      "season": "2023-24",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "tottenham-hotspur",
+      "season": "2024-25",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "tottenham-hotspur",
+      "season": "2025-26",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "west-ham-united",
+      "season": "2012-13",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "west-ham-united",
+      "season": "2013-14",
+      "playerCount": 39
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "west-ham-united",
+      "season": "2014-15",
+      "playerCount": 23
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "west-ham-united",
+      "season": "2015-16",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "west-ham-united",
+      "season": "2016-17",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "west-ham-united",
+      "season": "2017-18",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "west-ham-united",
+      "season": "2018-19",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "west-ham-united",
+      "season": "2019-20",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "west-ham-united",
+      "season": "2020-21",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "west-ham-united",
+      "season": "2021-22",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "west-ham-united",
+      "season": "2022-23",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "west-ham-united",
+      "season": "2023-24",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "west-ham-united",
+      "season": "2024-25",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "west-ham-united",
+      "season": "2025-26",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "wolverhampton-wanderers",
+      "season": "2023-24",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "wolverhampton-wanderers",
+      "season": "2024-25",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "wolverhampton-wanderers",
+      "season": "2025-26",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "fulham",
+      "season": "2011-12",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "fulham",
+      "season": "2012-13",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "fulham",
+      "season": "2013-14",
+      "playerCount": 43
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "fulham",
+      "season": "2018-19",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "fulham",
+      "season": "2020-21",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "fulham",
+      "season": "2024-25",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "fulham",
+      "season": "2025-26",
+      "playerCount": 25
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "crystal-palace",
+      "season": "2013-14",
+      "playerCount": 39
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "crystal-palace",
+      "season": "2014-15",
+      "playerCount": 47
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "crystal-palace",
+      "season": "2015-16",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "crystal-palace",
+      "season": "2016-17",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "crystal-palace",
+      "season": "2017-18",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "crystal-palace",
+      "season": "2018-19",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "crystal-palace",
+      "season": "2019-20",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "crystal-palace",
+      "season": "2020-21",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "crystal-palace",
+      "season": "2021-22",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "crystal-palace",
+      "season": "2022-23",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "crystal-palace",
+      "season": "2023-24",
+      "playerCount": 28
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "crystal-palace",
+      "season": "2024-25",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "crystal-palace",
+      "season": "2025-26",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "sunderland",
+      "season": "2011-12",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "sunderland",
+      "season": "2012-13",
+      "playerCount": 36
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "sunderland",
+      "season": "2013-14",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "sunderland",
+      "season": "2014-15",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "sunderland",
+      "season": "2015-16",
+      "playerCount": 38
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "sunderland",
+      "season": "2016-17",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "sunderland",
+      "season": "2025-26",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "blackburn-rovers",
+      "season": "2011-12",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "middlesbrough",
+      "season": "2016-17",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "bolton-wanderers",
+      "season": "2011-12",
+      "playerCount": 41
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "bayern-munich",
+      "season": "2011-12",
+      "playerCount": 24
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "bayern-munich",
+      "season": "2013-14",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "bayern-munich",
+      "season": "2014-15",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "bayern-munich",
+      "season": "2015-16",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "bayern-munich",
+      "season": "2016-17",
+      "playerCount": 23
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "bayern-munich",
+      "season": "2017-18",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "bayern-munich",
+      "season": "2018-19",
+      "playerCount": 26
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "bayern-munich",
+      "season": "2019-20",
+      "playerCount": 37
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "bayern-munich",
+      "season": "2020-21",
+      "playerCount": 41
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "bayern-munich",
+      "season": "2021-22",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "bayern-munich",
+      "season": "2022-23",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "bayern-munich",
+      "season": "2023-24",
+      "playerCount": 37
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "bayern-munich",
+      "season": "2024-25",
+      "playerCount": 43
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "bayern-munich",
+      "season": "2025-26",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "borussia-dortmund",
+      "season": "2011-12",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "borussia-dortmund",
+      "season": "2012-13",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "borussia-dortmund",
+      "season": "2013-14",
+      "playerCount": 26
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "borussia-dortmund",
+      "season": "2014-15",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "borussia-dortmund",
+      "season": "2015-16",
+      "playerCount": 28
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "borussia-dortmund",
+      "season": "2016-17",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "borussia-dortmund",
+      "season": "2017-18",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "borussia-dortmund",
+      "season": "2018-19",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "borussia-dortmund",
+      "season": "2019-20",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "borussia-dortmund",
+      "season": "2020-21",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "borussia-dortmund",
+      "season": "2021-22",
+      "playerCount": 41
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "borussia-dortmund",
+      "season": "2022-23",
+      "playerCount": 36
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "borussia-dortmund",
+      "season": "2023-24",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "borussia-dortmund",
+      "season": "2024-25",
+      "playerCount": 38
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "borussia-dortmund",
+      "season": "2025-26",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "bayer-leverkusen",
+      "season": "2012-13",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "bayer-leverkusen",
+      "season": "2015-16",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "bayer-leverkusen",
+      "season": "2016-17",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "bayer-leverkusen",
+      "season": "2017-18",
+      "playerCount": 28
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "bayer-leverkusen",
+      "season": "2018-19",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "bayer-leverkusen",
+      "season": "2019-20",
+      "playerCount": 28
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "bayer-leverkusen",
+      "season": "2020-21",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "bayer-leverkusen",
+      "season": "2021-22",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "bayer-leverkusen",
+      "season": "2022-23",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "bayer-leverkusen",
+      "season": "2023-24",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "bayer-leverkusen",
+      "season": "2024-25",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "bayer-leverkusen",
+      "season": "2025-26",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "rb-leipzig",
+      "season": "2016-17",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "rb-leipzig",
+      "season": "2017-18",
+      "playerCount": 26
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "rb-leipzig",
+      "season": "2018-19",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "rb-leipzig",
+      "season": "2019-20",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "rb-leipzig",
+      "season": "2020-21",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "rb-leipzig",
+      "season": "2021-22",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "rb-leipzig",
+      "season": "2022-23",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "rb-leipzig",
+      "season": "2023-24",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "rb-leipzig",
+      "season": "2024-25",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "rb-leipzig",
+      "season": "2025-26",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "borussia-monchengladbach",
+      "season": "2012-13",
+      "playerCount": 28
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "borussia-monchengladbach",
+      "season": "2013-14",
+      "playerCount": 24
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "borussia-monchengladbach",
+      "season": "2014-15",
+      "playerCount": 23
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "borussia-monchengladbach",
+      "season": "2015-16",
+      "playerCount": 25
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "borussia-monchengladbach",
+      "season": "2016-17",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "borussia-monchengladbach",
+      "season": "2017-18",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "borussia-monchengladbach",
+      "season": "2018-19",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "borussia-monchengladbach",
+      "season": "2019-20",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "borussia-monchengladbach",
+      "season": "2020-21",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "borussia-monchengladbach",
+      "season": "2021-22",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "borussia-monchengladbach",
+      "season": "2022-23",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "borussia-monchengladbach",
+      "season": "2023-24",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "borussia-monchengladbach",
+      "season": "2025-26",
+      "playerCount": 36
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "vfb-stuttgart",
+      "season": "2011-12",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "vfb-stuttgart",
+      "season": "2012-13",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "vfb-stuttgart",
+      "season": "2013-14",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "vfb-stuttgart",
+      "season": "2014-15",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "vfb-stuttgart",
+      "season": "2015-16",
+      "playerCount": 36
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "vfb-stuttgart",
+      "season": "2017-18",
+      "playerCount": 24
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "vfb-stuttgart",
+      "season": "2018-19",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "vfb-stuttgart",
+      "season": "2020-21",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "vfb-stuttgart",
+      "season": "2021-22",
+      "playerCount": 37
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "vfb-stuttgart",
+      "season": "2022-23",
+      "playerCount": 36
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "vfb-stuttgart",
+      "season": "2023-24",
+      "playerCount": 38
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "vfb-stuttgart",
+      "season": "2024-25",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "vfb-stuttgart",
+      "season": "2025-26",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "schalke-04",
+      "season": "2012-13",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "schalke-04",
+      "season": "2016-17",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "schalke-04",
+      "season": "2017-18",
+      "playerCount": 25
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "schalke-04",
+      "season": "2018-19",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "schalke-04",
+      "season": "2019-20",
+      "playerCount": 15
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "schalke-04",
+      "season": "2020-21",
+      "playerCount": 16
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "schalke-04",
+      "season": "2022-23",
+      "playerCount": 12
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "werder-bremen",
+      "season": "2012-13",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "werder-bremen",
+      "season": "2013-14",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "werder-bremen",
+      "season": "2014-15",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "werder-bremen",
+      "season": "2015-16",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "werder-bremen",
+      "season": "2016-17",
+      "playerCount": 37
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "werder-bremen",
+      "season": "2017-18",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "werder-bremen",
+      "season": "2018-19",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "werder-bremen",
+      "season": "2019-20",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "werder-bremen",
+      "season": "2020-21",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "werder-bremen",
+      "season": "2022-23",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "werder-bremen",
+      "season": "2023-24",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "werder-bremen",
+      "season": "2024-25",
+      "playerCount": 23
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "werder-bremen",
+      "season": "2025-26",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "wolfsburg",
+      "season": "2012-13",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "wolfsburg",
+      "season": "2013-14",
+      "playerCount": 28
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "wolfsburg",
+      "season": "2014-15",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "wolfsburg",
+      "season": "2015-16",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "wolfsburg",
+      "season": "2016-17",
+      "playerCount": 39
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "wolfsburg",
+      "season": "2017-18",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "wolfsburg",
+      "season": "2018-19",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "wolfsburg",
+      "season": "2019-20",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "wolfsburg",
+      "season": "2020-21",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "wolfsburg",
+      "season": "2021-22",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "wolfsburg",
+      "season": "2022-23",
+      "playerCount": 36
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "wolfsburg",
+      "season": "2023-24",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "wolfsburg",
+      "season": "2024-25",
+      "playerCount": 36
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "wolfsburg",
+      "season": "2025-26",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hertha-berlin",
+      "season": "2011-12",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hertha-berlin",
+      "season": "2012-13",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hertha-berlin",
+      "season": "2013-14",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hertha-berlin",
+      "season": "2014-15",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hertha-berlin",
+      "season": "2015-16",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hertha-berlin",
+      "season": "2016-17",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hertha-berlin",
+      "season": "2017-18",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hertha-berlin",
+      "season": "2018-19",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hertha-berlin",
+      "season": "2019-20",
+      "playerCount": 36
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hertha-berlin",
+      "season": "2020-21",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hertha-berlin",
+      "season": "2021-22",
+      "playerCount": 46
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hertha-berlin",
+      "season": "2022-23",
+      "playerCount": 43
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hertha-berlin",
+      "season": "2025-26",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "eintracht-frankfurt",
+      "season": "2012-13",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "eintracht-frankfurt",
+      "season": "2013-14",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "eintracht-frankfurt",
+      "season": "2014-15",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "eintracht-frankfurt",
+      "season": "2015-16",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "eintracht-frankfurt",
+      "season": "2016-17",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "eintracht-frankfurt",
+      "season": "2017-18",
+      "playerCount": 37
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "eintracht-frankfurt",
+      "season": "2018-19",
+      "playerCount": 45
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "eintracht-frankfurt",
+      "season": "2019-20",
+      "playerCount": 38
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "eintracht-frankfurt",
+      "season": "2020-21",
+      "playerCount": 39
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "eintracht-frankfurt",
+      "season": "2021-22",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "eintracht-frankfurt",
+      "season": "2022-23",
+      "playerCount": 36
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "eintracht-frankfurt",
+      "season": "2023-24",
+      "playerCount": 47
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "eintracht-frankfurt",
+      "season": "2024-25",
+      "playerCount": 37
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "eintracht-frankfurt",
+      "season": "2025-26",
+      "playerCount": 44
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hoffenheim",
+      "season": "2011-12",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hoffenheim",
+      "season": "2012-13",
+      "playerCount": 39
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hoffenheim",
+      "season": "2013-14",
+      "playerCount": 37
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hoffenheim",
+      "season": "2014-15",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hoffenheim",
+      "season": "2015-16",
+      "playerCount": 42
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hoffenheim",
+      "season": "2016-17",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hoffenheim",
+      "season": "2017-18",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hoffenheim",
+      "season": "2018-19",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hoffenheim",
+      "season": "2019-20",
+      "playerCount": 36
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hoffenheim",
+      "season": "2020-21",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hoffenheim",
+      "season": "2021-22",
+      "playerCount": 38
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hoffenheim",
+      "season": "2022-23",
+      "playerCount": 38
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hoffenheim",
+      "season": "2023-24",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hoffenheim",
+      "season": "2024-25",
+      "playerCount": 41
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "koln",
+      "season": "2014-15",
+      "playerCount": 28
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "koln",
+      "season": "2015-16",
+      "playerCount": 17
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "koln",
+      "season": "2016-17",
+      "playerCount": 24
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "koln",
+      "season": "2017-18",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "koln",
+      "season": "2019-20",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "koln",
+      "season": "2020-21",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "koln",
+      "season": "2021-22",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "koln",
+      "season": "2022-23",
+      "playerCount": 36
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "koln",
+      "season": "2023-24",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "koln",
+      "season": "2025-26",
+      "playerCount": 38
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hamburger-sv",
+      "season": "2011-12",
+      "playerCount": 26
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hamburger-sv",
+      "season": "2012-13",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hamburger-sv",
+      "season": "2013-14",
+      "playerCount": 28
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hamburger-sv",
+      "season": "2015-16",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hamburger-sv",
+      "season": "2016-17",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hamburger-sv",
+      "season": "2025-26",
+      "playerCount": 14
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "vfl-bochum",
+      "season": "2012-13",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "vfl-bochum",
+      "season": "2013-14",
+      "playerCount": 42
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "vfl-bochum",
+      "season": "2014-15",
+      "playerCount": 40
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "vfl-bochum",
+      "season": "2016-17",
+      "playerCount": 38
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "vfl-bochum",
+      "season": "2017-18",
+      "playerCount": 42
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "vfl-bochum",
+      "season": "2018-19",
+      "playerCount": 43
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "vfl-bochum",
+      "season": "2019-20",
+      "playerCount": 38
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "vfl-bochum",
+      "season": "2020-21",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "vfl-bochum",
+      "season": "2021-22",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "vfl-bochum",
+      "season": "2022-23",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "vfl-bochum",
+      "season": "2023-24",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "vfl-bochum",
+      "season": "2025-26",
+      "playerCount": 51
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "mainz-05",
+      "season": "2012-13",
+      "playerCount": 26
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "mainz-05",
+      "season": "2013-14",
+      "playerCount": 26
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "mainz-05",
+      "season": "2014-15",
+      "playerCount": 36
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "mainz-05",
+      "season": "2015-16",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "mainz-05",
+      "season": "2016-17",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "mainz-05",
+      "season": "2017-18",
+      "playerCount": 25
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "mainz-05",
+      "season": "2018-19",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "mainz-05",
+      "season": "2019-20",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "mainz-05",
+      "season": "2020-21",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "mainz-05",
+      "season": "2021-22",
+      "playerCount": 38
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "mainz-05",
+      "season": "2022-23",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "mainz-05",
+      "season": "2023-24",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-madrid",
+      "season": "2011-12",
+      "playerCount": 25
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-madrid",
+      "season": "2012-13",
+      "playerCount": 23
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-madrid",
+      "season": "2014-15",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-madrid",
+      "season": "2015-16",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-madrid",
+      "season": "2016-17",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-madrid",
+      "season": "2017-18",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-madrid",
+      "season": "2018-19",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-madrid",
+      "season": "2019-20",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-madrid",
+      "season": "2020-21",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-madrid",
+      "season": "2021-22",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-madrid",
+      "season": "2022-23",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-madrid",
+      "season": "2023-24",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-madrid",
+      "season": "2024-25",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-madrid",
+      "season": "2025-26",
+      "playerCount": 36
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "barcelona",
+      "season": "2014-15",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "barcelona",
+      "season": "2015-16",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "barcelona",
+      "season": "2016-17",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "barcelona",
+      "season": "2017-18",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "barcelona",
+      "season": "2018-19",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "barcelona",
+      "season": "2019-20",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "barcelona",
+      "season": "2020-21",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "barcelona",
+      "season": "2021-22",
+      "playerCount": 39
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "barcelona",
+      "season": "2022-23",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "atletico-madrid",
+      "season": "2011-12",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "atletico-madrid",
+      "season": "2012-13",
+      "playerCount": 28
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "atletico-madrid",
+      "season": "2013-14",
+      "playerCount": 28
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "atletico-madrid",
+      "season": "2014-15",
+      "playerCount": 24
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "atletico-madrid",
+      "season": "2015-16",
+      "playerCount": 26
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "atletico-madrid",
+      "season": "2016-17",
+      "playerCount": 17
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "atletico-madrid",
+      "season": "2017-18",
+      "playerCount": 14
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "atletico-madrid",
+      "season": "2018-19",
+      "playerCount": 19
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "atletico-madrid",
+      "season": "2019-20",
+      "playerCount": 13
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "atletico-madrid",
+      "season": "2020-21",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "atletico-madrid",
+      "season": "2021-22",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "atletico-madrid",
+      "season": "2022-23",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "atletico-madrid",
+      "season": "2023-24",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "atletico-madrid",
+      "season": "2024-25",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "atletico-madrid",
+      "season": "2025-26",
+      "playerCount": 37
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "valencia",
+      "season": "2011-12",
+      "playerCount": 63
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "valencia",
+      "season": "2012-13",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "valencia",
+      "season": "2013-14",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "valencia",
+      "season": "2014-15",
+      "playerCount": 26
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "valencia",
+      "season": "2015-16",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "valencia",
+      "season": "2016-17",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "valencia",
+      "season": "2017-18",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "valencia",
+      "season": "2018-19",
+      "playerCount": 28
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "valencia",
+      "season": "2019-20",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "valencia",
+      "season": "2020-21",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "valencia",
+      "season": "2021-22",
+      "playerCount": 38
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "valencia",
+      "season": "2024-25",
+      "playerCount": 13
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "sevilla",
+      "season": "2011-12",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "sevilla",
+      "season": "2012-13",
+      "playerCount": 43
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "sevilla",
+      "season": "2013-14",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "sevilla",
+      "season": "2014-15",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "sevilla",
+      "season": "2015-16",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "sevilla",
+      "season": "2016-17",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "sevilla",
+      "season": "2017-18",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "sevilla",
+      "season": "2018-19",
+      "playerCount": 36
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "sevilla",
+      "season": "2019-20",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "sevilla",
+      "season": "2020-21",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "sevilla",
+      "season": "2021-22",
+      "playerCount": 36
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "sevilla",
+      "season": "2022-23",
+      "playerCount": 36
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "sevilla",
+      "season": "2023-24",
+      "playerCount": 39
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "sevilla",
+      "season": "2024-25",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "sevilla",
+      "season": "2025-26",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-sociedad",
+      "season": "2011-12",
+      "playerCount": 25
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-sociedad",
+      "season": "2012-13",
+      "playerCount": 23
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-sociedad",
+      "season": "2013-14",
+      "playerCount": 22
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-sociedad",
+      "season": "2014-15",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-sociedad",
+      "season": "2015-16",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-sociedad",
+      "season": "2016-17",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-sociedad",
+      "season": "2017-18",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-sociedad",
+      "season": "2018-19",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-sociedad",
+      "season": "2019-20",
+      "playerCount": 28
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-sociedad",
+      "season": "2020-21",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-sociedad",
+      "season": "2021-22",
+      "playerCount": 37
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-sociedad",
+      "season": "2022-23",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-sociedad",
+      "season": "2023-24",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-sociedad",
+      "season": "2024-25",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-sociedad",
+      "season": "2025-26",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "athletic-bilbao",
+      "season": "2012-13",
+      "playerCount": 28
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "athletic-bilbao",
+      "season": "2013-14",
+      "playerCount": 25
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "athletic-bilbao",
+      "season": "2014-15",
+      "playerCount": 26
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "athletic-bilbao",
+      "season": "2020-21",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "athletic-bilbao",
+      "season": "2021-22",
+      "playerCount": 28
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "athletic-bilbao",
+      "season": "2022-23",
+      "playerCount": 28
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "athletic-bilbao",
+      "season": "2023-24",
+      "playerCount": 28
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "athletic-bilbao",
+      "season": "2024-25",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "athletic-bilbao",
+      "season": "2025-26",
+      "playerCount": 26
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "villarreal",
+      "season": "2011-12",
+      "playerCount": 26
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "villarreal",
+      "season": "2013-14",
+      "playerCount": 25
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "villarreal",
+      "season": "2014-15",
+      "playerCount": 26
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "villarreal",
+      "season": "2015-16",
+      "playerCount": 28
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "villarreal",
+      "season": "2016-17",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "villarreal",
+      "season": "2017-18",
+      "playerCount": 38
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "villarreal",
+      "season": "2018-19",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "villarreal",
+      "season": "2019-20",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "villarreal",
+      "season": "2020-21",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "villarreal",
+      "season": "2021-22",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "villarreal",
+      "season": "2022-23",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "villarreal",
+      "season": "2023-24",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "villarreal",
+      "season": "2024-25",
+      "playerCount": 28
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "villarreal",
+      "season": "2025-26",
+      "playerCount": 25
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-betis",
+      "season": "2011-12",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-betis",
+      "season": "2013-14",
+      "playerCount": 31
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-betis",
+      "season": "2015-16",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-betis",
+      "season": "2016-17",
+      "playerCount": 28
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-betis",
+      "season": "2017-18",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-betis",
+      "season": "2018-19",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-betis",
+      "season": "2019-20",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-betis",
+      "season": "2020-21",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-betis",
+      "season": "2021-22",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-betis",
+      "season": "2022-23",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-betis",
+      "season": "2023-24",
+      "playerCount": 39
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-betis",
+      "season": "2024-25",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "real-betis",
+      "season": "2025-26",
+      "playerCount": 43
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "celta-vigo",
+      "season": "2012-13",
+      "playerCount": 22
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "celta-vigo",
+      "season": "2013-14",
+      "playerCount": 28
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "celta-vigo",
+      "season": "2014-15",
+      "playerCount": 25
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "celta-vigo",
+      "season": "2015-16",
+      "playerCount": 22
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "celta-vigo",
+      "season": "2016-17",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "celta-vigo",
+      "season": "2017-18",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "celta-vigo",
+      "season": "2018-19",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "celta-vigo",
+      "season": "2019-20",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "celta-vigo",
+      "season": "2020-21",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "celta-vigo",
+      "season": "2021-22",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "celta-vigo",
+      "season": "2022-23",
+      "playerCount": 26
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "celta-vigo",
+      "season": "2023-24",
+      "playerCount": 39
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "celta-vigo",
+      "season": "2024-25",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "celta-vigo",
+      "season": "2025-26",
+      "playerCount": 39
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "espanyol",
+      "season": "2012-13",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "espanyol",
+      "season": "2013-14",
+      "playerCount": 24
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "espanyol",
+      "season": "2014-15",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "espanyol",
+      "season": "2015-16",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "espanyol",
+      "season": "2016-17",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "espanyol",
+      "season": "2017-18",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "espanyol",
+      "season": "2018-19",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "espanyol",
+      "season": "2019-20",
+      "playerCount": 37
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "espanyol",
+      "season": "2021-22",
+      "playerCount": 36
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "espanyol",
+      "season": "2022-23",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "espanyol",
+      "season": "2025-26",
+      "playerCount": 35
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "deportivo-la-coruna",
+      "season": "2012-13",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "deportivo-la-coruna",
+      "season": "2014-15",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "deportivo-la-coruna",
+      "season": "2015-16",
+      "playerCount": 29
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "deportivo-la-coruna",
+      "season": "2016-17",
+      "playerCount": 28
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "deportivo-la-coruna",
+      "season": "2017-18",
+      "playerCount": 34
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "deportivo-la-coruna",
+      "season": "2024-25",
+      "playerCount": 33
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "malaga",
+      "season": "2014-15",
+      "playerCount": 30
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "malaga",
+      "season": "2015-16",
+      "playerCount": 32
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "malaga",
+      "season": "2016-17",
+      "playerCount": 27
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "malaga",
+      "season": "2017-18",
+      "playerCount": 40
+    }
+  ]
+}

@@ -1,0 +1,387 @@
+{
+  "leagueId": "premier-league",
+  "clubId": "liverpool",
+  "season": "2013-14",
+  "division": "top-flight",
+  "squad": [
+    {
+      "id": "luis-su-rez-uru",
+      "name": "Luis Suárez",
+      "nationality": "URU",
+      "broadPosition": "FW",
+      "shirtNumber": 7,
+      "stats": {
+        "appearances": 31,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 83,
+        "pace": 87,
+        "shooting": 93,
+        "passing": 75,
+        "dribbling": 89,
+        "defending": 56,
+        "physical": 78
+      },
+      "primeRatings": {
+        "overall": 92,
+        "pace": 93,
+        "shooting": 99,
+        "passing": 86,
+        "dribbling": 97,
+        "defending": 68,
+        "physical": 88
+      }
+    },
+    {
+      "id": "daniel-sturridge-eng",
+      "name": "Daniel Sturridge",
+      "nationality": "ENG",
+      "broadPosition": "FW",
+      "shirtNumber": 15,
+      "stats": {
+        "appearances": 24,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 77,
+        "pace": 80,
+        "shooting": 82,
+        "passing": 66,
+        "dribbling": 83,
+        "defending": 50,
+        "physical": 72
+      },
+      "primeRatings": {
+        "overall": 84,
+        "pace": 86,
+        "shooting": 90,
+        "passing": 78,
+        "dribbling": 88,
+        "defending": 57,
+        "physical": 81
+      }
+    },
+    {
+      "id": "steven-gerrard-eng",
+      "name": "Steven Gerrard",
+      "nationality": "ENG",
+      "broadPosition": "MF",
+      "shirtNumber": 8,
+      "stats": {
+        "appearances": 14,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 76,
+        "pace": 71,
+        "shooting": 66,
+        "passing": 78,
+        "dribbling": 77,
+        "defending": 65,
+        "physical": 71
+      },
+      "primeRatings": {
+        "overall": 89,
+        "pace": 85,
+        "shooting": 80,
+        "passing": 92,
+        "dribbling": 87,
+        "defending": 80,
+        "physical": 86
+      }
+    },
+    {
+      "id": "raheem-sterling-eng",
+      "name": "Raheem Sterling",
+      "nationality": "ENG",
+      "broadPosition": "MF",
+      "shirtNumber": 31,
+      "stats": {
+        "appearances": 10,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 73,
+        "pace": 70,
+        "shooting": 67,
+        "passing": 76,
+        "dribbling": 75,
+        "defending": 65,
+        "physical": 72
+      },
+      "primeRatings": {
+        "overall": 87,
+        "pace": 85,
+        "shooting": 78,
+        "passing": 90,
+        "dribbling": 88,
+        "defending": 75,
+        "physical": 82
+      }
+    },
+    {
+      "id": "martin-krtel-svk",
+      "name": "Martin Škrtel",
+      "nationality": "SVK",
+      "broadPosition": "DF",
+      "shirtNumber": 37,
+      "stats": {
+        "appearances": 7,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 66,
+        "pace": 63,
+        "shooting": 48,
+        "passing": 62,
+        "dribbling": 59,
+        "defending": 74,
+        "physical": 71
+      },
+      "primeRatings": {
+        "overall": 67,
+        "pace": 63,
+        "shooting": 46,
+        "passing": 60,
+        "dribbling": 55,
+        "defending": 75,
+        "physical": 69
+      }
+    },
+    {
+      "id": "philippe-coutinho-bra",
+      "name": "Philippe Coutinho",
+      "nationality": "BRA",
+      "broadPosition": "MF",
+      "shirtNumber": 10,
+      "stats": {
+        "appearances": 5,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 71,
+        "pace": 66,
+        "shooting": 63,
+        "passing": 74,
+        "dribbling": 70,
+        "defending": 60,
+        "physical": 66
+      },
+      "primeRatings": {
+        "overall": 87,
+        "pace": 82,
+        "shooting": 79,
+        "passing": 89,
+        "dribbling": 87,
+        "defending": 78,
+        "physical": 82
+      }
+    },
+    {
+      "id": "jordan-henderson-eng",
+      "name": "Jordan Henderson",
+      "nationality": "ENG",
+      "broadPosition": "MF",
+      "shirtNumber": 14,
+      "stats": {
+        "appearances": 5,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 68,
+        "pace": 62,
+        "shooting": 60,
+        "passing": 74,
+        "dribbling": 68,
+        "defending": 57,
+        "physical": 63
+      },
+      "primeRatings": {
+        "overall": 84,
+        "pace": 79,
+        "shooting": 74,
+        "passing": 88,
+        "dribbling": 82,
+        "defending": 74,
+        "physical": 80
+      }
+    },
+    {
+      "id": "daniel-agger-denmark",
+      "name": "Daniel Agger",
+      "nationality": "Denmark",
+      "broadPosition": "DF",
+      "shirtNumber": 5,
+      "stats": {
+        "appearances": 2,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 61,
+        "pace": 56,
+        "shooting": 42,
+        "passing": 58,
+        "dribbling": 48,
+        "defending": 72,
+        "physical": 66
+      },
+      "primeRatings": {
+        "overall": 62,
+        "pace": 57,
+        "shooting": 41,
+        "passing": 54,
+        "dribbling": 54,
+        "defending": 68,
+        "physical": 64
+      }
+    },
+    {
+      "id": "victor-moses-ngr",
+      "name": "Victor Moses",
+      "nationality": "NGR",
+      "broadPosition": "MF",
+      "shirtNumber": 12,
+      "stats": {
+        "appearances": 2,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 62,
+        "pace": 57,
+        "shooting": 57,
+        "passing": 69,
+        "dribbling": 61,
+        "defending": 50,
+        "physical": 61
+      },
+      "primeRatings": {
+        "overall": 83,
+        "pace": 80,
+        "shooting": 76,
+        "passing": 89,
+        "dribbling": 85,
+        "defending": 73,
+        "physical": 77
+      }
+    },
+    {
+      "id": "iago-aspas-spain",
+      "name": "Iago Aspas",
+      "nationality": "Spain",
+      "broadPosition": "FW",
+      "shirtNumber": 9,
+      "stats": {
+        "appearances": 1,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 70,
+        "pace": 70,
+        "shooting": 80,
+        "passing": 64,
+        "dribbling": 71,
+        "defending": 47,
+        "physical": 68
+      },
+      "primeRatings": {
+        "overall": 86,
+        "pace": 87,
+        "shooting": 92,
+        "passing": 80,
+        "dribbling": 87,
+        "defending": 62,
+        "physical": 83
+      }
+    },
+    {
+      "id": "mamadou-sakho-fra",
+      "name": "Mamadou Sakho",
+      "nationality": "FRA",
+      "broadPosition": "DF",
+      "shirtNumber": 17,
+      "stats": {
+        "appearances": 1,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 61,
+        "pace": 57,
+        "shooting": 39,
+        "passing": 59,
+        "dribbling": 54,
+        "defending": 69,
+        "physical": 63
+      },
+      "primeRatings": {
+        "overall": 71,
+        "pace": 65,
+        "shooting": 53,
+        "passing": 65,
+        "dribbling": 58,
+        "defending": 81,
+        "physical": 72
+      }
+    },
+    {
+      "id": "joe-allen-wales",
+      "name": "Joe Allen",
+      "nationality": "Wales",
+      "broadPosition": "MF",
+      "shirtNumber": 24,
+      "stats": {
+        "appearances": 1,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 60,
+        "pace": 55,
+        "shooting": 54,
+        "passing": 68,
+        "dribbling": 59,
+        "defending": 51,
+        "physical": 59
+      },
+      "primeRatings": {
+        "overall": 65,
+        "pace": 64,
+        "shooting": 58,
+        "passing": 68,
+        "dribbling": 64,
+        "defending": 56,
+        "physical": 60
+      }
+    },
+    {
+      "id": "jon-flanagan-eng",
+      "name": "Jon Flanagan",
+      "nationality": "ENG",
+      "broadPosition": "DF",
+      "shirtNumber": 38,
+      "stats": {
+        "appearances": 1,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 61,
+        "pace": 57,
+        "shooting": 42,
+        "passing": 56,
+        "dribbling": 51,
+        "defending": 71,
+        "physical": 66
+      },
+      "primeRatings": {
+        "overall": 63,
+        "pace": 60,
+        "shooting": 45,
+        "passing": 59,
+        "dribbling": 50,
+        "defending": 73,
+        "physical": 67
+      }
+    }
+  ],
+  "sourceUrl": "https://en.wikipedia.org/wiki/2013%E2%80%9314_Liverpool_F.C._season",
+  "scrapedAt": "2026-07-08T16:24:06.664Z"
+}

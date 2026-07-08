@@ -1,0 +1,739 @@
+{
+  "leagueId": "premier-league",
+  "clubId": "fulham",
+  "season": "2025-26",
+  "division": "top-flight",
+  "squad": [
+    {
+      "id": "bernd-leno-ger",
+      "name": "Bernd Leno",
+      "nationality": "GER",
+      "broadPosition": "GK",
+      "shirtNumber": 1,
+      "stats": {
+        "appearances": 38,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 77,
+        "pace": 48,
+        "shooting": 17,
+        "passing": 64,
+        "dribbling": 48,
+        "defending": 57,
+        "physical": 70,
+        "goalkeeping": 87
+      },
+      "primeRatings": {
+        "overall": 86,
+        "pace": 42,
+        "shooting": 19,
+        "passing": 73,
+        "dribbling": 57,
+        "defending": 64,
+        "physical": 81,
+        "goalkeeping": 96
+      }
+    },
+    {
+      "id": "kenny-tete-ned",
+      "name": "Kenny Tete",
+      "nationality": "NED",
+      "broadPosition": "DF",
+      "shirtNumber": 2,
+      "stats": {
+        "appearances": 23,
+        "goals": 1
+      },
+      "seasonRatings": {
+        "overall": 67,
+        "pace": 61,
+        "shooting": 48,
+        "passing": 61,
+        "dribbling": 58,
+        "defending": 75,
+        "physical": 69
+      },
+      "primeRatings": {
+        "overall": 70,
+        "pace": 65,
+        "shooting": 50,
+        "passing": 63,
+        "dribbling": 61,
+        "defending": 77,
+        "physical": 72
+      }
+    },
+    {
+      "id": "calvin-bassey-nga",
+      "name": "Calvin Bassey",
+      "nationality": "NGA",
+      "broadPosition": "DF",
+      "shirtNumber": 3,
+      "stats": {
+        "appearances": 32,
+        "goals": 1
+      },
+      "seasonRatings": {
+        "overall": 72,
+        "pace": 69,
+        "shooting": 51,
+        "passing": 66,
+        "dribbling": 62,
+        "defending": 79,
+        "physical": 75
+      },
+      "primeRatings": {
+        "overall": 74,
+        "pace": 68,
+        "shooting": 55,
+        "passing": 67,
+        "dribbling": 63,
+        "defending": 82,
+        "physical": 76
+      }
+    },
+    {
+      "id": "joachim-andersen-den",
+      "name": "Joachim Andersen",
+      "nationality": "DEN",
+      "broadPosition": "DF",
+      "shirtNumber": 5,
+      "stats": {
+        "appearances": 35,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 71,
+        "pace": 64,
+        "shooting": 49,
+        "passing": 68,
+        "dribbling": 62,
+        "defending": 78,
+        "physical": 74
+      },
+      "primeRatings": {
+        "overall": 80,
+        "pace": 75,
+        "shooting": 62,
+        "passing": 76,
+        "dribbling": 73,
+        "defending": 90,
+        "physical": 85
+      }
+    },
+    {
+      "id": "harrison-reed-eng",
+      "name": "Harrison Reed",
+      "nationality": "ENG",
+      "broadPosition": "MF",
+      "shirtNumber": 6,
+      "stats": {
+        "appearances": 14,
+        "goals": 2
+      },
+      "seasonRatings": {
+        "overall": 68,
+        "pace": 63,
+        "shooting": 58,
+        "passing": 75,
+        "dribbling": 69,
+        "defending": 59,
+        "physical": 65
+      },
+      "primeRatings": {
+        "overall": 70,
+        "pace": 67,
+        "shooting": 59,
+        "passing": 78,
+        "dribbling": 70,
+        "defending": 62,
+        "physical": 67
+      }
+    },
+    {
+      "id": "ra-l-jim-nez-mex",
+      "name": "Raúl Jiménez",
+      "nationality": "MEX",
+      "broadPosition": "FW",
+      "shirtNumber": 7,
+      "stats": {
+        "appearances": 43,
+        "goals": 10
+      },
+      "seasonRatings": {
+        "overall": 81,
+        "pace": 86,
+        "shooting": 90,
+        "passing": 73,
+        "dribbling": 83,
+        "defending": 54,
+        "physical": 80
+      },
+      "primeRatings": {
+        "overall": 82,
+        "pace": 84,
+        "shooting": 91,
+        "passing": 74,
+        "dribbling": 82,
+        "defending": 58,
+        "physical": 76
+      }
+    },
+    {
+      "id": "harry-wilson-wal",
+      "name": "Harry Wilson",
+      "nationality": "WAL",
+      "broadPosition": "FW",
+      "shirtNumber": 8,
+      "stats": {
+        "appearances": 41,
+        "goals": 11
+      },
+      "seasonRatings": {
+        "overall": 80,
+        "pace": 84,
+        "shooting": 89,
+        "passing": 71,
+        "dribbling": 81,
+        "defending": 53,
+        "physical": 76
+      },
+      "primeRatings": {
+        "overall": 81,
+        "pace": 84,
+        "shooting": 92,
+        "passing": 76,
+        "dribbling": 86,
+        "defending": 55,
+        "physical": 78
+      }
+    },
+    {
+      "id": "rodrigo-muniz-bra",
+      "name": "Rodrigo Muniz",
+      "nationality": "BRA",
+      "broadPosition": "FW",
+      "shirtNumber": 9,
+      "stats": {
+        "appearances": 25,
+        "goals": 1
+      },
+      "seasonRatings": {
+        "overall": 71,
+        "pace": 77,
+        "shooting": 81,
+        "passing": 62,
+        "dribbling": 74,
+        "defending": 49,
+        "physical": 66
+      },
+      "primeRatings": {
+        "overall": 80,
+        "pace": 81,
+        "shooting": 88,
+        "passing": 74,
+        "dribbling": 85,
+        "defending": 55,
+        "physical": 74
+      }
+    },
+    {
+      "id": "tom-cairney-sco",
+      "name": "Tom Cairney",
+      "nationality": "SCO",
+      "broadPosition": "MF",
+      "shirtNumber": 10,
+      "stats": {
+        "appearances": 29,
+        "goals": 2
+      },
+      "seasonRatings": {
+        "overall": 72,
+        "pace": 69,
+        "shooting": 65,
+        "passing": 77,
+        "dribbling": 69,
+        "defending": 64,
+        "physical": 69
+      },
+      "primeRatings": {
+        "overall": 75,
+        "pace": 72,
+        "shooting": 67,
+        "passing": 80,
+        "dribbling": 74,
+        "defending": 67,
+        "physical": 74
+      }
+    },
+    {
+      "id": "oscar-bobb-nor",
+      "name": "Oscar Bobb",
+      "nationality": "NOR",
+      "broadPosition": "FW",
+      "shirtNumber": 14,
+      "stats": {
+        "appearances": 16,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 65,
+        "pace": 69,
+        "shooting": 73,
+        "passing": 58,
+        "dribbling": 66,
+        "defending": 38,
+        "physical": 65
+      },
+      "primeRatings": {
+        "overall": 66,
+        "pace": 69,
+        "shooting": 77,
+        "passing": 55,
+        "dribbling": 70,
+        "defending": 40,
+        "physical": 65
+      }
+    },
+    {
+      "id": "jorge-cuenca-esp",
+      "name": "Jorge Cuenca",
+      "nationality": "ESP",
+      "broadPosition": "DF",
+      "shirtNumber": 15,
+      "stats": {
+        "appearances": 22,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 67,
+        "pace": 64,
+        "shooting": 49,
+        "passing": 63,
+        "dribbling": 60,
+        "defending": 77,
+        "physical": 69
+      },
+      "primeRatings": {
+        "overall": 76,
+        "pace": 69,
+        "shooting": 56,
+        "passing": 68,
+        "dribbling": 67,
+        "defending": 84,
+        "physical": 77
+      }
+    },
+    {
+      "id": "sander-berge-nor",
+      "name": "Sander Berge",
+      "nationality": "NOR",
+      "broadPosition": "MF",
+      "shirtNumber": 16,
+      "stats": {
+        "appearances": 39,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 70,
+        "pace": 64,
+        "shooting": 60,
+        "passing": 76,
+        "dribbling": 72,
+        "defending": 63,
+        "physical": 68
+      },
+      "primeRatings": {
+        "overall": 73,
+        "pace": 70,
+        "shooting": 68,
+        "passing": 79,
+        "dribbling": 73,
+        "defending": 63,
+        "physical": 69
+      }
+    },
+    {
+      "id": "alex-iwobi-nga",
+      "name": "Alex Iwobi",
+      "nationality": "NGA",
+      "broadPosition": "FW",
+      "shirtNumber": 17,
+      "stats": {
+        "appearances": 33,
+        "goals": 4
+      },
+      "seasonRatings": {
+        "overall": 77,
+        "pace": 83,
+        "shooting": 83,
+        "passing": 69,
+        "dribbling": 77,
+        "defending": 49,
+        "physical": 73
+      },
+      "primeRatings": {
+        "overall": 82,
+        "pace": 85,
+        "shooting": 89,
+        "passing": 71,
+        "dribbling": 83,
+        "defending": 59,
+        "physical": 82
+      }
+    },
+    {
+      "id": "jonah-kusi-asare-swe",
+      "name": "Jonah Kusi-Asare",
+      "nationality": "SWE",
+      "broadPosition": "FW",
+      "shirtNumber": 18,
+      "stats": {
+        "appearances": 10,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 64,
+        "pace": 69,
+        "shooting": 73,
+        "passing": 53,
+        "dribbling": 66,
+        "defending": 41,
+        "physical": 59
+      },
+      "primeRatings": {
+        "overall": 65,
+        "pace": 67,
+        "shooting": 74,
+        "passing": 57,
+        "dribbling": 69,
+        "defending": 40,
+        "physical": 61
+      }
+    },
+    {
+      "id": "samuel-chukwueze-nga",
+      "name": "Samuel Chukwueze",
+      "nationality": "NGA",
+      "broadPosition": "FW",
+      "shirtNumber": 19,
+      "stats": {
+        "appearances": 25,
+        "goals": 3
+      },
+      "seasonRatings": {
+        "overall": 75,
+        "pace": 80,
+        "shooting": 86,
+        "passing": 69,
+        "dribbling": 77,
+        "defending": 51,
+        "physical": 74
+      },
+      "primeRatings": {
+        "overall": 88,
+        "pace": 93,
+        "shooting": 97,
+        "passing": 80,
+        "dribbling": 93,
+        "defending": 60,
+        "physical": 83
+      }
+    },
+    {
+      "id": "sa-a-luki-srb",
+      "name": "Saša Lukić",
+      "nationality": "SRB",
+      "broadPosition": "MF",
+      "shirtNumber": 20,
+      "stats": {
+        "appearances": 30,
+        "goals": 2
+      },
+      "seasonRatings": {
+        "overall": 73,
+        "pace": 71,
+        "shooting": 67,
+        "passing": 78,
+        "dribbling": 73,
+        "defending": 62,
+        "physical": 72
+      },
+      "primeRatings": {
+        "overall": 74,
+        "pace": 72,
+        "shooting": 67,
+        "passing": 79,
+        "dribbling": 72,
+        "defending": 64,
+        "physical": 70
+      }
+    },
+    {
+      "id": "timothy-castagne-bel",
+      "name": "Timothy Castagne",
+      "nationality": "BEL",
+      "broadPosition": "DF",
+      "shirtNumber": 21,
+      "stats": {
+        "appearances": 36,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 75,
+        "pace": 73,
+        "shooting": 57,
+        "passing": 71,
+        "dribbling": 65,
+        "defending": 83,
+        "physical": 79
+      },
+      "primeRatings": {
+        "overall": 80,
+        "pace": 73,
+        "shooting": 63,
+        "passing": 75,
+        "dribbling": 69,
+        "defending": 85,
+        "physical": 81
+      }
+    },
+    {
+      "id": "kevin-bra",
+      "name": "Kevin",
+      "nationality": "BRA",
+      "broadPosition": "FW",
+      "shirtNumber": 22,
+      "stats": {
+        "appearances": 31,
+        "goals": 3
+      },
+      "seasonRatings": {
+        "overall": 71,
+        "pace": 74,
+        "shooting": 78,
+        "passing": 63,
+        "dribbling": 73,
+        "defending": 48,
+        "physical": 66
+      },
+      "primeRatings": {
+        "overall": 72,
+        "pace": 76,
+        "shooting": 82,
+        "passing": 65,
+        "dribbling": 78,
+        "defending": 45,
+        "physical": 66
+      }
+    },
+    {
+      "id": "benjamin-lecomte-fra",
+      "name": "Benjamin Lecomte",
+      "nationality": "FRA",
+      "broadPosition": "GK",
+      "shirtNumber": 23,
+      "stats": {
+        "appearances": 7,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 63,
+        "pace": 47,
+        "shooting": 15,
+        "passing": 46,
+        "dribbling": 33,
+        "defending": 41,
+        "physical": 60,
+        "goalkeeping": 70
+      },
+      "primeRatings": {
+        "overall": 65,
+        "pace": 43,
+        "shooting": 20,
+        "passing": 52,
+        "dribbling": 33,
+        "defending": 47,
+        "physical": 62,
+        "goalkeeping": 71
+      }
+    },
+    {
+      "id": "josh-king-eng",
+      "name": "Josh King",
+      "nationality": "ENG",
+      "broadPosition": "MF",
+      "shirtNumber": 24,
+      "stats": {
+        "appearances": 38,
+        "goals": 2
+      },
+      "seasonRatings": {
+        "overall": 72,
+        "pace": 69,
+        "shooting": 62,
+        "passing": 75,
+        "dribbling": 73,
+        "defending": 65,
+        "physical": 68
+      },
+      "primeRatings": {
+        "overall": 73,
+        "pace": 70,
+        "shooting": 63,
+        "passing": 79,
+        "dribbling": 70,
+        "defending": 65,
+        "physical": 71
+      }
+    },
+    {
+      "id": "ryan-sessegnon-eng",
+      "name": "Ryan Sessegnon",
+      "nationality": "ENG",
+      "broadPosition": "DF",
+      "shirtNumber": 30,
+      "stats": {
+        "appearances": 31,
+        "goals": 3
+      },
+      "seasonRatings": {
+        "overall": 74,
+        "pace": 68,
+        "shooting": 55,
+        "passing": 66,
+        "dribbling": 61,
+        "defending": 84,
+        "physical": 76
+      },
+      "primeRatings": {
+        "overall": 76,
+        "pace": 70,
+        "shooting": 57,
+        "passing": 72,
+        "dribbling": 64,
+        "defending": 85,
+        "physical": 81
+      }
+    },
+    {
+      "id": "issa-diop-mar",
+      "name": "Issa Diop",
+      "nationality": "MAR",
+      "broadPosition": "DF",
+      "shirtNumber": 31,
+      "stats": {
+        "appearances": 18,
+        "goals": 1
+      },
+      "seasonRatings": {
+        "overall": 70,
+        "pace": 67,
+        "shooting": 52,
+        "passing": 65,
+        "dribbling": 60,
+        "defending": 77,
+        "physical": 72
+      },
+      "primeRatings": {
+        "overall": 79,
+        "pace": 72,
+        "shooting": 61,
+        "passing": 73,
+        "dribbling": 70,
+        "defending": 88,
+        "physical": 79
+      }
+    },
+    {
+      "id": "emile-smith-rowe-eng",
+      "name": "Emile Smith Rowe",
+      "nationality": "ENG",
+      "broadPosition": "MF",
+      "shirtNumber": 32,
+      "stats": {
+        "appearances": 43,
+        "goals": 5
+      },
+      "seasonRatings": {
+        "overall": 77,
+        "pace": 72,
+        "shooting": 71,
+        "passing": 85,
+        "dribbling": 77,
+        "defending": 66,
+        "physical": 72
+      },
+      "primeRatings": {
+        "overall": 84,
+        "pace": 80,
+        "shooting": 77,
+        "passing": 91,
+        "dribbling": 83,
+        "defending": 74,
+        "physical": 79
+      }
+    },
+    {
+      "id": "antonee-robinson-usa",
+      "name": "Antonee Robinson",
+      "nationality": "USA",
+      "broadPosition": "DF",
+      "shirtNumber": 33,
+      "stats": {
+        "appearances": 26,
+        "goals": 1
+      },
+      "seasonRatings": {
+        "overall": 72,
+        "pace": 69,
+        "shooting": 50,
+        "passing": 67,
+        "dribbling": 64,
+        "defending": 78,
+        "physical": 72
+      },
+      "primeRatings": {
+        "overall": 73,
+        "pace": 71,
+        "shooting": 52,
+        "passing": 70,
+        "dribbling": 63,
+        "defending": 83,
+        "physical": 73
+      }
+    },
+    {
+      "id": "adama-traor-esp",
+      "name": "Adama Traoré",
+      "nationality": "ESP",
+      "broadPosition": "FW",
+      "shirtNumber": 11,
+      "stats": {
+        "appearances": 20,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 64,
+        "pace": 64,
+        "shooting": 72,
+        "passing": 57,
+        "dribbling": 67,
+        "defending": 38,
+        "physical": 61
+      },
+      "primeRatings": {
+        "overall": 74,
+        "pace": 79,
+        "shooting": 84,
+        "passing": 67,
+        "dribbling": 79,
+        "defending": 46,
+        "physical": 73
+      }
+    }
+  ],
+  "sourceUrl": "https://en.wikipedia.org/wiki/2025%E2%80%9326_Fulham_F.C._season",
+  "scrapedAt": "2026-07-08T11:05:14.735Z"
+}

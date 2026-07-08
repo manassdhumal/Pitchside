@@ -1,0 +1,503 @@
+{
+  "leagueId": "premier-league",
+  "clubId": "manchester-city",
+  "season": "2014-15",
+  "division": "top-flight",
+  "squad": [
+    {
+      "id": "sergio-ag-ero-arg",
+      "name": "Sergio Agüero",
+      "nationality": "ARG",
+      "broadPosition": "FW",
+      "shirtNumber": 16,
+      "stats": {
+        "appearances": 32,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 91,
+        "pace": 94,
+        "shooting": 99,
+        "passing": 86,
+        "dribbling": 93,
+        "defending": 66,
+        "physical": 88
+      },
+      "primeRatings": {
+        "overall": 91,
+        "pace": 95,
+        "shooting": 99,
+        "passing": 84,
+        "dribbling": 95,
+        "defending": 65,
+        "physical": 86
+      }
+    },
+    {
+      "id": "david-silva-esp",
+      "name": "David Silva",
+      "nationality": "ESP",
+      "broadPosition": "MF",
+      "shirtNumber": 21,
+      "stats": {
+        "appearances": 12,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 75,
+        "pace": 69,
+        "shooting": 66,
+        "passing": 83,
+        "dribbling": 76,
+        "defending": 63,
+        "physical": 74
+      },
+      "primeRatings": {
+        "overall": 90,
+        "pace": 84,
+        "shooting": 82,
+        "passing": 95,
+        "dribbling": 91,
+        "defending": 78,
+        "physical": 86
+      }
+    },
+    {
+      "id": "yaya-tour-civ",
+      "name": "Yaya Touré",
+      "nationality": "CIV",
+      "broadPosition": "MF",
+      "shirtNumber": 42,
+      "stats": {
+        "appearances": 12,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 77,
+        "pace": 76,
+        "shooting": 68,
+        "passing": 83,
+        "dribbling": 77,
+        "defending": 67,
+        "physical": 73
+      },
+      "primeRatings": {
+        "overall": 88,
+        "pace": 83,
+        "shooting": 80,
+        "passing": 91,
+        "dribbling": 88,
+        "defending": 75,
+        "physical": 84
+      }
+    },
+    {
+      "id": "james-milner-eng",
+      "name": "James Milner",
+      "nationality": "ENG",
+      "broadPosition": "MF",
+      "shirtNumber": 7,
+      "stats": {
+        "appearances": 8,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 70,
+        "pace": 69,
+        "shooting": 65,
+        "passing": 76,
+        "dribbling": 70,
+        "defending": 63,
+        "physical": 69
+      },
+      "primeRatings": {
+        "overall": 82,
+        "pace": 77,
+        "shooting": 77,
+        "passing": 87,
+        "dribbling": 83,
+        "defending": 73,
+        "physical": 81
+      }
+    },
+    {
+      "id": "frank-lampard-eng",
+      "name": "Frank Lampard",
+      "nationality": "ENG",
+      "broadPosition": "MF",
+      "shirtNumber": 18,
+      "stats": {
+        "appearances": 8,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 72,
+        "pace": 68,
+        "shooting": 61,
+        "passing": 75,
+        "dribbling": 71,
+        "defending": 60,
+        "physical": 67
+      },
+      "primeRatings": {
+        "overall": 88,
+        "pace": 85,
+        "shooting": 83,
+        "passing": 92,
+        "dribbling": 88,
+        "defending": 79,
+        "physical": 86
+      }
+    },
+    {
+      "id": "edin-d-eko-bih",
+      "name": "Edin Džeko",
+      "nationality": "BIH",
+      "broadPosition": "FW",
+      "shirtNumber": 10,
+      "stats": {
+        "appearances": 6,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 71,
+        "pace": 73,
+        "shooting": 82,
+        "passing": 64,
+        "dribbling": 74,
+        "defending": 47,
+        "physical": 69
+      },
+      "primeRatings": {
+        "overall": 87,
+        "pace": 89,
+        "shooting": 93,
+        "passing": 76,
+        "dribbling": 92,
+        "defending": 60,
+        "physical": 85
+      }
+    },
+    {
+      "id": "stevan-joveti-mne",
+      "name": "Stevan Jovetić",
+      "nationality": "MNE",
+      "broadPosition": "FW",
+      "shirtNumber": 35,
+      "stats": {
+        "appearances": 5,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 62,
+        "pace": 64,
+        "shooting": 69,
+        "passing": 55,
+        "dribbling": 65,
+        "defending": 36,
+        "physical": 59
+      },
+      "primeRatings": {
+        "overall": 78,
+        "pace": 82,
+        "shooting": 86,
+        "passing": 71,
+        "dribbling": 83,
+        "defending": 52,
+        "physical": 75
+      }
+    },
+    {
+      "id": "fernandinho-bra",
+      "name": "Fernandinho",
+      "nationality": "BRA",
+      "broadPosition": "MF",
+      "shirtNumber": 25,
+      "stats": {
+        "appearances": 3,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 70,
+        "pace": 65,
+        "shooting": 65,
+        "passing": 75,
+        "dribbling": 68,
+        "defending": 59,
+        "physical": 65
+      },
+      "primeRatings": {
+        "overall": 86,
+        "pace": 82,
+        "shooting": 81,
+        "passing": 88,
+        "dribbling": 88,
+        "defending": 76,
+        "physical": 84
+      }
+    },
+    {
+      "id": "samir-nasri-fra",
+      "name": "Samir Nasri",
+      "nationality": "FRA",
+      "broadPosition": "MF",
+      "shirtNumber": 8,
+      "stats": {
+        "appearances": 3,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 62,
+        "pace": 60,
+        "shooting": 54,
+        "passing": 70,
+        "dribbling": 64,
+        "defending": 50,
+        "physical": 62
+      },
+      "primeRatings": {
+        "overall": 77,
+        "pace": 77,
+        "shooting": 70,
+        "passing": 84,
+        "dribbling": 75,
+        "defending": 65,
+        "physical": 77
+      }
+    },
+    {
+      "id": "wilfried-bony-civ",
+      "name": "Wilfried Bony",
+      "nationality": "CIV",
+      "broadPosition": "FW",
+      "shirtNumber": 14,
+      "stats": {
+        "appearances": 2,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 62,
+        "pace": 66,
+        "shooting": 70,
+        "passing": 55,
+        "dribbling": 66,
+        "defending": 36,
+        "physical": 57
+      },
+      "primeRatings": {
+        "overall": 74,
+        "pace": 75,
+        "shooting": 82,
+        "passing": 67,
+        "dribbling": 77,
+        "defending": 49,
+        "physical": 70
+      }
+    },
+    {
+      "id": "fernando-bra",
+      "name": "Fernando",
+      "nationality": "BRA",
+      "broadPosition": "MF",
+      "shirtNumber": 6,
+      "stats": {
+        "appearances": 2,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 63,
+        "pace": 57,
+        "shooting": 55,
+        "passing": 70,
+        "dribbling": 62,
+        "defending": 55,
+        "physical": 61
+      },
+      "primeRatings": {
+        "overall": 83,
+        "pace": 81,
+        "shooting": 75,
+        "passing": 89,
+        "dribbling": 81,
+        "defending": 71,
+        "physical": 80
+      }
+    },
+    {
+      "id": "aleksandar-kolarov-ser",
+      "name": "Aleksandar Kolarov",
+      "nationality": "SER",
+      "broadPosition": "DF",
+      "shirtNumber": 11,
+      "stats": {
+        "appearances": 2,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 62,
+        "pace": 58,
+        "shooting": 42,
+        "passing": 59,
+        "dribbling": 53,
+        "defending": 72,
+        "physical": 67
+      },
+      "primeRatings": {
+        "overall": 68,
+        "pace": 65,
+        "shooting": 47,
+        "passing": 62,
+        "dribbling": 56,
+        "defending": 77,
+        "physical": 72
+      }
+    },
+    {
+      "id": "pablo-zabaleta-arg",
+      "name": "Pablo Zabaleta",
+      "nationality": "ARG",
+      "broadPosition": "DF",
+      "shirtNumber": 5,
+      "stats": {
+        "appearances": 2,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 62,
+        "pace": 56,
+        "shooting": 40,
+        "passing": 60,
+        "dribbling": 50,
+        "defending": 72,
+        "physical": 65
+      },
+      "primeRatings": {
+        "overall": 76,
+        "pace": 70,
+        "shooting": 58,
+        "passing": 70,
+        "dribbling": 65,
+        "defending": 86,
+        "physical": 79
+      }
+    },
+    {
+      "id": "ga-l-clichy-fra",
+      "name": "Gaël Clichy",
+      "nationality": "FRA",
+      "broadPosition": "DF",
+      "shirtNumber": 22,
+      "stats": {
+        "appearances": 1,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 60,
+        "pace": 55,
+        "shooting": 39,
+        "passing": 56,
+        "dribbling": 52,
+        "defending": 67,
+        "physical": 64
+      },
+      "primeRatings": {
+        "overall": 67,
+        "pace": 64,
+        "shooting": 49,
+        "passing": 64,
+        "dribbling": 58,
+        "defending": 72,
+        "physical": 73
+      }
+    },
+    {
+      "id": "mart-n-demichelis-arg",
+      "name": "Martín Demichelis",
+      "nationality": "ARG",
+      "broadPosition": "DF",
+      "shirtNumber": 26,
+      "stats": {
+        "appearances": 1,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 60,
+        "pace": 55,
+        "shooting": 38,
+        "passing": 57,
+        "dribbling": 48,
+        "defending": 66,
+        "physical": 64
+      },
+      "primeRatings": {
+        "overall": 67,
+        "pace": 65,
+        "shooting": 50,
+        "passing": 63,
+        "dribbling": 54,
+        "defending": 73,
+        "physical": 73
+      }
+    },
+    {
+      "id": "jes-s-navas-esp",
+      "name": "Jesús Navas",
+      "nationality": "ESP",
+      "broadPosition": "MF",
+      "shirtNumber": 15,
+      "stats": {
+        "appearances": 1,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 62,
+        "pace": 57,
+        "shooting": 55,
+        "passing": 65,
+        "dribbling": 64,
+        "defending": 54,
+        "physical": 60
+      },
+      "primeRatings": {
+        "overall": 82,
+        "pace": 81,
+        "shooting": 74,
+        "passing": 89,
+        "dribbling": 81,
+        "defending": 69,
+        "physical": 79
+      }
+    },
+    {
+      "id": "jos-ngel-pozo-esp",
+      "name": "José Ángel Pozo",
+      "nationality": "ESP",
+      "broadPosition": "FW",
+      "shirtNumber": 78,
+      "stats": {
+        "appearances": 1,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 60,
+        "pace": 62,
+        "shooting": 66,
+        "passing": 54,
+        "dribbling": 64,
+        "defending": 38,
+        "physical": 59
+      },
+      "primeRatings": {
+        "overall": 61,
+        "pace": 63,
+        "shooting": 71,
+        "passing": 52,
+        "dribbling": 64,
+        "defending": 33,
+        "physical": 60
+      }
+    }
+  ],
+  "sourceUrl": "https://en.wikipedia.org/wiki/2014%E2%80%9315_Manchester_City_F.C._season",
+  "scrapedAt": "2026-07-08T16:26:16.179Z"
+}
