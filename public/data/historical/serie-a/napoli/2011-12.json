@@ -1,0 +1,741 @@
+{
+  "leagueId": "serie-a",
+  "clubId": "napoli",
+  "season": "2011-12",
+  "division": "top-flight",
+  "squad": [
+    {
+      "id": "morgan-de-sanctis-italy",
+      "name": "Morgan De Sanctis",
+      "nationality": "Italy",
+      "broadPosition": "GK",
+      "shirtNumber": 1,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 70,
+        "pace": 44,
+        "shooting": 19,
+        "passing": 57,
+        "dribbling": 37,
+        "defending": 52,
+        "physical": 67,
+        "goalkeeping": 80
+      },
+      "primeRatings": {
+        "overall": 79,
+        "pace": 42,
+        "shooting": 17,
+        "passing": 64,
+        "dribbling": 47,
+        "defending": 62,
+        "physical": 76,
+        "goalkeeping": 88
+      }
+    },
+    {
+      "id": "gianluca-grava-italy",
+      "name": "Gianluca Grava",
+      "nationality": "Italy",
+      "broadPosition": "DF",
+      "shirtNumber": 2,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 70,
+        "pace": 64,
+        "shooting": 49,
+        "passing": 65,
+        "dribbling": 63,
+        "defending": 80,
+        "physical": 73
+      },
+      "primeRatings": {
+        "overall": 71,
+        "pace": 66,
+        "shooting": 48,
+        "passing": 66,
+        "dribbling": 60,
+        "defending": 79,
+        "physical": 77
+      }
+    },
+    {
+      "id": "ignacio-fideleff-argentina",
+      "name": "Ignacio Fideleff",
+      "nationality": "Argentina",
+      "broadPosition": "DF",
+      "shirtNumber": 3,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 72,
+        "pace": 67,
+        "shooting": 54,
+        "passing": 66,
+        "dribbling": 64,
+        "defending": 79,
+        "physical": 75
+      },
+      "primeRatings": {
+        "overall": 73,
+        "pace": 69,
+        "shooting": 53,
+        "passing": 68,
+        "dribbling": 64,
+        "defending": 79,
+        "physical": 76
+      }
+    },
+    {
+      "id": "marco-donadel-italy",
+      "name": "Marco Donadel",
+      "nationality": "Italy",
+      "broadPosition": "MF",
+      "shirtNumber": 4,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 72,
+        "pace": 69,
+        "shooting": 62,
+        "passing": 80,
+        "dribbling": 71,
+        "defending": 59,
+        "physical": 70
+      },
+      "primeRatings": {
+        "overall": 73,
+        "pace": 69,
+        "shooting": 66,
+        "passing": 80,
+        "dribbling": 71,
+        "defending": 64,
+        "physical": 70
+      }
+    },
+    {
+      "id": "salvatore-aronica-italy",
+      "name": "Salvatore Aronica",
+      "nationality": "Italy",
+      "broadPosition": "DF",
+      "shirtNumber": 6,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 73,
+        "pace": 68,
+        "shooting": 52,
+        "passing": 69,
+        "dribbling": 61,
+        "defending": 82,
+        "physical": 74
+      },
+      "primeRatings": {
+        "overall": 74,
+        "pace": 67,
+        "shooting": 57,
+        "passing": 70,
+        "dribbling": 66,
+        "defending": 84,
+        "physical": 74
+      }
+    },
+    {
+      "id": "edinson-cavani-uruguay",
+      "name": "Edinson Cavani",
+      "nationality": "Uruguay",
+      "broadPosition": "FW",
+      "shirtNumber": 7,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 74,
+        "pace": 79,
+        "shooting": 84,
+        "passing": 67,
+        "dribbling": 74,
+        "defending": 50,
+        "physical": 71
+      },
+      "primeRatings": {
+        "overall": 90,
+        "pace": 91,
+        "shooting": 98,
+        "passing": 85,
+        "dribbling": 94,
+        "defending": 65,
+        "physical": 90
+      }
+    },
+    {
+      "id": "andrea-dossena-italy",
+      "name": "Andrea Dossena",
+      "nationality": "Italy",
+      "broadPosition": "DF",
+      "shirtNumber": 8,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 71,
+        "pace": 65,
+        "shooting": 54,
+        "passing": 65,
+        "dribbling": 61,
+        "defending": 77,
+        "physical": 76
+      },
+      "primeRatings": {
+        "overall": 72,
+        "pace": 70,
+        "shooting": 52,
+        "passing": 68,
+        "dribbling": 61,
+        "defending": 79,
+        "physical": 74
+      }
+    },
+    {
+      "id": "christian-maggio-italy",
+      "name": "Christian Maggio",
+      "nationality": "Italy",
+      "broadPosition": "MF",
+      "shirtNumber": 11,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 68,
+        "pace": 62,
+        "shooting": 62,
+        "passing": 70,
+        "dribbling": 68,
+        "defending": 56,
+        "physical": 65
+      },
+      "primeRatings": {
+        "overall": 83,
+        "pace": 80,
+        "shooting": 74,
+        "passing": 86,
+        "dribbling": 82,
+        "defending": 71,
+        "physical": 78
+      }
+    },
+    {
+      "id": "hugo-campagnaro-argentina",
+      "name": "Hugo Campagnaro",
+      "nationality": "Argentina",
+      "broadPosition": "DF",
+      "shirtNumber": 14,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 71,
+        "pace": 65,
+        "shooting": 53,
+        "passing": 68,
+        "dribbling": 61,
+        "defending": 76,
+        "physical": 74
+      },
+      "primeRatings": {
+        "overall": 75,
+        "pace": 73,
+        "shooting": 56,
+        "passing": 68,
+        "dribbling": 65,
+        "defending": 82,
+        "physical": 76
+      }
+    },
+    {
+      "id": "roberto-colombo-italy",
+      "name": "Roberto Colombo",
+      "nationality": "Italy",
+      "broadPosition": "GK",
+      "shirtNumber": 15,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 75,
+        "pace": 47,
+        "shooting": 16,
+        "passing": 59,
+        "dribbling": 47,
+        "defending": 57,
+        "physical": 71,
+        "goalkeeping": 81
+      },
+      "primeRatings": {
+        "overall": 76,
+        "pace": 45,
+        "shooting": 18,
+        "passing": 59,
+        "dribbling": 45,
+        "defending": 55,
+        "physical": 71,
+        "goalkeeping": 83
+      }
+    },
+    {
+      "id": "eduardo-vargas-chile",
+      "name": "Eduardo Vargas",
+      "nationality": "Chile",
+      "broadPosition": "FW",
+      "shirtNumber": 16,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 76,
+        "pace": 82,
+        "shooting": 81,
+        "passing": 70,
+        "dribbling": 77,
+        "defending": 52,
+        "physical": 71
+      },
+      "primeRatings": {
+        "overall": 77,
+        "pace": 81,
+        "shooting": 86,
+        "passing": 67,
+        "dribbling": 80,
+        "defending": 54,
+        "physical": 72
+      }
+    },
+    {
+      "id": "marek-ham-k-slovakia",
+      "name": "Marek Hamšík",
+      "nationality": "Slovakia",
+      "broadPosition": "MF",
+      "shirtNumber": 17,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 70,
+        "pace": 66,
+        "shooting": 63,
+        "passing": 74,
+        "dribbling": 72,
+        "defending": 61,
+        "physical": 65
+      },
+      "primeRatings": {
+        "overall": 92,
+        "pace": 90,
+        "shooting": 87,
+        "passing": 95,
+        "dribbling": 93,
+        "defending": 81,
+        "physical": 89
+      }
+    },
+    {
+      "id": "juan-z-iga-colombia",
+      "name": "Juan Zúñiga",
+      "nationality": "Colombia",
+      "broadPosition": "DF",
+      "shirtNumber": 18,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 69,
+        "pace": 62,
+        "shooting": 49,
+        "passing": 64,
+        "dribbling": 59,
+        "defending": 75,
+        "physical": 71
+      },
+      "primeRatings": {
+        "overall": 75,
+        "pace": 70,
+        "shooting": 58,
+        "passing": 70,
+        "dribbling": 66,
+        "defending": 85,
+        "physical": 76
+      }
+    },
+    {
+      "id": "blerim-d-emaili-switzerland",
+      "name": "Blerim Džemaili",
+      "nationality": "Switzerland",
+      "broadPosition": "MF",
+      "shirtNumber": 20,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 75,
+        "pace": 74,
+        "shooting": 65,
+        "passing": 81,
+        "dribbling": 74,
+        "defending": 62,
+        "physical": 69
+      },
+      "primeRatings": {
+        "overall": 87,
+        "pace": 86,
+        "shooting": 82,
+        "passing": 93,
+        "dribbling": 89,
+        "defending": 74,
+        "physical": 84
+      }
+    },
+    {
+      "id": "federico-fern-ndez-argentina",
+      "name": "Federico Fernández",
+      "nationality": "Argentina",
+      "broadPosition": "DF",
+      "shirtNumber": 21,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 76,
+        "pace": 73,
+        "shooting": 53,
+        "passing": 69,
+        "dribbling": 64,
+        "defending": 82,
+        "physical": 80
+      },
+      "primeRatings": {
+        "overall": 80,
+        "pace": 74,
+        "shooting": 60,
+        "passing": 78,
+        "dribbling": 67,
+        "defending": 89,
+        "physical": 85
+      }
+    },
+    {
+      "id": "ezequiel-lavezzi-argentina",
+      "name": "Ezequiel Lavezzi",
+      "nationality": "Argentina",
+      "broadPosition": "FW",
+      "shirtNumber": 22,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 75,
+        "pace": 80,
+        "shooting": 86,
+        "passing": 68,
+        "dribbling": 78,
+        "defending": 51,
+        "physical": 71
+      },
+      "primeRatings": {
+        "overall": 90,
+        "pace": 95,
+        "shooting": 98,
+        "passing": 81,
+        "dribbling": 95,
+        "defending": 66,
+        "physical": 89
+      }
+    },
+    {
+      "id": "walter-gargano-uruguay",
+      "name": "Walter Gargano",
+      "nationality": "Uruguay",
+      "broadPosition": "MF",
+      "shirtNumber": 23,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 70,
+        "pace": 66,
+        "shooting": 63,
+        "passing": 75,
+        "dribbling": 72,
+        "defending": 58,
+        "physical": 66
+      },
+      "primeRatings": {
+        "overall": 75,
+        "pace": 69,
+        "shooting": 68,
+        "passing": 80,
+        "dribbling": 77,
+        "defending": 68,
+        "physical": 74
+      }
+    },
+    {
+      "id": "paolo-cannavaro-italy",
+      "name": "Paolo Cannavaro",
+      "nationality": "Italy",
+      "broadPosition": "DF",
+      "shirtNumber": 28,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 71,
+        "pace": 65,
+        "shooting": 52,
+        "passing": 64,
+        "dribbling": 59,
+        "defending": 76,
+        "physical": 74
+      },
+      "primeRatings": {
+        "overall": 76,
+        "pace": 68,
+        "shooting": 56,
+        "passing": 71,
+        "dribbling": 68,
+        "defending": 86,
+        "physical": 76
+      }
+    },
+    {
+      "id": "goran-pandev-macedonia",
+      "name": "Goran Pandev",
+      "nationality": "Macedonia",
+      "broadPosition": "FW",
+      "shirtNumber": 29,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 74,
+        "pace": 78,
+        "shooting": 83,
+        "passing": 66,
+        "dribbling": 77,
+        "defending": 49,
+        "physical": 73
+      },
+      "primeRatings": {
+        "overall": 85,
+        "pace": 88,
+        "shooting": 92,
+        "passing": 77,
+        "dribbling": 86,
+        "defending": 60,
+        "physical": 84
+      }
+    },
+    {
+      "id": "jacopo-dezi-italy",
+      "name": "Jacopo Dezi",
+      "nationality": "Italy",
+      "broadPosition": "MF",
+      "shirtNumber": 31,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 73,
+        "pace": 71,
+        "shooting": 67,
+        "passing": 80,
+        "dribbling": 73,
+        "defending": 62,
+        "physical": 68
+      },
+      "primeRatings": {
+        "overall": 74,
+        "pace": 72,
+        "shooting": 69,
+        "passing": 77,
+        "dribbling": 76,
+        "defending": 64,
+        "physical": 72
+      }
+    },
+    {
+      "id": "antonio-rosati-italy",
+      "name": "Antonio Rosati",
+      "nationality": "Italy",
+      "broadPosition": "GK",
+      "shirtNumber": 83,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 69,
+        "pace": 43,
+        "shooting": 16,
+        "passing": 57,
+        "dribbling": 40,
+        "defending": 47,
+        "physical": 62,
+        "goalkeeping": 79
+      },
+      "primeRatings": {
+        "overall": 70,
+        "pace": 43,
+        "shooting": 20,
+        "passing": 54,
+        "dribbling": 41,
+        "defending": 51,
+        "physical": 64,
+        "goalkeeping": 78
+      }
+    },
+    {
+      "id": "miguel-britos-uruguay",
+      "name": "Miguel Britos",
+      "nationality": "Uruguay",
+      "broadPosition": "DF",
+      "shirtNumber": 85,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 69,
+        "pace": 62,
+        "shooting": 47,
+        "passing": 66,
+        "dribbling": 57,
+        "defending": 75,
+        "physical": 69
+      },
+      "primeRatings": {
+        "overall": 72,
+        "pace": 65,
+        "shooting": 53,
+        "passing": 65,
+        "dribbling": 62,
+        "defending": 78,
+        "physical": 75
+      }
+    },
+    {
+      "id": "g-khan-inler-switzerland",
+      "name": "Gökhan Inler",
+      "nationality": "Switzerland",
+      "broadPosition": "MF",
+      "shirtNumber": 88,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 74,
+        "pace": 72,
+        "shooting": 65,
+        "passing": 77,
+        "dribbling": 73,
+        "defending": 67,
+        "physical": 70
+      },
+      "primeRatings": {
+        "overall": 85,
+        "pace": 80,
+        "shooting": 77,
+        "passing": 89,
+        "dribbling": 88,
+        "defending": 75,
+        "physical": 85
+      }
+    },
+    {
+      "id": "massimiliano-ammendola-italy",
+      "name": "Massimiliano Ammendola",
+      "nationality": "Italy",
+      "broadPosition": "MF",
+      "shirtNumber": 90,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 74,
+        "pace": 72,
+        "shooting": 67,
+        "passing": 76,
+        "dribbling": 75,
+        "defending": 66,
+        "physical": 74
+      },
+      "primeRatings": {
+        "overall": 75,
+        "pace": 71,
+        "shooting": 70,
+        "passing": 81,
+        "dribbling": 77,
+        "defending": 64,
+        "physical": 72
+      }
+    },
+    {
+      "id": "cristiano-lucarelli-italy",
+      "name": "Cristiano Lucarelli",
+      "nationality": "Italy",
+      "broadPosition": "FW",
+      "shirtNumber": 99,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 76,
+        "pace": 82,
+        "shooting": 81,
+        "passing": 69,
+        "dribbling": 78,
+        "defending": 52,
+        "physical": 72
+      },
+      "primeRatings": {
+        "overall": 77,
+        "pace": 80,
+        "shooting": 86,
+        "passing": 72,
+        "dribbling": 81,
+        "defending": 53,
+        "physical": 76
+      }
+    }
+  ],
+  "sourceUrl": "https://en.wikipedia.org/wiki/2011%E2%80%9312_SSC_Napoli_season",
+  "scrapedAt": "2026-07-08T18:01:07.913Z"
+}

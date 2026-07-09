@@ -1,14 +1,174 @@
 @import "tailwindcss";
 
+/* ============ The Collector's Matchday — design tokens ============ */
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
+
+  --paper: #f6efdf;
+  --card: #fdfaf1;
+  --paper-deep: #ede3cb;
+  --panel: #efe7d2;
+  --ink: #1d2b45;
+  --ink-hover: #16223a;
+  --text: #3c3325;
+  --soft: #6b5f4a;
+  --line: #c9b98f;
+  --border: #d8cbad;
+  --brick: #a83e2c;
+  --brick-hover: #8e3222;
+  --card-shadow: #ddd1b2;
+  --grass-a: #5e9468;
+  --grass-b: #548a5e;
+  --btn-bg: #1d2b45;
+  --btn-fg: #f6efdf;
+  --btn-shadow: #c9b98f;
+  --btn-divider: rgba(246, 239, 223, 0.5);
+  --hint-border: #a83e2c;
+  --hint-bg: #fbefe3;
+  --hint-fg: #7e2e20;
+  --pip-border: #1d2b45;
+  --pip-empty: #f6efdf;
+  --pip-filled: #a83e2c;
+  --drum-rim: #1d2b45;
+  --toggle-border: #a99a78;
+  --toggle-track: #ede3cb;
+  --knob-bg: #6b5f4a;
+
+  --app-bg: var(--paper)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.3 0 0 0 0 0.2 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Floodlights (night mode): mown-grass stripes, chalk-cream ink. Physical print objects
+   (stickers, tickets, drum hub) intentionally stay cream via hardcoded colors. */
+:root[data-floodlights="on"] {
+  color-scheme: dark;
+
+  --paper: #16301f;
+  --card: #1e3a28;
+  --paper-deep: #0d1d12;
+  --panel: #122419;
+  --ink: #f2ead3;
+  --ink-hover: #e6dcbc;
+  --text: #d9cfaf;
+  --soft: #afb894;
+  --line: #33523d;
+  --border: #2c4936;
+  --brick: #e0876b;
+  --brick-hover: #d0714f;
+  --card-shadow: #0a160e;
+  --grass-a: #2f5b3c;
+  --grass-b: #295134;
+  --btn-bg: #f2ead3;
+  --btn-fg: #14291b;
+  --btn-shadow: #0a160e;
+  --btn-divider: rgba(20, 41, 27, 0.4);
+  --hint-border: #e0876b;
+  --hint-bg: #1c3223;
+  --hint-fg: #f0cdb9;
+  --pip-border: #f2ead3;
+  --pip-empty: #122418;
+  --pip-filled: #e0876b;
+  --drum-rim: #f2ead3;
+  --toggle-border: #4a6a52;
+  --toggle-track: #2f5b3c;
+  --knob-bg: #f2ead3;
+
+  --app-bg: repeating-linear-gradient(0deg, #16301f 0 84px, #122818 84px 168px);
 }
 
 body {
   margin: 0;
-  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+  font-family: Archivo, system-ui, sans-serif;
+  background: var(--app-bg);
+  color: var(--text);
+  transition: background 0.4s, color 0.4s;
 }
 
 #root {
   min-height: 100svh;
+}
+
+.font-display {
+  font-family: "Bodoni Moda", serif;
+}
+.font-stamp {
+  font-family: Graduate, serif;
+}
+
+/* Scalloped sticker edge */
+.sticker-mask {
+  -webkit-mask: radial-gradient(6px, #000 97%, #0000) -6px -6px/11px 11px round;
+  mask: radial-gradient(6px, #000 97%, #0000) -6px -6px/11px 11px round;
+}
+.sticker-mask-lg {
+  -webkit-mask: radial-gradient(9px, #000 97%, #0000) -9px -9px/16px 16px round;
+  mask: radial-gradient(9px, #000 97%, #0000) -9px -9px/16px 16px round;
+}
+
+/* Foil gold surfaces */
+.foil-bg {
+  background: linear-gradient(105deg, #d9bc5f, #f0de9a 35%, #c7a63e 55%, #ead388);
+}
+.foil-card-bg {
+  background: linear-gradient(120deg, #c7a63e, #f0de9a 30%, #b08a2e 55%, #e8ce7e 80%, #c7a63e);
+}
+.foil-text {
+  background: linear-gradient(105deg, #8c6a1d, #e5c96b 45%, #8c6a1d);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@keyframes foilSheen {
+  0% { background-position: -160% 0; }
+  55% { background-position: 260% 0; }
+  100% { background-position: 260% 0; }
+}
+@keyframes foilCardSheen {
+  0% { transform: translateX(-130%) rotate(18deg); }
+  55% { transform: translateX(230%) rotate(18deg); }
+  100% { transform: translateX(230%) rotate(18deg); }
+}
+@keyframes compatPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 217, 138, 0.75); }
+  50% { box-shadow: 0 0 0 8px rgba(255, 217, 138, 0); }
+}
+@keyframes stampIn {
+  0% { transform: translate(-50%, -50%) scale(1.45) rotate(-7deg); opacity: 0; }
+  62% { transform: translate(-50%, -50%) scale(0.96) rotate(1.6deg); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1) rotate(0); }
+}
+@keyframes stampInStatic {
+  0% { transform: scale(1.45) rotate(-7deg); opacity: 0; }
+  62% { transform: scale(0.96) rotate(1.6deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0); }
+}
+@keyframes ticketOut {
+  0% { transform: translateY(-14px); opacity: 0; }
+  70% { transform: translateY(3px); opacity: 1; }
+  100% { transform: translateY(0); }
+}
+@keyframes drumIdle {
+  0%, 100% { transform: rotate(-2.5deg); }
+  50% { transform: rotate(2.5deg); }
+}
+@keyframes wobble {
+  0%, 100% { transform: rotate(-1.2deg); }
+  50% { transform: rotate(1.2deg); }
+}
+@keyframes printIn {
+  0% { transform: translateY(-6px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sheen-layer,
+  [style*="drumIdle"],
+  [style*="compatPulse"] {
+    animation: none !important;
+  }
+}
+
+input[type="range"] {
+  accent-color: var(--brick);
 }

@@ -1,0 +1,532 @@
+{
+  "leagueId": "ligue-1",
+  "clubId": "nantes",
+  "season": "2012-13",
+  "division": "unknown",
+  "squad": [
+    {
+      "id": "athanasiadis-gre",
+      "name": "Athanasiadis",
+      "nationality": "GRE",
+      "broadPosition": "FW",
+      "shirtNumber": 33,
+      "stats": {
+        "appearances": 23,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 71,
+        "pace": 73,
+        "shooting": 79,
+        "passing": 65,
+        "dribbling": 75,
+        "defending": 44,
+        "physical": 70
+      },
+      "primeRatings": {
+        "overall": 72,
+        "pace": 72,
+        "shooting": 81,
+        "passing": 65,
+        "dribbling": 73,
+        "defending": 47,
+        "physical": 69
+      }
+    },
+    {
+      "id": "dimitris-salpingidis-gre",
+      "name": "Dimitris Salpingidis",
+      "nationality": "GRE",
+      "broadPosition": "FW",
+      "shirtNumber": 14,
+      "stats": {
+        "appearances": 14,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 65,
+        "pace": 65,
+        "shooting": 73,
+        "passing": 55,
+        "dribbling": 66,
+        "defending": 40,
+        "physical": 64
+      },
+      "primeRatings": {
+        "overall": 66,
+        "pace": 68,
+        "shooting": 72,
+        "passing": 57,
+        "dribbling": 70,
+        "defending": 42,
+        "physical": 62
+      }
+    },
+    {
+      "id": "kostas-katsouranis-gre",
+      "name": "Kostas Katsouranis",
+      "nationality": "GRE",
+      "broadPosition": "MF",
+      "shirtNumber": 28,
+      "stats": {
+        "appearances": 5,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 62,
+        "pace": 59,
+        "shooting": 55,
+        "passing": 68,
+        "dribbling": 64,
+        "defending": 49,
+        "physical": 61
+      },
+      "primeRatings": {
+        "overall": 63,
+        "pace": 62,
+        "shooting": 53,
+        "passing": 69,
+        "dribbling": 63,
+        "defending": 56,
+        "physical": 62
+      }
+    },
+    {
+      "id": "liam-lawrence-irl",
+      "name": "Liam Lawrence",
+      "nationality": "IRL",
+      "broadPosition": "MF",
+      "shirtNumber": 20,
+      "stats": {
+        "appearances": 4,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 62,
+        "pace": 58,
+        "shooting": 57,
+        "passing": 70,
+        "dribbling": 62,
+        "defending": 50,
+        "physical": 58
+      },
+      "primeRatings": {
+        "overall": 63,
+        "pace": 59,
+        "shooting": 58,
+        "passing": 71,
+        "dribbling": 63,
+        "defending": 51,
+        "physical": 58
+      }
+    },
+    {
+      "id": "costin-laz-r-rom",
+      "name": "Costin Lazăr",
+      "nationality": "ROM",
+      "broadPosition": "MF",
+      "shirtNumber": 25,
+      "stats": {
+        "appearances": 3,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 61,
+        "pace": 57,
+        "shooting": 51,
+        "passing": 68,
+        "dribbling": 58,
+        "defending": 49,
+        "physical": 60
+      },
+      "primeRatings": {
+        "overall": 62,
+        "pace": 58,
+        "shooting": 57,
+        "passing": 68,
+        "dribbling": 64,
+        "defending": 50,
+        "physical": 58
+      }
+    },
+    {
+      "id": "bertrand-robert-fra",
+      "name": "Bertrand Robert",
+      "nationality": "FRA",
+      "broadPosition": "MF",
+      "shirtNumber": 11,
+      "stats": {
+        "appearances": 3,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 61,
+        "pace": 58,
+        "shooting": 52,
+        "passing": 64,
+        "dribbling": 62,
+        "defending": 50,
+        "physical": 56
+      },
+      "primeRatings": {
+        "overall": 62,
+        "pace": 57,
+        "shooting": 52,
+        "passing": 68,
+        "dribbling": 62,
+        "defending": 52,
+        "physical": 57
+      }
+    },
+    {
+      "id": "giorgos-fotakis-gre",
+      "name": "Giorgos Fotakis",
+      "nationality": "GRE",
+      "broadPosition": "MF",
+      "shirtNumber": 18,
+      "stats": {
+        "appearances": 3,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 60,
+        "pace": 55,
+        "shooting": 54,
+        "passing": 66,
+        "dribbling": 58,
+        "defending": 52,
+        "physical": 59
+      },
+      "primeRatings": {
+        "overall": 61,
+        "pace": 60,
+        "shooting": 55,
+        "passing": 68,
+        "dribbling": 63,
+        "defending": 53,
+        "physical": 58
+      }
+    },
+    {
+      "id": "giorgos-katsikas-gre",
+      "name": "Giorgos Katsikas",
+      "nationality": "GRE",
+      "broadPosition": "DF",
+      "shirtNumber": 4,
+      "stats": {
+        "appearances": 3,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 60,
+        "pace": 53,
+        "shooting": 37,
+        "passing": 57,
+        "dribbling": 49,
+        "defending": 66,
+        "physical": 64
+      },
+      "primeRatings": {
+        "overall": 61,
+        "pace": 54,
+        "shooting": 40,
+        "passing": 56,
+        "dribbling": 52,
+        "defending": 70,
+        "physical": 65
+      }
+    },
+    {
+      "id": "apostolos-giannou-gre",
+      "name": "Apostolos Giannou",
+      "nationality": "GRE",
+      "broadPosition": "FW",
+      "shirtNumber": 99,
+      "stats": {
+        "appearances": 3,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 60,
+        "pace": 60,
+        "shooting": 70,
+        "passing": 50,
+        "dribbling": 64,
+        "defending": 33,
+        "physical": 56
+      },
+      "primeRatings": {
+        "overall": 61,
+        "pace": 66,
+        "shooting": 66,
+        "passing": 55,
+        "dribbling": 64,
+        "defending": 36,
+        "physical": 60
+      }
+    },
+    {
+      "id": "abdoul-camara-gui",
+      "name": "Abdoul Camara",
+      "nationality": "GUI",
+      "broadPosition": "FW",
+      "shirtNumber": 90,
+      "stats": {
+        "appearances": 2,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 62,
+        "pace": 66,
+        "shooting": 70,
+        "passing": 53,
+        "dribbling": 64,
+        "defending": 38,
+        "physical": 60
+      },
+      "primeRatings": {
+        "overall": 63,
+        "pace": 63,
+        "shooting": 71,
+        "passing": 53,
+        "dribbling": 67,
+        "defending": 38,
+        "physical": 58
+      }
+    },
+    {
+      "id": "zvonimir-vuki-ser",
+      "name": "Zvonimir Vukić",
+      "nationality": "SER",
+      "broadPosition": "MF",
+      "shirtNumber": 9,
+      "stats": {
+        "appearances": 2,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 62,
+        "pace": 60,
+        "shooting": 53,
+        "passing": 67,
+        "dribbling": 59,
+        "defending": 49,
+        "physical": 61
+      },
+      "primeRatings": {
+        "overall": 63,
+        "pace": 62,
+        "shooting": 53,
+        "passing": 66,
+        "dribbling": 62,
+        "defending": 50,
+        "physical": 57
+      }
+    },
+    {
+      "id": "lino-gre",
+      "name": "Lino",
+      "nationality": "GRE",
+      "broadPosition": "DF",
+      "shirtNumber": 16,
+      "stats": {
+        "appearances": 2,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 62,
+        "pace": 58,
+        "shooting": 39,
+        "passing": 57,
+        "dribbling": 50,
+        "defending": 69,
+        "physical": 65
+      },
+      "primeRatings": {
+        "overall": 63,
+        "pace": 61,
+        "shooting": 44,
+        "passing": 58,
+        "dribbling": 56,
+        "defending": 68,
+        "physical": 67
+      }
+    },
+    {
+      "id": "giorgos-georgiadis-gre",
+      "name": "Giorgos Georgiadis",
+      "nationality": "GRE",
+      "broadPosition": "MF",
+      "shirtNumber": 7,
+      "stats": {
+        "appearances": 2,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 60,
+        "pace": 56,
+        "shooting": 52,
+        "passing": 67,
+        "dribbling": 62,
+        "defending": 47,
+        "physical": 57
+      },
+      "primeRatings": {
+        "overall": 61,
+        "pace": 55,
+        "shooting": 52,
+        "passing": 65,
+        "dribbling": 61,
+        "defending": 49,
+        "physical": 55
+      }
+    },
+    {
+      "id": "kostas-stafylidis-gre",
+      "name": "Kostas Stafylidis",
+      "nationality": "GRE",
+      "broadPosition": "DF",
+      "shirtNumber": 3,
+      "stats": {
+        "appearances": 2,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 60,
+        "pace": 54,
+        "shooting": 42,
+        "passing": 57,
+        "dribbling": 48,
+        "defending": 65,
+        "physical": 63
+      },
+      "primeRatings": {
+        "overall": 67,
+        "pace": 62,
+        "shooting": 48,
+        "passing": 61,
+        "dribbling": 57,
+        "defending": 75,
+        "physical": 69
+      }
+    },
+    {
+      "id": "ergys-ka-e-alb",
+      "name": "Ergys Kaçe",
+      "nationality": "ALB",
+      "broadPosition": "MF",
+      "shirtNumber": 26,
+      "stats": {
+        "appearances": 1,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 60,
+        "pace": 55,
+        "shooting": 49,
+        "passing": 63,
+        "dribbling": 63,
+        "defending": 49,
+        "physical": 56
+      },
+      "primeRatings": {
+        "overall": 61,
+        "pace": 60,
+        "shooting": 53,
+        "passing": 67,
+        "dribbling": 62,
+        "defending": 49,
+        "physical": 59
+      }
+    },
+    {
+      "id": "dimitrios-pelkas-gre",
+      "name": "Dimitrios Pelkas",
+      "nationality": "GRE",
+      "broadPosition": "MF",
+      "shirtNumber": 10,
+      "stats": {
+        "appearances": 1,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 61,
+        "pace": 58,
+        "shooting": 54,
+        "passing": 66,
+        "dribbling": 64,
+        "defending": 54,
+        "physical": 56
+      },
+      "primeRatings": {
+        "overall": 62,
+        "pace": 59,
+        "shooting": 51,
+        "passing": 67,
+        "dribbling": 60,
+        "defending": 53,
+        "physical": 58
+      }
+    },
+    {
+      "id": "gordon-schildenfeld-cro",
+      "name": "Gordon Schildenfeld",
+      "nationality": "CRO",
+      "broadPosition": "DF",
+      "shirtNumber": 13,
+      "stats": {
+        "appearances": 1,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 62,
+        "pace": 59,
+        "shooting": 40,
+        "passing": 55,
+        "dribbling": 50,
+        "defending": 67,
+        "physical": 65
+      },
+      "primeRatings": {
+        "overall": 63,
+        "pace": 60,
+        "shooting": 43,
+        "passing": 59,
+        "dribbling": 55,
+        "defending": 73,
+        "physical": 65
+      }
+    },
+    {
+      "id": "sekou-oliseh-liberia",
+      "name": "Sekou Oliseh",
+      "nationality": "Liberia",
+      "broadPosition": "MF",
+      "shirtNumber": 62,
+      "stats": {
+        "appearances": 1,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 60,
+        "pace": 55,
+        "shooting": 53,
+        "passing": 68,
+        "dribbling": 63,
+        "defending": 52,
+        "physical": 55
+      },
+      "primeRatings": {
+        "overall": 61,
+        "pace": 56,
+        "shooting": 54,
+        "passing": 64,
+        "dribbling": 62,
+        "defending": 52,
+        "physical": 55
+      }
+    }
+  ],
+  "sourceUrl": "https://en.wikipedia.org/wiki/2012%E2%80%9313_PAOK_FC_season",
+  "scrapedAt": "2026-07-09T06:12:15.270Z"
+}

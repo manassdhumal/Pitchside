@@ -1,24 +1,32 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import type { DraftSettings, Player, Position, RealPlayerRecord, Team, ClubSeason } from '../types';
 import { REROLLS_BY_DIFFICULTY } from '../types';
 import { FORMATION_SLOTS } from '../data/formations';
-import { getClub } from '../data/leagues';
+import { getClub, getLeague } from '../data/leagues';
 import {
-  loadIndex, filterEntries, pickRandomEntry, loadClubSeason,
+  loadIndex, filterEntries, loadClubSeason,
   isPositionCompatible, realPlayerToEnginePlayer, type ClubSeasonIndexEntry,
 } from '../data/historicalData';
-import { PitchDiagram, type PitchSlotContent } from '../components/pitch/PitchDiagram';
 import { putPlayers, putTeam } from '../storage/cache';
 import { useAppDispatch } from '../state/AppContext';
+import { ProgrammeNav, ProgrammeFooter } from '../components/chrome/ProgrammeChrome';
+import { RaffleDrum, LEAGUE_INKS, POSITION_INKS } from '../components/chrome/RaffleDrum';
 
-const COLOR_PAIRS: [string, string][] = [
-  ['#dc2626', '#111827'], ['#2563eb', '#f8fafc'], ['#16a34a', '#f8fafc'],
-  ['#7c3aed', '#f8fafc'], ['#ea580c', '#111827'], ['#0891b2', '#111827'],
+const KITS: { name: string; c1: string; c2: string }[] = [
+  { name: 'Claret & Blue', c1: '#7A2E3B', c2: '#2F5D8A' },
+  { name: 'Navy & Gold', c1: '#1D2B45', c2: '#C7A63E' },
+  { name: 'Brick & Cream', c1: '#A83E2C', c2: '#F6EFDF' },
+  { name: 'Green & White', c1: '#3E7A4E', c2: '#FDFAF1' },
+  { name: 'Amber & Black', c1: '#B4691E', c2: '#26221A' },
+  { name: 'Violet & Sky', c1: '#4A3070', c2: '#9BB8D3' },
 ];
+
+const SPIN_MS = 4300;
 
 interface FilledSlot {
   player: Player;
+  record: RealPlayerRecord;
   clubName: string;
   season: string;
 }
@@ -32,16 +40,16 @@ export default function Draft() {
   const [entries, setEntries] = useState<ClubSeasonIndexEntry[] | null>(null);
   const [filled, setFilled] = useState<(FilledSlot | null)[]>([]);
   const [selectedSlot, setSelectedSlot] = useState<number | null>(null);
-  const [spinning, setSpinning] = useState(false);
-  const [spinLabel, setSpinLabel] = useState('');
+  const [phase, setPhase] = useState<'ready' | 'spinning' | 'revealed'>('ready');
+  const [drumRot, setDrumRot] = useState(0);
   const [currentClubSeason, setCurrentClubSeason] = useState<ClubSeason | null>(null);
   const [pendingRecord, setPendingRecord] = useState<RealPlayerRecord | null>(null);
   const [rerollsLeft, setRerollsLeft] = useState(0);
-  const [teamName, setTeamName] = useState('My All-Time XI');
-  const [colorIndex, setColorIndex] = useState(0);
+  const [teamName, setTeamName] = useState('Corinthian Wanderers');
+  const [kitIdx, setKitIdx] = useState(0);
   const [saving, setSaving] = useState(false);
 
-  const spinTimer = useRef<ReturnType<typeof setInterval> | null>(null);
+  const spinTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastClubIdRef = useRef<string | null>(null);
 
   useEffect(() => {
@@ -51,10 +59,11 @@ export default function Draft() {
     setRerollsLeft(REROLLS_BY_DIFFICULTY[settings.difficulty]);
   }, [settings, navigate]);
 
-  useEffect(() => () => { if (spinTimer.current) clearInterval(spinTimer.current); }, []);
+  useEffect(() => () => { if (spinTimer.current) clearTimeout(spinTimer.current); }, []);
 
   const slots = useMemo(() => (settings ? FORMATION_SLOTS[settings.formation] : []), [settings]);
   const openSlotIndexes = useMemo(() => filled.map((f, i) => (f ? -1 : i)).filter((i) => i !== -1), [filled]);
+  const filledCount = filled.filter(Boolean).length;
   const allFilled = openSlotIndexes.length === 0 && filled.length > 0;
 
   const eligibleEntries = useMemo(() => {
@@ -62,20 +71,6 @@ export default function Draft() {
     return filterEntries(entries, { leagueIds: settings.leagueIds, seasonMin: settings.seasonMin, seasonMax: settings.seasonMax });
   }, [settings, entries]);
 
-  const targetBroadPositions = useMemo(() => {
-    if (!settings) return null;
-    if (settings.draftMode === 'position-first' && selectedSlot !== null) {
-      return new Set([slots[selectedSlot].position]);
-    }
-    return null; // squad-first: any position compatible with any open slot is fine
-  }, [settings, selectedSlot, slots]);
-
-  const canSpin = settings?.draftMode === 'squad-first' ? openSlotIndexes.length > 0 : selectedSlot !== null;
-
-  /**
-   * 38-0-style wheel: pick a club uniformly (so clubs with more scraped seasons don't dominate),
-   * then a random season for that club — avoiding the previously-landed club when possible.
-   */
   const pickSpinTarget = (): ClubSeasonIndexEntry | null => {
     const byClub = new Map<string, ClubSeasonIndexEntry[]>();
     for (const entry of eligibleEntries) {
@@ -93,42 +88,31 @@ export default function Draft() {
     return seasons[Math.floor(Math.random() * seasons.length)];
   };
 
+  const canSpin = settings?.draftMode === 'squad-first' ? openSlotIndexes.length > 0 : selectedSlot !== null;
+
   const handleSpin = () => {
-    if (!settings || eligibleEntries.length === 0 || !canSpin) return;
-    setSpinning(true);
+    if (!settings || eligibleEntries.length === 0 || !canSpin || phase === 'spinning') return;
+    const entry = pickSpinTarget();
+    if (!entry) return;
+    lastClubIdRef.current = entry.clubId;
+
+    setPhase('spinning');
     setCurrentClubSeason(null);
     setPendingRecord(null);
+    setDrumRot((r) => r + 6 * 360 + 40 + Math.random() * 280);
 
-    let ticks = 0;
-    spinTimer.current = setInterval(() => {
-      const random = pickRandomEntry(eligibleEntries);
-      if (random) {
-        const club = getClub(random.clubId);
-        setSpinLabel(`${club?.name ?? random.clubId} ${random.season}`);
-      }
-      ticks += 1;
-      if (ticks > 14) {
-        if (spinTimer.current) clearInterval(spinTimer.current);
-        finishSpin();
-      }
-    }, 80);
-  };
-
-  const finishSpin = async () => {
-    if (!settings) return;
-    const entry = pickSpinTarget();
-    if (!entry) { setSpinning(false); return; }
-    lastClubIdRef.current = entry.clubId;
-    const clubSeason = await loadClubSeason(entry.leagueId, entry.clubId, entry.season);
-    setCurrentClubSeason(clubSeason);
-    setSpinning(false);
+    const loading = loadClubSeason(entry.leagueId, entry.clubId, entry.season);
+    if (spinTimer.current) clearTimeout(spinTimer.current);
+    spinTimer.current = setTimeout(async () => {
+      const clubSeason = await loading;
+      setCurrentClubSeason(clubSeason);
+      setPhase('revealed');
+    }, SPIN_MS);
   };
 
   const handleReroll = () => {
-    if (rerollsLeft <= 0) return;
+    if (rerollsLeft <= 0 || phase === 'spinning') return;
     setRerollsLeft((r) => r - 1);
-    setCurrentClubSeason(null);
-    setPendingRecord(null);
     handleSpin();
   };
 
@@ -142,33 +126,28 @@ export default function Draft() {
 
     setFilled((prev) => {
       const next = [...prev];
-      next[targetIndex] = { player, clubName: club?.name ?? currentClubSeason.clubId, season: currentClubSeason.season };
+      next[targetIndex] = { player, record, clubName: club?.name ?? currentClubSeason.clubId, season: currentClubSeason.season };
       return next;
     });
     setCurrentClubSeason(null);
     setPendingRecord(null);
     setSelectedSlot(null);
+    setPhase('ready');
   };
 
-  /**
-   * 38-0 flow: pick the player first, then choose which compatible open slot to put them in.
-   * In position-first mode the slot was already chosen, so the pick places immediately.
-   */
   const draftPlayer = (record: RealPlayerRecord) => {
     if (!settings || !currentClubSeason) return;
-
     if (settings.draftMode === 'position-first' && selectedSlot !== null) {
       placeIntoSlot(record, selectedSlot);
       return;
     }
-
     const compatibleOpen = openSlotIndexes.filter((i) => isPositionCompatible(record.broadPosition, slots[i].position));
     if (compatibleOpen.length === 0) return;
     if (compatibleOpen.length === 1) {
       placeIntoSlot(record, compatibleOpen[0]);
       return;
     }
-    setPendingRecord(record);
+    setPendingRecord((prev) => (prev?.id === record.id ? null : record));
   };
 
   const removeSlot = (index: number) => {
@@ -179,20 +158,29 @@ export default function Draft() {
     });
   };
 
+  const handleSlotClick = (i: number) => {
+    if (pendingRecord && !filled[i] && isPositionCompatible(pendingRecord.broadPosition, slots[i].position)) {
+      placeIntoSlot(pendingRecord, i);
+      return;
+    }
+    if (filled[i]) { removeSlot(i); return; }
+    if (settings?.draftMode === 'position-first') setSelectedSlot(i);
+  };
+
   const handleConfirm = async () => {
     if (!settings || !allFilled) return;
     setSaving(true);
     const teamId = `team-user-${Date.now()}`;
-    const [primary, secondary] = COLOR_PAIRS[colorIndex];
+    const kit = KITS[kitIdx];
     const players = filled.map((f) => f!.player);
 
     const team: Team = {
       id: teamId,
-      name: teamName.trim() || 'My All-Time XI',
-      shortName: (teamName.trim() || 'XI').slice(0, 3).toUpperCase(),
+      name: teamName.trim() || 'Corinthian Wanderers',
+      shortName: (teamName.trim() || 'CW').slice(0, 3).toUpperCase(),
       country: 'INT',
-      crest: { shape: 'shield', primaryColor: primary, secondaryColor: secondary, icon: 'shield' },
-      colors: { primary, secondary },
+      crest: { shape: 'shield', primaryColor: kit.c1, secondaryColor: kit.c2, icon: 'shield' },
+      colors: { primary: kit.c1, secondary: kit.c2 },
       squad: players.map((p) => p.id),
       formation: settings.formation,
       isUserCreated: true,
@@ -207,165 +195,393 @@ export default function Draft() {
 
   if (!settings) return null;
 
-  const pitchContent: PitchSlotContent[] = slots.map((slot, i) => {
-    const f = filled[i];
-    if (f) {
-      return { label: f.player.lastName.slice(0, 8), sublabel: settings.showRatings ? `${f.player.ratings.overall} OVR` : undefined, filled: true };
-    }
-    const highlighted = pendingRecord
-      ? isPositionCompatible(pendingRecord.broadPosition, slot.position)
-      : settings.draftMode === 'position-first' && selectedSlot === i;
-    return { label: slot.position, filled: false, highlighted };
-  });
+  const kit = KITS[kitIdx];
+  const showRatings = settings.showRatings;
+  const club = currentClubSeason ? getClub(currentClubSeason.clubId) : null;
+  const league = currentClubSeason ? getLeague(currentClubSeason.leagueId) : null;
+  const clubInk = currentClubSeason ? (LEAGUE_INKS[currentClubSeason.leagueId] ?? '#1D2B45') : '#1D2B45';
 
-  const handleSlotClick = (i: number) => {
-    if (pendingRecord && !filled[i] && isPositionCompatible(pendingRecord.broadPosition, slots[i].position)) {
-      placeIntoSlot(pendingRecord, i);
-      return;
-    }
-    if (filled[i]) { removeSlot(i); return; }
-    if (settings.draftMode === 'position-first') setSelectedSlot(i);
-  };
+  const ratingOf = (r: RealPlayerRecord) =>
+    settings.ratingsMode === 'prime' ? r.primeRatings.overall : r.seasonRatings.overall;
+
+  const squadRows = currentClubSeason
+    ? currentClubSeason.squad
+        .filter((r) => {
+          if (settings.draftMode === 'position-first' && selectedSlot !== null) {
+            return isPositionCompatible(r.broadPosition, slots[selectedSlot].position);
+          }
+          return true;
+        })
+        .slice()
+        .sort((a, b) => ratingOf(b) - ratingOf(a))
+    : [];
+
+  const hintText = pendingRecord
+    ? `Now tap a striped slot on the pitch to stick ${pendingRecord.name.split(' ').pop()} in.`
+    : phase === 'revealed'
+      ? settings.draftMode === 'position-first'
+        ? 'Pick a player — he goes straight into your chosen slot.'
+        : `Pick a player from the ${club?.name ?? ''} squad — open slots for their position will light up.`
+      : settings.draftMode === 'position-first' && selectedSlot === null
+        ? 'Tap an empty slot on the pitch first, then spin the drum for it.'
+        : null;
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-10 text-neutral-100">
-      <h1 className="text-3xl font-bold">Draft your XI</h1>
-      <p className="mt-1 text-neutral-400">
-        {settings.draftMode === 'squad-first' ? 'Spin a club-season, draft any player who fits an open slot.' : 'Pick an open slot, then spin for a club-season to fill it.'}
-      </p>
+    <div className="flex min-h-svh flex-col">
+      <ProgrammeNav
+        left={
+          <Link to="/setup" className="no-underline hover:text-[var(--brick)]" style={{ color: 'var(--soft)' }}>
+            ← Setup
+          </Link>
+        }
+        right={
+          <span className="flex items-center gap-4">
+            <span className="font-stamp text-xs tracking-[0.06em]" style={{ color: 'var(--brick)' }}>
+              STICKER {Math.min(filledCount + 1, 11)} OF 11
+            </span>
+            <span className="inline-flex gap-[3px]">
+              {filled.map((f, i) => (
+                <span
+                  key={i}
+                  className="h-[11px] w-[9px] border"
+                  style={{
+                    borderColor: 'var(--pip-border)',
+                    background: f ? 'var(--pip-filled)' : 'var(--pip-empty)',
+                  }}
+                />
+              ))}
+            </span>
+          </span>
+        }
+      />
 
-      <div className="mt-4 flex flex-wrap items-center gap-3">
-        <input
-          value={teamName}
-          onChange={(e) => setTeamName(e.target.value)}
-          maxLength={24}
-          className="rounded-lg border border-neutral-700 bg-neutral-900 px-3 py-2 font-semibold text-neutral-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-        />
-        <button
-          type="button"
-          onClick={() => setColorIndex((i) => (i + 1) % COLOR_PAIRS.length)}
-          className="h-8 w-8 rounded-full border border-neutral-600"
-          style={{ backgroundColor: COLOR_PAIRS[colorIndex][0] }}
-          aria-label="Change color"
-        />
-      </div>
-
-      <div className="mt-6 grid gap-6 md:grid-cols-2">
-        <div>
-          <PitchDiagram
-            formation={settings.formation}
-            slotContent={pitchContent}
-            onSlotClick={handleSlotClick}
-          />
-          <p className="mt-2 text-center text-xs text-neutral-500">
-            {pendingRecord
-              ? `Placing ${pendingRecord.name} — tap a highlighted slot.`
-              : settings.draftMode === 'position-first'
-                ? 'Click an empty slot to select it, or a filled one to clear it.'
-                : 'Click a filled slot to clear it.'}
-          </p>
-          {pendingRecord && (
-            <div className="mt-2 flex items-center justify-center gap-2">
-              <span className="text-sm font-semibold text-amber-300">
-                {pendingRecord.name}
-                {settings.showRatings && ` · ${settings.ratingsMode === 'prime' ? pendingRecord.primeRatings.overall : pendingRecord.seasonRatings.overall} OVR`}
+      <main className="mx-auto grid w-full max-w-[1440px] flex-1 lg:grid-cols-[1.25fr_1fr]">
+        {/* ============ LEFT: ALBUM PAGE ============ */}
+        <section
+          className="px-5 pb-10 pt-7 sm:px-8 lg:border-r-[3px]"
+          style={{ borderColor: 'var(--line)', borderRightStyle: 'double' }}
+        >
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
+            <div className="flex flex-col gap-0.5">
+              <label className="text-[10px] uppercase tracking-[0.18em]" style={{ color: 'var(--soft)' }}>
+                Your club
+              </label>
+              <input
+                value={teamName}
+                onChange={(e) => setTeamName(e.target.value)}
+                maxLength={26}
+                className="font-display w-[290px] border-0 border-b-2 bg-transparent px-0 py-0.5 text-[26px] font-extrabold outline-none sm:w-[320px] sm:text-[30px]"
+                style={{ borderColor: 'var(--line)', color: 'var(--ink)' }}
+              />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <span className="text-[10px] uppercase tracking-[0.18em]" style={{ color: 'var(--soft)' }}>
+                Kit colours
               </span>
+              <div className="flex gap-2">
+                {KITS.map((k, i) => (
+                  <button
+                    key={k.name}
+                    type="button"
+                    title={k.name}
+                    onClick={() => setKitIdx(i)}
+                    className="h-6 w-[34px] cursor-pointer p-0"
+                    style={{
+                      background: `linear-gradient(135deg,${k.c1} 50%,${k.c2} 50%)`,
+                      border: `2px solid ${i === kitIdx ? 'var(--ink)' : 'var(--line)'}`,
+                      outline: i === kitIdx ? '2px solid var(--brick)' : 'none',
+                      outlineOffset: 2,
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* pitch */}
+          <div
+            className="relative mx-auto w-full max-w-[560px]"
+            style={{
+              aspectRatio: '4/5',
+              background: 'repeating-linear-gradient(0deg,var(--grass-a) 0 12.5%,var(--grass-b) 12.5% 25%)',
+              border: '8px solid var(--card)',
+              outline: '1px solid var(--border)',
+              boxShadow: '6px 6px 0 var(--card-shadow)',
+              boxSizing: 'border-box',
+              transition: 'background .4s,border-color .4s',
+            }}
+          >
+            <div className="absolute" style={{ inset: 14, border: '2px solid rgba(253,250,241,.72)' }} />
+            <div className="absolute left-3.5 right-3.5 top-1/2" style={{ borderTop: '2px solid rgba(253,250,241,.72)' }} />
+            <div
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
+              style={{ width: '22%', aspectRatio: '1', border: '2px solid rgba(253,250,241,.72)' }}
+            />
+            <div
+              className="absolute bottom-3.5 left-1/2 -translate-x-1/2"
+              style={{ width: '42%', height: '12%', border: '2px solid rgba(253,250,241,.72)', borderBottom: 'none' }}
+            />
+            <div
+              className="absolute left-1/2 top-3.5 -translate-x-1/2"
+              style={{ width: '42%', height: '12%', border: '2px solid rgba(253,250,241,.72)', borderTop: 'none' }}
+            />
+            <div className="absolute bottom-4 left-[18px] text-[9px] tracking-[0.2em]" style={{ color: 'rgba(253,250,241,.6)' }}>
+              ALBUM PAGE 07 · THE FIRST XI
+            </div>
+
+            {slots.map((slot, i) => {
+              const f = filled[i];
+              const compatible = !f && pendingRecord
+                ? isPositionCompatible(pendingRecord.broadPosition, slot.position)
+                : false;
+              const isSelected = settings.draftMode === 'position-first' && selectedSlot === i && !f;
+              const highlight = compatible || isSelected;
+
+              if (f) {
+                const rating = f.player.ratings.overall;
+                const foil = showRatings && rating >= 90;
+                return (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => handleSlotClick(i)}
+                    title="Tap to remove"
+                    className="sticker-mask absolute w-[92px] cursor-pointer border-0 p-1.5 sm:w-[96px]"
+                    style={{
+                      left: `${slot.x}%`,
+                      top: `${slot.y}%`,
+                      transform: 'translate(-50%,-50%)',
+                      background: foil
+                        ? 'linear-gradient(120deg,#C7A63E,#F0DE9A 35%,#B08A2E 60%,#E8CE7E)'
+                        : '#FDFAF1',
+                      animation: 'stampIn .45s cubic-bezier(.2,1.2,.4,1)',
+                    }}
+                  >
+                    <div
+                      className="px-1 pb-1 pt-1.5 text-center"
+                      style={{ border: `1.5px solid ${foil ? '#8C6A1D' : '#1D2B45'}`, background: '#FDFAF1' }}
+                    >
+                      <div className="flex items-center justify-between px-0.5">
+                        <span className="font-stamp px-1 text-[8.5px]" style={{ background: '#1D2B45', color: '#F6EFDF' }}>
+                          {slot.position}
+                        </span>
+                        <span className="font-stamp text-[13px]" style={{ color: foil ? '#8C6A1D' : '#A83E2C' }}>
+                          {showRatings ? rating : '—'}
+                        </span>
+                      </div>
+                      <div
+                        className="font-display mt-1 text-[12px] font-extrabold uppercase leading-[1.05]"
+                        style={{ color: '#1D2B45' }}
+                      >
+                        {f.player.lastName.length > 12 ? f.player.lastName.slice(0, 11) + '…' : f.player.lastName}
+                      </div>
+                      <div className="mt-1 flex justify-center">
+                        <span
+                          className="h-[11px] w-[18px]"
+                          style={{ background: `linear-gradient(135deg,${kit.c1} 50%,${kit.c2} 50%)`, border: '1px solid #1D2B45' }}
+                        />
+                      </div>
+                    </div>
+                  </button>
+                );
+              }
+
+              return (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => handleSlotClick(i)}
+                  className="absolute flex h-[96px] w-[80px] flex-col items-center justify-center gap-1.5 p-0 sm:h-[104px] sm:w-[88px]"
+                  style={{
+                    left: `${slot.x}%`,
+                    top: `${slot.y}%`,
+                    transform: 'translate(-50%,-50%)',
+                    cursor: highlight || settings.draftMode === 'position-first' ? 'pointer' : 'default',
+                    border: highlight ? '2.5px solid #FFD98A' : '2px dashed rgba(253,250,241,.85)',
+                    background: highlight
+                      ? 'repeating-linear-gradient(45deg,rgba(168,62,44,.55) 0 7px,rgba(168,62,44,.3) 7px 14px)'
+                      : 'rgba(29,43,69,.15)',
+                    animation: highlight ? 'compatPulse 1.6s ease-in-out infinite' : 'none',
+                  }}
+                >
+                  <span className="font-stamp text-[15px]" style={{ color: '#FDFAF1' }}>{slot.position}</span>
+                  <span
+                    className="px-1.5 py-0.5 text-[9.5px] font-bold tracking-[0.1em]"
+                    style={{
+                      background: highlight ? '#FFD98A' : 'transparent',
+                      color: highlight ? '#4A2410' : 'rgba(253,250,241,.85)',
+                    }}
+                  >
+                    {compatible ? '▸ PLACE' : isSelected ? '▸ CHOSEN' : slot.position === 'GK' ? 'KEEPER' : 'EMPTY'}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {hintText && !allFilled && (
+            <div
+              className="mx-auto mt-4 flex max-w-[560px] items-center gap-2.5 border-[1.5px] px-4 py-3 text-[13px]"
+              style={{ borderColor: 'var(--hint-border)', background: 'var(--hint-bg)', color: 'var(--hint-fg)' }}
+            >
+              <span className="font-stamp text-xs">▸</span>
+              {hintText}
+            </div>
+          )}
+
+          {allFilled && (
+            <div className="mx-auto mt-5 max-w-[560px] text-center">
+              <div className="font-display mb-3.5 text-[19px] italic" style={{ color: 'var(--text)' }}>
+                The page is complete. Eleven stickers, one season ahead.
+              </div>
               <button
                 type="button"
-                onClick={() => setPendingRecord(null)}
-                className="rounded border border-neutral-600 px-2 py-0.5 text-xs text-neutral-300 hover:bg-neutral-800"
+                onClick={handleConfirm}
+                disabled={saving}
+                className="font-stamp foil-bg relative inline-block cursor-pointer overflow-hidden px-7 py-4 text-[17px] tracking-[0.1em] hover:brightness-105 disabled:opacity-60"
+                style={{ color: '#3B2C08', border: '1.5px solid #8C6A1D' }}
               >
-                Cancel
+                <span
+                  className="sheen-layer pointer-events-none absolute inset-0"
+                  style={{
+                    background: 'linear-gradient(105deg,transparent 38%,rgba(255,255,255,.75) 50%,transparent 62%)',
+                    backgroundSize: '220% 100%',
+                    animation: 'foilSheen 3.2s ease-in-out infinite',
+                  }}
+                />
+                {saving ? 'SAVING…' : 'KICK OFF THE SEASON →'}
               </button>
             </div>
           )}
-        </div>
+        </section>
 
-        <div>
-          {!currentClubSeason && !spinning && (
-            <div className="flex h-full flex-col items-center justify-center gap-4 rounded-xl border border-neutral-700 bg-neutral-900 p-8 text-center">
-              <p className="text-neutral-400">
-                {allFilled ? 'Squad complete!' : eligibleEntries.length === 0 ? 'No club-seasons match your settings.' : 'Ready to spin.'}
+        {/* ============ RIGHT: THE DRAW ============ */}
+        <section
+          className="flex flex-col gap-4 px-5 pb-10 pt-7 sm:px-8"
+          style={{ background: 'var(--panel)', transition: 'background .4s' }}
+        >
+          <div className="flex items-baseline justify-between">
+            <h2 className="font-display m-0 text-[26px] font-extrabold" style={{ color: 'var(--ink)' }}>The draw</h2>
+            <span className="text-xs" style={{ color: 'var(--soft)' }}>
+              Re-rolls left: <b className="font-stamp" style={{ color: 'var(--brick)' }}>{rerollsLeft}</b>
+            </span>
+          </div>
+
+          <div className="flex flex-col items-center gap-4">
+            <RaffleDrum
+              size={230}
+              rotation={drumRot}
+              spinning={phase === 'spinning'}
+              label={phase === 'spinning' ? '…' : 'SPIN'}
+              subLabel={`${eligibleEntries.length.toLocaleString()} TICKETS IN`}
+            />
+            {phase === 'ready' && !allFilled && (
+              <button
+                type="button"
+                onClick={handleSpin}
+                disabled={!canSpin || eligibleEntries.length === 0}
+                className="flex cursor-pointer items-center gap-3.5 border-0 px-4 py-3.5 pl-6 text-[15px] font-bold uppercase tracking-[0.06em] transition-transform hover:-translate-x-px hover:-translate-y-px active:translate-x-0.5 active:translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
+                style={{ background: 'var(--btn-bg)', color: 'var(--btn-fg)', boxShadow: '4px 4px 0 var(--btn-shadow)' }}
+              >
+                {filledCount === 0 ? 'Spin the drum' : 'Spin again'}
+                <span className="font-stamp border-l-[1.5px] border-dashed pl-3.5 text-[13px]" style={{ borderColor: 'var(--btn-divider)' }}>
+                  ↻
+                </span>
+              </button>
+            )}
+            {phase === 'spinning' && (
+              <div
+                className="font-display text-[17px] italic"
+                style={{ color: 'var(--soft)', animation: 'wobble 1s ease-in-out infinite' }}
+              >
+                Drawing a ticket…
+              </div>
+            )}
+            {phase === 'ready' && eligibleEntries.length === 0 && entries !== null && (
+              <p className="text-center text-[13px]" style={{ color: 'var(--soft)' }}>
+                No club-seasons match your setup — loosen the era range or add leagues.
               </p>
-              {!allFilled && (
+            )}
+          </div>
+
+          {phase === 'revealed' && currentClubSeason && (
+            <div style={{ animation: 'ticketOut .5s cubic-bezier(.2,1.1,.4,1)' }}>
+              <div style={{ background: '#FDFAF1', border: '1px solid var(--border)', boxShadow: '4px 4px 0 var(--card-shadow)' }}>
+                <div className="flex items-center justify-between px-4 py-3" style={{ background: clubInk, color: '#FDFAF1' }}>
+                  <div>
+                    <div className="text-[9.5px] tracking-[0.18em]">{(league?.name ?? '').toUpperCase()}</div>
+                    <div className="font-display text-[22px] font-extrabold leading-[1.1] sm:text-2xl">
+                      {club?.name ?? currentClubSeason.clubId}
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="font-stamp text-[19px]">{currentClubSeason.season.replace('-', '–')}</div>
+                    <div className="text-[9.5px] tracking-[0.14em] opacity-85">TICKET DRAWN</div>
+                  </div>
+                </div>
+                <div className="max-h-[330px] overflow-y-auto">
+                  {squadRows.map((record) => {
+                    const placeable =
+                      settings.draftMode === 'position-first' && selectedSlot !== null
+                        ? isPositionCompatible(record.broadPosition, slots[selectedSlot].position)
+                        : openSlotIndexes.some((i) => isPositionCompatible(record.broadPosition, slots[i].position));
+                    const sel = pendingRecord?.id === record.id;
+                    const rating = ratingOf(record);
+                    return (
+                      <button
+                        key={record.id}
+                        type="button"
+                        onClick={() => placeable && draftPlayer(record)}
+                        className="grid w-full items-center gap-3 border-0 border-b px-3.5 py-2.5 text-left hover:bg-[#F5E9C8]"
+                        style={{
+                          gridTemplateColumns: '38px 1fr auto auto',
+                          borderBottomColor: '#EDE3CB',
+                          background: sel ? '#F5E9C8' : 'transparent',
+                          cursor: placeable ? 'pointer' : 'not-allowed',
+                          opacity: placeable ? 1 : 0.42,
+                        }}
+                      >
+                        <span
+                          className="font-stamp py-0.5 text-center text-[10px]"
+                          style={{ background: POSITION_INKS[record.broadPosition], color: '#F6EFDF' }}
+                        >
+                          {record.broadPosition}
+                        </span>
+                        <span className="min-w-0">
+                          <span className="block truncate text-sm font-bold" style={{ color: '#1D2B45' }}>{record.name}</span>
+                          <span className="mt-px block text-[11px]" style={{ color: '#6B5F4A' }}>
+                            {record.nationality}{record.shirtNumber ? ` · № ${record.shirtNumber}` : ''}
+                          </span>
+                        </span>
+                        <span className="text-right text-[11px]" style={{ color: '#6B5F4A' }}>
+                          {record.stats.appearances} apps · {record.stats.goals} gls
+                        </span>
+                        <span
+                          className="font-stamp min-w-[34px] text-right text-lg"
+                          style={{ color: showRatings && rating >= 90 ? '#8C6A1D' : '#A83E2C' }}
+                        >
+                          {showRatings ? rating : '??'}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              {rerollsLeft > 0 && (
                 <button
                   type="button"
-                  onClick={handleSpin}
-                  disabled={!canSpin || eligibleEntries.length === 0}
-                  className="rounded-lg bg-emerald-600 px-6 py-3 text-lg font-semibold text-white hover:bg-emerald-500 disabled:opacity-50"
+                  onClick={handleReroll}
+                  className="mt-3 cursor-pointer border-0 px-4 py-2.5 text-[13px] font-bold uppercase tracking-[0.06em]"
+                  style={{ background: '#A83E2C', color: '#FDFAF1', boxShadow: '3px 3px 0 var(--card-shadow)' }}
                 >
-                  🎡 Spin
+                  Re-roll this club · {rerollsLeft} left
                 </button>
               )}
             </div>
           )}
-
-          {spinning && (
-            <div className="flex h-full flex-col items-center justify-center gap-2 rounded-xl border border-neutral-700 bg-neutral-900 p-8 text-center">
-              <div className="text-2xl font-bold text-emerald-400">{spinLabel}</div>
-              <p className="text-xs text-neutral-500">Spinning…</p>
-            </div>
-          )}
-
-          {currentClubSeason && !spinning && (
-            <div className="rounded-xl border border-neutral-700 bg-neutral-900 p-4">
-              <div className="mb-3 flex items-center justify-between">
-                <h3 className="text-lg font-bold">
-                  {getClub(currentClubSeason.clubId)?.name ?? currentClubSeason.clubId} · {currentClubSeason.season}
-                </h3>
-                <button
-                  type="button"
-                  onClick={handleReroll}
-                  disabled={rerollsLeft <= 0}
-                  className="rounded-lg border border-neutral-600 px-3 py-1 text-xs font-semibold text-neutral-300 hover:bg-neutral-800 disabled:opacity-40"
-                >
-                  Reroll ({rerollsLeft})
-                </button>
-              </div>
-              <div className="max-h-96 space-y-1 overflow-y-auto pr-1">
-                {currentClubSeason.squad
-                  .filter((r) => !targetBroadPositions || (slots[selectedSlot!] && isPositionCompatible(r.broadPosition, slots[selectedSlot!].position)))
-                  .filter((r) => settings.draftMode !== 'squad-first' || openSlotIndexes.some((i) => isPositionCompatible(r.broadPosition, slots[i].position)))
-                  .sort((a, b) => b.seasonRatings.overall - a.seasonRatings.overall)
-                  .map((record) => (
-                    <button
-                      key={record.id}
-                      type="button"
-                      onClick={() => draftPlayer(record)}
-                      className={`flex w-full items-center justify-between rounded-lg border px-3 py-2 text-left text-sm hover:border-emerald-500 ${
-                        pendingRecord?.id === record.id
-                          ? 'border-amber-500 bg-amber-500/10'
-                          : 'border-neutral-700 bg-neutral-800/60'
-                      }`}
-                    >
-                      <span>
-                        <span className="mr-2 rounded bg-neutral-700 px-1.5 py-0.5 text-[10px] font-semibold">{record.broadPosition}</span>
-                        {record.name}
-                        <span className="ml-1 text-xs text-neutral-500">({record.nationality})</span>
-                      </span>
-                      {settings.showRatings && (
-                        <span className="font-bold text-emerald-400">
-                          {settings.ratingsMode === 'prime' ? record.primeRatings.overall : record.seasonRatings.overall}
-                        </span>
-                      )}
-                    </button>
-                  ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {allFilled && (
-        <button
-          type="button"
-          onClick={handleConfirm}
-          disabled={saving}
-          className="mt-8 w-full rounded-lg bg-emerald-600 px-4 py-3 text-lg font-semibold text-white hover:bg-emerald-500 disabled:opacity-50"
-        >
-          {saving ? 'Saving…' : 'Confirm squad & start season →'}
-        </button>
-      )}
+        </section>
+      </main>
+      <ProgrammeFooter />
     </div>
   );
 }
