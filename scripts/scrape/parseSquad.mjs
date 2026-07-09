@@ -151,7 +151,9 @@ export function parseEfsTemplateSquad(wikitext) {
     let goals = 0;
     for (let i = 0; i < competitionCount; i++) {
       appearances += parseAppsToken(positional[i * 2]);
-      goals += parseInt(positional[i * 2 + 1] ?? '0', 10) || 0;
+      // Some articles record a keeper's SECOND value as goals conceded, written negative
+      // (e.g. "37|-31" = 37 apps, 31 conceded). Real goals are never negative, so clamp.
+      goals += Math.max(0, parseInt(positional[i * 2 + 1] ?? '0', 10) || 0);
     }
 
     players.push({

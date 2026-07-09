@@ -52,6 +52,13 @@ async function scrapeClubSeason(league, club, season) {
   const rows = extractClubSeasonSquad(page.wikitext);
   if (!rows) return { status: 'no-table' };
 
+  // Defensive: appearances/goals are never negative; a negative value is a parse artifact
+  // (e.g. a keeper's goals-conceded column read as goals).
+  for (const row of rows) {
+    row.appearances = Math.max(0, row.appearances);
+    row.goals = Math.max(0, row.goals);
+  }
+
   const maxAppearances = Math.max(...rows.map((r) => r.appearances), 20);
   const squad = rows.map((row) => {
     const seedKey = `${club.id}-${season}-${row.name}-${row.nationality}`;

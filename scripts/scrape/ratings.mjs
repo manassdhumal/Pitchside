@@ -1,8 +1,19 @@
 /**
- * Independent rating estimator. All ratings here are PitchSide-original numeric estimates,
- * derived from real public appearance/goal data plus a hand-assigned club-strength tier —
- * never copied from FIFA, Football Manager, or any other proprietary ratings database.
- * Deterministic (seeded by name+club+season) so reruns are stable.
+ * Independent rating estimator (v3). All ratings here are PitchSide-original numeric estimates,
+ * derived from real public appearance/goal data plus a hand-assigned club-strength tier and a
+ * curated peak-anchor list — never copied from FIFA, Football Manager, or any other proprietary
+ * ratings database. Deterministic (seeded by name+club+season) so reruns are stable.
+ *
+ * Design philosophy (mirrors 38-0's season-by-season model):
+ *   - A season rating answers "how good was this player THAT season", not their fame/career.
+ *   - Attacking output is scored as a PERCENTILE against same-position peers in the same
+ *     league-season, so scoring "a few goals" only helps if few peers scored more (dominance vs
+ *     the era's league), instead of an unbounded goals-per-app bonus that inflated mid players.
+ *   - Playing time sets a fringe→starter axis with a genuine low floor: bench/academy players
+ *     fall into the 40s-low-50s; a full-season regular at a mid club is ~70-74, not 80+.
+ *   - Club tier is the main vertical spread for defenders/keepers (we have no defensive stats).
+ *   - Prime = career-best interpretation (anchor for curated stars; best season + small premium
+ *     otherwise), always distinct from the season rating.
  */
 export function seededRandom(seed) {
   let h = 1779033703 ^ seed.length;
@@ -22,46 +33,59 @@ export function clamp(value, min = 1, max = 99) {
   return Math.min(max, Math.max(min, Math.round(value)));
 }
 
-/**
- * v2 season overall. Comparative signals:
- * - usage: share of the squad's max appearances that season (proxy for being a first-choice pick)
- * - club tier: being first-choice at an elite club implies a far higher level than at a small club,
- *   scaled by usage so benchwarmers at big clubs don't inherit the bonus
- * - goal involvement per appearance, weighted by position archetype
- * - career consistency: number of seasons (across the whole dataset) as a heavy-usage player
- */
-/**
- * Every player here made a real top-flight club's squad list, so the scale floor is 60 —
- * academy fillers land 60-64, fringe players mid-60s, regulars 70+, elite seasons up to 93.
- */
-export const SEASON_FLOOR = 60;
-export const SEASON_CAP = 93;
+export function clamp01(value) {
+  return Math.min(1, Math.max(0, value));
+}
 
-export function deriveSeasonOverall({ broadPosition, appearances, goals, maxAppearances, tier, careerHighUsageSeasons, noStats, rng }) {
+// Absolute scale bounds. Fringe/bad players may sit in the mid-40s; only curated elite anchors
+// reach 94+. Uncurated players are capped below the elite band in rebuildRatings.
+export const ABS_FLOOR = 44;
+export const HARD_CAP = 97;
+export const UNCURATED_SEASON_CAP = 87;
+export const UNCURATED_PRIME_CAP = 89;
+
+// Premium added (at full usage) for playing regularly at a club of this strength tier. Kept
+// modest so that being "a regular at a big club" alone lands ~78-82, not near-elite — the elite
+// band (88+) has to be earned through standout attacking output or a curated anchor.
+const TIER_PREMIUM = { 1: 7, 2: 4.5, 3: 2.5, 4: 1 };
+// Maximum attacking-output contribution by position (a league-leading scorer gets the full amount).
+const POS_OUTPUT_MAX = { FW: 18, MF: 12, DF: 5, GK: 0 };
+// Goals-per-appearance considered "elite" for the absolute-excellence safety score.
+export const POS_ELITE_RATE = { FW: 0.75, MF: 0.42, DF: 0.16, GK: 1 };
+
+/** Playing-time base: fringe ~48-52, rotation ~59-62, full-season regular ~67-68. */
+export function usageBase(usage) {
+  return 46 + 22 * Math.pow(Math.max(0, Math.min(1, usage)), 0.7);
+}
+
+/**
+ * Absolute-excellence score in [0,1] from raw goal rate alone — used as the scrape-time
+ * placeholder and blended (35%) into the authoritative percentile score in rebuildRatings.
+ */
+export function absoluteOutputScore(broadPosition, goals, appearances) {
+  const rate = goals / Math.max(appearances, 1);
+  return clamp01(rate / (POS_ELITE_RATE[broadPosition] ?? 1));
+}
+
+/**
+ * The core season-overall model. `outputScore` is a [0,1] measure of attacking output strength
+ * (percentile-vs-peers in the authoritative path, absolute-rate at scrape time).
+ */
+export function computeSeasonOverall({ usage, tier, broadPosition, outputScore, careerHighUsageSeasons, noStats, rng }) {
   if (noStats) {
-    // No appearance data available (older/simpler article format) - plausible squad-member
-    // baseline, still tier-aware.
-    const tierBase = { 1: 76, 2: 72, 3: 69, 4: 66 }[tier] ?? 69;
-    return clamp(tierBase + (rng() - 0.5) * 10, SEASON_FLOOR, 88);
+    // No appearance data available (older/simpler article format) - tier-aware plausible baseline.
+    const tierBase = { 1: 72, 2: 68, 3: 65, 4: 62 }[tier] ?? 65;
+    return clamp(tierBase + (rng() - 0.5) * 8, ABS_FLOOR, 84);
   }
 
-  const usage = Math.min(1, appearances / Math.max(maxAppearances, 20));
-  const tierBonus = ({ 1: 8, 2: 5, 3: 2, 4: 0 }[tier] ?? 2) * usage;
+  const u = Math.min(1, Math.max(0, usage));
+  let overall = usageBase(u);
+  overall += (TIER_PREMIUM[tier] ?? 2.5) * u; // trusted players at strong clubs are at a higher level
+  overall += (POS_OUTPUT_MAX[broadPosition] ?? 0) * clamp01(outputScore ?? 0);
+  overall += Math.min(2, Math.max(0, (careerHighUsageSeasons ?? 1) - 1) * 0.9); // proven fixture
+  overall += (rng() - 0.5) * 3;
 
-  let overall = SEASON_FLOOR + usage * 12 + tierBonus;
-
-  // Weights sized so a first-choice regular at an elite club sits in the mid-80s and only a
-  // truly prolific season approaches the low-90s cap - the very top is reserved for anchors.
-  const goalsPerApp = goals / Math.max(appearances, 1);
-  if (broadPosition === 'FW') overall += Math.min(11, goalsPerApp * 26);
-  else if (broadPosition === 'MF') overall += Math.min(9, goalsPerApp * 36);
-  else if (broadPosition === 'DF') overall += Math.min(4, goalsPerApp * 40);
-  else if (broadPosition === 'GK') overall += 1.5 * usage;
-
-  overall += Math.min(3, Math.max(0, (careerHighUsageSeasons ?? 1) - 1));
-  overall += (rng() - 0.5) * 4;
-
-  return clamp(overall, SEASON_FLOOR, SEASON_CAP);
+  return clamp(overall, ABS_FLOOR, HARD_CAP);
 }
 
 export function subRatings(broadPosition, overall, rng) {
@@ -118,19 +142,21 @@ export function subRatings(broadPosition, overall, rng) {
 }
 
 /**
- * v1 single-season derivation, kept for scrape-time placeholder ratings. The authoritative
- * ratings come from rebuildRatings.mjs, which recomputes everything with cross-season and
- * curated-anchor context after each scrape run.
+ * Scrape-time placeholder derivation (no whole-dataset context). Uses absolute goal rate for
+ * output and neutral tier/career assumptions. The authoritative ratings come from
+ * rebuildRatings.mjs, which recomputes everything with league-season percentiles and anchors.
  */
 export function deriveRatings(seedKey, broadPosition, appearances, goals, maxAppearances, noStats = false) {
   const rng = seededRandom(seedKey);
-  const overall = deriveSeasonOverall({
-    broadPosition, appearances, goals, maxAppearances,
-    tier: 3, careerHighUsageSeasons: 1, noStats, rng,
+  const usage = Math.min(1, appearances / Math.max(maxAppearances, 20));
+  const overall = computeSeasonOverall({
+    usage, tier: 3, broadPosition,
+    outputScore: absoluteOutputScore(broadPosition, goals, appearances),
+    careerHighUsageSeasons: 1, noStats, rng,
   });
   const seasonRatings = subRatings(broadPosition, overall, rng);
 
-  const primeOverall = clamp(overall + (95 - overall) * 0.22, overall, 95);
+  const primeOverall = clamp(overall + 3, overall, UNCURATED_PRIME_CAP);
   const primeRatings = subRatings(broadPosition, primeOverall, seededRandom(seedKey + '-prime'));
 
   return { seasonRatings, primeRatings };
