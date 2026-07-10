@@ -70,6 +70,36 @@ export function isPositionCompatible(broad: BroadPosition, slot: Position): bool
   return POSITION_TO_BROAD[slot] === broad;
 }
 
+/**
+ * Real squad sources only record a broad GK/DF/MF/FW bucket, so we refine it to a plausible
+ * specific label (CB, RB, CDM, CAM, LW, …) for display using the player's shirt number — the
+ * traditional positional numbering (2=RB, 3=LB, 6=CDM, 10=CAM, 9=ST, 7/11=wingers) is a weak but
+ * reasonable signal. Purely cosmetic: a player still fills any formation slot in their broad
+ * bucket, so this is an estimate in keeping with the rest of PitchSide's derived data.
+ */
+export function inferSpecificPosition(broad: BroadPosition, shirtNumber?: number): Position {
+  const n = shirtNumber;
+  switch (broad) {
+    case 'GK':
+      return 'GK';
+    case 'DF':
+      if (n === 2) return 'RB';
+      if (n === 3) return 'LB';
+      return 'CB';
+    case 'MF':
+      if (n === 4 || n === 6) return 'CDM';
+      if (n === 10) return 'CAM';
+      if (n === 7) return 'RM';
+      if (n === 11) return 'LM';
+      return 'CM';
+    case 'FW':
+    default:
+      if (n === 7) return 'RW';
+      if (n === 11) return 'LW';
+      return 'ST';
+  }
+}
+
 function seasonToEraTag(season: string): EraTag {
   const year = seasonStartYear(season);
   if (year < 1970) return 'pre-1970';

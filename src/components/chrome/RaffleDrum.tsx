@@ -7,10 +7,22 @@ export const LEAGUE_INKS: Record<string, string> = {
 };
 
 export const POSITION_INKS: Record<string, string> = {
-  GK: '#6B5F4A',
+  GK: '#B4691E',
   DF: '#2F5D8A',
   MF: '#3E7A4E',
   FW: '#A83E2C',
+};
+
+/**
+ * Per-line colour system for player cards: a strong `ink` (headers/badges/text) and a soft `tint`
+ * (card body) so goalkeepers, defenders, midfielders and forwards are instantly distinguishable.
+ * Keyed by broad position (GK/DF/MF/FW).
+ */
+export const LINE_PALETTE: Record<string, { ink: string; tint: string; label: string }> = {
+  GK: { ink: '#B4691E', tint: '#F5E7CC', label: 'GOALKEEPER' },
+  DF: { ink: '#2F5D8A', tint: '#DEE8F1', label: 'DEFENCE' },
+  MF: { ink: '#3E7A4E', tint: '#DFEBE1', label: 'MIDFIELD' },
+  FW: { ink: '#A83E2C', tint: '#F6E2DC', label: 'ATTACK' },
 };
 
 interface DrumProps {
@@ -22,9 +34,11 @@ interface DrumProps {
   rotation?: number;
   spinning?: boolean;
   idle?: boolean;
+  /** Duration of the spin easing, in ms. Keep in sync with the caller's reveal timer. */
+  spinMs?: number;
 }
 
-export function RaffleDrum({ size, label, subLabel, topLabel = 'CLUB · SEASON', rotation = 0, spinning = false, idle = false }: DrumProps) {
+export function RaffleDrum({ size, label, subLabel, topLabel = 'CLUB · SEASON', rotation = 0, spinning = false, idle = false, spinMs = 2600 }: DrumProps) {
   const inset = Math.round(size * 0.105);
   return (
     <div className="relative" style={{ width: size, height: size }}>
@@ -48,7 +62,7 @@ export function RaffleDrum({ size, label, subLabel, topLabel = 'CLUB · SEASON',
           border: `${Math.max(8, Math.round(size * 0.035))}px solid var(--drum-rim)`,
           boxShadow: '0 14px 30px -10px rgba(0,0,0,.45), inset 0 0 0 4px #F6EFDF',
           transform: `rotate(${rotation}deg)`,
-          transition: spinning ? 'transform 4.2s cubic-bezier(.12,.8,.16,1)' : 'none',
+          transition: spinning ? `transform ${spinMs}ms cubic-bezier(.12,.8,.16,1)` : 'none',
           animation: idle ? 'drumIdle 5s ease-in-out infinite' : undefined,
         }}
       />

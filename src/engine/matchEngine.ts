@@ -1,9 +1,17 @@
 import type { Player, EraRuleConfig } from '../types';
+import { computeTeamOvr } from './teamRatings';
 
 export const DIXON_COLES_RHO = -0.13;
 export const LEAGUE_AVG_GOALS = 1.2;
 export const HOME_ADVANTAGE = 1.35;
 const MAX_GOALS = 10;
+
+// Sensitivity of the OVR tilt: rating-point edge → goal-expectation multiplier. Kept gentle and
+// bounded so evenly-matched sides (edge ≈ 0) stay calibration-neutral, while a clear quality gap
+// meaningfully separates the scoreline on top of the raw attack/defence ratio.
+const OVR_TILT_PER_POINT = 0.011;
+const OVR_TILT_MIN = 0.6;
+const OVR_TILT_MAX = 1.6;
 
 const ATTACK_WEIGHT: Partial<Record<Player['position'], number>> = {
   GK: 0.1, CB: 0.3, LB: 0.6, RB: 0.6, LWB: 0.7, RWB: 0.7, CDM: 0.6, CM: 1, CAM: 1.4,
@@ -118,14 +126,34 @@ export interface MatchResult {
   penalties?: { home: number; away: number };
 }
 
+/**
+ * Bounded multiplier from a rating-point "edge". Zero edge → 1.0 (calibration-neutral); a large
+ * edge is clamped so no single match runs away to an implausible scoreline.
+ */
+function ovrTiltFactor(edge: number): number {
+  return Math.min(OVR_TILT_MAX, Math.max(OVR_TILT_MIN, 1 + edge * OVR_TILT_PER_POINT));
+}
+
 export function computeExpectedGoals(homeXI: Player[], awayXI: Player[], homeAdvantage = HOME_ADVANTAGE): { lambdaHome: number; lambdaAway: number } {
   const homeAttack = weightedAttackRating(homeXI);
   const homeDefence = weightedDefenceRating(homeXI);
   const awayAttack = weightedAttackRating(awayXI);
   const awayDefence = weightedDefenceRating(awayXI);
 
-  const lambdaHome = (homeAttack / awayDefence) * LEAGUE_AVG_GOALS * homeAdvantage;
-  const lambdaAway = (awayAttack / homeDefence) * LEAGUE_AVG_GOALS;
+  let lambdaHome = (homeAttack / awayDefence) * LEAGUE_AVG_GOALS * homeAdvantage;
+  let lambdaAway = (awayAttack / homeDefence) * LEAGUE_AVG_GOALS;
+
+  // Explicit OVR head-to-head: each side's attacking line is measured against the other's
+  // defensive line, plus a midfield battle and an overall-quality term. This is a factor on top
+  // of (not a replacement for) the Dixon-Coles attack/defence ratio, so the drafted team's OVR —
+  // the same number shown in the Draft panel — genuinely drives results.
+  const home = computeTeamOvr(homeXI);
+  const away = computeTeamOvr(awayXI);
+  const homeEdge = 0.5 * (home.atk - away.def) + 0.3 * (home.mid - away.mid) + 0.2 * (home.overall - away.overall);
+  const awayEdge = 0.5 * (away.atk - home.def) + 0.3 * (away.mid - home.mid) + 0.2 * (away.overall - home.overall);
+  lambdaHome *= ovrTiltFactor(homeEdge);
+  lambdaAway *= ovrTiltFactor(awayEdge);
+
   return { lambdaHome, lambdaAway };
 }
 

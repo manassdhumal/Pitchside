@@ -1,17 +1,18 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import type { DraftSettings, Player, Position, RealPlayerRecord, Team, ClubSeason } from '../types';
-import { REROLLS_BY_DIFFICULTY } from '../types';
+import { REROLLS_BY_DIFFICULTY, POSITION_TO_BROAD } from '../types';
 import { FORMATION_SLOTS } from '../data/formations';
 import { getClub, getLeague } from '../data/leagues';
 import {
   loadIndex, filterEntries, loadClubSeason,
-  isPositionCompatible, realPlayerToEnginePlayer, type ClubSeasonIndexEntry,
+  isPositionCompatible, inferSpecificPosition, realPlayerToEnginePlayer, type ClubSeasonIndexEntry,
 } from '../data/historicalData';
+import { computeTeamOvr } from '../engine/teamRatings';
 import { putPlayers, putTeam } from '../storage/cache';
 import { useAppDispatch } from '../state/AppContext';
 import { ProgrammeNav, ProgrammeFooter } from '../components/chrome/ProgrammeChrome';
-import { RaffleDrum, LEAGUE_INKS, POSITION_INKS } from '../components/chrome/RaffleDrum';
+import { RaffleDrum, LEAGUE_INKS, POSITION_INKS, LINE_PALETTE } from '../components/chrome/RaffleDrum';
 
 const KITS: { name: string; c1: string; c2: string }[] = [
   { name: 'Claret & Blue', c1: '#7A2E3B', c2: '#2F5D8A' },
@@ -22,7 +23,24 @@ const KITS: { name: string; c1: string; c2: string }[] = [
   { name: 'Violet & Sky', c1: '#4A3070', c2: '#9BB8D3' },
 ];
 
-const SPIN_MS = 4300;
+const SPIN_MS = 1500;
+
+/** One tile in the live team-OVR strip (OVR / DEF / MID / ATK). */
+function OvrTile({ label, value, ink, big = false }: { label: string; value: number; ink: string; big?: boolean }) {
+  return (
+    <div
+      className="flex flex-col items-center justify-center py-1.5"
+      style={{ border: `1.5px solid ${ink}`, borderRadius: 4, background: 'var(--card)' }}
+    >
+      <span className="font-stamp leading-none" style={{ fontSize: big ? 27 : 21, color: ink }}>
+        {value > 0 ? value : '—'}
+      </span>
+      <span className="mt-0.5 text-[9px] font-bold tracking-[0.14em]" style={{ color: 'var(--soft)' }}>
+        {label}
+      </span>
+    </div>
+  );
+}
 
 interface FilledSlot {
   player: Player;
@@ -65,6 +83,11 @@ export default function Draft() {
   const openSlotIndexes = useMemo(() => filled.map((f, i) => (f ? -1 : i)).filter((i) => i !== -1), [filled]);
   const filledCount = filled.filter(Boolean).length;
   const allFilled = openSlotIndexes.length === 0 && filled.length > 0;
+
+  const teamOvr = useMemo(
+    () => computeTeamOvr(filled.filter((f): f is FilledSlot => f !== null).map((f) => f.player)),
+    [filled],
+  );
 
   const eligibleEntries = useMemo(() => {
     if (!settings || !entries) return [];
@@ -190,7 +213,9 @@ export default function Draft() {
     await putPlayers(players);
     await putTeam(team);
     dispatch({ type: 'SET_CURRENT_TEAM', teamId });
-    navigate('/season');
+    navigate('/season', {
+      state: { leagueIds: settings.leagueIds, seasonMax: settings.seasonMax, ratingsMode: settings.ratingsMode },
+    });
   };
 
   if (!settings) return null;
@@ -204,6 +229,13 @@ export default function Draft() {
   const ratingOf = (r: RealPlayerRecord) =>
     settings.ratingsMode === 'prime' ? r.primeRatings.overall : r.seasonRatings.overall;
 
+  // Can this player go into any currently-open slot? Drives both the placeable-first ordering
+  // and the per-row enabled/disabled styling below.
+  const isPlaceable = (r: RealPlayerRecord) =>
+    settings.draftMode === 'position-first' && selectedSlot !== null
+      ? isPositionCompatible(r.broadPosition, slots[selectedSlot].position)
+      : openSlotIndexes.some((i) => isPositionCompatible(r.broadPosition, slots[i].position));
+
   const squadRows = currentClubSeason
     ? currentClubSeason.squad
         .filter((r) => {
@@ -213,7 +245,14 @@ export default function Draft() {
           return true;
         })
         .slice()
-        .sort((a, b) => ratingOf(b) - ratingOf(a))
+        // Compatible (placeable) players first, then by rating within each group, so the drafts
+        // you can actually make surface at the top instead of the highest-rated unplaceable ones.
+        .sort((a, b) => {
+          const pa = isPlaceable(a) ? 1 : 0;
+          const pb = isPlaceable(b) ? 1 : 0;
+          if (pa !== pb) return pb - pa;
+          return ratingOf(b) - ratingOf(a);
+        })
     : [];
 
   const hintText = pendingRecord
@@ -298,6 +337,14 @@ export default function Draft() {
             </div>
           </div>
 
+          {/* live team OVR — updates as the XI fills, and feeds the season simulator */}
+          <div className="mx-auto mb-4 grid max-w-[560px] grid-cols-4 gap-2">
+            <OvrTile label="TEAM OVR" value={teamOvr.overall} ink="var(--ink)" big />
+            <OvrTile label="DEF" value={teamOvr.def} ink={LINE_PALETTE.DF.ink} />
+            <OvrTile label="MID" value={teamOvr.mid} ink={LINE_PALETTE.MF.ink} />
+            <OvrTile label="ATK" value={teamOvr.atk} ink={LINE_PALETTE.FW.ink} />
+          </div>
+
           {/* pitch */}
           <div
             className="relative mx-auto w-full max-w-[560px]"
@@ -340,47 +387,53 @@ export default function Draft() {
               if (f) {
                 const rating = f.player.ratings.overall;
                 const foil = showRatings && rating >= 90;
+                const broad = POSITION_TO_BROAD[slot.position];
+                const pal = LINE_PALETTE[broad];
+                const headerBg = foil ? '#8C6A1D' : pal.ink;
+                const name = f.player.lastName || f.player.firstName;
                 return (
                   <button
                     key={i}
                     type="button"
                     onClick={() => handleSlotClick(i)}
                     title="Tap to remove"
-                    className="sticker-mask absolute w-[92px] cursor-pointer border-0 p-1.5 sm:w-[96px]"
+                    className="absolute w-[94px] cursor-pointer overflow-hidden border-0 p-0 sm:w-[100px]"
                     style={{
                       left: `${slot.x}%`,
                       top: `${slot.y}%`,
                       transform: 'translate(-50%,-50%)',
+                      border: `2px solid ${headerBg}`,
+                      borderRadius: 4,
                       background: foil
                         ? 'linear-gradient(120deg,#C7A63E,#F0DE9A 35%,#B08A2E 60%,#E8CE7E)'
-                        : '#FDFAF1',
-                      animation: 'stampIn .45s cubic-bezier(.2,1.2,.4,1)',
+                        : pal.tint,
+                      boxShadow: '2px 2px 0 rgba(29,43,69,.28)',
+                      animation: 'stampIn .4s cubic-bezier(.2,1.2,.4,1)',
                     }}
                   >
+                    {/* colour-coded header: position + rating */}
                     <div
-                      className="px-1 pb-1 pt-1.5 text-center"
-                      style={{ border: `1.5px solid ${foil ? '#8C6A1D' : '#1D2B45'}`, background: '#FDFAF1' }}
+                      className="flex items-center justify-between px-1.5 py-0.5"
+                      style={{ background: headerBg, color: '#FDFAF1' }}
                     >
-                      <div className="flex items-center justify-between px-0.5">
-                        <span className="font-stamp px-1 text-[8.5px]" style={{ background: '#1D2B45', color: '#F6EFDF' }}>
-                          {slot.position}
-                        </span>
-                        <span className="font-stamp text-[13px]" style={{ color: foil ? '#8C6A1D' : '#A83E2C' }}>
-                          {showRatings ? rating : '—'}
-                        </span>
-                      </div>
-                      <div
-                        className="font-display mt-1 text-[12px] font-extrabold uppercase leading-[1.05]"
+                      <span className="font-stamp text-[9px] tracking-[0.04em]">{slot.position}</span>
+                      <span className="font-stamp text-[12.5px] leading-none" style={{ color: foil ? '#FFF4CE' : '#FDFAF1' }}>
+                        {showRatings ? rating : '—'}
+                      </span>
+                    </div>
+                    {/* name + kit */}
+                    <div className="flex flex-col items-center gap-0.5 px-1 pb-1 pt-1">
+                      <span
+                        className="font-jersey block w-full truncate text-center text-[13px] font-semibold uppercase leading-tight"
                         style={{ color: '#1D2B45' }}
+                        title={name}
                       >
-                        {f.player.lastName.length > 12 ? f.player.lastName.slice(0, 11) + '…' : f.player.lastName}
-                      </div>
-                      <div className="mt-1 flex justify-center">
-                        <span
-                          className="h-[11px] w-[18px]"
-                          style={{ background: `linear-gradient(135deg,${kit.c1} 50%,${kit.c2} 50%)`, border: '1px solid #1D2B45' }}
-                        />
-                      </div>
+                        {name}
+                      </span>
+                      <span
+                        className="h-[9px] w-[16px]"
+                        style={{ background: `linear-gradient(135deg,${kit.c1} 50%,${kit.c2} 50%)`, border: '1px solid #1D2B45' }}
+                      />
                     </div>
                   </button>
                 );
@@ -404,7 +457,12 @@ export default function Draft() {
                     animation: highlight ? 'compatPulse 1.6s ease-in-out infinite' : 'none',
                   }}
                 >
-                  <span className="font-stamp text-[15px]" style={{ color: '#FDFAF1' }}>{slot.position}</span>
+                  <span
+                    className="font-stamp px-1.5 py-0.5 text-[13px] leading-none"
+                    style={{ background: LINE_PALETTE[POSITION_TO_BROAD[slot.position]].ink, color: '#FDFAF1', borderRadius: 3 }}
+                  >
+                    {slot.position}
+                  </span>
                   <span
                     className="px-1.5 py-0.5 text-[9.5px] font-bold tracking-[0.1em]"
                     style={{
@@ -472,6 +530,7 @@ export default function Draft() {
               size={230}
               rotation={drumRot}
               spinning={phase === 'spinning'}
+              spinMs={SPIN_MS}
               label={phase === 'spinning' ? '…' : 'SPIN'}
               subLabel={`${eligibleEntries.length.toLocaleString()} TICKETS IN`}
             />
@@ -521,10 +580,7 @@ export default function Draft() {
                 </div>
                 <div className="max-h-[330px] overflow-y-auto">
                   {squadRows.map((record) => {
-                    const placeable =
-                      settings.draftMode === 'position-first' && selectedSlot !== null
-                        ? isPositionCompatible(record.broadPosition, slots[selectedSlot].position)
-                        : openSlotIndexes.some((i) => isPositionCompatible(record.broadPosition, slots[i].position));
+                    const placeable = isPlaceable(record);
                     const sel = pendingRecord?.id === record.id;
                     const rating = ratingOf(record);
                     return (
@@ -545,10 +601,10 @@ export default function Draft() {
                           className="font-stamp py-0.5 text-center text-[10px]"
                           style={{ background: POSITION_INKS[record.broadPosition], color: '#F6EFDF' }}
                         >
-                          {record.broadPosition}
+                          {inferSpecificPosition(record.broadPosition, record.shirtNumber)}
                         </span>
                         <span className="min-w-0">
-                          <span className="block truncate text-sm font-bold" style={{ color: '#1D2B45' }}>{record.name}</span>
+                          <span className="font-jersey block truncate text-[15px] font-semibold uppercase" style={{ color: '#1D2B45', letterSpacing: '0.01em' }}>{record.name}</span>
                           <span className="mt-px block text-[11px]" style={{ color: '#6B5F4A' }}>
                             {record.nationality}{record.shirtNumber ? ` · № ${record.shirtNumber}` : ''}
                           </span>

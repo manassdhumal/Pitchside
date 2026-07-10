@@ -94,6 +94,11 @@ body {
 .font-stamp {
   font-family: Graduate, serif;
 }
+/* Player-name font: condensed jersey lettering, high legibility on small sticker cards. */
+.font-jersey {
+  font-family: Oswald, "Archivo Narrow", system-ui, sans-serif;
+  letter-spacing: 0.01em;
+}
 
 /* Scalloped sticker edge */
 .sticker-mask {

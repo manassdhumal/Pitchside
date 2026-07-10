@@ -6,6 +6,11 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
+    // 5173 is this project's canonical dev port. An explicit PORT (e.g. from preview tooling)
+    // can still override it, but otherwise the server always binds 5173 and fails loudly if it's
+    // taken (strictPort) rather than silently drifting to 5174.
+    port: process.env.PORT ? Number(process.env.PORT) : 5173,
+    strictPort: true,
     // The scraper pipeline (scripts/scrape) continuously writes into this directory in the
     // background; without this, every scraped file triggers a dev-server full reload
     // mid-session (public/ changes normally cause one). Function form because glob patterns

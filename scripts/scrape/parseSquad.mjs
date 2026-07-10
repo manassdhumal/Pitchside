@@ -47,6 +47,10 @@ function parseRowCells(rowBlock) {
   for (const rawLine of rowBlock.split('\n')) {
     const line = rawLine.trim();
     if (!line || (!line.startsWith('|') && !line.startsWith('!'))) continue;
+    // A `|+` line is the table caption, not a data/header cell. Newer season articles add an
+    // accessible `|+{{sronly|…}}` caption; counting it as a cell shifts every column index by one,
+    // which misaligns Pos./Name/Apps and silently drops the whole table.
+    if (line.startsWith('|+')) continue;
     const marker = line[0];
     const sep = marker + marker;
     const rest = line.slice(1);
@@ -222,8 +226,18 @@ function extractTableBlocks(wikitext) {
   return blocks;
 }
 
+/**
+ * Removes HTML comments. Newer season articles wrap their appearances table opener inline after a
+ * comment (`<!--Total-->{| class="wikitable"...`) and scatter `<!--Premier League-->` markers
+ * between cells; the comment before `{|` pushes it off the line start so `extractTableBlocks`
+ * never sees the table. Stripping comments first makes the markup line-oriented again.
+ */
+function stripComments(wikitext) {
+  return wikitext.replace(/<!--[\s\S]*?-->/g, '');
+}
+
 export function parseSquadTable(wikitext) {
-  const tableBlocks = extractTableBlocks(wikitext);
+  const tableBlocks = extractTableBlocks(stripComments(wikitext));
   const candidates = [];
 
   for (const block of tableBlocks) {
@@ -233,16 +247,21 @@ export function parseSquadTable(wikitext) {
     const headerRowIdx = rows.findIndex((r) => /Pos\.?/i.test(r) && /(Name|Player)/i.test(r));
     if (headerRowIdx === -1) continue;
 
+    // Header label text with wiki-links/templates resolved and stray HTML tags (e.g. a `<br>` in
+    // "TOTALS<br>All competitions") flattened, for tolerant matching across article eras.
+    const headerText = (c) => extractLinkText(c).replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
     const headerCells = parseRowCells(rows[headerRowIdx]);
-    const noIdx = headerCells.findIndex((c) => /^No\.?$/i.test(extractLinkText(c)));
-    const posIdx = headerCells.findIndex((c) => /^Pos\.?$/i.test(extractLinkText(c)));
-    const natIdx = headerCells.findIndex((c) => /^Nat\.?$/i.test(extractLinkText(c)));
-    const nameIdx = headerCells.findIndex((c) => /^(Name|Player)$/i.test(extractLinkText(c)));
+    const noIdx = headerCells.findIndex((c) => /^No\.?$/i.test(headerText(c)));
+    const posIdx = headerCells.findIndex((c) => /^Pos\.?$/i.test(headerText(c)));
+    const natIdx = headerCells.findIndex((c) => /^Nat\.?$/i.test(headerText(c)));
+    // Accept "Name", "Player", and the older "Player name".
+    const nameIdx = headerCells.findIndex((c) => /^(name|player(?:\s*name)?)$/i.test(headerText(c)));
     if (posIdx === -1 || nameIdx === -1) continue;
 
     const leadColumns = Math.max(noIdx, posIdx, natIdx, nameIdx) + 1;
     const groupCells = headerCells.slice(leadColumns);
-    const totalGroupIdx = groupCells.findIndex((c) => /^Total$/i.test(extractLinkText(c)));
+    // Accept "Total", "Totals", and "TOTALS All competitions".
+    const totalGroupIdx = groupCells.findIndex((c) => /^totals?\b/i.test(headerText(c)));
     if (totalGroupIdx === -1) continue;
 
     // Read the sub-header row to check what the Total group's columns actually are. Pages carry
@@ -258,13 +277,29 @@ export function parseSquadTable(wikitext) {
     let appsVerified;
     let goalsAvailable;
     if (looksLikeSubHeader) {
-      appsColIdx = leadColumns + totalGroupIdx * 2;
-      goalsColIdx = appsColIdx + 1;
-      const totalFirstLabel = subHeaderCells[totalGroupIdx * 2];
-      const totalSecondLabel = subHeaderCells[totalGroupIdx * 2 + 1];
-      appsVerified = totalFirstLabel !== undefined && /app/i.test(extractLinkText(totalFirstLabel));
+      // Competitions may use 2 sub-columns (Apps/Goals) or, in older tables, more — e.g.
+      // Apps/Goals/Yellow/Red, or Apps/Starts/Goals/Assists. Infer the uniform group width from the
+      // sub-header count per group, then locate Apps (first column) and Goals *within* the group
+      // (its position varies), so the values land on the correct data columns.
+      const groupWidth = Math.max(1, Math.round(subHeaderCells.length / Math.max(1, groupCells.length)));
+      const subBase = totalGroupIdx * groupWidth; // Total group's first sub-header (no lead cols here)
+      appsColIdx = leadColumns + subBase;
+      appsVerified = /app/i.test(extractLinkText(subHeaderCells[subBase] ?? ''));
       if (!appsVerified) continue; // discipline/cards/goalscorer table - skip
-      goalsAvailable = totalSecondLabel === undefined || /goal/i.test(extractLinkText(totalSecondLabel));
+
+      // Goals is the sub-column whose header says "Goal(s)" or is a soccerball/goal icon; fall back
+      // to the second column for a plain Apps/Goals table. Never treat Starts/Assists/etc. as goals.
+      let goalsOffset = -1;
+      for (let k = 0; k < groupWidth; k++) {
+        const raw = subHeaderCells[subBase + k] ?? '';
+        if (/goals?|soccer/i.test(raw)) { goalsOffset = k; break; }
+      }
+      if (goalsOffset === -1 && groupWidth >= 2) {
+        const second = extractLinkText(subHeaderCells[subBase + 1] ?? '');
+        if (!/^\s*(starts?|assists?|clean|conceded|minutes|mins)\b/i.test(second)) goalsOffset = 1;
+      }
+      goalsAvailable = goalsOffset >= 0;
+      goalsColIdx = goalsAvailable ? leadColumns + subBase + goalsOffset : appsColIdx;
     } else {
       // Single-column-per-competition layout (e.g. ranked Appearances tables): the Total column
       // holds total appearances; goals live in a separate table we don't consume.
