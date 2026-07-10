@@ -1,0 +1,567 @@
+{
+  "leagueId": "serie-a",
+  "clubId": "cagliari",
+  "season": "2024-25",
+  "division": "top-flight",
+  "squad": [
+    {
+      "id": "giuseppe-ciocci-italy",
+      "name": "Giuseppe Ciocci",
+      "nationality": "Italy",
+      "broadPosition": "GK",
+      "shirtNumber": 1,
+      "stats": {
+        "appearances": 1,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 46,
+        "pace": 42,
+        "shooting": 16,
+        "passing": 30,
+        "dribbling": 16,
+        "defending": 25,
+        "physical": 39,
+        "goalkeeping": 53
+      },
+      "primeRatings": {
+        "overall": 68,
+        "pace": 44,
+        "shooting": 17,
+        "passing": 50,
+        "dribbling": 36,
+        "defending": 48,
+        "physical": 60,
+        "goalkeeping": 75
+      }
+    },
+    {
+      "id": "tommaso-augello-italy",
+      "name": "Tommaso Augello",
+      "nationality": "Italy",
+      "broadPosition": "DF",
+      "shirtNumber": 3,
+      "stats": {
+        "appearances": 41,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 72,
+        "pace": 68,
+        "shooting": 53,
+        "passing": 69,
+        "dribbling": 59,
+        "defending": 79,
+        "physical": 73
+      },
+      "primeRatings": {
+        "overall": 76,
+        "pace": 70,
+        "shooting": 58,
+        "passing": 72,
+        "dribbling": 69,
+        "defending": 82,
+        "physical": 81
+      }
+    },
+    {
+      "id": "sebastiano-luperto-italy",
+      "name": "Sebastiano Luperto",
+      "nationality": "Italy",
+      "broadPosition": "DF",
+      "shirtNumber": 6,
+      "stats": {
+        "appearances": 37,
+        "goals": 1
+      },
+      "seasonRatings": {
+        "overall": 69,
+        "pace": 62,
+        "shooting": 46,
+        "passing": 65,
+        "dribbling": 56,
+        "defending": 76,
+        "physical": 71
+      },
+      "primeRatings": {
+        "overall": 72,
+        "pace": 65,
+        "shooting": 55,
+        "passing": 65,
+        "dribbling": 63,
+        "defending": 77,
+        "physical": 78
+      }
+    },
+    {
+      "id": "michel-ndary-adopo-france",
+      "name": "Michel Ndary Adopo",
+      "nationality": "France",
+      "broadPosition": "MF",
+      "shirtNumber": 8,
+      "stats": {
+        "appearances": 38,
+        "goals": 1
+      },
+      "seasonRatings": {
+        "overall": 72,
+        "pace": 71,
+        "shooting": 67,
+        "passing": 75,
+        "dribbling": 72,
+        "defending": 62,
+        "physical": 69
+      },
+      "primeRatings": {
+        "overall": 75,
+        "pace": 73,
+        "shooting": 64,
+        "passing": 80,
+        "dribbling": 76,
+        "defending": 67,
+        "physical": 73
+      }
+    },
+    {
+      "id": "florinel-coman-romania",
+      "name": "Florinel Coman",
+      "nationality": "Romania",
+      "broadPosition": "FW",
+      "shirtNumber": 9,
+      "stats": {
+        "appearances": 9,
+        "goals": 1
+      },
+      "seasonRatings": {
+        "overall": 59,
+        "pace": 64,
+        "shooting": 69,
+        "passing": 52,
+        "dribbling": 65,
+        "defending": 34,
+        "physical": 56
+      },
+      "primeRatings": {
+        "overall": 62,
+        "pace": 64,
+        "shooting": 70,
+        "passing": 57,
+        "dribbling": 63,
+        "defending": 37,
+        "physical": 56
+      }
+    },
+    {
+      "id": "nicolas-viola-italy",
+      "name": "Nicolas Viola",
+      "nationality": "Italy",
+      "broadPosition": "MF",
+      "shirtNumber": 10,
+      "stats": {
+        "appearances": 28,
+        "goals": 3
+      },
+      "seasonRatings": {
+        "overall": 69,
+        "pace": 64,
+        "shooting": 61,
+        "passing": 72,
+        "dribbling": 68,
+        "defending": 58,
+        "physical": 67
+      },
+      "primeRatings": {
+        "overall": 72,
+        "pace": 68,
+        "shooting": 63,
+        "passing": 79,
+        "dribbling": 73,
+        "defending": 64,
+        "physical": 69
+      }
+    },
+    {
+      "id": "alessandro-deiola-italy",
+      "name": "Alessandro Deiola",
+      "nationality": "Italy",
+      "broadPosition": "MF",
+      "shirtNumber": 14,
+      "stats": {
+        "appearances": 32,
+        "goals": 2
+      },
+      "seasonRatings": {
+        "overall": 72,
+        "pace": 70,
+        "shooting": 61,
+        "passing": 75,
+        "dribbling": 72,
+        "defending": 61,
+        "physical": 67
+      },
+      "primeRatings": {
+        "overall": 75,
+        "pace": 74,
+        "shooting": 67,
+        "passing": 82,
+        "dribbling": 76,
+        "defending": 67,
+        "physical": 69
+      }
+    },
+    {
+      "id": "matteo-prati-italy",
+      "name": "Matteo Prati",
+      "nationality": "Italy",
+      "broadPosition": "MF",
+      "shirtNumber": 16,
+      "stats": {
+        "appearances": 14,
+        "goals": 1
+      },
+      "seasonRatings": {
+        "overall": 63,
+        "pace": 62,
+        "shooting": 57,
+        "passing": 71,
+        "dribbling": 60,
+        "defending": 52,
+        "physical": 59
+      },
+      "primeRatings": {
+        "overall": 66,
+        "pace": 64,
+        "shooting": 60,
+        "passing": 72,
+        "dribbling": 65,
+        "defending": 59,
+        "physical": 63
+      }
+    },
+    {
+      "id": "r-zvan-marin-romania",
+      "name": "Răzvan Marin",
+      "nationality": "Romania",
+      "broadPosition": "MF",
+      "shirtNumber": 18,
+      "stats": {
+        "appearances": 35,
+        "goals": 3
+      },
+      "seasonRatings": {
+        "overall": 75,
+        "pace": 73,
+        "shooting": 69,
+        "passing": 78,
+        "dribbling": 72,
+        "defending": 66,
+        "physical": 71
+      },
+      "primeRatings": {
+        "overall": 80,
+        "pace": 74,
+        "shooting": 72,
+        "passing": 82,
+        "dribbling": 79,
+        "defending": 72,
+        "physical": 79
+      }
+    },
+    {
+      "id": "nadir-zortea-italy",
+      "name": "Nadir Zortea",
+      "nationality": "Italy",
+      "broadPosition": "MF",
+      "shirtNumber": 19,
+      "stats": {
+        "appearances": 37,
+        "goals": 6
+      },
+      "seasonRatings": {
+        "overall": 75,
+        "pace": 70,
+        "shooting": 68,
+        "passing": 81,
+        "dribbling": 73,
+        "defending": 65,
+        "physical": 73
+      },
+      "primeRatings": {
+        "overall": 78,
+        "pace": 74,
+        "shooting": 72,
+        "passing": 83,
+        "dribbling": 76,
+        "defending": 66,
+        "physical": 72
+      }
+    },
+    {
+      "id": "jos-luis-palomino-argentina",
+      "name": "José Luis Palomino",
+      "nationality": "Argentina",
+      "broadPosition": "DF",
+      "shirtNumber": 24,
+      "stats": {
+        "appearances": 20,
+        "goals": 1
+      },
+      "seasonRatings": {
+        "overall": 63,
+        "pace": 56,
+        "shooting": 43,
+        "passing": 55,
+        "dribbling": 52,
+        "defending": 70,
+        "physical": 69
+      },
+      "primeRatings": {
+        "overall": 84,
+        "pace": 79,
+        "shooting": 65,
+        "passing": 78,
+        "dribbling": 71,
+        "defending": 93,
+        "physical": 88
+      }
+    },
+    {
+      "id": "elia-caprile-italy",
+      "name": "Elia Caprile",
+      "nationality": "Italy",
+      "broadPosition": "GK",
+      "shirtNumber": 25,
+      "stats": {
+        "appearances": 18,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 60,
+        "pace": 46,
+        "shooting": 16,
+        "passing": 47,
+        "dribbling": 30,
+        "defending": 42,
+        "physical": 53,
+        "goalkeeping": 70
+      },
+      "primeRatings": {
+        "overall": 66,
+        "pace": 46,
+        "shooting": 20,
+        "passing": 52,
+        "dribbling": 39,
+        "defending": 44,
+        "physical": 59,
+        "goalkeeping": 76
+      }
+    },
+    {
+      "id": "yerry-mina-colombia",
+      "name": "Yerry Mina",
+      "nationality": "Colombia",
+      "broadPosition": "DF",
+      "shirtNumber": 26,
+      "stats": {
+        "appearances": 31,
+        "goals": 1
+      },
+      "seasonRatings": {
+        "overall": 70,
+        "pace": 67,
+        "shooting": 49,
+        "passing": 63,
+        "dribbling": 61,
+        "defending": 78,
+        "physical": 75
+      },
+      "primeRatings": {
+        "overall": 76,
+        "pace": 70,
+        "shooting": 58,
+        "passing": 73,
+        "dribbling": 65,
+        "defending": 83,
+        "physical": 79
+      }
+    },
+    {
+      "id": "gabriele-zappa-italy",
+      "name": "Gabriele Zappa",
+      "nationality": "Italy",
+      "broadPosition": "DF",
+      "shirtNumber": 28,
+      "stats": {
+        "appearances": 40,
+        "goals": 2
+      },
+      "seasonRatings": {
+        "overall": 72,
+        "pace": 66,
+        "shooting": 49,
+        "passing": 68,
+        "dribbling": 65,
+        "defending": 78,
+        "physical": 78
+      },
+      "primeRatings": {
+        "overall": 75,
+        "pace": 71,
+        "shooting": 53,
+        "passing": 72,
+        "dribbling": 68,
+        "defending": 82,
+        "physical": 75
+      }
+    },
+    {
+      "id": "antoine-makoumbou-congo",
+      "name": "Antoine Makoumbou",
+      "nationality": "Congo",
+      "broadPosition": "MF",
+      "shirtNumber": 29,
+      "stats": {
+        "appearances": 34,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 69,
+        "pace": 69,
+        "shooting": 60,
+        "passing": 77,
+        "dribbling": 67,
+        "defending": 60,
+        "physical": 68
+      },
+      "primeRatings": {
+        "overall": 72,
+        "pace": 69,
+        "shooting": 67,
+        "passing": 76,
+        "dribbling": 70,
+        "defending": 62,
+        "physical": 71
+      }
+    },
+    {
+      "id": "leonardo-pavoletti-italy",
+      "name": "Leonardo Pavoletti",
+      "nationality": "Italy",
+      "broadPosition": "FW",
+      "shirtNumber": 30,
+      "stats": {
+        "appearances": 28,
+        "goals": 3
+      },
+      "seasonRatings": {
+        "overall": 72,
+        "pace": 78,
+        "shooting": 81,
+        "passing": 66,
+        "dribbling": 76,
+        "defending": 48,
+        "physical": 68
+      },
+      "primeRatings": {
+        "overall": 87,
+        "pace": 92,
+        "shooting": 96,
+        "passing": 79,
+        "dribbling": 90,
+        "defending": 64,
+        "physical": 84
+      }
+    },
+    {
+      "id": "adam-obert-svk",
+      "name": "Adam Obert",
+      "nationality": "SVK",
+      "broadPosition": "DF",
+      "shirtNumber": 33,
+      "stats": {
+        "appearances": 23,
+        "goals": 1
+      },
+      "seasonRatings": {
+        "overall": 65,
+        "pace": 62,
+        "shooting": 44,
+        "passing": 60,
+        "dribbling": 58,
+        "defending": 74,
+        "physical": 70
+      },
+      "primeRatings": {
+        "overall": 68,
+        "pace": 65,
+        "shooting": 47,
+        "passing": 64,
+        "dribbling": 58,
+        "defending": 73,
+        "physical": 73
+      }
+    },
+    {
+      "id": "gianluca-gaetano-italy",
+      "name": "Gianluca Gaetano",
+      "nationality": "Italy",
+      "broadPosition": "MF",
+      "shirtNumber": 70,
+      "stats": {
+        "appearances": 30,
+        "goals": 2
+      },
+      "seasonRatings": {
+        "overall": 69,
+        "pace": 66,
+        "shooting": 62,
+        "passing": 76,
+        "dribbling": 69,
+        "defending": 61,
+        "physical": 67
+      },
+      "primeRatings": {
+        "overall": 72,
+        "pace": 71,
+        "shooting": 66,
+        "passing": 80,
+        "dribbling": 72,
+        "defending": 60,
+        "physical": 68
+      }
+    },
+    {
+      "id": "alen-sherri-albania",
+      "name": "Alen Sherri",
+      "nationality": "Albania",
+      "broadPosition": "GK",
+      "shirtNumber": 71,
+      "stats": {
+        "appearances": 8,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 53,
+        "pace": 44,
+        "shooting": 21,
+        "passing": 36,
+        "dribbling": 22,
+        "defending": 31,
+        "physical": 50,
+        "goalkeeping": 58
+      },
+      "primeRatings": {
+        "overall": 64,
+        "pace": 44,
+        "shooting": 15,
+        "passing": 49,
+        "dribbling": 36,
+        "defending": 44,
+        "physical": 60,
+        "goalkeeping": 74
+      }
+    }
+  ],
+  "sourceUrl": "https://en.wikipedia.org/wiki/2024%E2%80%9325_Cagliari_Calcio_season",
+  "scrapedAt": "2026-07-10T18:48:04.766Z"
+}
