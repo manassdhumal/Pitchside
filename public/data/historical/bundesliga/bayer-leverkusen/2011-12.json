@@ -1,0 +1,718 @@
+{
+  "leagueId": "bundesliga",
+  "clubId": "bayer-leverkusen",
+  "season": "2011-12",
+  "division": "top-flight",
+  "squad": [
+    {
+      "id": "ren-adler-ger",
+      "name": "René Adler",
+      "nationality": "GER",
+      "broadPosition": "GK",
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 49,
+        "pace": 48,
+        "shooting": 17,
+        "passing": 37,
+        "dribbling": 17,
+        "defending": 29,
+        "physical": 45,
+        "goalkeeping": 57
+      },
+      "primeRatings": {
+        "overall": 77,
+        "pace": 42,
+        "shooting": 19,
+        "passing": 62,
+        "dribbling": 47,
+        "defending": 57,
+        "physical": 72,
+        "goalkeeping": 85
+      }
+    },
+    {
+      "id": "fabian-giefer-ger",
+      "name": "Fabian Giefer",
+      "nationality": "GER",
+      "broadPosition": "GK",
+      "stats": {
+        "appearances": 2,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 49,
+        "pace": 44,
+        "shooting": 19,
+        "passing": 32,
+        "dribbling": 19,
+        "defending": 26,
+        "physical": 41,
+        "goalkeeping": 54
+      },
+      "primeRatings": {
+        "overall": 52,
+        "pace": 48,
+        "shooting": 18,
+        "passing": 40,
+        "dribbling": 24,
+        "defending": 33,
+        "physical": 45,
+        "goalkeeping": 62
+      }
+    },
+    {
+      "id": "bernd-leno-ger",
+      "name": "Bernd Leno",
+      "nationality": "GER",
+      "broadPosition": "GK",
+      "stats": {
+        "appearances": 40,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 78,
+        "pace": 47,
+        "shooting": 21,
+        "passing": 65,
+        "dribbling": 49,
+        "defending": 55,
+        "physical": 73,
+        "goalkeeping": 85
+      },
+      "primeRatings": {
+        "overall": 88,
+        "pace": 43,
+        "shooting": 17,
+        "passing": 74,
+        "dribbling": 58,
+        "defending": 70,
+        "physical": 80,
+        "goalkeeping": 98
+      }
+    },
+    {
+      "id": "david-yelldell-usa",
+      "name": "David Yelldell",
+      "nationality": "USA",
+      "broadPosition": "GK",
+      "stats": {
+        "appearances": 2,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 50,
+        "pace": 46,
+        "shooting": 16,
+        "passing": 38,
+        "dribbling": 18,
+        "defending": 27,
+        "physical": 45,
+        "goalkeeping": 58
+      },
+      "primeRatings": {
+        "overall": 53,
+        "pace": 47,
+        "shooting": 16,
+        "passing": 38,
+        "dribbling": 25,
+        "defending": 36,
+        "physical": 50,
+        "goalkeeping": 61
+      }
+    },
+    {
+      "id": "gonzalo-castro-ger",
+      "name": "Gonzalo Castro",
+      "nationality": "GER",
+      "broadPosition": "DF",
+      "stats": {
+        "appearances": 38,
+        "goals": 1
+      },
+      "seasonRatings": {
+        "overall": 78,
+        "pace": 73,
+        "shooting": 58,
+        "passing": 76,
+        "dribbling": 67,
+        "defending": 85,
+        "physical": 83
+      },
+      "primeRatings": {
+        "overall": 86,
+        "pace": 83,
+        "shooting": 65,
+        "passing": 82,
+        "dribbling": 77,
+        "defending": 92,
+        "physical": 88
+      }
+    },
+    {
+      "id": "danny-da-costa-ger",
+      "name": "Danny da Costa",
+      "nationality": "GER",
+      "broadPosition": "DF",
+      "stats": {
+        "appearances": 2,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 50,
+        "pace": 44,
+        "shooting": 29,
+        "passing": 46,
+        "dribbling": 37,
+        "defending": 57,
+        "physical": 53
+      },
+      "primeRatings": {
+        "overall": 81,
+        "pace": 76,
+        "shooting": 60,
+        "passing": 79,
+        "dribbling": 72,
+        "defending": 89,
+        "physical": 86
+      }
+    },
+    {
+      "id": "manuel-friedrich-ger",
+      "name": "Manuel Friedrich",
+      "nationality": "GER",
+      "broadPosition": "DF",
+      "stats": {
+        "appearances": 22,
+        "goals": 1
+      },
+      "seasonRatings": {
+        "overall": 67,
+        "pace": 62,
+        "shooting": 44,
+        "passing": 59,
+        "dribbling": 55,
+        "defending": 77,
+        "physical": 70
+      },
+      "primeRatings": {
+        "overall": 70,
+        "pace": 64,
+        "shooting": 52,
+        "passing": 67,
+        "dribbling": 62,
+        "defending": 81,
+        "physical": 73
+      }
+    },
+    {
+      "id": "michal-kadlec-the",
+      "name": "Michal Kadlec",
+      "nationality": "THE",
+      "broadPosition": "DF",
+      "stats": {
+        "appearances": 38,
+        "goals": 2
+      },
+      "seasonRatings": {
+        "overall": 79,
+        "pace": 77,
+        "shooting": 57,
+        "passing": 74,
+        "dribbling": 68,
+        "defending": 86,
+        "physical": 84
+      },
+      "primeRatings": {
+        "overall": 82,
+        "pace": 75,
+        "shooting": 65,
+        "passing": 79,
+        "dribbling": 71,
+        "defending": 88,
+        "physical": 86
+      }
+    },
+    {
+      "id": "bastian-oczipka-ger",
+      "name": "Bastian Oczipka",
+      "nationality": "GER",
+      "broadPosition": "DF",
+      "stats": {
+        "appearances": 8,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 56,
+        "pace": 49,
+        "shooting": 36,
+        "passing": 49,
+        "dribbling": 44,
+        "defending": 66,
+        "physical": 57
+      },
+      "primeRatings": {
+        "overall": 80,
+        "pace": 72,
+        "shooting": 63,
+        "passing": 77,
+        "dribbling": 72,
+        "defending": 89,
+        "physical": 85
+      }
+    },
+    {
+      "id": "stefan-reinartz-ger",
+      "name": "Stefan Reinartz",
+      "nationality": "GER",
+      "broadPosition": "DF",
+      "stats": {
+        "appearances": 40,
+        "goals": 1
+      },
+      "seasonRatings": {
+        "overall": 79,
+        "pace": 76,
+        "shooting": 59,
+        "passing": 75,
+        "dribbling": 67,
+        "defending": 85,
+        "physical": 80
+      },
+      "primeRatings": {
+        "overall": 82,
+        "pace": 76,
+        "shooting": 64,
+        "passing": 78,
+        "dribbling": 74,
+        "defending": 93,
+        "physical": 83
+      }
+    },
+    {
+      "id": "daniel-schwaab-ger",
+      "name": "Daniel Schwaab",
+      "nationality": "GER",
+      "broadPosition": "DF",
+      "stats": {
+        "appearances": 28,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 70,
+        "pace": 64,
+        "shooting": 49,
+        "passing": 63,
+        "dribbling": 58,
+        "defending": 80,
+        "physical": 75
+      },
+      "primeRatings": {
+        "overall": 75,
+        "pace": 73,
+        "shooting": 53,
+        "passing": 71,
+        "dribbling": 64,
+        "defending": 83,
+        "physical": 77
+      }
+    },
+    {
+      "id": "mer-toprak-tur",
+      "name": "Ömer Toprak",
+      "nationality": "TUR",
+      "broadPosition": "DF",
+      "stats": {
+        "appearances": 38,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 77,
+        "pace": 72,
+        "shooting": 59,
+        "passing": 74,
+        "dribbling": 69,
+        "defending": 86,
+        "physical": 79
+      },
+      "primeRatings": {
+        "overall": 81,
+        "pace": 78,
+        "shooting": 64,
+        "passing": 74,
+        "dribbling": 71,
+        "defending": 92,
+        "physical": 86
+      }
+    },
+    {
+      "id": "hanno-balitsch-ger",
+      "name": "Hanno Balitsch",
+      "nationality": "GER",
+      "broadPosition": "MF",
+      "stats": {
+        "appearances": 22,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 64,
+        "pace": 61,
+        "shooting": 55,
+        "passing": 71,
+        "dribbling": 64,
+        "defending": 52,
+        "physical": 63
+      },
+      "primeRatings": {
+        "overall": 67,
+        "pace": 64,
+        "shooting": 57,
+        "passing": 70,
+        "dribbling": 67,
+        "defending": 56,
+        "physical": 62
+      }
+    },
+    {
+      "id": "michael-ballack-ger",
+      "name": "Michael Ballack",
+      "nationality": "GER",
+      "broadPosition": "MF",
+      "stats": {
+        "appearances": 36,
+        "goals": 3
+      },
+      "seasonRatings": {
+        "overall": 78,
+        "pace": 76,
+        "shooting": 72,
+        "passing": 85,
+        "dribbling": 78,
+        "defending": 68,
+        "physical": 74
+      },
+      "primeRatings": {
+        "overall": 81,
+        "pace": 79,
+        "shooting": 74,
+        "passing": 83,
+        "dribbling": 79,
+        "defending": 73,
+        "physical": 77
+      }
+    },
+    {
+      "id": "tranquillo-barnetta-sui",
+      "name": "Tranquillo Barnetta",
+      "nationality": "SUI",
+      "broadPosition": "MF",
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 47,
+        "pace": 44,
+        "shooting": 40,
+        "passing": 50,
+        "dribbling": 45,
+        "defending": 39,
+        "physical": 42
+      },
+      "primeRatings": {
+        "overall": 72,
+        "pace": 67,
+        "shooting": 61,
+        "passing": 75,
+        "dribbling": 71,
+        "defending": 63,
+        "physical": 68
+      }
+    },
+    {
+      "id": "karim-bellarabi-ger",
+      "name": "Karim Bellarabi",
+      "nationality": "GER",
+      "broadPosition": "MF",
+      "stats": {
+        "appearances": 6,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 54,
+        "pace": 51,
+        "shooting": 43,
+        "passing": 61,
+        "dribbling": 56,
+        "defending": 46,
+        "physical": 53
+      },
+      "primeRatings": {
+        "overall": 88,
+        "pace": 85,
+        "shooting": 79,
+        "passing": 91,
+        "dribbling": 85,
+        "defending": 77,
+        "physical": 84
+      }
+    },
+    {
+      "id": "lars-bender-ger",
+      "name": "Lars Bender",
+      "nationality": "GER",
+      "broadPosition": "MF",
+      "stats": {
+        "appearances": 44,
+        "goals": 2
+      },
+      "seasonRatings": {
+        "overall": 81,
+        "pace": 77,
+        "shooting": 73,
+        "passing": 83,
+        "dribbling": 81,
+        "defending": 70,
+        "physical": 75
+      },
+      "primeRatings": {
+        "overall": 84,
+        "pace": 79,
+        "shooting": 76,
+        "passing": 88,
+        "dribbling": 87,
+        "defending": 77,
+        "physical": 82
+      }
+    },
+    {
+      "id": "michael-ortega-col",
+      "name": "Michael Ortega",
+      "nationality": "COL",
+      "broadPosition": "MF",
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 47,
+        "pace": 45,
+        "shooting": 41,
+        "passing": 53,
+        "dribbling": 47,
+        "defending": 36,
+        "physical": 43
+      },
+      "primeRatings": {
+        "overall": 50,
+        "pace": 44,
+        "shooting": 44,
+        "passing": 58,
+        "dribbling": 53,
+        "defending": 42,
+        "physical": 45
+      }
+    },
+    {
+      "id": "renato-augusto-bra",
+      "name": "Renato Augusto",
+      "nationality": "BRA",
+      "broadPosition": "MF",
+      "stats": {
+        "appearances": 20,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 62,
+        "pace": 56,
+        "shooting": 54,
+        "passing": 68,
+        "dribbling": 63,
+        "defending": 49,
+        "physical": 62
+      },
+      "primeRatings": {
+        "overall": 65,
+        "pace": 64,
+        "shooting": 55,
+        "passing": 67,
+        "dribbling": 67,
+        "defending": 52,
+        "physical": 64
+      }
+    },
+    {
+      "id": "simon-rolfes-ger",
+      "name": "Simon Rolfes",
+      "nationality": "GER",
+      "broadPosition": "MF",
+      "stats": {
+        "appearances": 44,
+        "goals": 1
+      },
+      "seasonRatings": {
+        "overall": 79,
+        "pace": 75,
+        "shooting": 70,
+        "passing": 85,
+        "dribbling": 78,
+        "defending": 71,
+        "physical": 76
+      },
+      "primeRatings": {
+        "overall": 82,
+        "pace": 79,
+        "shooting": 76,
+        "passing": 89,
+        "dribbling": 82,
+        "defending": 73,
+        "physical": 80
+      }
+    },
+    {
+      "id": "sidney-sam-ger",
+      "name": "Sidney Sam",
+      "nationality": "GER",
+      "broadPosition": "MF",
+      "stats": {
+        "appearances": 44,
+        "goals": 5
+      },
+      "seasonRatings": {
+        "overall": 83,
+        "pace": 78,
+        "shooting": 75,
+        "passing": 85,
+        "dribbling": 83,
+        "defending": 72,
+        "physical": 81
+      },
+      "primeRatings": {
+        "overall": 86,
+        "pace": 81,
+        "shooting": 80,
+        "passing": 90,
+        "dribbling": 85,
+        "defending": 78,
+        "physical": 83
+      }
+    },
+    {
+      "id": "eren-derdiyok-sui",
+      "name": "Eren Derdiyok",
+      "nationality": "SUI",
+      "broadPosition": "FW",
+      "stats": {
+        "appearances": 38,
+        "goals": 8
+      },
+      "seasonRatings": {
+        "overall": 81,
+        "pace": 83,
+        "shooting": 88,
+        "passing": 73,
+        "dribbling": 83,
+        "defending": 55,
+        "physical": 76
+      },
+      "primeRatings": {
+        "overall": 84,
+        "pace": 88,
+        "shooting": 93,
+        "passing": 77,
+        "dribbling": 85,
+        "defending": 58,
+        "physical": 79
+      }
+    },
+    {
+      "id": "nicolai-j-rgensen-den",
+      "name": "Nicolai Jørgensen",
+      "nationality": "DEN",
+      "broadPosition": "FW",
+      "stats": {
+        "appearances": 6,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 52,
+        "pace": 54,
+        "shooting": 58,
+        "passing": 45,
+        "dribbling": 52,
+        "defending": 25,
+        "physical": 50
+      },
+      "primeRatings": {
+        "overall": 55,
+        "pace": 57,
+        "shooting": 62,
+        "passing": 49,
+        "dribbling": 57,
+        "defending": 31,
+        "physical": 55
+      }
+    },
+    {
+      "id": "stefan-kie-ling-ger",
+      "name": "Stefan Kießling",
+      "nationality": "GER",
+      "broadPosition": "FW",
+      "stats": {
+        "appearances": 44,
+        "goals": 4
+      },
+      "seasonRatings": {
+        "overall": 75,
+        "pace": 79,
+        "shooting": 86,
+        "passing": 70,
+        "dribbling": 77,
+        "defending": 48,
+        "physical": 69
+      },
+      "primeRatings": {
+        "overall": 84,
+        "pace": 87,
+        "shooting": 89,
+        "passing": 75,
+        "dribbling": 86,
+        "defending": 62,
+        "physical": 82
+      }
+    },
+    {
+      "id": "andr-sch-rrle-ger",
+      "name": "André Schürrle",
+      "nationality": "GER",
+      "broadPosition": "FW",
+      "stats": {
+        "appearances": 38,
+        "goals": 3
+      },
+      "seasonRatings": {
+        "overall": 77,
+        "pace": 83,
+        "shooting": 87,
+        "passing": 70,
+        "dribbling": 80,
+        "defending": 51,
+        "physical": 74
+      },
+      "primeRatings": {
+        "overall": 87,
+        "pace": 87,
+        "shooting": 95,
+        "passing": 77,
+        "dribbling": 93,
+        "defending": 60,
+        "physical": 81
+      }
+    }
+  ],
+  "sourceUrl": "https://en.wikipedia.org/wiki/2011%E2%80%9312_Bayer_04_Leverkusen_season",
+  "scrapedAt": "2026-07-10T17:29:15.879Z"
+}

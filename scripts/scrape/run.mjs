@@ -35,10 +35,10 @@ function playerId(name, nationality) {
     .replace(/^-+|-+$/g, '');
 }
 
-async function scrapeClubSeason(league, club, season) {
+async function scrapeClubSeason(league, club, season, force = false) {
   const outDir = join(HIST_DIR, league.id, club.id);
   const outFile = join(outDir, `${season}.json`);
-  if (existsSync(outFile)) return { status: 'skipped' };
+  if (!force && existsSync(outFile)) return { status: 'skipped' };
 
   const title = await resolveSeasonArticleTitle(club.wikiTitle, season, club.name);
   if (!title) return { status: 'not-found' };
@@ -122,6 +122,9 @@ async function main() {
   const startYear = parseInt(args.find((a) => a.startsWith('--start='))?.split('=')[1] ?? '2011', 10);
   const endYear = parseInt(args.find((a) => a.startsWith('--end='))?.split('=')[1] ?? '2025', 10);
   const leagueFilter = args.find((a) => a.startsWith('--league='))?.split('=')[1];
+  // --force re-scrapes and overwrites existing files (e.g. after a parser fix), instead of the
+  // default resumable behaviour that skips any club-season already on disk.
+  const force = args.includes('--force');
 
   mkdirSync(HIST_DIR, { recursive: true });
   const leagues = JSON.parse(readFileSync(join(DATA_DIR, 'leagues.json'), 'utf8'));
@@ -136,7 +139,7 @@ async function main() {
     for (const club of leagueClubs) {
       for (const season of seasons) {
         try {
-          const result = await scrapeClubSeason(league, club, season);
+          const result = await scrapeClubSeason(league, club, season, force);
           if (result.status === 'ok') { ok++; log(`OK   ${league.id}/${club.id}/${season} (${result.players} players)`); }
           else if (result.status === 'skipped') { skipped++; }
           else { missing++; log(`MISS ${league.id}/${club.id}/${season}: ${result.status}`); }
