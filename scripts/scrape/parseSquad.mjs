@@ -72,6 +72,13 @@ function extractLinkText(wikitext) {
     const name = [sortname[1].trim(), sortname[2].trim()].filter(Boolean).join(' ');
     if (name) return name;
   }
+  // {{sort|sortkey|Display}} or {{sort|Display}} -> the displayed value (used pervasively for
+  // apps/pos cells in the {{football season player stats}} template, e.g. {{sort|49.5|46(4)}}).
+  const sortTmpl = wikitext.match(/\{\{\s*sort\s*\|([^|}]*)(?:\|([^}]*))?\}\}/i);
+  if (sortTmpl && !/\{\{\s*sortname/i.test(wikitext)) {
+    const disp = (sortTmpl[2] ?? sortTmpl[1] ?? '').trim();
+    if (disp) return disp;
+  }
   // {{Abbr|Pos|Position}} / {{Tooltip|Pos.|Position}} -> "Pos" (both common in header cells)
   const abbr = wikitext.match(/\{\{\s*(?:abbr|tooltip)\s*\|([^|}]*)/i);
   if (abbr && abbr[1].trim()) return abbr[1].trim();
@@ -299,6 +306,62 @@ export function parseFbSiSquad(wikitext) {
       noStats: true,
     });
   }
+  return players.length >= 11 ? players : null;
+}
+
+/**
+ * Parses the `{{football season player stats|…}}` template layout used by many modern
+ * (2015+) English club-season articles. The template *generates* the table header, so there's no
+ * `{|`/header for `parseSquadTable` to find — but the data rows sit in the wikitext right after the
+ * template call, up to the closing `|}`. Column order is fixed: `[No.,] Pos, Nat+Player`, then an
+ * Apps/Goals pair per competition, then the **Total** Apps/Goals pair, then Yellow/Red cards. So
+ * the Total and cards are read from the end, independent of how many competitions the page lists.
+ */
+export function parseFootballSeasonStatsTemplate(wikitext) {
+  const text = stripComments(wikitext);
+  const start = text.search(/\{\{\s*football season player stats/i);
+  if (start === -1) return null;
+  const tmplEnd = text.indexOf('}}', start);
+  if (tmplEnd === -1) return null;
+  const params = text.slice(start + 2, tmplEnd).split('|').map((s) => s.trim());
+  const hasNo = params.some((p) => /^number\s*=\s*y/i.test(p));
+  const posIdx = hasNo ? 1 : 0;
+  const nameIdx = hasNo ? 2 : 1;
+
+  const close = text.indexOf('\n|}', tmplEnd);
+  const body = text.slice(tmplEnd + 2, close === -1 ? undefined : close);
+
+  // First pass: collect the valid player rows and their cells (trailing empties trimmed).
+  const rowsCells = [];
+  for (const row of splitRows(body)) {
+    const cells = parseRowCells(row);
+    while (cells.length && /^\s*$/.test(cells[cells.length - 1])) cells.pop();
+    if (cells.length < nameIdx + 5) continue;
+    const position = normalizePosition(cells[posIdx]);
+    const name = extractLinkText(cells[nameIdx]);
+    if (!position || !name || /^\s*$/.test(name)) continue;
+    rowsCells.push({ cells, position, name });
+  }
+  if (rowsCells.length < 11) return null;
+
+  // Total Apps/Goals are the pair just before the two card columns. Anchor from the FRONT using the
+  // *modal* row width, so a few rows carrying trailing <ref>/award cells don't shift the read (those
+  // extra cells are always at the end; reading from the end would misalign them).
+  const counts = {};
+  for (const r of rowsCells) counts[r.cells.length] = (counts[r.cells.length] || 0) + 1;
+  const modalC = Number(Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0]);
+  const totalAppsCol = modalC - 4;
+  const totalGoalsCol = modalC - 3;
+  if (totalAppsCol <= nameIdx) return null;
+
+  const players = rowsCells.map(({ cells, position, name }) => ({
+    name,
+    nationality: extractNationality(cells[nameIdx]),
+    broadPosition: position,
+    shirtNumber: hasNo ? leadingNumber(extractLinkText(cells[0])) : undefined,
+    appearances: parseAppsToken(extractLinkText(cells[totalAppsCol] ?? '')),
+    goals: Math.max(0, leadingNumber(extractLinkText(cells[totalGoalsCol] ?? ''))),
+  }));
   return players.length >= 11 ? players : null;
 }
 
@@ -648,6 +711,7 @@ const MAX_PLAUSIBLE_SEASON_APPS = 68;
 export function extractClubSeasonSquad(wikitext) {
   const candidates = [
     parseSquadTable(wikitext),
+    parseFootballSeasonStatsTemplate(wikitext),
     parseGermanGroupSquad(wikitext),
     parseEfsTemplateSquad(wikitext),
     parseFsTemplateSquad(wikitext),
