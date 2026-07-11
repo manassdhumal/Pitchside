@@ -23,7 +23,7 @@ const LANG_BY_LEAGUE = { 'ligue-1': 'fr', 'serie-a': 'it' };
 // Genuine top-flight seasons with no English article (verified: club WAS in the top flight that
 // year — lower-division years are deliberately excluded).
 const TARGETS = [
-  ['ligue-1', 'rennes', '2011-12'], ['ligue-1', 'rennes', '2012-13'], ['ligue-1', 'rennes', '2013-14'],
+  ['ligue-1', 'rennes', '2011-12', 'Saison 2011-2012 du Stade rennais FC'], ['ligue-1', 'rennes', '2012-13'], ['ligue-1', 'rennes', '2013-14'],
   ['ligue-1', 'nice', '2011-12'], ['ligue-1', 'nice', '2013-14'],
   ['ligue-1', 'montpellier', '2013-14'], ['ligue-1', 'bordeaux', '2011-12'], ['ligue-1', 'toulouse', '2011-12'],
   ['serie-a', 'genoa', '2011-12'], ['serie-a', 'genoa', '2013-14'],
@@ -145,7 +145,7 @@ function sleepSync(ms) { Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 
 
 async function run() {
   let ok = 0, fail = 0;
-  for (const [leagueId, clubId, season] of TARGETS) {
+  for (const [leagueId, clubId, season, titleOverride] of TARGETS) {
     const out = join(HIST, leagueId, clubId, `${season}.json`);
     if (existsSync(out)) { console.log(`SKIP ${clubId}/${season}`); continue; }
     const lang = LANG_BY_LEAGUE[leagueId];
@@ -155,13 +155,16 @@ async function run() {
     // rugby article that merely shares the years (e.g. "Championnat de France ...", "rugby à XV").
     const tok = club.name.toLowerCase().replace(/[^a-z]/g, '').slice(0, 4);
     try {
-      const q = lang === 'fr' ? `Saison ${ys}-${ye} ${club.name}` : `${club.name} ${ys}-${ye}`;
-      const titles = await search(lang, q);
-      const title = titles.find((t) => {
-        const low = t.toLowerCase();
-        return low.includes(ys) && low.includes(ye) && low.includes(tok) &&
-          !/championnat|rugby|serie [abc]\b|ligue [12]|coupe|campionato/.test(low);
-      });
+      let title = titleOverride;
+      if (!title) {
+        const q = lang === 'fr' ? `Saison ${ys}-${ye} ${club.name}` : `${club.name} ${ys}-${ye}`;
+        const titles = await search(lang, q);
+        title = titles.find((t) => {
+          const low = t.toLowerCase();
+          return low.includes(ys) && low.includes(ye) && low.includes(tok) &&
+            !/championnat|rugby|serie [abc]\b|ligue [12]|coupe|campionato/.test(low);
+        });
+      }
       if (!title) { fail++; console.log(`NF   ${clubId}/${season}`); continue; }
       const wt = await wikitext(lang, title);
       const rows = (lang === 'fr' ? parseFrench(wt) : parseItalian(wt)).filter((p, i, a) => a.findIndex((q) => q.name === p.name) === i);
