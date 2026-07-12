@@ -16,10 +16,20 @@ const MIN_APPS_FOR_POOL = 8; // ignore cameo/injury seasons when building the pe
 const MIN_POOL_SIZE = 6; // below this a percentile is unreliable; fall back to absolute rate
 // How far below their curated peak an anchored star's weakest observed season may fall.
 const MAX_ANCHOR_DROP = 18;
-// A curated anchor is only applied to an identity that reached within this of it on merit in some
-// season. Without this gate a fringe *namesake* (a different player who happens to share the name,
-// e.g. a squad "Óscar" or the Colombian "Luis Suárez") inherits the star's peak rating.
+// A curated anchor is applied to an identity either (a) that reached within this of it on merit in
+// some season, OR (b) that is the *primary* identity for the name (highest-rated, an established
+// regular) — because a genuine star should be anchored even when their position suppresses the
+// computed rating (keepers/deep playmakers have no output/defensive stats: Xavi, Alisson, Foden).
+// A fringe *namesake* (a different player who happens to share the name — a squad "Óscar", the
+// Colombian "Luis Suárez") is neither, so it keeps its own modest rating.
 const ANCHOR_GATE = 14;
+// The primary identity must at least look like a real first-team regular to claim the anchor, so a
+// name whose only bearers are fringe players (the real star absent from our data) anchors nobody.
+const STAR_FLOOR = 68;
+const STAR_MIN_APPS = 18;
+// Sibling identities within this of the primary's best season are treated as the same star split by
+// inconsistent nationality codes, and share the anchor; lower ones are namesakes and do not.
+const SPLIT_TOL = 5;
 
 /**
  * Canonical nationality key: first three letters, upper-cased, with the common scraped-code
@@ -179,15 +189,33 @@ export function rebuildAllRatings({ log = console.log } = {}) {
     }
   }
 
+  // Pre-pass: each career's best computed season, and — per name — the "primary" identity (the
+  // highest-rated one, and whether it's an established regular) used to place curated anchors.
+  const algBestOf = new Map(careers.map((c) => [c, Math.max(...c.entries.map((e) => seasonOveralls.get(e.record)))]));
+  const primaryByName = new Map(); // nameKey -> { alg, apps }
+  for (const c of careers) {
+    const alg = algBestOf.get(c);
+    const apps = Math.max(...c.entries.map((e) => e.record.stats.appearances), 0);
+    const prev = primaryByName.get(c.nameKey);
+    if (!prev || alg > prev.alg) primaryByName.set(c.nameKey, { alg, apps });
+  }
+
   // Pass 3: per-identity prime + curated anchoring, then write back.
   let anchoredPlayers = 0;
   for (const career of careers) {
-    const algs = career.entries.map(({ record }) => seasonOveralls.get(record));
-    const algBest = Math.max(...algs);
+    const algBest = algBestOf.get(career);
     const rawAnchor = anchors.get(career.nameKey);
-    // Only anchor an identity that actually reached near the peak on merit — a fringe namesake
-    // (different player, same name) never does, so it keeps its own modest rating.
-    const anchor = rawAnchor !== undefined && algBest >= rawAnchor - ANCHOR_GATE ? rawAnchor : undefined;
+    let anchor;
+    if (rawAnchor === undefined) {
+      anchor = undefined;
+    } else {
+      const primary = primaryByName.get(career.nameKey);
+      const starPresent = primary.alg >= STAR_FLOOR && primary.apps >= STAR_MIN_APPS;
+      // Anchor if this identity is independently near the peak, OR it's the real star (the primary,
+      // or a split-off of it) for a name whose star is actually present in the data.
+      anchor = algBest >= rawAnchor - ANCHOR_GATE || (starPresent && algBest >= primary.alg - SPLIT_TOL)
+        ? rawAnchor : undefined;
+    }
 
     let prime;
     let shift = 0;

@@ -45,8 +45,8 @@ export const HARD_CAP = 97;
 // however good one scraped season looks — caps below it, so 86+ always means "a name we vouched
 // for", never an output-percentile fluke. Genuinely-elite players missing here belong in
 // curatedAnchors.mjs, not lifted by loosening this cap.
-export const UNCURATED_SEASON_CAP = 84;
-export const UNCURATED_PRIME_CAP = 86;
+export const UNCURATED_SEASON_CAP = 85;
+export const UNCURATED_PRIME_CAP = 87;
 // Roster-only (no appearance data) players can't be separated on merit, so they get a tight,
 // plausible band — never near-elite — with only a light shirt-number role gradient.
 export const NOSTATS_CAP = 78;

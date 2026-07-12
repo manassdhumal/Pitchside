@@ -742,8 +742,12 @@ export function detectDivision(wikitext, leagueId) {
   const patterns = TOP_FLIGHT_PATTERNS[leagueId];
   if (!patterns) return 'unknown';
 
-  const leagueField = wikitext.match(/\|\s*league\s*=\s*([^\n|]*(?:\[\[[^\]]*\]\][^\n|]*)*)/i);
-  const sample = leagueField ? leagueField[1] : wikitext.slice(0, 3000);
+  // Strip `{{nowrap|…}}` (and stray template braces) around the league value first — otherwise the
+  // field regex stops at the `|` inside `{{nowrap|[[Segunda División]]}}` and reads only "{{nowrap",
+  // so a second-tier season slips through as 'unknown' instead of being rejected.
+  const unwrapped = wikitext.replace(/\{\{\s*nowrap\s*\|/gi, '');
+  const leagueField = unwrapped.match(/\|\s*league\s*=\s*([^\n|]*(?:\[\[[^\]]*\]\][^\n|]*)*)/i);
+  const sample = leagueField ? leagueField[1] : unwrapped.slice(0, 3000);
 
   if (patterns.reject.test(sample)) return 'lower-division';
   if (patterns.accept.test(sample)) return 'top-flight';

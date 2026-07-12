@@ -172,6 +172,8 @@ export const CURATED_ANCHORS = [
   { name: 'Edinson Cavani', anchor: 90 },
   { name: 'Gonzalo Higuain', anchor: 89 },
   { name: 'Radamel Falcao', anchor: 89 },
+  { name: 'Falcao', anchor: 89 }, // squad tables often list him by the mononym alone
+  { name: 'Chicharito', anchor: 84 }, // Javier Hernández
   { name: 'Angel Di Maria', anchor: 89 },
   { name: 'Sadio Mane', anchor: 89 },
   { name: 'Son Heung-min', anchor: 89 },
