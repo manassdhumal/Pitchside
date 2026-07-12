@@ -41,8 +41,15 @@ export function clamp01(value) {
 // reach 94+. Uncurated players are capped below the elite band in rebuildRatings.
 export const ABS_FLOOR = 44;
 export const HARD_CAP = 97;
-export const UNCURATED_SEASON_CAP = 87;
-export const UNCURATED_PRIME_CAP = 89;
+// Only recognised (curated-anchor) players may reach the near-elite band. An uncurated player —
+// however good one scraped season looks — caps below it, so 86+ always means "a name we vouched
+// for", never an output-percentile fluke. Genuinely-elite players missing here belong in
+// curatedAnchors.mjs, not lifted by loosening this cap.
+export const UNCURATED_SEASON_CAP = 84;
+export const UNCURATED_PRIME_CAP = 86;
+// Roster-only (no appearance data) players can't be separated on merit, so they get a tight,
+// plausible band — never near-elite — with only a light shirt-number role gradient.
+export const NOSTATS_CAP = 78;
 
 // Club-quality proxy added at full usage (weight 1). This is the MAIN vertical lever for
 // defenders and keepers: they have no attacking output to separate them, but a trusted
@@ -76,11 +83,15 @@ export function absoluteOutputScore(broadPosition, goals, appearances) {
  * The core season-overall model. `outputScore` is a [0,1] measure of attacking output strength
  * (percentile-vs-peers in the authoritative path, absolute-rate at scrape time).
  */
-export function computeSeasonOverall({ usage, tier, broadPosition, outputScore, careerHighUsageSeasons, noStats, rng }) {
+export function computeSeasonOverall({ usage, tier, broadPosition, outputScore, careerHighUsageSeasons, noStats, shirtNumber, rng }) {
   if (noStats) {
-    // No appearance data available (older/simpler article format) - tier-aware plausible baseline.
-    const tierBase = { 1: 72, 2: 68, 3: 65, 4: 62 }[tier] ?? 65;
-    return clamp(tierBase + (rng() - 0.5) * 8, ABS_FLOOR, 84);
+    // No appearance data (roster-only source). We can't rank the squad on merit, so give a tight
+    // tier-appropriate band with a *light, deterministic* role gradient from the shirt number
+    // (low numbers ≈ first-choice) — never the wide random swing that made these look arbitrary.
+    const tierBase = { 1: 70, 2: 66, 3: 63, 4: 60 }[tier] ?? 63;
+    const n = shirtNumber;
+    const roleAdj = !n ? -2 : n <= 11 ? 3 : n <= 20 ? 0 : -3;
+    return clamp(tierBase + roleAdj + (rng() - 0.5) * 3, ABS_FLOOR, NOSTATS_CAP);
   }
 
   const u = clamp01(usage);

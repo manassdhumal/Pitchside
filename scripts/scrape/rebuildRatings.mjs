@@ -16,6 +16,22 @@ const MIN_APPS_FOR_POOL = 8; // ignore cameo/injury seasons when building the pe
 const MIN_POOL_SIZE = 6; // below this a percentile is unreliable; fall back to absolute rate
 // How far below their curated peak an anchored star's weakest observed season may fall.
 const MAX_ANCHOR_DROP = 18;
+// A curated anchor is only applied to an identity that reached within this of it on merit in some
+// season. Without this gate a fringe *namesake* (a different player who happens to share the name,
+// e.g. a squad "Óscar" or the Colombian "Luis Suárez") inherits the star's peak rating.
+const ANCHOR_GATE = 14;
+
+/**
+ * Canonical nationality key: first three letters, upper-cased, with the common scraped-code
+ * inconsistencies folded together (SPA/ESP, NET/HOL/NED, DEU/Germany…). Used to split players who
+ * merely share a name into separate career identities. Empty/unknown → ''.
+ */
+function normNat(nat) {
+  const up = (nat || '').toUpperCase().replace(/[^A-Z]/g, '');
+  if (!up) return '';
+  const code = up.slice(0, 3);
+  return ({ SPA: 'ESP', NET: 'NED', HOL: 'NED', DEU: 'GER', HRV: 'CRO', POR: 'POR' }[code]) ?? code;
+}
 
 function listClubSeasonFiles() {
   const files = [];
@@ -81,19 +97,46 @@ export function rebuildAllRatings({ log = console.log } = {}) {
     }
   }
 
-  // Pass 1: career context per player identity.
-  const careers = new Map(); // nameKey -> { highUsageSeasons, entries: [{record, doc}] }
+  // Pass 1: group every record by name, then split each name into separate career *identities* by
+  // normalized nationality so that different players who share a name don't merge into one career
+  // (which would let a namesake inherit a star's best season, career bonus, and anchor). Records
+  // with no nationality are folded into that name's largest identity (assumed to be the main player).
+  const docMaxApps = new Map(documents.map(({ doc }) => [doc, Math.max(...doc.squad.map((r) => r.stats.appearances), 20)]));
+  const byName = new Map(); // nameKey -> [{record, doc}]
   for (const { doc } of documents) {
-    const maxAppearances = Math.max(...doc.squad.map((r) => r.stats.appearances), 20);
     for (const record of doc.squad) {
-      const key = nameKey(record.name);
-      let career = careers.get(key);
-      if (!career) {
-        career = { highUsageSeasons: 0, entries: [] };
-        careers.set(key, career);
+      const k = nameKey(record.name);
+      (byName.get(k) ?? byName.set(k, []).get(k)).push({ record, doc });
+    }
+  }
+
+  const recordCareer = new Map(); // record -> career
+  const careers = []; // { nameKey, highUsageSeasons, entries: [{record, doc}] }
+  for (const [nk, entries] of byName) {
+    const groups = new Map(); // normNat -> entries[]
+    const blanks = [];
+    for (const e of entries) {
+      const nn = normNat(e.record.nationality);
+      if (!nn) { blanks.push(e); continue; }
+      (groups.get(nn) ?? groups.set(nn, []).get(nn)).push(e);
+    }
+    if (groups.size === 0) {
+      groups.set('', blanks);
+    } else if (blanks.length) {
+      let best = null, bestApps = -1;
+      for (const [nn, g] of groups) {
+        const a = g.reduce((s, e) => s + e.record.stats.appearances, 0);
+        if (a > bestApps) { bestApps = a; best = nn; }
       }
-      if (record.stats.appearances / maxAppearances >= HIGH_USAGE_THRESHOLD) career.highUsageSeasons += 1;
-      career.entries.push({ record, doc });
+      groups.get(best).push(...blanks);
+    }
+    for (const g of groups.values()) {
+      const career = { nameKey: nk, highUsageSeasons: 0, entries: g };
+      for (const e of g) {
+        if (e.record.stats.appearances / docMaxApps.get(e.doc) >= HIGH_USAGE_THRESHOLD) career.highUsageSeasons += 1;
+        recordCareer.set(e.record, career);
+      }
+      careers.push(career);
     }
   }
 
@@ -125,23 +168,26 @@ export function rebuildAllRatings({ log = console.log } = {}) {
         }
       }
 
-      const career = careers.get(nameKey(record.name));
+      const career = recordCareer.get(record);
       const seedKey = `${doc.clubId}-${doc.season}-${record.name}-${record.nationality}`;
       const overall = computeSeasonOverall({
         usage, tier, broadPosition: pos, outputScore,
         careerHighUsageSeasons: career?.highUsageSeasons ?? 1,
-        noStats, rng: seededRandom(seedKey),
+        noStats, shirtNumber: record.shirtNumber, rng: seededRandom(seedKey),
       });
       seasonOveralls.set(record, overall);
     }
   }
 
-  // Pass 3: per-career prime + curated anchoring, then write back.
+  // Pass 3: per-identity prime + curated anchoring, then write back.
   let anchoredPlayers = 0;
-  for (const [key, career] of careers) {
+  for (const career of careers) {
     const algs = career.entries.map(({ record }) => seasonOveralls.get(record));
     const algBest = Math.max(...algs);
-    const anchor = anchors.get(key);
+    const rawAnchor = anchors.get(career.nameKey);
+    // Only anchor an identity that actually reached near the peak on merit — a fringe namesake
+    // (different player, same name) never does, so it keeps its own modest rating.
+    const anchor = rawAnchor !== undefined && algBest >= rawAnchor - ANCHOR_GATE ? rawAnchor : undefined;
 
     let prime;
     let shift = 0;
@@ -176,8 +222,8 @@ export function rebuildAllRatings({ log = console.log } = {}) {
     writeFileSync(file, JSON.stringify(doc, null, 2));
   }
 
-  log(`Ratings rebuilt: ${documents.length} club-seasons, ${careers.size} distinct players, ${anchoredPlayers} matched curated anchors.`);
-  return { clubSeasons: documents.length, players: careers.size, anchored: anchoredPlayers };
+  log(`Ratings rebuilt: ${documents.length} club-seasons, ${careers.length} distinct identities, ${anchoredPlayers} matched curated anchors.`);
+  return { clubSeasons: documents.length, players: careers.length, anchored: anchoredPlayers };
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url).endsWith('rebuildRatings.mjs') && process.argv[1].endsWith('rebuildRatings.mjs')) {
