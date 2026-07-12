@@ -27,20 +27,89 @@ const ANCHOR_GATE = 14;
 // name whose only bearers are fringe players (the real star absent from our data) anchors nobody.
 const STAR_FLOOR = 68;
 const STAR_MIN_APPS = 18;
-// Sibling identities within this of the primary's best season are treated as the same star split by
-// inconsistent nationality codes, and share the anchor; lower ones are namesakes and do not.
-const SPLIT_TOL = 5;
 
-/**
- * Canonical nationality key: first three letters, upper-cased, with the common scraped-code
- * inconsistencies folded together (SPA/ESP, NET/HOL/NED, DEU/Germany…). Used to split players who
- * merely share a name into separate career identities. Empty/unknown → ''.
- */
+// Every scraped spelling/code of a nationality → one canonical code. Squad sources are wildly
+// inconsistent (ITA vs Italy, CIV vs "Ivory Coast", IRL vs IRE vs "Republic of Ireland", SUI vs
+// SWI, AUT vs Austria, POR vs PRT). Without folding these, one real player is split into several
+// career identities and shows a different prime per season. Unlisted inputs fall back to their
+// first three letters (already-consistent codes stay themselves).
+const NAT_CANON = {
+  IRL: 'IRL', IRE: 'IRL', IRELAND: 'IRL', REPUBLICOFIRELAND: 'IRL', ROI: 'IRL', EIRE: 'IRL',
+  NIR: 'NIR', NORTHERNIRELAND: 'NIR',
+  SUI: 'SUI', SWI: 'SUI', SWITZERLAND: 'SUI', SCHWEIZ: 'SUI',
+  CIV: 'CIV', IVORYCOAST: 'CIV', COTEDIVOIRE: 'CIV',
+  MAR: 'MAR', MOROCCO: 'MAR', MRC: 'MAR',
+  AUT: 'AUT', AUSTRIA: 'AUT',
+  AUS: 'AUS', AUSTRALIA: 'AUS',
+  GER: 'GER', DEU: 'GER', GERMANY: 'GER', DEUTSCHLAND: 'GER', ALLEMAGNE: 'GER',
+  ESP: 'ESP', SPA: 'ESP', SPAIN: 'ESP', ESPAGNE: 'ESP',
+  NED: 'NED', NET: 'NED', HOL: 'NED', NETHERLANDS: 'NED', HOLLAND: 'NED', PAYSBAS: 'NED',
+  POR: 'POR', PRT: 'POR', PORTUGAL: 'POR',
+  SRB: 'SRB', SER: 'SRB', SERBIA: 'SRB',
+  CRO: 'CRO', HRV: 'CRO', CROATIA: 'CRO', CROATIE: 'CRO',
+  SVN: 'SVN', SLO: 'SVN', SLOVENIA: 'SVN',
+  SVK: 'SVK', SLOVAKIA: 'SVK',
+  COD: 'COD', DRCONGO: 'COD', CONGODR: 'COD', DRC: 'COD', DEMOCRATICREPUBLICOFTHECONGO: 'COD',
+  CGO: 'CGO', CONGO: 'CGO',
+  EQG: 'EQG', GNQ: 'EQG', EQUATORIALGUINEA: 'EQG',
+  TGO: 'TGO', TOG: 'TGO', TOGO: 'TGO',
+  NGA: 'NGA', NGR: 'NGA', NIGERIA: 'NGA',
+  KOS: 'KOS', KVX: 'KOS', RKS: 'KOS', KOSOVO: 'KOS',
+  ITA: 'ITA', ITALY: 'ITA', ITALIE: 'ITA',
+  BRA: 'BRA', BRAZIL: 'BRA', BRESIL: 'BRA',
+  ARG: 'ARG', ARGENTINA: 'ARG', ARGENTINE: 'ARG',
+  FRA: 'FRA', FRANCE: 'FRA',
+  ENG: 'ENG', ENGLAND: 'ENG',
+  SCO: 'SCO', SCOTLAND: 'SCO', ECOSSE: 'SCO',
+  WAL: 'WAL', WALES: 'WAL',
+  BEL: 'BEL', BELGIUM: 'BEL', BELGIQUE: 'BEL',
+  URU: 'URU', URUGUAY: 'URU',
+  COL: 'COL', COLOMBIA: 'COL', COLOMBIE: 'COL',
+  SEN: 'SEN', SENEGAL: 'SEN',
+  GHA: 'GHA', GHANA: 'GHA',
+  CMR: 'CMR', CAMEROON: 'CMR', CAMEROUN: 'CMR',
+  ALG: 'ALG', DZA: 'ALG', ALGERIA: 'ALG', ALGERIE: 'ALG',
+  TUN: 'TUN', TUNISIA: 'TUN', TUNISIE: 'TUN',
+  EGY: 'EGY', EGYPT: 'EGY',
+  MEX: 'MEX', MEXICO: 'MEX',
+  USA: 'USA', UNITEDSTATES: 'USA', US: 'USA',
+  JPN: 'JPN', JAPAN: 'JPN', JAP: 'JPN',
+  KOR: 'KOR', SOUTHKOREA: 'KOR', KOREAREPUBLIC: 'KOR',
+  DEN: 'DEN', DNK: 'DEN', DENMARK: 'DEN', DANEMARK: 'DEN',
+  SWE: 'SWE', SWEDEN: 'SWE', SUEDE: 'SWE',
+  NOR: 'NOR', NORWAY: 'NOR', NORVEGE: 'NOR',
+  POL: 'POL', POLAND: 'POL', POLOGNE: 'POL',
+  CZE: 'CZE', CZECHREPUBLIC: 'CZE', CZECHIA: 'CZE',
+  GRE: 'GRE', GRC: 'GRE', GREECE: 'GRE', GRECE: 'GRE',
+  TUR: 'TUR', TURKEY: 'TUR', TURQUIE: 'TUR',
+  RUS: 'RUS', RUSSIA: 'RUS', RUSSIE: 'RUS',
+  UKR: 'UKR', UKRAINE: 'UKR',
+  ROU: 'ROU', ROMANIA: 'ROU', ROUMANIE: 'ROU',
+  HUN: 'HUN', HUNGARY: 'HUN',
+  ISL: 'ISL', ICELAND: 'ISL',
+  FIN: 'FIN', FINLAND: 'FIN',
+  BIH: 'BIH', BOSNIAANDHERZEGOVINA: 'BIH', BOSNIA: 'BIH',
+  MNE: 'MNE', MONTENEGRO: 'MNE',
+  MKD: 'MKD', NORTHMACEDONIA: 'MKD', MACEDONIA: 'MKD',
+  ALB: 'ALB', ALBANIA: 'ALB',
+  PAR: 'PAR', PARAGUAY: 'PAR',
+  PER: 'PER', PERU: 'PER', PEROU: 'PER',
+  CHI: 'CHI', CHILE: 'CHI', CHILI: 'CHI',
+  ECU: 'ECU', ECUADOR: 'ECU', EQUATEUR: 'ECU',
+  VEN: 'VEN', VENEZUELA: 'VEN',
+  CAN: 'CAN', CANADA: 'CAN',
+  MLI: 'MLI', MALI: 'MLI',
+  GUI: 'GUI', GIN: 'GUI', GUINEA: 'GUI', GUINEE: 'GUI',
+  GAB: 'GAB', GABON: 'GAB',
+  BFA: 'BFA', BURKINAFASO: 'BFA',
+  ZAM: 'ZAM', ZMB: 'ZAM', ZAMBIA: 'ZAM',
+  RSA: 'RSA', SOUTHAFRICA: 'RSA',
+  NGR2: 'NGA',
+};
 function normNat(nat) {
   const up = (nat || '').toUpperCase().replace(/[^A-Z]/g, '');
   if (!up) return '';
-  const code = up.slice(0, 3);
-  return ({ SPA: 'ESP', NET: 'NED', HOL: 'NED', DEU: 'GER', HRV: 'CRO', POR: 'POR' }[code]) ?? code;
+  return NAT_CANON[up] ?? up.slice(0, 3);
 }
 
 function listClubSeasonFiles() {
@@ -107,10 +176,12 @@ export function rebuildAllRatings({ log = console.log } = {}) {
     }
   }
 
-  // Pass 1: group every record by name, then split each name into separate career *identities* by
-  // normalized nationality so that different players who share a name don't merge into one career
-  // (which would let a namesake inherit a star's best season, career bonus, and anchor). Records
-  // with no nationality are folded into that name's largest identity (assumed to be the main player).
+  // Pass 1: resolve player *identities*. Records that share a name are the same person if they
+  // share a nationality OR a club (union-find) — so different players who merely share a name split
+  // apart (they wouldn't otherwise let a namesake inherit a star's best season, career bonus and
+  // anchor), while the SAME player is kept together even when a season lists them under a second
+  // nationality (Italo-Brazilian Jorginho at Napoli under "BRA" then "ITA" — the shared club links
+  // them). This keeps one player's prime consistent across all their seasons.
   const docMaxApps = new Map(documents.map(({ doc }) => [doc, Math.max(...doc.squad.map((r) => r.stats.appearances), 20)]));
   const byName = new Map(); // nameKey -> [{record, doc}]
   for (const { doc } of documents) {
@@ -123,24 +194,20 @@ export function rebuildAllRatings({ log = console.log } = {}) {
   const recordCareer = new Map(); // record -> career
   const careers = []; // { nameKey, highUsageSeasons, entries: [{record, doc}] }
   for (const [nk, entries] of byName) {
-    const groups = new Map(); // normNat -> entries[]
-    const blanks = [];
-    for (const e of entries) {
+    const parent = entries.map((_, i) => i);
+    const find = (x) => { while (parent[x] !== x) { parent[x] = parent[parent[x]]; x = parent[x]; } return x; };
+    const union = (a, b) => { parent[find(a)] = find(b); };
+    const firstByNat = new Map();
+    const firstByClub = new Map();
+    entries.forEach((e, i) => {
       const nn = normNat(e.record.nationality);
-      if (!nn) { blanks.push(e); continue; }
-      (groups.get(nn) ?? groups.set(nn, []).get(nn)).push(e);
-    }
-    if (groups.size === 0) {
-      groups.set('', blanks);
-    } else if (blanks.length) {
-      let best = null, bestApps = -1;
-      for (const [nn, g] of groups) {
-        const a = g.reduce((s, e) => s + e.record.stats.appearances, 0);
-        if (a > bestApps) { bestApps = a; best = nn; }
-      }
-      groups.get(best).push(...blanks);
-    }
-    for (const g of groups.values()) {
+      if (nn) { if (firstByNat.has(nn)) union(i, firstByNat.get(nn)); else firstByNat.set(nn, i); }
+      const cl = e.doc.clubId;
+      if (firstByClub.has(cl)) union(i, firstByClub.get(cl)); else firstByClub.set(cl, i);
+    });
+    const comps = new Map(); // root -> entries[]
+    entries.forEach((e, i) => { const r = find(i); (comps.get(r) ?? comps.set(r, []).get(r)).push(e); });
+    for (const g of comps.values()) {
       const career = { nameKey: nk, highUsageSeasons: 0, entries: g };
       for (const e of g) {
         if (e.record.stats.appearances / docMaxApps.get(e.doc) >= HIGH_USAGE_THRESHOLD) career.highUsageSeasons += 1;
@@ -211,10 +278,13 @@ export function rebuildAllRatings({ log = console.log } = {}) {
     } else {
       const primary = primaryByName.get(career.nameKey);
       const starPresent = primary.alg >= STAR_FLOOR && primary.apps >= STAR_MIN_APPS;
-      // Anchor if this identity is independently near the peak, OR it's the real star (the primary,
-      // or a split-off of it) for a name whose star is actually present in the data.
-      anchor = algBest >= rawAnchor - ANCHOR_GATE || (starPresent && algBest >= primary.alg - SPLIT_TOL)
-        ? rawAnchor : undefined;
+      const careerApps = Math.max(...career.entries.map((e) => e.record.stats.appearances), 0);
+      // Anchor if this identity is independently near the peak, OR — when the name's star is really
+      // in the data — this identity is itself an established regular at a plausible level. That last
+      // clause keeps a star split across genuine dual nationalities (Rice IRL→ENG, Jorginho ITA/BRA)
+      // consistent, while a fringe namesake (never a regular) is still excluded.
+      const isStarIdentity = starPresent && careerApps >= STAR_MIN_APPS && algBest >= STAR_FLOOR;
+      anchor = algBest >= rawAnchor - ANCHOR_GATE || isStarIdentity ? rawAnchor : undefined;
     }
 
     let prime;
