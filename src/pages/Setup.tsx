@@ -105,6 +105,7 @@ export default function Setup() {
   const [seasonMin, setSeasonMin] = useState<string | null>(null);
   const [seasonMax, setSeasonMax] = useState<string | null>(null);
   const [managersEnabled, setManagersEnabled] = useState(true);
+  const [transferWindowEnabled, setTransferWindowEnabled] = useState(false);
 
   useEffect(() => {
     loadIndex().then(setEntries);
@@ -142,7 +143,7 @@ export default function Setup() {
       leagueIds, formation, difficulty,
       showRatings: difficulty === 'hard' ? false : showRatings,
       ratingsMode, seasonMin, seasonMax, draftMode,
-      managersEnabled, transferWindowEnabled: false,
+      managersEnabled, transferWindowEnabled,
     };
     navigate('/draft', { state: settings });
   };
@@ -309,12 +310,11 @@ export default function Setup() {
                     <span className="text-[13px] font-semibold" style={{ color: '#3C3325' }}>Managers</span>
                     <Knob on={managersEnabled} onClick={() => setManagersEnabled((m) => !m)} />
                   </div>
-                  <div className="flex items-center justify-between opacity-55">
+                  <div className="flex items-center justify-between">
                     <span className="text-[13px] font-semibold" style={{ color: '#3C3325' }}>
                       January transfer window
-                      <span className="font-stamp ml-1.5 px-1.5 py-0.5 text-[9px]" style={{ background: '#A83E2C', color: '#FDFAF1' }}>SOON</span>
                     </span>
-                    <Knob on={false} disabled />
+                    <Knob on={transferWindowEnabled} onClick={() => setTransferWindowEnabled((t) => !t)} />
                   </div>
                 </div>
               </CardSection>

@@ -214,7 +214,10 @@ export default function Draft() {
     await putTeam(team);
     dispatch({ type: 'SET_CURRENT_TEAM', teamId });
     navigate('/season', {
-      state: { leagueIds: settings.leagueIds, seasonMax: settings.seasonMax, ratingsMode: settings.ratingsMode },
+      state: {
+        leagueIds: settings.leagueIds, seasonMax: settings.seasonMax, ratingsMode: settings.ratingsMode,
+        managersEnabled: settings.managersEnabled, transferWindowEnabled: settings.transferWindowEnabled,
+      },
     });
   };
 

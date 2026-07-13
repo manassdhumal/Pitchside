@@ -5,12 +5,14 @@ import { getTeam, getPlayers, putSeason } from '../storage/cache';
 import { loadIndex, type ClubSeasonIndexEntry } from '../data/historicalData';
 import { loadLeagueOpponents } from '../data/leagueOpponents';
 import { computeTeamOvr, type TeamOvr } from '../engine/teamRatings';
-import { buildStandingsTable } from '../engine/competitions';
+import { buildStandingsTable, generateRoundRobinFixtures, simulateLeagueFixtures } from '../engine/competitions';
 import { getLeague } from '../data/leagues';
+import { MANAGERS, getManager, applyManagerToXI } from '../data/managers';
 import { ProgrammeNav, ProgrammeFooter } from '../components/chrome/ProgrammeChrome';
-import { LEAGUE_INKS } from '../components/chrome/RaffleDrum';
+import { LEAGUE_INKS, POSITION_INKS } from '../components/chrome/RaffleDrum';
+import { POSITION_TO_BROAD } from '../types';
 import type { Team, Player, Match, StandingsRow, EraRuleConfig, RatingsMode } from '../types';
-import type { SimulateLeagueRequest, SimulateLeagueResponse } from '../workers/simWorker';
+import type { LeagueOpponent } from '../data/leagueOpponents';
 
 const NEUTRAL_ERA_RULES: EraRuleConfig = {
   awayGoalsRule: false,
@@ -28,6 +30,8 @@ interface SeasonNavState {
   leagueIds?: string[];
   seasonMax?: string;
   ratingsMode?: RatingsMode;
+  managersEnabled?: boolean;
+  transferWindowEnabled?: boolean;
 }
 
 function matchdayNumber(round: string): number {
@@ -183,13 +187,17 @@ export default function Season() {
     : ['premier-league', 'bundesliga', 'la-liga', 'serie-a', 'ligue-1'];
   const seasonMax = navState.seasonMax ?? '2025-26';
   const ratingsMode: RatingsMode = navState.ratingsMode ?? 'season';
+  const managersEnabled = navState.managersEnabled ?? false;
+  const transferWindowEnabled = navState.transferWindowEnabled ?? false;
+
+  const [managerId, setManagerId] = useState<string | null>(null);
 
   const [userTeam, setUserTeam] = useState<Team | null>(null);
   const [userPlayers, setUserPlayers] = useState<Player[]>([]);
   const [entries, setEntries] = useState<ClubSeasonIndexEntry[] | null>(null);
 
   const [chosenLeague, setChosenLeague] = useState<string | null>(null);
-  const [phase, setPhase] = useState<'league' | 'building' | 'ready' | 'revealing' | 'done'>('league');
+  const [phase, setPhase] = useState<'league' | 'building' | 'ready' | 'revealing' | 'transfer' | 'done'>('league');
   const [buildError, setBuildError] = useState<string | null>(null);
 
   const [teamNames, setTeamNames] = useState<Map<string, string>>(new Map());
@@ -201,7 +209,16 @@ export default function Season() {
   const [revealCount, setRevealCount] = useState(0);
   const [playing, setPlaying] = useState(true);
 
-  const workerRef = useRef<Worker | null>(null);
+  // Mid-season (January) transfer window state.
+  const [userXi, setUserXi] = useState<Player[]>([]); // the user's live XI (manager applied)
+  const [market, setMarket] = useState<Player[]>([]); // available signings this window
+  const [swapsLeft, setSwapsLeft] = useState(0);
+  const opponentsRef = useRef<LeagueOpponent[]>([]);
+  const fixturesRef = useRef<ReturnType<typeof generateRoundRobinFixtures>>([]);
+  const teamIdsRef = useRef<string[]>([]);
+  const halftimeRoundRef = useRef(0); // first fixture round of the second half
+  const awaitingTransferRef = useRef(false);
+
   const tickerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const setupDone = useRef(false);
 
@@ -221,7 +238,6 @@ export default function Season() {
   }, [currentTeamId, navigate]);
 
   useEffect(() => () => {
-    workerRef.current?.terminate();
     if (tickerRef.current) clearInterval(tickerRef.current);
   }, []);
 
@@ -244,6 +260,7 @@ export default function Season() {
       setPhase('league');
       return;
     }
+    opponentsRef.current = opponents;
 
     const names = new Map<string, string>();
     const ovrs = new Map<string, TeamOvr>();
@@ -262,40 +279,99 @@ export default function Season() {
     setPhase('ready');
   };
 
+  // Full opponents-plus-user XI map for a given user XI. The sim runs on the main thread (fast for
+  // a ~380-game season) so a mid-season transfer can re-simulate the second half.
+  const buildSimXi = (uXi: Player[]): Map<string, Player[]> => {
+    const m = new Map<string, Player[]>();
+    if (xiByTeam) for (const [id, xi] of xiByTeam) m.set(id, id === userTeam?.id ? uXi : xi);
+    return m;
+  };
+  const saveSeason = (allMatches: Match[], finalTable: StandingsRow[]) => {
+    putSeason({
+      id: `season-${Date.now()}`,
+      year: new Date().getFullYear(),
+      competitionInstances: [{ templateId: COMPETITION_ID, teams: teamIdsRef.current, matches: allMatches, table: finalTable }],
+    });
+  };
+
   const runSeason = () => {
     if (!userTeam || !xiByTeam) return;
+    // The chosen gaffer's tactical shape is baked into the user's XI (only).
+    const manager = managersEnabled ? getManager(managerId) : undefined;
+    const startXi = applyManagerToXI(userPlayers, manager);
+    setUserXi(startXi);
+    setOvrByTeam((prev) => new Map(prev).set(userTeam.id, computeTeamOvr(startXi)));
+
+    const teamIds = Array.from(xiByTeam.keys());
+    teamIdsRef.current = teamIds;
+    const fixtures = generateRoundRobinFixtures(teamIds, true);
+    fixturesRef.current = fixtures;
+
     setPhase('revealing');
     setRevealCount(0);
     setPlaying(true);
 
-    const worker = new Worker(new URL('../workers/simWorker.ts', import.meta.url), { type: 'module' });
-    workerRef.current = worker;
-    worker.onmessage = (event: MessageEvent<SimulateLeagueResponse>) => {
-      const { matches: resultMatches, table: resultTable } = event.data;
-      setMatches(resultMatches);
-      setTable(resultTable);
-      worker.terminate();
-      putSeason({
-        id: `season-${Date.now()}`,
-        year: new Date().getFullYear(),
-        competitionInstances: [{
-          templateId: COMPETITION_ID,
-          teams: Array.from(xiByTeam.keys()),
-          matches: resultMatches,
-          table: resultTable,
-        }],
-      });
-    };
+    if (transferWindowEnabled) {
+      const maxRound = Math.max(...fixtures.map((f) => f.round));
+      const half = Math.ceil((maxRound + 1) / 2);
+      halftimeRoundRef.current = half;
+      const m1 = simulateLeagueFixtures(fixtures.filter((f) => f.round < half), buildSimXi(startXi), COMPETITION_ID, NEUTRAL_ERA_RULES);
+      awaitingTransferRef.current = true;
+      setMatches(m1);
+      setTable(buildStandingsTable(m1, teamIds, POINTS_SYSTEM));
+    } else {
+      awaitingTransferRef.current = false;
+      const all = simulateLeagueFixtures(fixtures, buildSimXi(startXi), COMPETITION_ID, NEUTRAL_ERA_RULES);
+      setMatches(all);
+      const t = buildStandingsTable(all, teamIds, POINTS_SYSTEM);
+      setTable(t);
+      saveSeason(all, t);
+    }
+  };
 
-    const request: SimulateLeagueRequest = {
-      type: 'SIMULATE_LEAGUE',
-      competitionId: COMPETITION_ID,
-      teams: Array.from(xiByTeam.entries()).map(([teamId, startingXI]) => ({ teamId, startingXI })),
-      doubleRoundRobin: true,
-      pointsSystem: POINTS_SYSTEM,
-      eraRules: NEUTRAL_ERA_RULES,
-    };
-    worker.postMessage(request);
+  // Halftime: open the January window with the strongest league players not already in the XI.
+  const openTransferWindow = () => {
+    const owned = new Set(userXi.map((p) => p.id));
+    const pool = opponentsRef.current
+      .flatMap((o) => o.players)
+      .filter((p) => !owned.has(p.id))
+      .sort((a, b) => b.ratings.overall - a.ratings.overall);
+    const seen = new Set<string>();
+    const uniquePool = pool.filter((p) => (seen.has(p.id) ? false : (seen.add(p.id), true)));
+    setMarket(uniquePool.slice(0, 16));
+    setSwapsLeft(2);
+    setPlaying(false);
+    setPhase('transfer');
+  };
+
+  // Swap a market signing in for the user's weakest starter in the same line, keeping the slot.
+  const signPlayer = (signing: Player) => {
+    if (swapsLeft <= 0) return;
+    const broad = POSITION_TO_BROAD[signing.position];
+    const candidates = userXi
+      .map((p, i) => ({ p, i }))
+      .filter(({ p }) => POSITION_TO_BROAD[p.position] === broad)
+      .sort((a, b) => a.p.ratings.overall - b.p.ratings.overall);
+    if (candidates.length === 0) return;
+    const outIdx = candidates[0].i;
+    const slot = userXi[outIdx].position;
+    setUserXi((prev) => prev.map((p, i) => (i === outIdx ? { ...signing, position: slot } : p)));
+    setMarket((prev) => prev.filter((p) => p.id !== signing.id));
+    setSwapsLeft((s) => s - 1);
+  };
+
+  const resumeAfterTransfer = () => {
+    awaitingTransferRef.current = false;
+    if (userTeam) setOvrByTeam((prev) => new Map(prev).set(userTeam.id, computeTeamOvr(userXi)));
+    const secondFixtures = fixturesRef.current.filter((f) => f.round >= halftimeRoundRef.current);
+    const m2 = simulateLeagueFixtures(secondFixtures, buildSimXi(userXi), COMPETITION_ID, NEUTRAL_ERA_RULES);
+    const all = [...matches, ...m2];
+    const t = buildStandingsTable(all, teamIdsRef.current, POINTS_SYSTEM);
+    setMatches(all);
+    setTable(t);
+    saveSeason(all, t);
+    setPhase('revealing');
+    setPlaying(true);
   };
 
   // Auto-advance the reveal one game at a time once results are in.
@@ -312,8 +388,10 @@ export default function Season() {
 
   useEffect(() => {
     if (phase === 'revealing' && userMatches.length > 0 && revealCount >= userMatches.length) {
-      setPhase('done');
+      if (awaitingTransferRef.current) openTransferWindow();
+      else setPhase('done');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase, revealCount, userMatches.length]);
 
   const skipToEnd = () => {
@@ -421,14 +499,52 @@ export default function Season() {
               <br />
               <span className="font-medium italic" style={{ color: '#A83E2C' }}>Can you go unbeaten?</span>
             </div>
-            <div className="mx-auto mb-7 flex max-w-[420px] justify-center gap-2">
-              {(['overall', 'def', 'mid', 'atk'] as const).map((k) => (
-                <div key={k} className="flex-1 border py-2" style={{ borderColor: '#1D2B45', background: '#FDFAF1' }}>
-                  <div className="font-stamp text-[22px]" style={{ color: '#1D2B45' }}>{userOvr[k]}</div>
-                  <div className="text-[9px] font-bold tracking-[0.12em]" style={{ color: '#6B5F4A' }}>{k === 'overall' ? 'TEAM OVR' : k.toUpperCase()}</div>
+            {(() => {
+              const shownOvr = managersEnabled && managerId
+                ? computeTeamOvr(applyManagerToXI(userPlayers, getManager(managerId)))
+                : userOvr;
+              return (
+                <div className="mx-auto mb-7 flex max-w-[420px] justify-center gap-2">
+                  {(['overall', 'def', 'mid', 'atk'] as const).map((k) => (
+                    <div key={k} className="flex-1 border py-2" style={{ borderColor: '#1D2B45', background: '#FDFAF1' }}>
+                      <div className="font-stamp text-[22px]" style={{ color: shownOvr[k] !== userOvr[k] ? '#3E7A4E' : '#1D2B45' }}>{shownOvr[k]}</div>
+                      <div className="text-[9px] font-bold tracking-[0.12em]" style={{ color: '#6B5F4A' }}>{k === 'overall' ? 'TEAM OVR' : k.toUpperCase()}</div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              );
+            })()}
+
+            {managersEnabled && (
+              <div className="mx-auto mb-7 max-w-[640px]">
+                <div className="mb-2.5 text-[11px] uppercase tracking-[0.18em]" style={{ color: '#A83E2C' }}>Appoint your gaffer</div>
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                  {MANAGERS.map((mgr) => {
+                    const sel = managerId === mgr.id;
+                    const line = (v: number) => (v > 0 ? `+${v}` : `${v}`);
+                    return (
+                      <button
+                        key={mgr.id}
+                        type="button"
+                        onClick={() => setManagerId(sel ? null : mgr.id)}
+                        className="cursor-pointer border-[1.5px] px-3 py-2.5 text-left transition-transform hover:-translate-y-0.5"
+                        style={{ borderColor: sel ? '#A83E2C' : '#D8CBAD', background: sel ? '#F5E9C8' : '#FDFAF1', outline: sel ? '2px solid #A83E2C' : 'none', outlineOffset: 1 }}
+                      >
+                        <div className="font-display text-[15px] font-extrabold leading-tight" style={{ color: '#1D2B45' }}>{mgr.name}</div>
+                        <div className="text-[10px] uppercase tracking-[0.1em]" style={{ color: '#6B5F4A' }}>{mgr.style}</div>
+                        <div className="mt-1 flex gap-1.5 font-stamp text-[10px]">
+                          <span style={{ color: mgr.def >= 0 ? '#3E7A4E' : '#A83E2C' }}>DEF {line(mgr.def)}</span>
+                          <span style={{ color: mgr.mid >= 0 ? '#3E7A4E' : '#A83E2C' }}>MID {line(mgr.mid)}</span>
+                          <span style={{ color: mgr.atk >= 0 ? '#3E7A4E' : '#A83E2C' }}>ATK {line(mgr.atk)}</span>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+                {!managerId && <p className="mt-2 text-[11px] italic" style={{ color: '#6B5F4A' }}>Pick a gaffer, or kick off without one.</p>}
+              </div>
+            )}
+
             <button
               type="button"
               onClick={runSeason}
@@ -447,26 +563,28 @@ export default function Season() {
             {currentMatch ? (() => {
               const m = currentMatch;
               const userHome = m.homeTeamId === userTeam.id;
-              const homeId = m.homeTeamId, awayId = m.awayTeamId;
+              const oppId = userHome ? m.awayTeamId : m.homeTeamId;
+              // Everything is shown from the user's perspective: user always on the left, with an
+              // (H)/(A) venue tag, and score/xG/odds flipped so they read user-first left-to-right.
               const forGoals = userHome ? m.homeScore : m.awayScore;
               const agGoals = userHome ? m.awayScore : m.homeScore;
+              const userXG = userHome ? m.homeXG : m.awayXG;
+              const oppXG = userHome ? m.awayXG : m.homeXG;
+              const userWin = Math.round((userHome ? m.homeWinProbability : m.awayWinProbability) * 100);
+              const oppWin = Math.round((userHome ? m.awayWinProbability : m.homeWinProbability) * 100);
+              const drawP = Math.max(0, 100 - userWin - oppWin);
               const res = forGoals > agGoals ? 'WON' : forGoals === agGoals ? 'DREW' : 'LOST';
               const resInk = res === 'WON' ? '#3E7A4E' : res === 'DREW' ? '#8A7D63' : '#A83E2C';
-              const homeWin = Math.round(m.homeWinProbability * 100);
-              const awayWin = Math.round(m.awayWinProbability * 100);
-              const drawP = Math.max(0, 100 - homeWin - awayWin);
+              const venue = userHome ? 'H' : 'A';
               const leagueInk = chosenLeague ? LEAGUE_INKS[chosenLeague] ?? '#1D2B45' : '#1D2B45';
-              const teamCell = (id: string, align: 'right' | 'left') => {
-                const isUser = id === userTeam.id;
-                return (
-                  <div className={`flex flex-col gap-1 ${align === 'right' ? 'items-end text-right' : 'items-start text-left'}`}>
-                    <span className="font-display text-[19px] font-extrabold leading-tight sm:text-[22px]" style={{ color: isUser ? '#A83E2C' : '#1D2B45' }}>
-                      {teamNames.get(id)}{isUser && ' ★'}
-                    </span>
-                    <OvrChip ovr={ovrByTeam.get(id)?.overall ?? 0} ink={isUser ? '#A83E2C' : leagueInk} />
-                  </div>
-                );
-              };
+              const teamCell = (id: string, isUser: boolean, align: 'left' | 'right') => (
+                <div className={`flex flex-col gap-1 ${align === 'right' ? 'items-end text-right' : 'items-start text-left'}`}>
+                  <span className="font-display text-[19px] font-extrabold leading-tight sm:text-[22px]" style={{ color: isUser ? '#A83E2C' : '#1D2B45' }}>
+                    {isUser && '★ '}{teamNames.get(id)}
+                  </span>
+                  <OvrChip ovr={ovrByTeam.get(id)?.overall ?? 0} ink={isUser ? '#A83E2C' : leagueInk} />
+                </div>
+              );
               return (
                 <div
                   key={m.id}
@@ -474,27 +592,30 @@ export default function Season() {
                   style={{ background: '#FDFAF1', border: '1px solid #D8CBAD', boxShadow: '6px 6px 0 var(--card-shadow)', animation: 'ticketOut .35s cubic-bezier(.2,1.1,.4,1)' }}
                 >
                   <div className="flex items-center justify-between px-4 py-2" style={{ background: leagueInk, color: '#FDFAF1' }}>
-                    <span className="font-stamp text-[12px] tracking-[0.1em]">MATCHDAY {currentMatchday}</span>
+                    <span className="font-stamp text-[12px] tracking-[0.1em]">
+                      MATCHDAY {currentMatchday}
+                      <span className="ml-2 rounded-sm px-1.5 py-px text-[11px]" style={{ background: '#FDFAF1', color: leagueInk }}>({venue})</span>
+                    </span>
                     <span className="text-[10px] tracking-[0.14em] opacity-85">{revealCount} / {totalGames}</span>
                   </div>
                   <div className="grid items-center gap-3 px-5 py-7" style={{ gridTemplateColumns: '1fr auto 1fr' }}>
-                    {teamCell(homeId, 'right')}
+                    {teamCell(userTeam.id, true, 'left')}
                     <div className="flex flex-col items-center">
-                      <span className="font-stamp text-[40px] leading-none" style={{ color: '#1D2B45' }}>{m.homeScore}–{m.awayScore}</span>
-                      <span className="mt-1 text-[10.5px]" style={{ color: '#3C3325' }}>xG {m.homeXG.toFixed(1)}–{m.awayXG.toFixed(1)}</span>
+                      <span className="font-stamp text-[40px] leading-none" style={{ color: '#1D2B45' }}>{forGoals}–{agGoals}</span>
+                      <span className="mt-1 text-[10.5px]" style={{ color: '#3C3325' }}>xG {userXG.toFixed(1)}–{oppXG.toFixed(1)}</span>
                     </div>
-                    {teamCell(awayId, 'left')}
+                    {teamCell(oppId, false, 'right')}
                   </div>
                   <div className="px-5 pb-3">
                     <span className="flex h-2.5 border" style={{ borderColor: '#1D2B45' }}>
-                      <span style={{ width: `${homeWin}%`, background: '#3E7A4E' }} />
+                      <span style={{ width: `${userWin}%`, background: '#3E7A4E' }} />
                       <span style={{ width: `${drawP}%`, background: '#D8CBAD' }} />
-                      <span style={{ width: `${awayWin}%`, background: '#A83E2C' }} />
+                      <span style={{ width: `${oppWin}%`, background: '#A83E2C' }} />
                     </span>
                     <div className="mt-1 flex justify-between text-[9.5px]" style={{ color: '#6B5F4A' }}>
-                      <span>{teamNames.get(homeId)?.slice(0, 14)} {homeWin}%</span>
+                      <span>YOU {userWin}%</span>
                       <span>DRAW {drawP}%</span>
-                      <span>{awayWin}% {teamNames.get(awayId)?.slice(0, 14)}</span>
+                      <span>{oppWin}% {teamNames.get(oppId)?.slice(0, 14)}</span>
                     </div>
                   </div>
                   <div className="flex items-center justify-center border-t py-2.5" style={{ borderColor: '#EDE3CB' }}>
@@ -528,6 +649,71 @@ export default function Season() {
                 </button>
                 <button type="button" onClick={skipToEnd} className="cursor-pointer border-0 px-3 py-1.5 text-[12px] font-bold uppercase" style={{ background: '#A83E2C', color: '#FDFAF1' }}>
                   Skip ⏭
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ============ JANUARY TRANSFER WINDOW ============ */}
+        {phase === 'transfer' && (
+          <div className="mt-8">
+            <div className="border-[3px] px-5 py-6 sm:px-8" style={{ borderColor: '#1D2B45', borderStyle: 'double', background: '#FDFAF1', boxShadow: '6px 6px 0 var(--card-shadow)' }}>
+              <div className="flex flex-wrap items-baseline justify-between gap-3">
+                <div>
+                  <div className="text-[11px] uppercase tracking-[0.2em]" style={{ color: '#6B5F4A' }}>Halfway · the window is open</div>
+                  <div className="font-display text-[28px] font-extrabold sm:text-[34px]" style={{ color: '#1D2B45' }}>January transfer window</div>
+                </div>
+                <div className="font-stamp text-[15px]" style={{ color: swapsLeft > 0 ? '#A83E2C' : '#6B5F4A' }}>{swapsLeft} signing{swapsLeft === 1 ? '' : 's'} left</div>
+              </div>
+              <p className="mt-1 mb-4 text-[12.5px]" style={{ color: '#3C3325' }}>
+                Sign a player and they replace your weakest starter in that line for the second half. Skip if you're happy with your XI.
+              </p>
+              <div className="grid gap-5 lg:grid-cols-2">
+                <div>
+                  <div className="mb-2 text-[11px] uppercase tracking-[0.14em]" style={{ color: '#A83E2C' }}>Your XI</div>
+                  <div className="grid grid-cols-1 gap-1 sm:grid-cols-2">
+                    {userXi.map((p, i) => (
+                      <div key={`${p.id}-${i}`} className="flex items-center gap-2 border-b py-1" style={{ borderColor: '#EDE3CB' }}>
+                        <span className="font-stamp w-9 py-0.5 text-center text-[9px]" style={{ background: POSITION_INKS[POSITION_TO_BROAD[p.position]], color: '#F6EFDF' }}>{p.position}</span>
+                        <span className="font-jersey min-w-0 flex-1 truncate text-[13px] font-semibold uppercase" style={{ color: '#1D2B45' }}>{p.lastName || p.firstName}</span>
+                        <span className="font-stamp text-[13px]" style={{ color: '#1D2B45' }}>{p.ratings.overall}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <div className="mb-2 text-[11px] uppercase tracking-[0.14em]" style={{ color: '#A83E2C' }}>The market · top available</div>
+                  <div className="max-h-[320px] overflow-y-auto pr-1">
+                    {market.map((p) => {
+                      const canSign = swapsLeft > 0;
+                      return (
+                        <button
+                          key={p.id}
+                          type="button"
+                          disabled={!canSign}
+                          onClick={() => signPlayer(p)}
+                          className="grid w-full items-center gap-2 border-b px-1 py-1.5 text-left hover:bg-[#F5E9C8] disabled:cursor-not-allowed disabled:opacity-45"
+                          style={{ gridTemplateColumns: '36px 1fr auto auto', borderColor: '#EDE3CB', cursor: canSign ? 'pointer' : 'not-allowed' }}
+                        >
+                          <span className="font-stamp py-0.5 text-center text-[9px]" style={{ background: POSITION_INKS[POSITION_TO_BROAD[p.position]], color: '#F6EFDF' }}>{p.position}</span>
+                          <span className="font-jersey min-w-0 truncate text-[13px] font-semibold uppercase" style={{ color: '#1D2B45' }}>{p.lastName || p.firstName}</span>
+                          <span className="text-[10.5px]" style={{ color: '#6B5F4A' }}>{p.nationality}</span>
+                          <span className="font-stamp text-[14px]" style={{ color: p.ratings.overall >= 85 ? '#8C6A1D' : '#A83E2C' }}>{p.ratings.overall}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+              <div className="mt-5 text-center">
+                <button
+                  type="button"
+                  onClick={resumeAfterTransfer}
+                  className="font-stamp cursor-pointer border-0 px-8 py-3.5 text-[15px] uppercase tracking-[0.08em]"
+                  style={{ background: 'var(--btn-bg)', color: 'var(--btn-fg)', boxShadow: '4px 4px 0 var(--btn-shadow)' }}
+                >
+                  Continue the season →
                 </button>
               </div>
             </div>
