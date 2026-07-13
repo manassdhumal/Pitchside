@@ -6,6 +6,7 @@ import { loadIndex, type ClubSeasonIndexEntry } from '../data/historicalData';
 import { loadLeagueOpponents } from '../data/leagueOpponents';
 import { computeTeamOvr, type TeamOvr } from '../engine/teamRatings';
 import { buildStandingsTable, generateRoundRobinFixtures, simulateLeagueFixtures } from '../engine/competitions';
+import { simulateCup, type CupResult } from '../engine/cup';
 import { getLeague } from '../data/leagues';
 import { MANAGERS, getManager, applyManagerToXI } from '../data/managers';
 import { ProgrammeNav, ProgrammeFooter } from '../components/chrome/ProgrammeChrome';
@@ -197,8 +198,13 @@ export default function Season() {
   const [entries, setEntries] = useState<ClubSeasonIndexEntry[] | null>(null);
 
   const [chosenLeague, setChosenLeague] = useState<string | null>(null);
-  const [phase, setPhase] = useState<'league' | 'building' | 'ready' | 'revealing' | 'transfer' | 'done'>('league');
+  const [phase, setPhase] = useState<'league' | 'building' | 'ready' | 'revealing' | 'transfer' | 'done' | 'cup-reveal' | 'cup-done'>('league');
   const [buildError, setBuildError] = useState<string | null>(null);
+
+  // Knockout cup run (after the league).
+  const [cup, setCup] = useState<CupResult | null>(null);
+  const [cupReveal, setCupReveal] = useState(0);
+  const cupTickerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const [teamNames, setTeamNames] = useState<Map<string, string>>(new Map());
   const [ovrByTeam, setOvrByTeam] = useState<Map<string, TeamOvr>>(new Map());
@@ -398,6 +404,29 @@ export default function Season() {
     if (tickerRef.current) clearInterval(tickerRef.current);
     setRevealCount(userMatches.length);
   };
+
+  // ---- Knockout cup (played after the league with the same, post-transfer XI) ----
+  const enterCup = () => {
+    if (!userTeam || !xiByTeam) return;
+    const entrants = Array.from(xiByTeam.entries()).map(([id, xi]) => ({ id, xi: id === userTeam.id ? userXi : xi }));
+    setCup(simulateCup(entrants, userTeam.id));
+    setCupReveal(0);
+    setPhase('cup-reveal');
+  };
+
+  useEffect(() => {
+    if (phase !== 'cup-reveal' || !cup) return;
+    cupTickerRef.current = setInterval(() => {
+      setCupReveal((c) => (c >= cup.userTies.length ? c : c + 1));
+    }, 1400);
+    return () => { if (cupTickerRef.current) clearInterval(cupTickerRef.current); };
+  }, [phase, cup]);
+
+  useEffect(() => {
+    if (phase === 'cup-reveal' && cup && cupReveal >= cup.userTies.length) setPhase('cup-done');
+  }, [phase, cupReveal, cup]);
+
+  useEffect(() => () => { if (cupTickerRef.current) clearInterval(cupTickerRef.current); }, []);
 
   if (!userTeam) {
     return (
@@ -725,6 +754,14 @@ export default function Season() {
           <div className="mt-8 grid items-start gap-7 lg:grid-cols-[1fr_1.1fr]">
             <div className="flex flex-col gap-5">
               {userRow && <ResultCardPanel team={userTeam} row={userRow} position={userPosition} totalTeams={table.length} leagueName={leagueName} />}
+              <button
+                type="button"
+                onClick={enterCup}
+                className="font-stamp foil-bg relative cursor-pointer overflow-hidden px-6 py-3.5 text-[15px] uppercase tracking-[0.08em] hover:brightness-105"
+                style={{ color: '#3B2C08', border: '1.5px solid #8C6A1D' }}
+              >
+                🏆 Enter the {leagueName} Cup →
+              </button>
             </div>
             <section style={{ background: '#FDFAF1', border: '1px solid #D8CBAD', boxShadow: '5px 5px 0 var(--card-shadow)' }}>
               <div className="flex items-center justify-between border-b-[3px] px-4 py-3.5" style={{ borderColor: '#1D2B45', borderBottomStyle: 'double' }}>
@@ -757,6 +794,97 @@ export default function Season() {
             </section>
           </div>
         )}
+
+        {/* ============ CUP RUN (knockout, revealed round by round) ============ */}
+        {(phase === 'cup-reveal' || phase === 'cup-done') && cup && (() => {
+          const leagueInk = chosenLeague ? LEAGUE_INKS[chosenLeague] ?? '#1D2B45' : '#1D2B45';
+          const tie = phase === 'cup-reveal' && cupReveal > 0 ? cup.userTies[cupReveal - 1] : null;
+          return (
+            <div className="mt-8 flex flex-col items-center">
+              <div className="mb-4 text-center">
+                <div className="text-[11px] uppercase tracking-[0.2em]" style={{ color: '#6B5F4A' }}>{leagueName} Cup · knockout</div>
+                <div className="font-display text-[26px] font-extrabold sm:text-[32px]" style={{ color: '#1D2B45' }}>{userTeam.name}'s cup run</div>
+              </div>
+
+              {/* current tie (during reveal) */}
+              {tie && (() => {
+                const userHome = tie.homeId === userTeam.id;
+                const oppId = userHome ? tie.awayId : tie.homeId;
+                const uG = userHome ? tie.result.homeGoals : tie.result.awayGoals;
+                const oG = userHome ? tie.result.awayGoals : tie.result.homeGoals;
+                const won = tie.winnerId === userTeam.id;
+                const pens = tie.result.penalties;
+                const uP = pens ? (userHome ? pens.home : pens.away) : null;
+                const oP = pens ? (userHome ? pens.away : pens.home) : null;
+                return (
+                  <div key={cupReveal} className="w-full max-w-[560px]" style={{ background: '#FDFAF1', border: '1px solid #D8CBAD', boxShadow: '6px 6px 0 var(--card-shadow)', animation: 'ticketOut .35s cubic-bezier(.2,1.1,.4,1)' }}>
+                    <div className="flex items-center justify-between px-4 py-2" style={{ background: leagueInk, color: '#FDFAF1' }}>
+                      <span className="font-stamp text-[12px] tracking-[0.1em]">{tie.round}</span>
+                      <span className="text-[10px] tracking-[0.14em] opacity-85">{cupReveal} / {cup.userTies.length}</span>
+                    </div>
+                    <div className="grid items-center gap-3 px-5 py-7" style={{ gridTemplateColumns: '1fr auto 1fr' }}>
+                      <div className="flex flex-col items-start gap-1 text-left">
+                        <span className="font-display text-[20px] font-extrabold leading-tight" style={{ color: '#A83E2C' }}>★ {userTeam.name}</span>
+                        <OvrChip ovr={ovrByTeam.get(userTeam.id)?.overall ?? 0} ink="#A83E2C" />
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <span className="font-stamp text-[40px] leading-none" style={{ color: '#1D2B45' }}>{uG}–{oG}</span>
+                        {pens && <span className="mt-1 text-[10.5px]" style={{ color: '#3C3325' }}>pens {uP}–{oP}</span>}
+                      </div>
+                      <div className="flex flex-col items-end gap-1 text-right">
+                        <span className="font-display text-[20px] font-extrabold leading-tight" style={{ color: '#1D2B45' }}>{teamNames.get(oppId)}</span>
+                        <OvrChip ovr={ovrByTeam.get(oppId)?.overall ?? 0} ink={leagueInk} />
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-center border-t py-2.5" style={{ borderColor: '#EDE3CB' }}>
+                      <span className="font-stamp px-3 py-1 text-[14px]" style={{ background: won ? '#3E7A4E' : '#A83E2C', color: '#FDFAF1', borderRadius: 3 }}>
+                        {won ? 'THROUGH' : 'KNOCKED OUT'}{pens ? ' · ON PENALTIES' : ''}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })()}
+
+              {phase === 'cup-reveal' && (
+                <button type="button" onClick={() => { if (cupTickerRef.current) clearInterval(cupTickerRef.current); setCupReveal(cup.userTies.length); }}
+                  className="mt-4 cursor-pointer border-0 px-4 py-2 text-[12px] font-bold uppercase" style={{ background: '#A83E2C', color: '#FDFAF1' }}>
+                  Skip ⏭
+                </button>
+              )}
+
+              {phase === 'cup-done' && (
+                <div className="w-full max-w-[560px]">
+                  <div className="p-2.5" style={cup.userExit === 'Winners' ? undefined : { background: '#FDFAF1', border: '1px solid #D8CBAD' }}>
+                    <div className={cup.userExit === 'Winners' ? 'foil-card-bg relative overflow-hidden p-2.5' : ''}>
+                      <div className="px-6 py-6 text-center" style={{ background: '#1D2B45', color: '#F6EFDF' }}>
+                        <div className="text-[10px] tracking-[0.2em]" style={{ color: '#E5C96B' }}>{leagueName.toUpperCase()} CUP</div>
+                        <div className="font-display my-2 text-[30px] font-extrabold">
+                          {cup.userExit === 'Winners' ? '🏆 CHAMPIONS' : `Out in the ${cup.userExit}`}
+                        </div>
+                        <div className="text-[13px]" style={{ color: 'rgba(246,239,223,.85)' }}>
+                          {cup.userExit === 'Winners'
+                            ? `${userTeam.name} lift the cup!`
+                            : `Winners: ${teamNames.get(cup.champion) ?? cup.champion}`}
+                        </div>
+                        <div className="font-stamp mt-3 text-[12px]" style={{ color: '#E5C96B' }}>
+                          {cup.userTies.map((t) => t.round).join(' · ')}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-3 flex gap-2.5">
+                    <Link to="/setup" className="flex-1 border-[1.5px] px-4 py-3 text-center text-[13px] font-bold uppercase tracking-[0.06em] no-underline" style={{ borderColor: 'var(--ink)', color: 'var(--ink)' }}>
+                      New season
+                    </Link>
+                    <Link to="/" className="flex-1 border-[1.5px] px-4 py-3 text-center text-[13px] font-bold uppercase tracking-[0.06em] no-underline" style={{ borderColor: 'var(--ink)', color: 'var(--ink)' }}>
+                      Cover
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })()}
       </main>
       <ProgrammeFooter />
     </div>

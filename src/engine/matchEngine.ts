@@ -23,6 +23,25 @@ const DEFENCE_WEIGHT: Partial<Record<Player['position'], number>> = {
   LM: 0.6, RM: 0.6, LW: 0.4, RW: 0.4, ST: 0.2,
 };
 
+// Creativity/chance-creation weight — heaviest for the players who make chances (a number 10, wide
+// creators, deep playmakers) so a side full of creators generates more even if the finishers are
+// modest. This is the model's stand-in for assists, which the source data doesn't provide.
+const CREATIVITY_WEIGHT: Partial<Record<Player['position'], number>> = {
+  GK: 0, CB: 0.2, LB: 0.6, RB: 0.6, LWB: 0.8, RWB: 0.8, CDM: 0.7, CM: 1.2, CAM: 1.7,
+  LM: 1.3, RM: 1.3, LW: 1.4, RW: 1.4, ST: 0.8,
+};
+// A team of average creators sits near this; the multiplier is centred here so it's
+// calibration-neutral for typical sides and only rewards a genuinely creative XI.
+const REF_CREATIVITY = 68;
+const CREATIVITY_PER_POINT = 0.006;
+const CREATIVITY_MIN = 0.82;
+const CREATIVITY_MAX = 1.25;
+
+/** Creativity rating of an XI: passing-led, dribbling-supported, weighted toward creative roles. */
+export function weightedCreativityRating(startingXI: Player[]): number {
+  return weightedAverage(startingXI, CREATIVITY_WEIGHT, (p) => 0.62 * p.ratings.passing + 0.38 * p.ratings.dribbling);
+}
+
 function weightedAverage(players: Player[], weights: Partial<Record<Player['position'], number>>, pick: (p: Player) => number): number {
   let totalWeight = 0;
   let sum = 0;
@@ -134,6 +153,11 @@ function ovrTiltFactor(edge: number): number {
   return Math.min(OVR_TILT_MAX, Math.max(OVR_TILT_MIN, 1 + edge * OVR_TILT_PER_POINT));
 }
 
+/** Bounded chance-creation multiplier from a side's creativity, centred on the league reference. */
+function creativityFactor(creativity: number): number {
+  return Math.min(CREATIVITY_MAX, Math.max(CREATIVITY_MIN, 1 + (creativity - REF_CREATIVITY) * CREATIVITY_PER_POINT));
+}
+
 export function computeExpectedGoals(homeXI: Player[], awayXI: Player[], homeAdvantage = HOME_ADVANTAGE): { lambdaHome: number; lambdaAway: number } {
   const homeAttack = weightedAttackRating(homeXI);
   const homeDefence = weightedDefenceRating(homeXI);
@@ -153,6 +177,12 @@ export function computeExpectedGoals(homeXI: Player[], awayXI: Player[], homeAdv
   const awayEdge = 0.5 * (away.atk - home.def) + 0.3 * (away.mid - home.mid) + 0.2 * (away.overall - home.overall);
   lambdaHome *= ovrTiltFactor(homeEdge);
   lambdaAway *= ovrTiltFactor(awayEdge);
+
+  // Creativity: a side that makes more chances converts more of them into goals, so a great
+  // playmaker/wing-creator raises expected goals even when the finishers are only average. Centred
+  // on the league reference, so it's calibration-neutral for a typical XI.
+  lambdaHome *= creativityFactor(weightedCreativityRating(homeXI));
+  lambdaAway *= creativityFactor(weightedCreativityRating(awayXI));
 
   return { lambdaHome, lambdaAway };
 }
