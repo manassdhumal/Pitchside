@@ -49,6 +49,31 @@ interface FilledSlot {
   season: string;
 }
 
+// Which formation-slot positions a player of a given natural position can *also* be shifted into —
+// logical adjacencies only (a left winger to left-mid, a full-back to wing-back, a striker wide or
+// into the hole). Used by the "Adjust players" mode to swap/move placed players.
+const POSITION_ADJACENCY: Record<Position, Position[]> = {
+  GK: ['GK'],
+  CB: ['CB'],
+  LB: ['LB', 'LWB', 'LM'],
+  RB: ['RB', 'RWB', 'RM'],
+  LWB: ['LWB', 'LB', 'LM'],
+  RWB: ['RWB', 'RB', 'RM'],
+  CDM: ['CDM', 'CM'],
+  CM: ['CM', 'CDM', 'CAM'],
+  CAM: ['CAM', 'CM', 'ST'],
+  LM: ['LM', 'LW', 'LWB', 'LB'],
+  RM: ['RM', 'RW', 'RWB', 'RB'],
+  LW: ['LW', 'LM', 'ST'],
+  RW: ['RW', 'RM', 'ST'],
+  ST: ['ST', 'CAM', 'LW', 'RW'],
+};
+
+/** Can a player whose natural position is `natural` be placed in a `slot` position? */
+function canFillSlot(natural: Position, slot: Position): boolean {
+  return (POSITION_ADJACENCY[natural] ?? [natural]).includes(slot);
+}
+
 export default function Draft() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -58,6 +83,8 @@ export default function Draft() {
   const [entries, setEntries] = useState<ClubSeasonIndexEntry[] | null>(null);
   const [filled, setFilled] = useState<(FilledSlot | null)[]>([]);
   const [selectedSlot, setSelectedSlot] = useState<number | null>(null);
+  const [adjustMode, setAdjustMode] = useState(false);
+  const [adjustSel, setAdjustSel] = useState<number | null>(null);
   const [phase, setPhase] = useState<'ready' | 'spinning' | 'revealed'>('ready');
   const [drumRot, setDrumRot] = useState(0);
   const [currentClubSeason, setCurrentClubSeason] = useState<ClubSeason | null>(null);
@@ -179,15 +206,60 @@ export default function Draft() {
       next[index] = null;
       return next;
     });
+    setAdjustSel((s) => (s === index ? null : s));
+  };
+
+  /** A placed player's natural position (from their real record), which drives adjust-mode moves. */
+  const naturalPos = (f: FilledSlot): Position => inferSpecificPosition(f.record.broadPosition, f.record.shirtNumber);
+
+  // Re-seat a player into a different slot, updating the player's position to that slot.
+  const seat = (f: FilledSlot, slotIndex: number): FilledSlot => ({
+    ...f,
+    player: { ...f.player, position: slots[slotIndex].position },
+  });
+
+  const handleAdjustClick = (i: number) => {
+    if (adjustSel === null) {
+      if (filled[i]) setAdjustSel(i);
+      return;
+    }
+    if (i === adjustSel) { setAdjustSel(null); return; }
+    const sel = filled[adjustSel]!;
+    const selNat = naturalPos(sel);
+    const target = filled[i];
+    if (target) {
+      // Swap two placed players, if each can play the other's slot.
+      if (canFillSlot(selNat, slots[i].position) && canFillSlot(naturalPos(target), slots[adjustSel].position)) {
+        setFilled((prev) => {
+          const next = [...prev];
+          next[i] = seat(sel, i);
+          next[adjustSel] = seat(target, adjustSel);
+          return next;
+        });
+        setAdjustSel(null);
+      } else {
+        setAdjustSel(i); // not swappable — just move the selection
+      }
+    } else if (canFillSlot(selNat, slots[i].position)) {
+      // Move to an empty, compatible slot.
+      setFilled((prev) => {
+        const next = [...prev];
+        next[i] = seat(sel, i);
+        next[adjustSel] = null;
+        return next;
+      });
+      setAdjustSel(null);
+    }
   };
 
   const handleSlotClick = (i: number) => {
+    if (adjustMode) { handleAdjustClick(i); return; }
     if (pendingRecord && !filled[i] && isPositionCompatible(pendingRecord.broadPosition, slots[i].position)) {
       placeIntoSlot(pendingRecord, i);
       return;
     }
-    if (filled[i]) { removeSlot(i); return; }
-    if (settings?.draftMode === 'position-first') setSelectedSlot(i);
+    // A plain click on a filled slot no longer removes it (use the ✕). Empty slots select in position-first mode.
+    if (!filled[i] && settings?.draftMode === 'position-first') setSelectedSlot(i);
   };
 
   const handleConfirm = async () => {
@@ -348,6 +420,31 @@ export default function Draft() {
             <OvrTile label="ATK" value={teamOvr.atk} ink={LINE_PALETTE.FW.ink} />
           </div>
 
+          {/* adjust-mode toggle: rearrange placed players into compatible slots */}
+          {filledCount > 0 && (
+            <div className="mx-auto mb-4 flex max-w-[560px] items-center justify-between gap-3">
+              <button
+                type="button"
+                onClick={() => { setAdjustMode((m) => !m); setAdjustSel(null); }}
+                className="font-stamp cursor-pointer px-4 py-2 text-[12px] tracking-[0.08em] hover:brightness-105"
+                style={{
+                  background: adjustMode ? '#2E7D5B' : 'var(--card)',
+                  color: adjustMode ? '#FDFAF1' : 'var(--text)',
+                  border: `1.5px solid ${adjustMode ? '#2E7D5B' : 'var(--border)'}`,
+                  borderRadius: 4,
+                  boxShadow: '2px 2px 0 var(--card-shadow)',
+                }}
+              >
+                {adjustMode ? '✓ DONE ADJUSTING' : '⇄ ADJUST PLAYERS'}
+              </button>
+              {adjustMode && (
+                <span className="text-[12px] italic" style={{ color: 'var(--text-soft, var(--text))' }}>
+                  {adjustSel === null ? 'Pick a player to move.' : 'Now tap a highlighted slot.'}
+                </span>
+              )}
+            </div>
+          )}
+
           {/* pitch */}
           <div
             className="relative mx-auto w-full max-w-[560px]"
@@ -385,7 +482,15 @@ export default function Draft() {
                 ? isPositionCompatible(pendingRecord.broadPosition, slot.position)
                 : false;
               const isSelected = settings.draftMode === 'position-first' && selectedSlot === i && !f;
-              const highlight = compatible || isSelected;
+              // Adjust-mode highlighting: the picked-up sticker + every slot it can legally move to / swap with.
+              const selNat = adjustSel !== null && filled[adjustSel] ? naturalPos(filled[adjustSel]!) : null;
+              const adjustSelected = adjustMode && adjustSel === i;
+              const adjustTarget = adjustMode && selNat !== null && adjustSel !== i && (
+                f
+                  ? canFillSlot(selNat, slot.position) && canFillSlot(naturalPos(f), slots[adjustSel!].position)
+                  : canFillSlot(selNat, slot.position)
+              );
+              const highlight = compatible || isSelected || adjustTarget;
 
               if (f) {
                 const rating = f.player.ratings.overall;
@@ -399,21 +504,43 @@ export default function Draft() {
                     key={i}
                     type="button"
                     onClick={() => handleSlotClick(i)}
-                    title="Tap to remove"
-                    className="absolute w-[94px] cursor-pointer overflow-hidden border-0 p-0 sm:w-[100px]"
+                    title={adjustMode ? (adjustSelected ? 'Tap again to cancel' : 'Tap to move / swap') : name}
+                    className="absolute w-[94px] overflow-hidden border-0 p-0 sm:w-[100px]"
                     style={{
                       left: `${slot.x}%`,
                       top: `${slot.y}%`,
-                      transform: 'translate(-50%,-50%)',
-                      border: `2px solid ${headerBg}`,
+                      transform: `translate(-50%,-50%)${adjustSelected ? ' scale(1.08)' : ''}`,
+                      cursor: adjustMode ? 'pointer' : 'default',
+                      border: adjustSelected
+                        ? '2px solid #FFD98A'
+                        : adjustTarget
+                        ? '2px dashed #2E7D5B'
+                        : `2px solid ${headerBg}`,
                       borderRadius: 4,
                       background: foil
                         ? 'linear-gradient(120deg,#C7A63E,#F0DE9A 35%,#B08A2E 60%,#E8CE7E)'
                         : pal.tint,
-                      boxShadow: '2px 2px 0 rgba(29,43,69,.28)',
+                      boxShadow: adjustSelected
+                        ? '0 0 0 3px rgba(255,217,138,.85), 2px 2px 0 rgba(29,43,69,.28)'
+                        : adjustTarget
+                        ? '0 0 0 3px rgba(46,125,91,.5)'
+                        : '2px 2px 0 rgba(29,43,69,.28)',
                       animation: 'stampIn .4s cubic-bezier(.2,1.2,.4,1)',
+                      zIndex: adjustSelected ? 5 : undefined,
                     }}
                   >
+                    {!adjustMode && (
+                      <span
+                        role="button"
+                        tabIndex={0}
+                        title="Remove player"
+                        onClick={(e) => { e.stopPropagation(); removeSlot(i); }}
+                        className="absolute right-0.5 top-0.5 z-10 flex h-[15px] w-[15px] cursor-pointer items-center justify-center rounded-full text-[10px] leading-none"
+                        style={{ background: 'rgba(29,43,69,.82)', color: '#FDFAF1' }}
+                      >
+                        ✕
+                      </span>
+                    )}
                     {/* colour-coded header: position + rating */}
                     <div
                       className="flex items-center justify-between px-1.5 py-0.5"
@@ -473,7 +600,7 @@ export default function Draft() {
                       color: highlight ? '#4A2410' : 'rgba(253,250,241,.85)',
                     }}
                   >
-                    {compatible ? '▸ PLACE' : isSelected ? '▸ CHOSEN' : slot.position === 'GK' ? 'KEEPER' : 'EMPTY'}
+                    {compatible ? '▸ PLACE' : isSelected ? '▸ CHOSEN' : adjustTarget ? '▸ MOVE' : slot.position === 'GK' ? 'KEEPER' : 'EMPTY'}
                   </span>
                 </button>
               );
