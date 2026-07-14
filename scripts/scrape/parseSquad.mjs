@@ -214,12 +214,16 @@ function parseAppsToken(token) {
  * params) instead of a wikitable.
  */
 export function parseEfsTemplateSquad(wikitext) {
-  const startMatch = wikitext.match(/\{\{\s*(?:Efs|Extended football squad) start\|([\s\S]*?)\}\}/i);
+  // The template name carries an optional competition-count suffix: `Efs start` / `Efs start2` /
+  // `Efs start4` (and matching `Efs player` / `player2` / `player4`). The player rows then list that
+  // many apps/goals positional pairs; competitionCount (from the start template's pipe-separated
+  // competition list) drives how many pairs to sum, so the suffix must be accepted, not required.
+  const startMatch = wikitext.match(/\{\{\s*(?:Efs|Extended football squad) start\d*\s*\|([\s\S]*?)\}\}/i);
   if (!startMatch) return null;
   const competitionCount = splitPipeAware(startMatch[1]).length;
 
   const players = [];
-  for (const m of wikitext.matchAll(/\{\{\s*(?:Efs|Extended football squad) player2?\s*\|([\s\S]*?)\}\}/gi)) {
+  for (const m of wikitext.matchAll(/\{\{\s*(?:Efs|Extended football squad) player\d*\s*\|([\s\S]*?)\}\}/gi)) {
     const { named, positional } = parseTemplateFields(m[0].slice(2, -2));
     const position = named.pos ? normalizePosition(named.pos) : null;
     const name = named.name ? extractLinkText(named.name) : '';
@@ -687,6 +691,127 @@ export function parseGermanGroupSquad(wikitext) {
   return null;
 }
 
+/**
+ * Parses the modern English "Squad, appearances and goals" table used by many club-season articles
+ * (Bayern, Schalke, PSG, AC Milan, Valencia, …). It falls between the other two table parsers:
+ * unlike `parseSquadTable` it has NO Pos. column — position comes from `colspan` divider rows
+ * (Goalkeepers/Defenders/…) — and unlike `parseGermanGroupSquad` its header spans TWO rows: a first
+ * row of competition GROUP names led by a `Total` colspan group, then a second row of per-group
+ * sub-labels (Total Appearances / Starts / Sub apps / Goals), usually written as cryptic
+ * `{{Tooltip|TA|Total Appearances}}` / `{{Tooltip|G|Goals}}` abbreviations. Season apps and goals
+ * come from the Total group's appearances and goals sub-columns (resolved via `cellMeaning`, i.e. the
+ * tooltip's full description, so the abbreviations still match).
+ */
+export function parseGroupedTotalsSquad(wikitext) {
+  const label = (c) => extractLinkText(c.text).replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+
+  for (const block of extractTableBlocks(stripComments(wikitext))) {
+    const rows = splitRows(block);
+    if (rows.length < 3) continue;
+
+    // Two accepted header shapes, both with position coming from `colspan` divider rows (so NEITHER
+    // has a Pos column — a Pos column means it's a standard table `parseSquadTable` already owns):
+    //   • 'group' — a two-row header whose first row has a multi-column `Total` group (sub-labels
+    //     Total Appearances / Starts / Goals … on the second row), e.g. Bayern 2013-14.
+    //   • 'flat'  — a single-row header with a standalone `Total Appearances` column (often the
+    //     cryptic `{{Tooltip|All A|Total Appearances}}`) immediately followed by a goals column
+    //     (a `{{goal}}` icon), e.g. Schalke 2016-17.
+    const isTotalGroup = (c) => c.colspan > 1 && /^totals?\b/i.test(label(c));
+    const isFlatTotalApps = (c) => c.colspan === 1 && /total appearances/i.test(cellMeaning(c.text));
+    let headerIdx = -1;
+    let headerFull = null;
+    let mode = null;
+    for (let i = 0; i < rows.length - 1; i++) {
+      const hf = parseHeaderCells(rows[i]);
+      if (hf.length < 3) continue;
+      const hasName = hf.some((c) => /^(name|player(?:\s*name)?)$/i.test(label(c)));
+      const hasPos = hf.some((c) => /^pos\.?$|position/i.test(label(c)));
+      if (!hasName || hasPos) continue;
+      if (hf.some(isTotalGroup)) { headerIdx = i; headerFull = hf; mode = 'group'; break; }
+      if (hf.some(isFlatTotalApps)) { headerIdx = i; headerFull = hf; mode = 'flat'; break; }
+    }
+    if (headerIdx === -1) continue;
+
+    const colStart = [];
+    let totalCols = 0;
+    for (const c of headerFull) { colStart.push(totalCols); totalCols += c.colspan; }
+
+    const nameIdx = headerFull.findIndex((c) => /^(name|player(?:\s*name)?)$/i.test(label(c)));
+    const noIdx = headerFull.findIndex((c) => /^no\.?$|number|shirt/i.test(label(c)));
+    const natIdx = headerFull.findIndex((c) => /^nat\.?$|country/i.test(label(c)));
+    if (nameIdx === -1) continue;
+
+    const nameCol = colStart[nameIdx];
+    const noCol = noIdx !== -1 ? colStart[noIdx] : -1;
+    const natCol = natIdx !== -1 ? colStart[natIdx] : -1;
+
+    let appsCol = -1;
+    let goalsCol = -1;
+    let dataStart;
+    if (mode === 'group') {
+      const totalIdx = headerFull.findIndex((c, i) => i > nameIdx && isTotalGroup(c));
+      const totalStart = colStart[totalIdx];
+      const totalWidth = headerFull[totalIdx].colspan;
+      // Sub-label row (header row 2): map its cells onto the columns under each colspan>1 group. Match
+      // on each sub-label's tooltip DESCRIPTION so `{{Tooltip|TA|Total Appearances}}`/`{{Tooltip|G|
+      // Goals}}` resolve to "appearances"/"goals" (their visible labels "TA"/"G" would not).
+      const subCells = parseRowCells(rows[headerIdx + 1]);
+      const subByCol = {};
+      let subPtr = 0;
+      for (let i = 0; i < headerFull.length; i++) {
+        if (headerFull[i].colspan > 1) {
+          for (let k = 0; k < headerFull[i].colspan; k++) subByCol[colStart[i] + k] = subCells[subPtr++] ?? '';
+        }
+      }
+      if (!/app/i.test(cellMeaning(subByCol[totalStart] ?? ''))) continue; // not an appearances table
+      appsCol = totalStart;
+      // Goals = the Total sub-column meaning "goal(s)"; never a Starts/Sub-apps/Assists/against column.
+      for (let col = totalStart; col < totalStart + totalWidth; col++) {
+        const meaning = cellMeaning(subByCol[col] ?? '');
+        if (/goals?|soccer/i.test(meaning) && !/assist|against|conceded/i.test(meaning)) { goalsCol = col; break; }
+      }
+      dataStart = headerIdx + 2;
+    } else {
+      // Flat: the standalone Total-Appearances column, with goals the immediately-following column when
+      // it is a goal icon / "goal(s)" header (never a cards/assists column).
+      const appsIdx = headerFull.findIndex((c, i) => i > nameIdx && isFlatTotalApps(c));
+      appsCol = colStart[appsIdx];
+      const next = headerFull[appsIdx + 1];
+      if (next && (/goals?|soccer/i.test(next.text) || /goals?/i.test(cellMeaning(next.text))) &&
+        !/assist|against|conceded|card|yellow|red/i.test(cellMeaning(next.text))) {
+        goalsCol = colStart[appsIdx + 1];
+      }
+      dataStart = headerIdx + 1;
+    }
+
+    const players = [];
+    let currentPos = null;
+    for (let i = dataStart; i < rows.length; i++) {
+      const cells = parseRowCells(rows[i]);
+      const rowText = cells.map((c) => extractLinkText(c)).join(' ');
+      const grp = groupPosition(rowText);
+      if (grp && cells.length <= 2) { currentPos = grp; continue; } // a position-group divider row
+      if (!currentPos) continue;
+      if (cells.length <= Math.max(nameCol, appsCol, goalsCol)) continue;
+
+      const name = extractLinkText(cells[nameCol]);
+      if (!name || /^\s*$/.test(name)) continue;
+
+      players.push({
+        name,
+        nationality: natCol !== -1 ? extractNationality(cells[natCol]) : extractNationality(cells[nameCol]),
+        broadPosition: currentPos,
+        shirtNumber: noCol !== -1 ? leadingNumber(cells[noCol]) : undefined,
+        appearances: parseAppsToken(extractLinkText(cells[appsCol])),
+        goals: goalsCol !== -1 ? leadingNumber(cells[goalsCol]) : 0,
+      });
+    }
+
+    if (players.length >= 11) return players;
+  }
+  return null;
+}
+
 /** Collapses duplicate rows for the same player (some pages list a player in several sections). */
 function dedupeByName(players) {
   const byKey = new Map();
@@ -712,6 +837,7 @@ export function extractClubSeasonSquad(wikitext) {
   const candidates = [
     parseSquadTable(wikitext),
     parseFootballSeasonStatsTemplate(wikitext),
+    parseGroupedTotalsSquad(wikitext),
     parseGermanGroupSquad(wikitext),
     parseEfsTemplateSquad(wikitext),
     parseFsTemplateSquad(wikitext),
