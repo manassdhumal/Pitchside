@@ -6,10 +6,14 @@ export const LEAGUE_AVG_GOALS = 1.2;
 export const HOME_ADVANTAGE = 1.35;
 const MAX_GOALS = 10;
 
-// Sensitivity of the OVR tilt: rating-point edge → goal-expectation multiplier. Kept gentle and
-// bounded so evenly-matched sides (edge ≈ 0) stay calibration-neutral, while a clear quality gap
-// meaningfully separates the scoreline on top of the raw attack/defence ratio.
-const OVR_TILT_PER_POINT = 0.011;
+// Sensitivity of the OVR tilt: rating-point edge → goal-expectation multiplier. Bounded so
+// evenly-matched sides (edge ≈ 0) stay calibration-neutral — the calibration test pits identical
+// squads, so this value never affects it — while a clear quality gap separates the scoreline on top
+// of the raw attack/defence ratio. Tuned so a full simulated season spreads realistically: strong
+// sides ~1.9-2.1 ppg, relegation-level ~0.75-0.9 ppg (0.011 left the table too flat — champions on
+// ~1.75 ppg, bottom on ~1.05). The champion ceiling is set by how clustered the top of the league is,
+// which is a ratings/selection matter, not this constant.
+const OVR_TILT_PER_POINT = 0.024;
 const OVR_TILT_MIN = 0.6;
 const OVR_TILT_MAX = 1.6;
 
