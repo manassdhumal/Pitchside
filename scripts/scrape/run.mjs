@@ -5,6 +5,7 @@ import { resolveSeasonArticleTitle, fetchWikitext } from './wiki.mjs';
 import { extractClubSeasonSquad, detectDivision } from './parseSquad.mjs';
 import { deriveRatings } from './ratings.mjs';
 import { rebuildAllRatings } from './rebuildRatings.mjs';
+import { rebuildIndex as buildIndex } from './indexBuilder.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = join(__dirname, '..', '..', 'src', 'data');
@@ -93,28 +94,8 @@ async function scrapeClubSeason(league, club, season, force = false) {
 }
 
 function rebuildIndex() {
-  const leagues = JSON.parse(readFileSync(join(DATA_DIR, 'leagues.json'), 'utf8'));
-  const clubs = JSON.parse(readFileSync(join(DATA_DIR, 'clubs.json'), 'utf8'));
-  const entries = [];
-
-  for (const club of clubs) {
-    const clubDir = join(HIST_DIR, club.leagueId, club.id);
-    if (!existsSync(clubDir)) continue;
-    const files = readdirSync(clubDir).filter((f) => f.endsWith('.json'));
-    for (const file of files) {
-      const season = file.replace('.json', '');
-      const data = JSON.parse(readFileSync(join(clubDir, file), 'utf8'));
-      entries.push({
-        leagueId: club.leagueId,
-        clubId: club.id,
-        season,
-        playerCount: data.squad.length,
-      });
-    }
-  }
-
-  writeFileSync(join(HIST_DIR, 'index.json'), JSON.stringify({ leagues, clubs, entries }, null, 2));
-  log(`Index rebuilt: ${entries.length} club-seasons available.`);
+  const n = buildIndex(HIST_DIR, DATA_DIR);
+  log(`Index rebuilt: ${n} club-seasons available.`);
 }
 
 async function main() {

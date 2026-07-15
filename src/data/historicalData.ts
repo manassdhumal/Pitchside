@@ -6,6 +6,13 @@ export interface ClubSeasonIndexEntry {
   clubId: string;
   season: string;
   playerCount: number;
+  /** Highest appearance count in the squad — 0 for a stats-less roster, low for a partial/in-progress
+   * season. Used to skip incomplete seasons when picking a club's opponent side. Optional for
+   * backward compatibility with an older index. */
+  maxApps?: number;
+  /** Best-XI mean overall (4-3-3) precomputed at scrape time, so opponent selection can pick a club's
+   * strongest complete season without loading every season file. Optional (older index). */
+  strength?: number;
 }
 
 interface HistoricalIndex {

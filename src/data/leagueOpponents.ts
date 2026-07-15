@@ -56,21 +56,36 @@ export function buildBestXI(clubSeason: ClubSeason, mode: RatingsMode): Player[]
   return xi;
 }
 
-/** Most recent available season for a club at or before `seasonMax`, from the loaded index. */
-function latestSeasonForClub(entries: ClubSeasonIndexEntry[], clubId: string, seasonMax: string): string | null {
+// A season only counts as a realistic opponent side if its squad has real, full-season appearance
+// data. Below this, the season is a stats-less roster (flat baseline) or a partial/in-progress scrape
+// (everyone rated as low-usage) — either way it under-represents the club and warps the table.
+const MIN_COMPLETE_APPS = 25;
+
+/**
+ * The season that best represents a club for opponent duty: among its COMPLETE seasons at or before
+ * `seasonMax` (real full-season stats, `maxApps ≥ MIN_COMPLETE_APPS`), the strongest by precomputed
+ * best-XI `strength`. This fixes standings that otherwise track data coverage rather than football —
+ * a partial current-season scrape (e.g. Arsenal rated off 8 appearances) or a club whose only recent
+ * data is a flat roster no longer drags a strong side to the bottom. Clubs with no complete season are
+ * dropped (returns null), which also removes long-relegated clubs that have no usable recent side.
+ * Ties (and indexes predating the `strength`/`maxApps` fields) fall back to the most recent season.
+ */
+function bestSeasonForClub(entries: ClubSeasonIndexEntry[], clubId: string, seasonMax: string): string | null {
   const maxYear = parseInt(seasonMax.slice(0, 4), 10);
-  const seasons = entries
+  const candidates = entries
     .filter((e) => e.clubId === clubId && parseInt(e.season.slice(0, 4), 10) <= maxYear)
-    .map((e) => e.season)
-    .sort();
-  return seasons.length ? seasons[seasons.length - 1] : null;
+    .filter((e) => e.maxApps === undefined || e.maxApps >= MIN_COMPLETE_APPS);
+  if (!candidates.length) return null;
+  candidates.sort((a, b) => (b.strength ?? 0) - (a.strength ?? 0) || b.season.localeCompare(a.season));
+  return candidates[0].season;
 }
 
 /**
- * Builds the pool of real opponent clubs for a league: every club in that league that has scraped
- * data at or before `seasonMax`, fielded from its most recent available season. Excludes the
- * user's own drafted team (they take the extra slot). This is what makes the season a real
- * head-to-head against the league's actual current sides rather than procedural filler.
+ * Builds the pool of real opponent clubs for a league: every club in that league that has a COMPLETE
+ * scraped season at or before `seasonMax`, fielded from its strongest such season (see
+ * `bestSeasonForClub`). Excludes the user's own drafted team (they take the extra slot). Selecting each
+ * club's strongest complete side — rather than whatever season happens to be latest — keeps the table
+ * driven by football (big clubs near the top) instead of by uneven data coverage.
  */
 export async function loadLeagueOpponents(
   leagueId: string,
@@ -84,7 +99,7 @@ export async function loadLeagueOpponents(
 
   const opponents: LeagueOpponent[] = [];
   for (const clubId of clubIds) {
-    const season = latestSeasonForClub(entries, clubId, seasonMax);
+    const season = bestSeasonForClub(entries, clubId, seasonMax);
     if (!season) continue;
     const clubSeason = await loadClubSeason(leagueId, clubId, season);
     if (!clubSeason) continue;

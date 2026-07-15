@@ -9,6 +9,7 @@ import { resolveSeasonArticleTitle, fetchWikitext } from './wiki.mjs';
 import { extractClubSeasonSquad, detectDivision } from './parseSquad.mjs';
 import { deriveRatings } from './ratings.mjs';
 import { rebuildAllRatings } from './rebuildRatings.mjs';
+import { rebuildIndex as buildIndex } from './indexBuilder.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = join(__dirname, '..', '..', 'src', 'data');
@@ -66,21 +67,7 @@ async function scrapeOne(league, club, season) {
   return { status: 'ok', players: squad.length, maxApps: Math.max(...squad.map((p) => p.stats.appearances)) };
 }
 
-function rebuildIndex() {
-  const clubs = JSON.parse(readFileSync(join(DATA_DIR, 'clubs.json'), 'utf8'));
-  const leagues = JSON.parse(readFileSync(join(DATA_DIR, 'leagues.json'), 'utf8'));
-  const entries = [];
-  for (const club of clubs) {
-    const clubDir = join(HIST_DIR, club.leagueId, club.id);
-    if (!existsSync(clubDir)) continue;
-    for (const file of readdirSync(clubDir).filter((f) => f.endsWith('.json'))) {
-      const data = JSON.parse(readFileSync(join(clubDir, file), 'utf8'));
-      entries.push({ leagueId: club.leagueId, clubId: club.id, season: file.replace('.json', ''), playerCount: data.squad.length });
-    }
-  }
-  writeFileSync(join(HIST_DIR, 'index.json'), JSON.stringify({ leagues, clubs, entries }, null, 2));
-  return entries.length;
-}
+const rebuildIndex = () => buildIndex(HIST_DIR, DATA_DIR);
 
 async function main() {
   const clubs = JSON.parse(readFileSync(join(DATA_DIR, 'clubs.json'), 'utf8'));
