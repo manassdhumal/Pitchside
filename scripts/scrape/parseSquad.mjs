@@ -155,6 +155,22 @@ function normalizePosition(raw) {
   if (text.includes('DF')) return 'DF';
   if (text.includes('MF')) return 'MF';
   if (text.includes('FW')) return 'FW';
+  // Many modern Appearances tables label position with SPECIFIC codes (CB, DM/CM, LW/RW/CF …) rather
+  // than the broad GK/DF/MF/FW. Map the first listed code to its broad line so the table still parses
+  // — otherwise every player row is dropped and the page silently falls back to a stats-less roster
+  // (this was the Liverpool 2021-22 bug). Unrecognised/empty → null (skip the row), never a guessed FW.
+  const first = (text.match(/[A-Z]+/g) ?? [])[0];
+  return first ? broadFromSpecificStrict(first) : null;
+}
+
+/** Like `broadFromSpecific` but returns null for anything not a recognised position code (rather than
+ * defaulting to FW), so a stray non-position cell can't be turned into a phantom forward. */
+function broadFromSpecificStrict(pos) {
+  const p = (pos || '').toUpperCase().replace(/[^A-Z]/g, '');
+  if (p === 'GK' || p === 'G') return 'GK';
+  if (['CB', 'LB', 'RB', 'LWB', 'RWB', 'WB', 'SW', 'DF', 'D', 'RCB', 'LCB'].includes(p)) return 'DF';
+  if (['CDM', 'CM', 'CAM', 'DM', 'AM', 'LM', 'RM', 'WM', 'MF', 'M', 'RCM', 'LCM'].includes(p)) return 'MF';
+  if (['LW', 'RW', 'CF', 'SS', 'ST', 'FW', 'F', 'W', 'LF', 'RF'].includes(p)) return 'FW';
   return null;
 }
 
@@ -555,8 +571,14 @@ export function parseSquadTable(wikitext) {
       }
       goalsAvailable = goalsCol >= 0;
       goalsColIdx = goalsAvailable ? goalsCol : appsColIdx;
+    } else if (totalWidth > 1) {
+      // A MULTI-column Total group with no apps/starts sub-header names its sub-columns something other
+      // than appearances (a disciplinary table's Total is yellow/2nd-yellow/red card counts). Reading
+      // its first sub-column as apps yields garbage (the Liverpool 2021-22 bug: total yellow cards read
+      // as appearances), so skip the table entirely rather than emit a bogus low-apps candidate.
+      continue;
     }
-    // else: single-column-per-competition layout — Total holds total appearances only, no goals.
+    // else (totalWidth === 1): single-column-per-competition layout — Total is total appearances only.
 
     const expectedDataCols = looksLikeSubHeader ? -1 : totalCols;
 

@@ -14,8 +14,12 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = join(__dirname, '..', '..', 'src', 'data');
 const HIST_DIR = join(__dirname, '..', '..', 'public', 'data', 'historical');
 
-// leagueId/clubId/season triples recovered by the new parseGroupedTotalsSquad branch + Efs `\d*` fix.
+// leagueId/clubId/season triples whose stored file was a stale roster-only baseline but which now
+// parse full stats after parseSquad.mjs improvements (parseGroupedTotalsSquad, Efs `\d*`, and the
+// specific-position-code / disciplinary-table fixes). Safe to re-run: unchanged pages just refresh
+// their scrapedAt; a failed re-parse leaves the existing file untouched.
 const TARGETS = [
+  ['bundesliga', 'bayern-munich', '2011-12'],
   ['bundesliga', 'bayern-munich', '2013-14'],
   ['bundesliga', 'bayern-munich', '2016-17'],
   ['bundesliga', 'bayern-munich', '2017-18'],
@@ -23,6 +27,7 @@ const TARGETS = [
   ['bundesliga', 'schalke-04', '2016-17'],
   ['bundesliga', 'schalke-04', '2017-18'],
   ['bundesliga', 'schalke-04', '2018-19'],
+  ['premier-league', 'liverpool', '2021-22'],
 ];
 
 const playerId = (name, nationality) =>
