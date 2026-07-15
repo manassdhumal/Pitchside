@@ -17,6 +17,18 @@ const OVR_TILT_PER_POINT = 0.024;
 const OVR_TILT_MIN = 0.6;
 const OVR_TILT_MAX = 1.6;
 
+// De-clustering the top of the table: opponent selection fields each club at its scraped peak, which
+// bunches the elite sides within a couple of rating points (e.g. five 83-85 clubs), so no champion
+// could pull away — the title race stayed a coin-flip and champions capped near ~1.9 ppg. This convex
+// transform stretches the SPACING among elite lines only (values above the threshold), leaving mid and
+// lower sides untouched, so a genuinely-best side gains a real edge over near-peers. Below the
+// threshold it's the identity, so it never disturbs the evenly-matched calibration (edge still ≈ 0).
+const TOP_SHARPEN_THRESHOLD = 78;
+const TOP_SHARPEN_GAIN = 1.0;
+function sharpenElite(v: number): number {
+  return v > TOP_SHARPEN_THRESHOLD ? TOP_SHARPEN_THRESHOLD + (v - TOP_SHARPEN_THRESHOLD) * (1 + TOP_SHARPEN_GAIN) : v;
+}
+
 const ATTACK_WEIGHT: Partial<Record<Player['position'], number>> = {
   GK: 0.1, CB: 0.3, LB: 0.6, RB: 0.6, LWB: 0.7, RWB: 0.7, CDM: 0.6, CM: 1, CAM: 1.4,
   LM: 1.2, RM: 1.2, LW: 1.5, RW: 1.5, ST: 1.8,
@@ -175,8 +187,11 @@ export function computeExpectedGoals(homeXI: Player[], awayXI: Player[], homeAdv
   // defensive line, plus a midfield battle and an overall-quality term. This is a factor on top
   // of (not a replacement for) the Dixon-Coles attack/defence ratio, so the drafted team's OVR —
   // the same number shown in the Draft panel — genuinely drives results.
-  const home = computeTeamOvr(homeXI);
-  const away = computeTeamOvr(awayXI);
+  const homeRaw = computeTeamOvr(homeXI);
+  const awayRaw = computeTeamOvr(awayXI);
+  // Sharpen the elite end so the best sides separate from a cluster of near-peers (see sharpenElite).
+  const home = { atk: sharpenElite(homeRaw.atk), def: sharpenElite(homeRaw.def), mid: sharpenElite(homeRaw.mid), overall: sharpenElite(homeRaw.overall) };
+  const away = { atk: sharpenElite(awayRaw.atk), def: sharpenElite(awayRaw.def), mid: sharpenElite(awayRaw.mid), overall: sharpenElite(awayRaw.overall) };
   const homeEdge = 0.5 * (home.atk - away.def) + 0.3 * (home.mid - away.mid) + 0.2 * (home.overall - away.overall);
   const awayEdge = 0.5 * (away.atk - home.def) + 0.3 * (away.mid - home.mid) + 0.2 * (away.overall - home.overall);
   lambdaHome *= ovrTiltFactor(homeEdge);
