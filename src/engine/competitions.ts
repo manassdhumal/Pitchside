@@ -1,6 +1,6 @@
 import type { Match, StandingsRow, EraRuleConfig, Player, FormatConfig } from '../types';
 import { generateRoundRobinFixtures, type FixturePair } from './fixtures';
-import { simulateMatch } from './matchEngine';
+import { simulateMatch, NEUTRAL_TACTICS, type TacticalShape } from './matchEngine';
 
 let matchIdCounter = 0;
 function nextMatchId(): string {
@@ -13,11 +13,14 @@ export function simulateLeagueFixtures(
   startingXIByTeam: Map<string, Player[]>,
   competitionId: string,
   eraRules: EraRuleConfig,
+  tacticsByTeam?: Map<string, TacticalShape>,
 ): Match[] {
   return fixtures.map((fixture) => {
     const homeXI = startingXIByTeam.get(fixture.homeTeamId) ?? [];
     const awayXI = startingXIByTeam.get(fixture.awayTeamId) ?? [];
-    const result = simulateMatch(homeXI, awayXI, eraRules, false);
+    const homeTactics = tacticsByTeam?.get(fixture.homeTeamId) ?? NEUTRAL_TACTICS;
+    const awayTactics = tacticsByTeam?.get(fixture.awayTeamId) ?? NEUTRAL_TACTICS;
+    const result = simulateMatch(homeXI, awayXI, eraRules, false, homeTactics, awayTactics);
 
     return {
       id: nextMatchId(),

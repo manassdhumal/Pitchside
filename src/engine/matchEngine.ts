@@ -174,7 +174,25 @@ function creativityFactor(creativity: number): number {
   return Math.min(CREATIVITY_MAX, Math.max(CREATIVITY_MIN, 1 + (creativity - REF_CREATIVITY) * CREATIVITY_PER_POINT));
 }
 
-export function computeExpectedGoals(homeXI: Player[], awayXI: Player[], homeAdvantage = HOME_ADVANTAGE): { lambdaHome: number; lambdaAway: number } {
+/**
+ * A manager's tactical shape as direct match-model multipliers, layered on top of the rating-based
+ * expected goals: `attack` scales this side's own goals (attacking intent), `concede` scales the goals
+ * the OPPONENT is expected to score against them (defensive risk). A low block is low/low (grind out
+ * 1-0s), a gegenpress is high/high (chaos both ends), a counter is high-attack/low-concede.
+ */
+export interface TacticalShape {
+  attack: number;
+  concede: number;
+}
+export const NEUTRAL_TACTICS: TacticalShape = { attack: 1, concede: 1 };
+
+export function computeExpectedGoals(
+  homeXI: Player[],
+  awayXI: Player[],
+  homeAdvantage = HOME_ADVANTAGE,
+  homeTactics: TacticalShape = NEUTRAL_TACTICS,
+  awayTactics: TacticalShape = NEUTRAL_TACTICS,
+): { lambdaHome: number; lambdaAway: number } {
   const homeAttack = weightedAttackRating(homeXI);
   const homeDefence = weightedDefenceRating(homeXI);
   const awayAttack = weightedAttackRating(awayXI);
@@ -203,6 +221,12 @@ export function computeExpectedGoals(homeXI: Player[], awayXI: Player[], homeAdv
   lambdaHome *= creativityFactor(weightedCreativityRating(homeXI));
   lambdaAway *= creativityFactor(weightedCreativityRating(awayXI));
 
+  // Tactical shape (managers): each side's attacking intent lifts its own goals, and its defensive
+  // risk scales what the opponent scores. Neutral (1,1) leaves the model untouched — so a manager-less
+  // side, and the calibration test, are unaffected.
+  lambdaHome *= homeTactics.attack * awayTactics.concede;
+  lambdaAway *= awayTactics.attack * homeTactics.concede;
+
   return { lambdaHome, lambdaAway };
 }
 
@@ -226,8 +250,15 @@ function simulateExtraTime(lambdaHome: number, lambdaAway: number, rho: number):
   return sampleDixonColesScoreline(lambdaHome * etScale, lambdaAway * etScale, rho);
 }
 
-export function simulateMatch(homeXI: Player[], awayXI: Player[], eraRules: EraRuleConfig, requiresDecisiveResult = false): MatchResult {
-  const { lambdaHome, lambdaAway } = computeExpectedGoals(homeXI, awayXI);
+export function simulateMatch(
+  homeXI: Player[],
+  awayXI: Player[],
+  eraRules: EraRuleConfig,
+  requiresDecisiveResult = false,
+  homeTactics: TacticalShape = NEUTRAL_TACTICS,
+  awayTactics: TacticalShape = NEUTRAL_TACTICS,
+): MatchResult {
+  const { lambdaHome, lambdaAway } = computeExpectedGoals(homeXI, awayXI, HOME_ADVANTAGE, homeTactics, awayTactics);
   const { homeGoals, awayGoals } = sampleDixonColesScoreline(lambdaHome, lambdaAway);
   const probabilities = computeOutcomeProbabilities(lambdaHome, lambdaAway);
 

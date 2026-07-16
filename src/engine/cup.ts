@@ -1,5 +1,5 @@
 import type { Player, EraRuleConfig } from '../types';
-import { simulateMatch, type MatchResult } from './matchEngine';
+import { simulateMatch, NEUTRAL_TACTICS, type MatchResult, type TacticalShape } from './matchEngine';
 import { computeTeamOvr } from './teamRatings';
 
 /** Knockout ties use decisive results: extra time then penalties when a match is level. */
@@ -74,7 +74,7 @@ function seedSlots(size: number): number[] {
  * is handled by first-round byes for the top seeds. Returns the full bracket (all ties per round), the
  * user's run, and the champion. Reuses the Dixon-Coles simulator with extra-time/penalties.
  */
-export function simulateCup(entrants: CupEntrant[], userId: string): CupResult {
+export function simulateCup(entrants: CupEntrant[], userId: string, tacticsByTeam?: Map<string, TacticalShape>): CupResult {
   // Rank by strength → seeds (1 = strongest). Ties in strength broken by a stable coin flip.
   const seeded = [...entrants].sort((a, b) =>
     computeTeamOvr(b.xi).overall - computeTeamOvr(a.xi).overall || (Math.random() < 0.5 ? -1 : 1));
@@ -107,7 +107,8 @@ export function simulateCup(entrants: CupEntrant[], userId: string): CupResult {
       if (b && !a) { next.push(b); if (b.id === userId) byeIds.push(b.id); continue; }
       if (!a && !b) { next.push(null); continue; }
 
-      const result = simulateMatch(a!.xi, b!.xi, CUP_ERA_RULES, true);
+      const result = simulateMatch(a!.xi, b!.xi, CUP_ERA_RULES, true,
+        tacticsByTeam?.get(a!.id) ?? NEUTRAL_TACTICS, tacticsByTeam?.get(b!.id) ?? NEUTRAL_TACTICS);
       let winner: CupEntrant;
       if (result.homeGoals > result.awayGoals) winner = a!;
       else if (result.awayGoals > result.homeGoals) winner = b!;

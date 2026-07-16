@@ -8,7 +8,8 @@ import { computeTeamOvr, type TeamOvr } from '../engine/teamRatings';
 import { buildStandingsTable, generateRoundRobinFixtures, simulateLeagueFixtures } from '../engine/competitions';
 import { simulateCup, type CupResult, type CupTie } from '../engine/cup';
 import { getLeague } from '../data/leagues';
-import { MANAGERS, getManager, applyManagerToXI } from '../data/managers';
+import { MANAGERS, getManager, applyManagerToXI, managerTactics } from '../data/managers';
+import type { TacticalShape } from '../engine/matchEngine';
 import { ProgrammeNav, ProgrammeFooter } from '../components/chrome/ProgrammeChrome';
 import { LEAGUE_INKS, POSITION_INKS } from '../components/chrome/RaffleDrum';
 import { POSITION_TO_BROAD } from '../types';
@@ -345,6 +346,11 @@ export default function Season() {
     if (xiByTeam) for (const [id, xi] of xiByTeam) m.set(id, id === userTeam?.id ? uXi : xi);
     return m;
   };
+  // The chosen gaffer's tactical shape, keyed to the user's team, for the simulator (league + cup).
+  const buildTactics = (): Map<string, TacticalShape> | undefined => {
+    if (!managersEnabled || !userTeam || !managerId) return undefined;
+    return new Map([[userTeam.id, managerTactics(getManager(managerId))]]);
+  };
   const saveSeason = (allMatches: Match[], finalTable: StandingsRow[]) => {
     putSeason({
       id: `season-${Date.now()}`,
@@ -374,13 +380,13 @@ export default function Season() {
       const maxRound = Math.max(...fixtures.map((f) => f.round));
       const half = Math.ceil((maxRound + 1) / 2);
       halftimeRoundRef.current = half;
-      const m1 = simulateLeagueFixtures(fixtures.filter((f) => f.round < half), buildSimXi(startXi), COMPETITION_ID, NEUTRAL_ERA_RULES);
+      const m1 = simulateLeagueFixtures(fixtures.filter((f) => f.round < half), buildSimXi(startXi), COMPETITION_ID, NEUTRAL_ERA_RULES, buildTactics());
       awaitingTransferRef.current = true;
       setMatches(m1);
       setTable(buildStandingsTable(m1, teamIds, POINTS_SYSTEM));
     } else {
       awaitingTransferRef.current = false;
-      const all = simulateLeagueFixtures(fixtures, buildSimXi(startXi), COMPETITION_ID, NEUTRAL_ERA_RULES);
+      const all = simulateLeagueFixtures(fixtures, buildSimXi(startXi), COMPETITION_ID, NEUTRAL_ERA_RULES, buildTactics());
       setMatches(all);
       const t = buildStandingsTable(all, teamIds, POINTS_SYSTEM);
       setTable(t);
@@ -423,7 +429,7 @@ export default function Season() {
     awaitingTransferRef.current = false;
     if (userTeam) setOvrByTeam((prev) => new Map(prev).set(userTeam.id, computeTeamOvr(userXi)));
     const secondFixtures = fixturesRef.current.filter((f) => f.round >= halftimeRoundRef.current);
-    const m2 = simulateLeagueFixtures(secondFixtures, buildSimXi(userXi), COMPETITION_ID, NEUTRAL_ERA_RULES);
+    const m2 = simulateLeagueFixtures(secondFixtures, buildSimXi(userXi), COMPETITION_ID, NEUTRAL_ERA_RULES, buildTactics());
     const all = [...matches, ...m2];
     const t = buildStandingsTable(all, teamIdsRef.current, POINTS_SYSTEM);
     setMatches(all);
@@ -462,7 +468,7 @@ export default function Season() {
   const enterCup = () => {
     if (!userTeam || !xiByTeam) return;
     const entrants = Array.from(xiByTeam.entries()).map(([id, xi]) => ({ id, xi: id === userTeam.id ? userXi : xi }));
-    setCup(simulateCup(entrants, userTeam.id));
+    setCup(simulateCup(entrants, userTeam.id, buildTactics()));
     setCupReveal(0);
     setPhase('cup-reveal');
   };
@@ -604,6 +610,7 @@ export default function Season() {
                   {MANAGERS.map((mgr) => {
                     const sel = managerId === mgr.id;
                     const line = (v: number) => (v > 0 ? `+${v}` : `${v}`);
+                    const pct = (mult: number) => { const d = Math.round((mult - 1) * 100); return d === 0 ? '±0%' : d > 0 ? `+${d}%` : `${d}%`; };
                     return (
                       <button
                         key={mgr.id}
@@ -619,6 +626,12 @@ export default function Season() {
                           <span style={{ color: mgr.mid >= 0 ? '#3E7A4E' : '#A83E2C' }}>MID {line(mgr.mid)}</span>
                           <span style={{ color: mgr.atk >= 0 ? '#3E7A4E' : '#A83E2C' }}>ATK {line(mgr.atk)}</span>
                         </div>
+                        {/* tactical tempo: how the match model itself bends (goals scored / conceded) */}
+                        <div className="mt-1 flex gap-1.5 font-stamp text-[9.5px]" title="How this style bends match tempo">
+                          <span style={{ color: mgr.shape.attack >= 1 ? '#3E7A4E' : '#A83E2C' }}>⚔ {pct(mgr.shape.attack)}</span>
+                          <span style={{ color: mgr.shape.concede <= 1 ? '#3E7A4E' : '#A83E2C' }}>🛡 {pct(mgr.shape.concede)}</span>
+                        </div>
+                        <div className="mt-0.5 text-[9.5px] italic leading-snug" style={{ color: '#6B5F4A' }}>{mgr.tradeoff}</div>
                       </button>
                     );
                   })}
