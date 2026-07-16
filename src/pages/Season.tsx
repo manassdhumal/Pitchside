@@ -6,7 +6,7 @@ import { loadIndex, type ClubSeasonIndexEntry } from '../data/historicalData';
 import { loadLeagueOpponents } from '../data/leagueOpponents';
 import { computeTeamOvr, type TeamOvr } from '../engine/teamRatings';
 import { buildStandingsTable, generateRoundRobinFixtures, simulateLeagueFixtures } from '../engine/competitions';
-import { simulateCup, type CupResult } from '../engine/cup';
+import { simulateCup, type CupResult, type CupTie } from '../engine/cup';
 import { getLeague } from '../data/leagues';
 import { MANAGERS, getManager, applyManagerToXI } from '../data/managers';
 import { ProgrammeNav, ProgrammeFooter } from '../components/chrome/ProgrammeChrome';
@@ -174,6 +174,59 @@ function OvrChip({ ovr, ink }: { ovr: number; ink: string }) {
     >
       {ovr}
     </span>
+  );
+}
+
+/** One knockout tie in the bracket: the two sides stacked, winner in bold, the user's side flagged. */
+function TieCard({ tie, userId, teamNames, seedById }: {
+  tie: CupTie; userId: string; teamNames: Map<string, string>; seedById: Record<string, number>;
+}) {
+  const rows = [
+    { id: tie.homeId, g: tie.result.homeGoals, p: tie.result.penalties?.home },
+    { id: tie.awayId, g: tie.result.awayGoals, p: tie.result.penalties?.away },
+  ];
+  return (
+    <div style={{ background: '#FDFAF1', border: `${tie.userInvolved ? 2 : 1}px solid ${tie.userInvolved ? '#A83E2C' : '#D8CBAD'}`, boxShadow: '2px 2px 0 var(--card-shadow)', borderRadius: 3 }}>
+      {rows.map((r, i) => {
+        const won = tie.winnerId === r.id;
+        const you = r.id === userId;
+        return (
+          <div key={r.id} className="flex items-center gap-1.5 px-2 py-1.5" style={{ borderBottom: i === 0 ? '1px solid #EDE3CB' : 'none', opacity: won ? 1 : 0.62 }}>
+            <span className="font-stamp text-[9px]" style={{ color: '#9A8C6E', minWidth: 14, textAlign: 'right' }}>{seedById[r.id]}</span>
+            <span className="flex-1 truncate text-[12.5px] leading-tight" style={{ fontWeight: won ? 700 : 500, color: you ? '#A83E2C' : '#1D2B45' }}>
+              {you ? '★ ' : ''}{teamNames.get(r.id) ?? r.id}
+            </span>
+            <span className="font-stamp text-[13px]" style={{ color: '#1D2B45' }}>{r.g}{tie.result.penalties ? ` (${r.p})` : ''}</span>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+/** The seeded knockout bracket as horizontally-scrollable round columns, revealed left-to-right. */
+function CupBracket({ rounds, revealed, userId, teamNames, seedById }: {
+  rounds: CupTie[][]; revealed: number; userId: string; teamNames: Map<string, string>; seedById: Record<string, number>;
+}) {
+  const shown = rounds.slice(0, Math.max(0, revealed));
+  if (!shown.length) return null;
+  return (
+    <div className="w-full overflow-x-auto pb-2">
+      <div className="mx-auto flex w-max gap-4">
+        {shown.map((round, ri) => (
+          <div key={ri} className="flex flex-col" style={{ minWidth: 186 }}>
+            <div className="font-stamp mb-2.5 pb-1 text-center text-[11px] tracking-[0.12em]" style={{ color: '#6B5F4A', borderBottom: '1px solid #D8CBAD' }}>
+              {round[0].round}
+            </div>
+            <div className="flex flex-1 flex-col justify-around gap-2.5">
+              {round.map((tie, ti) => (
+                <TieCard key={ti} tie={tie} userId={userId} teamNames={teamNames} seedById={seedById} />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -417,13 +470,13 @@ export default function Season() {
   useEffect(() => {
     if (phase !== 'cup-reveal' || !cup) return;
     cupTickerRef.current = setInterval(() => {
-      setCupReveal((c) => (c >= cup.userTies.length ? c : c + 1));
-    }, 1400);
+      setCupReveal((c) => (c >= cup.rounds.length ? c : c + 1));
+    }, 1600);
     return () => { if (cupTickerRef.current) clearInterval(cupTickerRef.current); };
   }, [phase, cup]);
 
   useEffect(() => {
-    if (phase === 'cup-reveal' && cup && cupReveal >= cup.userTies.length) setPhase('cup-done');
+    if (phase === 'cup-reveal' && cup && cupReveal >= cup.rounds.length) setPhase('cup-done');
   }, [phase, cupReveal, cup]);
 
   useEffect(() => () => { if (cupTickerRef.current) clearInterval(cupTickerRef.current); }, []);
@@ -798,7 +851,10 @@ export default function Season() {
         {/* ============ CUP RUN (knockout, revealed round by round) ============ */}
         {(phase === 'cup-reveal' || phase === 'cup-done') && cup && (() => {
           const leagueInk = chosenLeague ? LEAGUE_INKS[chosenLeague] ?? '#1D2B45' : '#1D2B45';
-          const tie = phase === 'cup-reveal' && cupReveal > 0 ? cup.userTies[cupReveal - 1] : null;
+          const revealedRounds = phase === 'cup-done' ? cup.rounds.length : cupReveal;
+          // The user's tie in the most-recently-revealed round, shown prominently for drama.
+          const latest = cupReveal > 0 ? cup.rounds[cupReveal - 1] : null;
+          const tie = phase === 'cup-reveal' ? latest?.find((t) => t.userInvolved) ?? null : null;
           return (
             <div className="mt-8 flex flex-col items-center">
               <div className="mb-4 text-center">
@@ -806,7 +862,7 @@ export default function Season() {
                 <div className="font-display text-[26px] font-extrabold sm:text-[32px]" style={{ color: '#1D2B45' }}>{userTeam.name}'s cup run</div>
               </div>
 
-              {/* current tie (during reveal) */}
+              {/* prominent card for the user's tie in the round just revealed */}
               {tie && (() => {
                 const userHome = tie.homeId === userTeam.id;
                 const oppId = userHome ? tie.awayId : tie.homeId;
@@ -817,10 +873,10 @@ export default function Season() {
                 const uP = pens ? (userHome ? pens.home : pens.away) : null;
                 const oP = pens ? (userHome ? pens.away : pens.home) : null;
                 return (
-                  <div key={cupReveal} className="w-full max-w-[560px]" style={{ background: '#FDFAF1', border: '1px solid #D8CBAD', boxShadow: '6px 6px 0 var(--card-shadow)', animation: 'ticketOut .35s cubic-bezier(.2,1.1,.4,1)' }}>
+                  <div key={cupReveal} className="mb-6 w-full max-w-[560px]" style={{ background: '#FDFAF1', border: '1px solid #D8CBAD', boxShadow: '6px 6px 0 var(--card-shadow)', animation: 'ticketOut .35s cubic-bezier(.2,1.1,.4,1)' }}>
                     <div className="flex items-center justify-between px-4 py-2" style={{ background: leagueInk, color: '#FDFAF1' }}>
                       <span className="font-stamp text-[12px] tracking-[0.1em]">{tie.round}</span>
-                      <span className="text-[10px] tracking-[0.14em] opacity-85">{cupReveal} / {cup.userTies.length}</span>
+                      <span className="text-[10px] tracking-[0.14em] opacity-85">round {cupReveal} / {cup.rounds.length}</span>
                     </div>
                     <div className="grid items-center gap-3 px-5 py-7" style={{ gridTemplateColumns: '1fr auto 1fr' }}>
                       <div className="flex flex-col items-start gap-1 text-left">
@@ -845,15 +901,19 @@ export default function Season() {
                 );
               })()}
 
+              {/* the full seeded bracket, revealed round by round */}
+              <CupBracket rounds={cup.rounds} revealed={revealedRounds} userId={userTeam.id}
+                teamNames={teamNames} seedById={cup.seedById} />
+
               {phase === 'cup-reveal' && (
-                <button type="button" onClick={() => { if (cupTickerRef.current) clearInterval(cupTickerRef.current); setCupReveal(cup.userTies.length); }}
-                  className="mt-4 cursor-pointer border-0 px-4 py-2 text-[12px] font-bold uppercase" style={{ background: '#A83E2C', color: '#FDFAF1' }}>
-                  Skip ⏭
+                <button type="button" onClick={() => { if (cupTickerRef.current) clearInterval(cupTickerRef.current); setCupReveal(cup.rounds.length); }}
+                  className="mt-5 cursor-pointer border-0 px-4 py-2 text-[12px] font-bold uppercase" style={{ background: '#A83E2C', color: '#FDFAF1' }}>
+                  Skip to final ⏭
                 </button>
               )}
 
               {phase === 'cup-done' && (
-                <div className="w-full max-w-[560px]">
+                <div className="mt-7 w-full max-w-[560px]">
                   <div className="p-2.5" style={cup.userExit === 'Winners' ? undefined : { background: '#FDFAF1', border: '1px solid #D8CBAD' }}>
                     <div className={cup.userExit === 'Winners' ? 'foil-card-bg relative overflow-hidden p-2.5' : ''}>
                       <div className="px-6 py-6 text-center" style={{ background: '#1D2B45', color: '#F6EFDF' }}>
