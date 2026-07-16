@@ -7,7 +7,10 @@ import { loadEuropeanField } from '../data/leagueOpponents';
 import { computeTeamOvr } from '../engine/teamRatings';
 import { drawGroups, simulateGroupStage, groupQualifiers, type GroupResult } from '../engine/groupStage';
 import { simulateCup, type CupResult } from '../engine/cup';
+import { getManager, applyManagerToXI, managerTactics } from '../data/managers';
+import type { TacticalShape } from '../engine/matchEngine';
 import { CupBracket } from '../components/CupBracket';
+import { ManagerPicker } from '../components/ManagerPicker';
 import { ProgrammeNav, ProgrammeFooter } from '../components/chrome/ProgrammeChrome';
 import type { Team, Player, RatingsMode } from '../types';
 
@@ -26,6 +29,13 @@ interface NavState {
   leagueIds?: string[];
   seasonMax?: string;
   ratingsMode?: RatingsMode;
+  managersEnabled?: boolean;
+}
+
+interface Field {
+  team: Team;
+  userXi: Player[];
+  opponents: { id: string; name: string; ovr: number; players: Player[] }[];
 }
 
 export default function ChampionsLeague() {
@@ -35,9 +45,11 @@ export default function ChampionsLeague() {
   const nav = (location.state as NavState | null) ?? {};
   const seasonMax = nav.seasonMax ?? '2025-26';
   const ratingsMode: RatingsMode = nav.ratingsMode ?? 'season';
+  const managersEnabled = nav.managersEnabled ?? false;
 
-  const [phase, setPhase] = useState<'building' | 'draw' | 'groups' | 'knockout' | 'done'>('building');
+  const [phase, setPhase] = useState<'building' | 'ready' | 'draw' | 'groups' | 'knockout' | 'done'>('building');
   const [error, setError] = useState<string | null>(null);
+  const [managerId, setManagerId] = useState<string | null>(null);
   const [userTeam, setUserTeam] = useState<Team | null>(null);
   const [teamNames, setTeamNames] = useState<Map<string, string>>(new Map());
   const [ovrByTeam, setOvrByTeam] = useState<Map<string, number>>(new Map());
@@ -47,7 +59,44 @@ export default function ChampionsLeague() {
   const [userAdvanced, setUserAdvanced] = useState(false);
   const [cupReveal, setCupReveal] = useState(0);
   const tickerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const fieldRef = useRef<Field | null>(null);
   const setupDone = useRef(false);
+
+  // Draw + simulate the whole competition with the chosen gaffer baked into the user's side (rating
+  // deltas + tactical shape). Runs once managers are settled — immediately when they're off, or when
+  // the user confirms their pick. The manager also lifts the user's strength, so it can shift their pot.
+  const runCompetition = (mgrId: string | null) => {
+    const field = fieldRef.current;
+    if (!field) return;
+    const { team, opponents } = field;
+    const manager = getManager(mgrId);
+    const userXi = applyManagerToXI(field.userXi, manager);
+
+    const names = new Map<string, string>();
+    const ovrs = new Map<string, number>();
+    const xis = new Map<string, Player[]>();
+    const strength = new Map<string, number>();
+    const uOvr = computeTeamOvr(userXi).overall;
+    names.set(team.id, team.name); ovrs.set(team.id, uOvr); xis.set(team.id, userXi); strength.set(team.id, uOvr);
+    for (const o of opponents) {
+      names.set(o.id, o.name); ovrs.set(o.id, o.ovr); xis.set(o.id, o.players); strength.set(o.id, o.ovr);
+    }
+    const tactics: Map<string, TacticalShape> | undefined = manager ? new Map([[team.id, managerTactics(manager)]]) : undefined;
+
+    const fieldIds = [team.id, ...opponents.map((o) => o.id)];
+    const groupResults = simulateGroupStage(drawGroups(fieldIds, strength, NUM_GROUPS), xis, tactics);
+    const quals = groupQualifiers(groupResults, 2);
+    const cupResult = simulateCup(quals.map((id) => ({ id, xi: xis.get(id)! })), team.id, tactics);
+    const uGroup = groupResults.find((g) => g.teamIds.includes(team.id));
+
+    setTeamNames(names);
+    setOvrByTeam(ovrs);
+    setGroups(groupResults);
+    setCup(cupResult);
+    setUserGroupId(uGroup?.id ?? '');
+    setUserAdvanced(quals.includes(team.id));
+    setPhase('draw');
+  };
 
   useEffect(() => {
     if (!currentTeamId) { navigate('/draft'); return; }
@@ -58,40 +107,23 @@ export default function ChampionsLeague() {
       if (!team) { navigate('/draft'); return; }
       const userXi = (await getPlayers(team.squad)).slice(0, 11);
       const entries = await loadIndex();
-      const opponents = await loadEuropeanField(ALL_LEAGUES, seasonMax, entries, ratingsMode, FIELD_SIZE - 1);
-      if (opponents.length < FIELD_SIZE - 1) {
+      const opps = await loadEuropeanField(ALL_LEAGUES, seasonMax, entries, ratingsMode, FIELD_SIZE - 1);
+      if (opps.length < FIELD_SIZE - 1) {
         setError('Not enough clubs with complete data to fill a 32-team Champions League yet — scrape more, or add leagues in Setup.');
         return;
       }
-
-      const names = new Map<string, string>();
-      const ovrs = new Map<string, number>();
-      const xis = new Map<string, Player[]>();
-      const strength = new Map<string, number>();
-      const uOvr = computeTeamOvr(userXi).overall;
-      names.set(team.id, team.name); ovrs.set(team.id, uOvr); xis.set(team.id, userXi); strength.set(team.id, uOvr);
-      for (const o of opponents) {
-        names.set(o.team.id, o.team.name); ovrs.set(o.team.id, o.ovr.overall);
-        xis.set(o.team.id, o.players); strength.set(o.team.id, o.ovr.overall);
-      }
-
-      const fieldIds = [team.id, ...opponents.map((o) => o.team.id)];
-      const drawn = drawGroups(fieldIds, strength, NUM_GROUPS);
-      const groupResults = simulateGroupStage(drawn, xis);
-      const quals = groupQualifiers(groupResults, 2);
-      const cupResult = simulateCup(quals.map((id) => ({ id, xi: xis.get(id)! })), team.id);
-      const uGroup = groupResults.find((g) => g.teamIds.includes(team.id));
-
+      fieldRef.current = {
+        team,
+        userXi,
+        opponents: opps.map((o) => ({ id: o.team.id, name: o.team.name, ovr: o.ovr.overall, players: o.players })),
+      };
       setUserTeam(team);
-      setTeamNames(names);
-      setOvrByTeam(ovrs);
-      setGroups(groupResults);
-      setCup(cupResult);
-      setUserGroupId(uGroup?.id ?? '');
-      setUserAdvanced(quals.includes(team.id));
-      setPhase('draw');
+      // With managers on, let the user appoint a gaffer before the draw; otherwise go straight in.
+      if (managersEnabled) setPhase('ready');
+      else runCompetition(null);
     })();
-  }, [currentTeamId, navigate, seasonMax, ratingsMode]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentTeamId, navigate, seasonMax, ratingsMode, managersEnabled]);
 
   // Reveal the knockout one round at a time, like the domestic cup.
   useEffect(() => {
@@ -121,6 +153,20 @@ export default function ChampionsLeague() {
         {phase === 'building' && !error && (
           <div className="mt-10 border border-dashed px-5 py-16 text-center text-sm italic" style={{ borderColor: 'var(--line)', color: 'var(--soft)' }}>
             Gathering Europe's 32 best and making the draw…
+          </div>
+        )}
+
+        {/* ============ APPOINT GAFFER (managers on) ============ */}
+        {phase === 'ready' && userTeam && (
+          <div className="mt-9 flex flex-col items-center">
+            <div className="mb-5 text-center">
+              <div className="text-[11px] uppercase tracking-[0.2em]" style={{ color: '#6B5F4A' }}>Europe's 32 best are assembled</div>
+              <div className="font-display text-[26px] font-extrabold sm:text-[32px]" style={{ color: INK }}>Appoint your gaffer for the campaign</div>
+            </div>
+            <ManagerPicker managerId={managerId} onSelect={setManagerId} heading="Your gaffer for the Champions League" />
+            <button type="button" onClick={() => runCompetition(managerId)} className="font-stamp foil-bg relative mt-2 cursor-pointer overflow-hidden px-8 py-4 text-[16px] tracking-[0.1em] hover:brightness-105">
+              Make the draw →
+            </button>
           </div>
         )}
 
