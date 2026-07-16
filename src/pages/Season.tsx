@@ -501,6 +501,8 @@ export default function Season() {
               You'll play a full home-and-away season against that league's real current clubs — each fielding their actual squad. Your team OVR of <b style={{ color: '#A83E2C' }}>{userOvr.overall}</b> meets theirs, line by line.
             </p>
             {buildError && <p className="mb-5 text-center text-[13px] font-semibold" style={{ color: '#A83E2C' }}>{buildError}</p>}
+            {/* Appoint the gaffer once here — the same choice carries into whichever competition you enter. */}
+            {managersEnabled && <ManagerPicker managerId={managerId} onSelect={setManagerId} heading="Appoint your gaffer — carries into every competition" />}
             <div className="mx-auto flex max-w-[720px] flex-wrap justify-center gap-3">
               {candidateLeagues.map((lid) => {
                 const lg = getLeague(lid);
@@ -524,7 +526,7 @@ export default function Season() {
               <div className="mb-3 text-[11px] uppercase tracking-[0.2em]" style={{ color: '#6B5F4A' }}>Or take on the continent</div>
               <button
                 type="button"
-                onClick={() => navigate('/champions-league', { state: { leagueIds: candidateLeagues, seasonMax, ratingsMode, managersEnabled } })}
+                onClick={() => navigate('/champions-league', { state: { leagueIds: candidateLeagues, seasonMax, ratingsMode, managersEnabled, managerId } })}
                 className="foil-bg relative inline-block cursor-pointer overflow-hidden px-7 py-4 transition-transform hover:-translate-y-0.5"
                 style={{ boxShadow: '3px 3px 0 var(--card-shadow)' }}
               >
@@ -566,7 +568,14 @@ export default function Season() {
               );
             })()}
 
-            {managersEnabled && <ManagerPicker managerId={managerId} onSelect={setManagerId} />}
+            {/* The gaffer was appointed on the competition screen and applies here too — shown, not re-picked. */}
+            {managersEnabled && managerId && (
+              <div className="mx-auto mb-6 inline-block border-[1.5px] px-4 py-2" style={{ borderColor: '#A83E2C', background: '#F5E9C8' }}>
+                <span className="text-[10px] uppercase tracking-[0.14em]" style={{ color: '#6B5F4A' }}>Gaffer</span>{' '}
+                <span className="font-display text-[15px] font-extrabold" style={{ color: '#1D2B45' }}>{getManager(managerId)?.name}</span>
+                <span className="ml-1.5 text-[11px] italic" style={{ color: '#6B5F4A' }}>· {getManager(managerId)?.style}</span>
+              </div>
+            )}
 
             <button
               type="button"

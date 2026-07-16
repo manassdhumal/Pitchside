@@ -10,7 +10,6 @@ import { simulateCup, type CupResult } from '../engine/cup';
 import { getManager, applyManagerToXI, managerTactics } from '../data/managers';
 import type { TacticalShape } from '../engine/matchEngine';
 import { CupBracket } from '../components/CupBracket';
-import { ManagerPicker } from '../components/ManagerPicker';
 import { ProgrammeNav, ProgrammeFooter } from '../components/chrome/ProgrammeChrome';
 import type { Team, Player, RatingsMode } from '../types';
 
@@ -30,6 +29,8 @@ interface NavState {
   seasonMax?: string;
   ratingsMode?: RatingsMode;
   managersEnabled?: boolean;
+  /** The gaffer appointed on the competition screen — the SAME one used in the domestic season. */
+  managerId?: string | null;
 }
 
 interface Field {
@@ -45,11 +46,10 @@ export default function ChampionsLeague() {
   const nav = (location.state as NavState | null) ?? {};
   const seasonMax = nav.seasonMax ?? '2025-26';
   const ratingsMode: RatingsMode = nav.ratingsMode ?? 'season';
-  const managersEnabled = nav.managersEnabled ?? false;
+  const managerId = nav.managerId ?? null; // appointed once on the competition screen, reused here
 
-  const [phase, setPhase] = useState<'building' | 'ready' | 'draw' | 'groups' | 'knockout' | 'done'>('building');
+  const [phase, setPhase] = useState<'building' | 'draw' | 'groups' | 'knockout' | 'done'>('building');
   const [error, setError] = useState<string | null>(null);
-  const [managerId, setManagerId] = useState<string | null>(null);
   const [userTeam, setUserTeam] = useState<Team | null>(null);
   const [teamNames, setTeamNames] = useState<Map<string, string>>(new Map());
   const [ovrByTeam, setOvrByTeam] = useState<Map<string, number>>(new Map());
@@ -118,12 +118,11 @@ export default function ChampionsLeague() {
         opponents: opps.map((o) => ({ id: o.team.id, name: o.team.name, ovr: o.ovr.overall, players: o.players })),
       };
       setUserTeam(team);
-      // With managers on, let the user appoint a gaffer before the draw; otherwise go straight in.
-      if (managersEnabled) setPhase('ready');
-      else runCompetition(null);
+      // Use the gaffer already appointed on the competition screen — no second pick.
+      runCompetition(managerId);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentTeamId, navigate, seasonMax, ratingsMode, managersEnabled]);
+  }, [currentTeamId, navigate, seasonMax, ratingsMode, managerId]);
 
   // Reveal the knockout one round at a time, like the domestic cup.
   useEffect(() => {
@@ -156,26 +155,18 @@ export default function ChampionsLeague() {
           </div>
         )}
 
-        {/* ============ APPOINT GAFFER (managers on) ============ */}
-        {phase === 'ready' && userTeam && (
-          <div className="mt-9 flex flex-col items-center">
-            <div className="mb-5 text-center">
-              <div className="text-[11px] uppercase tracking-[0.2em]" style={{ color: '#6B5F4A' }}>Europe's 32 best are assembled</div>
-              <div className="font-display text-[26px] font-extrabold sm:text-[32px]" style={{ color: INK }}>Appoint your gaffer for the campaign</div>
-            </div>
-            <ManagerPicker managerId={managerId} onSelect={setManagerId} heading="Your gaffer for the Champions League" />
-            <button type="button" onClick={() => runCompetition(managerId)} className="font-stamp foil-bg relative mt-2 cursor-pointer overflow-hidden px-8 py-4 text-[16px] tracking-[0.1em] hover:brightness-105">
-              Make the draw →
-            </button>
-          </div>
-        )}
-
         {/* ============ THE DRAW ============ */}
         {phase === 'draw' && userTeam && userGroup && (
           <div className="mt-9 flex flex-col items-center">
             <div className="mb-5 text-center">
               <div className="text-[11px] uppercase tracking-[0.2em]" style={{ color: '#6B5F4A' }}>The draw is made</div>
               <div className="font-display text-[28px] font-extrabold sm:text-[34px]" style={{ color: INK }}>You're in Group {userGroup.id}</div>
+              {managerId && (
+                <div className="mt-2 inline-block border-[1.5px] px-3 py-1" style={{ borderColor: BRICK, background: '#F5E9C8' }}>
+                  <span className="text-[10px] uppercase tracking-[0.14em]" style={{ color: '#6B5F4A' }}>Gaffer</span>{' '}
+                  <span className="font-display text-[14px] font-extrabold" style={{ color: INK }}>{getManager(managerId)?.name}</span>
+                </div>
+              )}
             </div>
             <div className="w-full max-w-[440px]" style={{ background: CREAM, border: `2px solid ${BRICK}`, boxShadow: '6px 6px 0 var(--card-shadow)' }}>
               <div className="px-4 py-2 font-stamp text-[13px] tracking-[0.12em]" style={{ background: INK, color: CREAM }}>GROUP {userGroup.id}</div>
