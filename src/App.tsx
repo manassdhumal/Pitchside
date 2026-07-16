@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Setup from './pages/Setup';
 import Draft from './pages/Draft';
 import Season from './pages/Season';
+import ChampionsLeague from './pages/ChampionsLeague';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/setup" element={<Setup />} />
           <Route path="/draft" element={<Draft />} />
           <Route path="/season" element={<Season />} />
+          <Route path="/champions-league" element={<ChampionsLeague />} />
         </Routes>
       </BrowserRouter>
     </AppProvider>

@@ -133,3 +133,19 @@ export async function loadLeagueOpponents(
   const cap = (LEAGUE_SIZE[leagueId] ?? 20) - 1;
   return opponents.slice(0, cap);
 }
+
+/**
+ * Builds the Champions League field: the strongest clubs across ALL of the given leagues (each fielded
+ * from its strongest complete season, as in a domestic season), pooled and cut to the `count` best.
+ * The user takes the remaining continental slot, so pass `count = fieldSize − 1`.
+ */
+export async function loadEuropeanField(
+  leagueIds: string[],
+  seasonMax: string,
+  entries: ClubSeasonIndexEntry[],
+  mode: RatingsMode,
+  count: number,
+): Promise<LeagueOpponent[]> {
+  const pools = await Promise.all(leagueIds.map((id) => loadLeagueOpponents(id, seasonMax, entries, mode)));
+  return pools.flat().sort((a, b) => b.ovr.overall - a.ovr.overall).slice(0, count);
+}
