@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useAppState } from '../state/AppContext';
+import { useAppState, useAppDispatch } from '../state/AppContext';
 import { getTeam, getPlayers, putSeason } from '../storage/cache';
 import { loadIndex, type ClubSeasonIndexEntry } from '../data/historicalData';
 import { loadLeagueOpponents } from '../data/leagueOpponents';
@@ -185,7 +185,10 @@ export default function Season() {
   const navigate = useNavigate();
   const location = useLocation();
   const navState = (location.state as SeasonNavState | null) ?? {};
-  const { currentTeamId } = useAppState();
+  const { currentTeamId, managerId } = useAppState();
+  const appDispatch = useAppDispatch();
+  // The gaffer lives in app state, so it survives hopping between competitions (season ↔ UCL).
+  const setManagerId = (id: string | null) => appDispatch({ type: 'SET_MANAGER', managerId: id });
 
   const candidateLeagues = navState.leagueIds && navState.leagueIds.length > 0
     ? navState.leagueIds
@@ -195,7 +198,6 @@ export default function Season() {
   const managersEnabled = navState.managersEnabled ?? false;
   const transferWindowEnabled = navState.transferWindowEnabled ?? false;
 
-  const [managerId, setManagerId] = useState<string | null>(null);
 
   const [userTeam, setUserTeam] = useState<Team | null>(null);
   const [userPlayers, setUserPlayers] = useState<Player[]>([]);
@@ -526,7 +528,7 @@ export default function Season() {
               <div className="mb-3 text-[11px] uppercase tracking-[0.2em]" style={{ color: '#6B5F4A' }}>Or take on the continent</div>
               <button
                 type="button"
-                onClick={() => navigate('/champions-league', { state: { leagueIds: candidateLeagues, seasonMax, ratingsMode, managersEnabled, managerId } })}
+                onClick={() => navigate('/champions-league', { state: { leagueIds: candidateLeagues, seasonMax, ratingsMode, managersEnabled } })}
                 className="foil-bg relative inline-block cursor-pointer overflow-hidden px-7 py-4 transition-transform hover:-translate-y-0.5"
                 style={{ boxShadow: '3px 3px 0 var(--card-shadow)' }}
               >

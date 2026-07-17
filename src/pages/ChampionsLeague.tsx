@@ -29,8 +29,6 @@ interface NavState {
   seasonMax?: string;
   ratingsMode?: RatingsMode;
   managersEnabled?: boolean;
-  /** The gaffer appointed on the competition screen — the SAME one used in the domestic season. */
-  managerId?: string | null;
 }
 
 interface Field {
@@ -42,11 +40,12 @@ interface Field {
 export default function ChampionsLeague() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { currentTeamId } = useAppState();
+  // The gaffer comes from shared app state — appointed once on the competition screen and reused here,
+  // so it survives navigating back and forth between competitions.
+  const { currentTeamId, managerId } = useAppState();
   const nav = (location.state as NavState | null) ?? {};
   const seasonMax = nav.seasonMax ?? '2025-26';
   const ratingsMode: RatingsMode = nav.ratingsMode ?? 'season';
-  const managerId = nav.managerId ?? null; // appointed once on the competition screen, reused here
 
   const [phase, setPhase] = useState<'building' | 'draw' | 'groups' | 'knockout' | 'done'>('building');
   const [error, setError] = useState<string | null>(null);
