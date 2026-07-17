@@ -528,7 +528,7 @@ export default function Season() {
               <div className="mb-3 text-[11px] uppercase tracking-[0.2em]" style={{ color: '#6B5F4A' }}>Or take on the continent</div>
               <button
                 type="button"
-                onClick={() => navigate('/champions-league', { state: { leagueIds: candidateLeagues, seasonMax, ratingsMode, managersEnabled } })}
+                onClick={() => navigate('/champions-league', { state: { leagueIds: candidateLeagues, seasonMax, ratingsMode, managersEnabled, transferWindowEnabled } })}
                 className="foil-bg relative inline-block cursor-pointer overflow-hidden px-7 py-4 transition-transform hover:-translate-y-0.5"
                 style={{ boxShadow: '3px 3px 0 var(--card-shadow)' }}
               >

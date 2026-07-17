@@ -24,11 +24,15 @@ const BRICK = '#A83E2C';
 const GREEN = '#3E7A4E';
 const LINE = '#D8CBAD';
 
+/** The draft settings, carried in from the competition screen and handed straight back by the
+ * "← Competitions" link so a round trip doesn't silently reset them to defaults. `transferWindowEnabled`
+ * is unused here but travels through so the domestic season keeps it. */
 interface NavState {
   leagueIds?: string[];
   seasonMax?: string;
   ratingsMode?: RatingsMode;
   managersEnabled?: boolean;
+  transferWindowEnabled?: boolean;
 }
 
 interface Field {
@@ -139,7 +143,9 @@ export default function ChampionsLeague() {
 
   return (
     <div className="flex min-h-svh flex-col">
-      <ProgrammeNav left={<Link to="/season" className="no-underline hover:text-[var(--brick)]" style={{ color: 'var(--soft)' }}>← Competitions</Link>} />
+      {/* Carry the draft settings back, or the competition screen falls back to defaults (managers off,
+          all leagues) and loses the gaffer picker. */}
+      <ProgrammeNav left={<Link to="/season" state={nav} className="no-underline hover:text-[var(--brick)]" style={{ color: 'var(--soft)' }}>← Competitions</Link>} />
       <main className="mx-auto w-full max-w-[1180px] flex-1 px-5 pb-14 pt-9 sm:px-10">
         <div className="flex flex-wrap items-baseline gap-4">
           <span className="font-stamp -rotate-[1.5deg] border-[1.5px] px-2.5 py-1 text-sm" style={{ borderColor: 'var(--brick)', color: 'var(--brick)' }}>ACT V</span>
@@ -284,7 +290,7 @@ export default function ChampionsLeague() {
                   </div>
                 </div>
                 <div className="mt-3 flex gap-2.5">
-                  <Link to="/season" className="flex-1 border-[1.5px] px-4 py-3 text-center text-[13px] font-bold uppercase tracking-[0.06em] no-underline" style={{ borderColor: 'var(--ink)', color: 'var(--ink)' }}>Competitions</Link>
+                  <Link to="/season" state={nav} className="flex-1 border-[1.5px] px-4 py-3 text-center text-[13px] font-bold uppercase tracking-[0.06em] no-underline" style={{ borderColor: 'var(--ink)', color: 'var(--ink)' }}>Competitions</Link>
                   <Link to="/setup" className="flex-1 border-[1.5px] px-4 py-3 text-center text-[13px] font-bold uppercase tracking-[0.06em] no-underline" style={{ borderColor: 'var(--ink)', color: 'var(--ink)' }}>New draft</Link>
                 </div>
               </div>
