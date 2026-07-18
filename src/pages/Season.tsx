@@ -8,6 +8,8 @@ import { computeTeamOvr, type TeamOvr } from '../engine/teamRatings';
 import { buildStandingsTable, generateRoundRobinFixtures, simulateLeagueFixtures } from '../engine/competitions';
 import { simulateCup, type CupResult } from '../engine/cup';
 import { CupBracket } from '../components/CupBracket';
+import { SeasonStatsPanel } from '../components/SeasonStats';
+import { computeSeasonStats } from '../engine/seasonStats';
 import { getLeague } from '../data/leagues';
 import { getManager, applyManagerToXI, managerTactics } from '../data/managers';
 import type { TacticalShape } from '../engine/matchEngine';
@@ -813,6 +815,12 @@ export default function Season() {
                 );
               })}
             </section>
+          </div>
+        )}
+
+        {phase === 'done' && userMatches.length > 0 && (
+          <div className="mt-9">
+            <SeasonStatsPanel stats={computeSeasonStats(userMatches, userTeam.id)} teamNames={teamNames} />
           </div>
         )}
 
