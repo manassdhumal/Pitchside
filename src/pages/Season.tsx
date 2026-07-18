@@ -43,6 +43,13 @@ function matchdayNumber(round: string): number {
   return n ? parseInt(n, 10) : 0;
 }
 
+/** "st"/"nd"/"rd"/"th" suffix for a league position, e.g. 1→"st", 12→"th". */
+function ordinalSuffix(n: number): string {
+  const t = n % 100;
+  if (t >= 11 && t <= 13) return 'th';
+  return ['th', 'st', 'nd', 'rd'][n % 10] ?? 'th';
+}
+
 function ResultCardPanel({ team, row, position, totalTeams, leagueName }: { team: Team; row: StandingsRow; position: number; totalTeams: number; leagueName: string }) {
   const unbeaten = row.played > 0 && row.lost === 0;
   const perfect = row.played > 0 && row.won === row.played;
@@ -523,18 +530,12 @@ export default function Season() {
                 );
               })}
             </div>
-            {/* Continental competition: your XI vs Europe's elite across every chosen league. */}
+            {/* The Champions League is now EARNED: finish top 4 in your league to qualify. */}
             <div className="mx-auto mt-6 max-w-[720px] border-t pt-6 text-center" style={{ borderColor: '#D8CBAD' }}>
-              <div className="mb-3 text-[11px] uppercase tracking-[0.2em]" style={{ color: '#6B5F4A' }}>Or take on the continent</div>
-              <button
-                type="button"
-                onClick={() => navigate('/champions-league', { state: { leagueIds: candidateLeagues, seasonMax, ratingsMode, managersEnabled, transferWindowEnabled } })}
-                className="foil-bg relative inline-block cursor-pointer overflow-hidden px-7 py-4 transition-transform hover:-translate-y-0.5"
-                style={{ boxShadow: '3px 3px 0 var(--card-shadow)' }}
-              >
-                <div className="font-display text-[22px] font-extrabold leading-tight" style={{ color: '#1D2B45' }}>★ Champions League</div>
-                <div className="font-stamp text-[10.5px] tracking-[0.14em]" style={{ color: '#4A2410' }}>32 OF EUROPE'S BEST · GROUPS → KNOCKOUT →</div>
-              </button>
+              <div className="text-[11px] uppercase tracking-[0.2em]" style={{ color: '#6B5F4A' }}>★ Champions League</div>
+              <div className="mt-1 text-[13px] italic" style={{ color: '#3C3325' }}>
+                Finish in the <b style={{ color: '#A83E2C' }}>top 4</b> of your league to qualify for next season's continental campaign.
+              </div>
             </div>
           </div>
         )}
@@ -767,6 +768,21 @@ export default function Season() {
               >
                 🏆 Enter the {leagueName} Cup →
               </button>
+              {/* Champions League is earned by a top-4 finish. */}
+              {userPosition >= 1 && userPosition <= 4 ? (
+                <button
+                  type="button"
+                  onClick={() => navigate('/champions-league', { state: { leagueIds: candidateLeagues, seasonMax, ratingsMode, managersEnabled, transferWindowEnabled } })}
+                  className="font-stamp foil-bg relative cursor-pointer overflow-hidden px-6 py-3.5 text-[15px] uppercase tracking-[0.08em] hover:brightness-105"
+                  style={{ color: '#1D2B45', border: '1.5px solid #1D2B45' }}
+                >
+                  ★ Qualified! Enter the Champions League →
+                </button>
+              ) : (
+                <div className="border border-dashed px-5 py-3 text-center text-[12px] italic" style={{ borderColor: '#D8CBAD', color: '#6B5F4A' }}>
+                  Finished {userPosition}{ordinalSuffix(userPosition)} — top 4 needed for the Champions League. Maybe next season.
+                </div>
+              )}
             </div>
             <section style={{ background: '#FDFAF1', border: '1px solid #D8CBAD', boxShadow: '5px 5px 0 var(--card-shadow)' }}>
               <div className="flex items-center justify-between border-b-[3px] px-4 py-3.5" style={{ borderColor: '#1D2B45', borderBottomStyle: 'double' }}>
