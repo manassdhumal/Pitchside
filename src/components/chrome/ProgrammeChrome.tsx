@@ -1,5 +1,18 @@
 import type { ReactNode } from 'react';
+import { Link } from 'react-router-dom';
 import { useFloodlights } from '../../state/useFloodlights';
+
+/** The brand lockup: the "P" monogram mark + PitchSide wordmark, linking home. Shown in every nav. */
+export function BrandMark() {
+  return (
+    <Link to="/" className="flex items-center gap-2 no-underline" title="PitchSide — home">
+      <img src="/favicon.svg" width={26} height={26} alt="PitchSide" style={{ display: 'block' }} />
+      <span className="font-display text-[19px] font-extrabold leading-none" style={{ color: 'var(--ink)', textTransform: 'none', letterSpacing: '-0.01em' }}>
+        PitchSide
+      </span>
+    </Link>
+  );
+}
 
 export function FloodlightsToggle() {
   const [night, toggle] = useFloodlights();
@@ -42,7 +55,9 @@ export function ProgrammeNav({ left, right }: NavProps) {
       className="flex flex-wrap items-center justify-between gap-2.5 border-b px-5 py-3 text-[11px] uppercase tracking-[0.16em] sm:px-8"
       style={{ borderColor: 'var(--line)', color: 'var(--soft)' }}
     >
-      <div className="flex flex-wrap items-center gap-4">
+      <div className="flex flex-wrap items-center gap-3.5">
+        <BrandMark />
+        {left && <span className="opacity-40">·</span>}
         {left ?? <span>Official Matchday Programme · № 001</span>}
       </div>
       <div className="flex flex-wrap items-center gap-4">
