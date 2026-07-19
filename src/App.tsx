@@ -12,7 +12,7 @@ import Login from './pages/Login';
 /** Gates the game behind a signed-in account: a brief loading state while the session is checked,
  * the login screen when signed out, and the routed app once authenticated. */
 function Gate() {
-  const { user, loading } = useAuth();
+  const { user, isGuest, loading } = useAuth();
   if (loading) {
     return (
       <div className="flex min-h-svh items-center justify-center" style={{ background: 'var(--paper, #F6EFDF)' }}>
@@ -20,7 +20,7 @@ function Gate() {
       </div>
     );
   }
-  if (!user) return <Login />;
+  if (!user && !isGuest) return <Login />;
   return (
     <AppProvider>
       <BrowserRouter>

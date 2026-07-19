@@ -11,7 +11,7 @@ const SOFT = '#6B5F4A';
 /** The sign-in / sign-up gate. Shown by App when there's no logged-in user; on success the
  * AuthContext user flips and App renders the game. */
 export default function Login() {
-  const { login, register } = useAuth();
+  const { login, register, continueAsGuest } = useAuth();
   const [mode, setMode] = useState<'login' | 'register'>('login');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -84,11 +84,24 @@ export default function Login() {
               ? <>New here? <b style={{ color: BRICK }}>Create an account</b></>
               : <>Already have one? <b style={{ color: BRICK }}>Sign in</b></>}
           </button>
+
+          <div className="mt-1 flex items-center gap-2" aria-hidden>
+            <span className="h-px flex-1" style={{ background: LINE }} />
+            <span className="text-[10px] uppercase tracking-[0.12em]" style={{ color: SOFT }}>or</span>
+            <span className="h-px flex-1" style={{ background: LINE }} />
+          </div>
+          <button
+            type="button" onClick={continueAsGuest}
+            className="cursor-pointer border-[1.5px] bg-transparent px-5 py-2.5 text-[13px] font-bold uppercase tracking-[0.08em] hover:border-[color:var(--brick,#A83E2C)]"
+            style={{ borderColor: LINE, color: INK }}
+          >
+            Play as guest →
+          </button>
         </div>
       </form>
 
       <p className="mt-5 max-w-[380px] text-center text-[11px] italic" style={{ color: SOFT }}>
-        Your drafted teams and season results are saved to your account.
+        Sign in and your teams &amp; results follow you across devices. Guest play saves only on this device.
       </p>
     </div>
   );

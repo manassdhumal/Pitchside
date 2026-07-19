@@ -3,22 +3,38 @@ import { Link } from 'react-router-dom';
 import { useFloodlights } from '../../state/useFloodlights';
 import { useAuth } from '../../state/AuthContext';
 
-/** The signed-in manager's controls in the nav: a link to their history + sign-out. */
+/** The manager's controls in the nav: history link, plus who they are — a signed-in username with
+ * Sign out, or a Guest badge with a Sign in prompt. */
 function UserMenu() {
-  const { user, logout } = useAuth();
-  if (!user) return null;
+  const { user, isGuest, logout, exitGuest } = useAuth();
+  if (!user && !isGuest) return null;
   return (
     <div className="flex items-center gap-2.5">
       <Link to="/career" className="text-[11px] uppercase tracking-[0.12em] no-underline hover:text-[var(--brick)]" style={{ color: 'var(--ink)' }}>My Career</Link>
       <span className="opacity-40">·</span>
-      <span className="text-[11px] normal-case" style={{ color: 'var(--soft)' }} title={`Signed in as ${user.username}`}>{user.username}</span>
-      <button
-        type="button" onClick={() => void logout()}
-        className="cursor-pointer border-[1.5px] bg-transparent px-2 py-0.5 text-[9.5px] uppercase tracking-[0.08em] hover:border-[var(--brick)]"
-        style={{ borderColor: 'var(--toggle-border)', color: 'var(--ink)' }}
-      >
-        Sign out
-      </button>
+      {user ? (
+        <>
+          <span className="text-[11px] normal-case" style={{ color: 'var(--soft)' }} title={`Signed in as ${user.username}`}>{user.username}</span>
+          <button
+            type="button" onClick={() => void logout()}
+            className="cursor-pointer border-[1.5px] bg-transparent px-2 py-0.5 text-[9.5px] uppercase tracking-[0.08em] hover:border-[var(--brick)]"
+            style={{ borderColor: 'var(--toggle-border)', color: 'var(--ink)' }}
+          >
+            Sign out
+          </button>
+        </>
+      ) : (
+        <>
+          <span className="text-[11px]" style={{ color: 'var(--soft)' }}>Guest</span>
+          <button
+            type="button" onClick={exitGuest}
+            className="cursor-pointer border-[1.5px] bg-transparent px-2 py-0.5 text-[9.5px] uppercase tracking-[0.08em] hover:border-[var(--brick)]"
+            style={{ borderColor: 'var(--toggle-border)', color: 'var(--ink)' }}
+          >
+            Sign in
+          </button>
+        </>
+      )}
     </div>
   );
 }
