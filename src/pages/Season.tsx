@@ -315,6 +315,12 @@ export default function Season() {
   const saveSeason = (allMatches: Match[], finalTable: StandingsRow[]) => {
     const pos = userTeam ? finalTable.findIndex((r) => r.teamId === userTeam.id) + 1 : 0;
     const row = userTeam ? finalTable.find((r) => r.teamId === userTeam.id) : undefined;
+    // Precompute the full stats panel + the team names it references, so My Career can re-render it
+    // later without keeping the raw match blob or the live name map around.
+    const userMs = userTeam ? allMatches.filter((m) => m.homeTeamId === userTeam.id || m.awayTeamId === userTeam.id) : [];
+    const summary = userTeam
+      ? { stats: computeSeasonStats(userMs, userTeam.id), teamNames: Object.fromEntries(teamNames) }
+      : undefined;
     void putSeason(
       {
         id: `season-${Date.now()}`,
@@ -322,7 +328,7 @@ export default function Season() {
         competitionInstances: [{ templateId: COMPETITION_ID, teams: teamIdsRef.current, matches: allMatches, table: finalTable }],
       },
       // Denormalized bits for the My Career history list.
-      { teamId: userTeam?.id, competition: leagueName, position: pos || undefined, played: row?.played, points: row?.points },
+      { teamId: userTeam?.id, competition: leagueName, position: pos || undefined, played: row?.played, points: row?.points, summary },
     );
   };
 

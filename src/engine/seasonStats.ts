@@ -43,6 +43,16 @@ export interface SeasonStats {
   cumulativePoints: number[];
 }
 
+/**
+ * What we persist in a saved season's `summary` so My Career can re-render the full stats panel
+ * without the raw match blob or the live team-name map. `teamNames` is a plain id→name object
+ * (JSON-friendly) covering the opponents referenced by the stats (biggest win / heaviest defeat).
+ */
+export interface StoredSeasonStats {
+  stats: SeasonStats;
+  teamNames: Record<string, string>;
+}
+
 /** The user's view of a single match: goals for/against, opponent, venue, and W/D/L outcome. */
 function fromUser(m: Match, userTeamId: string): MarginResult & { outcome: 'W' | 'D' | 'L' } {
   const home = m.homeTeamId === userTeamId;

@@ -2,6 +2,8 @@ import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { ProgrammeNav, ProgrammeFooter } from '../components/chrome/ProgrammeChrome';
 import { getAllTeams, getAllSeasons, deleteSeason, deleteTeam, type TeamSummary, type SeasonSummary } from '../storage/cache';
+import { SeasonStatsPanel } from '../components/SeasonStats';
+import type { StoredSeasonStats } from '../engine/seasonStats';
 
 const CREAM = '#FDFAF1';
 const INK = '#1D2B45';
@@ -13,12 +15,20 @@ const SOFT = '#6B5F4A';
 const ord = (n: number) => (n % 10 === 1 && n % 100 !== 11 ? 'st' : n % 10 === 2 && n % 100 !== 12 ? 'nd' : n % 10 === 3 && n % 100 !== 13 ? 'rd' : 'th');
 const dateStr = (ms: number) => new Date(ms).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' });
 
+/** Pull the saved stats blob out of a season's denormalized summary, if it was recorded. Seasons
+ * saved before the stats-in-summary change have no `stats` field and return null (legacy fallback). */
+const statsFrom = (summary: Record<string, unknown> | null): StoredSeasonStats | null =>
+  summary && typeof summary === 'object' && 'stats' in summary && 'teamNames' in summary
+    ? (summary as unknown as StoredSeasonStats)
+    : null;
+
 /** The manager's history: every saved team and season, with delete controls (the "remove past
  * seasons" ask). Data comes from the accounts API via the cache helpers. */
 export default function Career() {
   const [teams, setTeams] = useState<TeamSummary[]>([]);
   const [seasons, setSeasons] = useState<SeasonSummary[]>([]);
   const [loading, setLoading] = useState(true);
+  const [expandedId, setExpandedId] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -101,31 +111,47 @@ export default function Career() {
               <div style={{ background: CREAM, border: `1px solid ${LINE}`, boxShadow: '4px 4px 0 var(--card-shadow)' }}>
                 {seasons.map((s, i) => {
                   const champ = s.position === 1;
+                  const stored = statsFrom(s.summary);
+                  const open = expandedId === s.id;
                   return (
-                    <div key={s.id} className="flex items-center gap-3 px-4 py-3" style={{ borderTop: i === 0 ? 'none' : `1px solid #EDE3CB` }}>
-                      <span className="font-stamp grid h-[30px] w-[30px] shrink-0 place-items-center text-[12px]" style={{ background: champ ? '#C7A63E' : INK, color: CREAM, borderRadius: 3 }}>
-                        {s.position ? `${s.position}` : '–'}
-                      </span>
-                      <div className="min-w-0 flex-1">
-                        <div className="truncate text-[14px] font-semibold" style={{ color: INK }}>
-                          {champ && '★ '}{s.competition ?? 'Season'} <span style={{ color: SOFT }}>· {teamName(s.teamId)}</span>
-                        </div>
-                        <div className="text-[11px]" style={{ color: SOFT }}>
-                          {s.position ? `Finished ${s.position}${ord(s.position)}` : ''}{s.points != null ? ` · ${s.points} pts` : ''}{s.played != null ? ` · ${s.played} games` : ''} · {dateStr(s.createdAt)}
-                        </div>
+                    <div key={s.id} style={{ borderTop: i === 0 ? 'none' : `1px solid #EDE3CB` }}>
+                      <div className="flex items-center gap-3 px-4 py-3">
+                        <button type="button"
+                          onClick={() => stored && setExpandedId(open ? null : s.id)}
+                          aria-expanded={open}
+                          title={stored ? (open ? 'Hide stats' : 'View full season stats') : 'No detailed stats recorded for this season'}
+                          className={`flex min-w-0 flex-1 items-center gap-3 border-0 bg-transparent p-0 text-left ${stored ? 'cursor-pointer' : 'cursor-default'}`}>
+                          <span className="font-stamp grid h-[30px] w-[30px] shrink-0 place-items-center text-[12px]" style={{ background: champ ? '#C7A63E' : INK, color: CREAM, borderRadius: 3 }}>
+                            {s.position ? `${s.position}` : '–'}
+                          </span>
+                          <span className="min-w-0 flex-1">
+                            <span className="flex items-center gap-1.5 truncate text-[14px] font-semibold" style={{ color: INK }}>
+                              {champ && '★ '}{s.competition ?? 'Season'} <span style={{ color: SOFT }}>· {teamName(s.teamId)}</span>
+                              {stored && <span className="text-[11px]" style={{ color: BRICK }}>{open ? '▲' : '▼'}</span>}
+                            </span>
+                            <span className="block text-[11px]" style={{ color: SOFT }}>
+                              {s.position ? `Finished ${s.position}${ord(s.position)}` : ''}{s.points != null ? ` · ${s.points} pts` : ''}{s.played != null ? ` · ${s.played} games` : ''} · {dateStr(s.createdAt)}
+                            </span>
+                          </span>
+                        </button>
+                        <button type="button" onClick={() => removeSeason(s.id)} title="Delete this season"
+                          className="shrink-0 cursor-pointer border px-2.5 py-1 text-[11px] font-bold uppercase hover:brightness-105"
+                          style={{ borderColor: BRICK, color: BRICK, background: 'transparent' }}>
+                          Delete
+                        </button>
                       </div>
-                      <button type="button" onClick={() => removeSeason(s.id)} title="Delete this season"
-                        className="shrink-0 cursor-pointer border px-2.5 py-1 text-[11px] font-bold uppercase hover:brightness-105"
-                        style={{ borderColor: BRICK, color: BRICK, background: 'transparent' }}>
-                        Delete
-                      </button>
+                      {open && stored && (
+                        <div className="px-4 pb-5 pt-1" style={{ borderTop: `1px solid #EDE3CB`, background: '#FBF6E9' }}>
+                          <SeasonStatsPanel stats={stored.stats} teamNames={new Map(Object.entries(stored.teamNames))} />
+                        </div>
+                      )}
                     </div>
                   );
                 })}
               </div>
             )}
             <p className="mt-6 text-center text-[11px] italic" style={{ color: SOFT }}>
-              Champion seasons are marked <span style={{ color: GREEN }}>★</span>. Deleting a team removes its seasons too.
+              Champion seasons are marked <span style={{ color: GREEN }}>★</span>. Tap a season to see its full stats. Deleting a team removes its seasons too.
             </p>
           </>
         )}
