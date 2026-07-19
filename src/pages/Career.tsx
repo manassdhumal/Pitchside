@@ -1,9 +1,10 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { ProgrammeNav, ProgrammeFooter } from '../components/chrome/ProgrammeChrome';
-import { getAllTeams, getAllSeasons, deleteSeason, deleteTeam, type TeamSummary, type SeasonSummary } from '../storage/cache';
+import { getAllTeams, getAllSeasons, getTeam, getPlayers, deleteSeason, deleteTeam, type TeamSummary, type SeasonSummary } from '../storage/cache';
 import { SeasonStatsPanel } from '../components/SeasonStats';
 import type { StoredSeasonStats } from '../engine/seasonStats';
+import { POSITION_TO_BROAD, type BroadPosition, type Player } from '../types';
 
 const CREAM = '#FDFAF1';
 const INK = '#1D2B45';
@@ -11,6 +12,10 @@ const BRICK = '#A83E2C';
 const GREEN = '#3E7A4E';
 const LINE = '#D8CBAD';
 const SOFT = '#6B5F4A';
+
+const LINE_ORDER: BroadPosition[] = ['GK', 'DF', 'MF', 'FW'];
+const LINE_LABEL: Record<BroadPosition, string> = { GK: 'Goalkeeper', DF: 'Defence', MF: 'Midfield', FW: 'Attack' };
+const LINE_INK: Record<BroadPosition, string> = { GK: '#B8860B', DF: '#2F5D8A', MF: GREEN, FW: BRICK };
 
 const ord = (n: number) => (n % 10 === 1 && n % 100 !== 11 ? 'st' : n % 10 === 2 && n % 100 !== 12 ? 'nd' : n % 10 === 3 && n % 100 !== 13 ? 'rd' : 'th');
 const dateStr = (ms: number) => new Date(ms).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' });
@@ -29,6 +34,18 @@ export default function Career() {
   const [seasons, setSeasons] = useState<SeasonSummary[]>([]);
   const [loading, setLoading] = useState(true);
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [expandedTeamId, setExpandedTeamId] = useState<string | null>(null);
+  const [teamXIs, setTeamXIs] = useState<Record<string, Player[]>>({});
+
+  const toggleTeam = useCallback(async (id: string) => {
+    if (expandedTeamId === id) { setExpandedTeamId(null); return; }
+    setExpandedTeamId(id);
+    if (!teamXIs[id]) {
+      const team = await getTeam(id); // fetches + seeds the player cache
+      const players = team ? await getPlayers(team.squad) : [];
+      setTeamXIs((prev) => ({ ...prev, [id]: players }));
+    }
+  }, [expandedTeamId, teamXIs]);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -80,20 +97,37 @@ export default function Career() {
                 No teams yet. <Link to="/setup" style={{ color: BRICK }}>Draft your first XI →</Link>
               </div>
             ) : (
-              <div className="grid gap-2.5 sm:grid-cols-2">
-                {teams.map((t) => (
-                  <div key={t.id} className="flex items-center justify-between px-4 py-3" style={{ background: CREAM, border: `1px solid ${LINE}`, boxShadow: '3px 3px 0 var(--card-shadow)' }}>
-                    <div>
-                      <div className="font-display text-[17px] font-bold" style={{ color: INK }}>{t.name}</div>
-                      <div className="text-[11px]" style={{ color: SOFT }}>{t.team.formation} · {dateStr(t.createdAt)}</div>
+              <div className="flex flex-col gap-2.5">
+                {teams.map((t) => {
+                  const open = expandedTeamId === t.id;
+                  const seasonCount = seasons.filter((s) => s.teamId === t.id).length;
+                  return (
+                    <div key={t.id} style={{ background: CREAM, border: `1px solid ${LINE}`, boxShadow: '3px 3px 0 var(--card-shadow)' }}>
+                      <div className="flex items-center justify-between px-4 py-3">
+                        <button type="button" onClick={() => void toggleTeam(t.id)} aria-expanded={open}
+                          className="flex min-w-0 flex-1 cursor-pointer items-center gap-2 border-0 bg-transparent p-0 text-left">
+                          <span className="min-w-0">
+                            <span className="flex items-center gap-1.5">
+                              <span className="font-display text-[17px] font-bold" style={{ color: INK }}>{t.name}</span>
+                              <span className="text-[11px]" style={{ color: BRICK }}>{open ? '▲' : '▼'}</span>
+                            </span>
+                            <span className="block text-[11px]" style={{ color: SOFT }}>{t.team.formation} · {seasonCount} season{seasonCount === 1 ? '' : 's'} · {dateStr(t.createdAt)}</span>
+                          </span>
+                        </button>
+                        <button type="button" onClick={() => removeTeam(t.id)} title="Delete team + its seasons"
+                          className="shrink-0 cursor-pointer border px-2.5 py-1 text-[11px] font-bold uppercase hover:brightness-105"
+                          style={{ borderColor: BRICK, color: BRICK, background: 'transparent' }}>
+                          Delete
+                        </button>
+                      </div>
+                      {open && (
+                        <div className="px-4 pb-4 pt-1" style={{ borderTop: `1px solid #EDE3CB`, background: '#FBF6E9' }}>
+                          <TeamXI players={teamXIs[t.id]} formation={t.team.formation} />
+                        </div>
+                      )}
                     </div>
-                    <button type="button" onClick={() => removeTeam(t.id)} title="Delete team + its seasons"
-                      className="cursor-pointer border px-2.5 py-1 text-[11px] font-bold uppercase hover:brightness-105"
-                      style={{ borderColor: BRICK, color: BRICK, background: 'transparent' }}>
-                      Delete
-                    </button>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
 
@@ -151,12 +185,39 @@ export default function Career() {
               </div>
             )}
             <p className="mt-6 text-center text-[11px] italic" style={{ color: SOFT }}>
-              Champion seasons are marked <span style={{ color: GREEN }}>★</span>. Tap a season to see its full stats. Deleting a team removes its seasons too.
+              Champion seasons are marked <span style={{ color: GREEN }}>★</span>. Tap a team to see its XI, or a season for its full stats. Deleting a team removes its seasons too.
             </p>
           </>
         )}
       </main>
       <ProgrammeFooter />
+    </div>
+  );
+}
+
+/** The drafted XI for a team, grouped by line (GK/DF/MF/FW) with each player's overall rating. */
+function TeamXI({ players, formation }: { players: Player[] | undefined; formation: string }) {
+  if (!players) return <div className="py-4 text-center text-[12px] italic" style={{ color: SOFT }}>Loading the squad…</div>;
+  if (players.length === 0) return <div className="py-4 text-center text-[12px] italic" style={{ color: SOFT }}>Squad details aren’t available for this team.</div>;
+  return (
+    <div className="flex flex-col gap-2.5 pt-2">
+      <div className="text-[10px] font-bold uppercase tracking-[0.14em]" style={{ color: SOFT }}>{formation} · {players.length} players</div>
+      {LINE_ORDER.map((line) => {
+        const inLine = players.filter((p) => POSITION_TO_BROAD[p.position] === line);
+        if (inLine.length === 0) return null;
+        return (
+          <div key={line} className="flex flex-wrap items-center gap-1.5">
+            <span className="w-[74px] shrink-0 text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: LINE_INK[line] }}>{LINE_LABEL[line]}</span>
+            {inLine.map((p) => (
+              <span key={p.id} className="flex items-center gap-1.5 border px-2 py-1" style={{ borderColor: LINE, background: CREAM }}>
+                <span className="text-[10px] font-bold uppercase" style={{ color: LINE_INK[line] }}>{p.position}</span>
+                <span className="text-[12.5px] font-semibold" style={{ color: INK }}>{p.firstName} {p.lastName}</span>
+                <span className="font-stamp text-[12px]" style={{ color: p.ratings.overall >= 85 ? '#B8860B' : SOFT }}>{p.ratings.overall}</span>
+              </span>
+            ))}
+          </div>
+        );
+      })}
     </div>
   );
 }
