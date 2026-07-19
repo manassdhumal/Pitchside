@@ -1090,5 +1090,551 @@
     },
     "crestIcon": "shield",
     "tier": 4
+  },
+  {
+    "id": "brighton-hove-albion",
+    "name": "Brighton & Hove Albion",
+    "shortName": "BHA",
+    "leagueId": "premier-league",
+    "wikiTitle": "Brighton & Hove Albion F.C.",
+    "colors": {
+      "primary": "#0057B8",
+      "secondary": "#FFFFFF"
+    },
+    "crestIcon": "shield",
+    "tier": 2
+  },
+  {
+    "id": "brentford",
+    "name": "Brentford",
+    "shortName": "BRE",
+    "leagueId": "premier-league",
+    "wikiTitle": "Brentford F.C.",
+    "colors": {
+      "primary": "#E30613",
+      "secondary": "#FFFFFF"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "nottingham-forest",
+    "name": "Nottingham Forest",
+    "shortName": "NFO",
+    "leagueId": "premier-league",
+    "wikiTitle": "Nottingham Forest F.C.",
+    "colors": {
+      "primary": "#DD0000",
+      "secondary": "#FFFFFF"
+    },
+    "crestIcon": "tower",
+    "tier": 2
+  },
+  {
+    "id": "norwich-city",
+    "name": "Norwich City",
+    "shortName": "NOR",
+    "leagueId": "premier-league",
+    "wikiTitle": "Norwich City F.C.",
+    "colors": {
+      "primary": "#FFF200",
+      "secondary": "#00A650"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "watford",
+    "name": "Watford",
+    "shortName": "WAT",
+    "leagueId": "premier-league",
+    "wikiTitle": "Watford F.C.",
+    "colors": {
+      "primary": "#FBEE23",
+      "secondary": "#ED2127"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "stoke-city",
+    "name": "Stoke City",
+    "shortName": "STK",
+    "leagueId": "premier-league",
+    "wikiTitle": "Stoke City F.C.",
+    "colors": {
+      "primary": "#E03A3E",
+      "secondary": "#FFFFFF"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "swansea-city",
+    "name": "Swansea City",
+    "shortName": "SWA",
+    "leagueId": "premier-league",
+    "wikiTitle": "Swansea City A.F.C.",
+    "colors": {
+      "primary": "#000000",
+      "secondary": "#FFFFFF"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "burnley",
+    "name": "Burnley",
+    "shortName": "BUR",
+    "leagueId": "premier-league",
+    "wikiTitle": "Burnley F.C.",
+    "colors": {
+      "primary": "#6C1D45",
+      "secondary": "#99D6EA"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "queens-park-rangers",
+    "name": "Queens Park Rangers",
+    "shortName": "QPR",
+    "leagueId": "premier-league",
+    "wikiTitle": "Queens Park Rangers F.C.",
+    "colors": {
+      "primary": "#1D5BA4",
+      "secondary": "#FFFFFF"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "ipswich-town",
+    "name": "Ipswich Town",
+    "shortName": "IPS",
+    "leagueId": "premier-league",
+    "wikiTitle": "Ipswich Town F.C.",
+    "colors": {
+      "primary": "#3A64A3",
+      "secondary": "#FFFFFF"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "sc-freiburg",
+    "name": "SC Freiburg",
+    "shortName": "SCF",
+    "leagueId": "bundesliga",
+    "wikiTitle": "SC Freiburg",
+    "colors": {
+      "primary": "#000000",
+      "secondary": "#E30613"
+    },
+    "crestIcon": "shield",
+    "tier": 2
+  },
+  {
+    "id": "union-berlin",
+    "name": "Union Berlin",
+    "shortName": "FCU",
+    "leagueId": "bundesliga",
+    "wikiTitle": "1. FC Union Berlin",
+    "colors": {
+      "primary": "#E30613",
+      "secondary": "#FFE500"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "augsburg",
+    "name": "FC Augsburg",
+    "shortName": "FCA",
+    "leagueId": "bundesliga",
+    "wikiTitle": "FC Augsburg",
+    "colors": {
+      "primary": "#BA3733",
+      "secondary": "#46714D"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "hannover-96",
+    "name": "Hannover 96",
+    "shortName": "H96",
+    "leagueId": "bundesliga",
+    "wikiTitle": "Hannover 96",
+    "colors": {
+      "primary": "#00679A",
+      "secondary": "#000000"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "kaiserslautern",
+    "name": "1. FC Kaiserslautern",
+    "shortName": "FCK",
+    "leagueId": "bundesliga",
+    "wikiTitle": "1. FC Kaiserslautern",
+    "colors": {
+      "primary": "#E30613",
+      "secondary": "#FFFFFF"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "nurnberg",
+    "name": "1. FC Nürnberg",
+    "shortName": "FCN",
+    "leagueId": "bundesliga",
+    "wikiTitle": "1. FC Nürnberg",
+    "colors": {
+      "primary": "#8B0000",
+      "secondary": "#FFFFFF"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "fortuna-dusseldorf",
+    "name": "Fortuna Düsseldorf",
+    "shortName": "F95",
+    "leagueId": "bundesliga",
+    "wikiTitle": "Fortuna Düsseldorf",
+    "colors": {
+      "primary": "#E30613",
+      "secondary": "#FFFFFF"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "arminia-bielefeld",
+    "name": "Arminia Bielefeld",
+    "shortName": "DSC",
+    "leagueId": "bundesliga",
+    "wikiTitle": "Arminia Bielefeld",
+    "colors": {
+      "primary": "#004E9E",
+      "secondary": "#FFFFFF"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "osasuna",
+    "name": "CA Osasuna",
+    "shortName": "OSA",
+    "leagueId": "la-liga",
+    "wikiTitle": "CA Osasuna",
+    "colors": {
+      "primary": "#0A346F",
+      "secondary": "#D91A21"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "rayo-vallecano",
+    "name": "Rayo Vallecano",
+    "shortName": "RAY",
+    "leagueId": "la-liga",
+    "wikiTitle": "Rayo Vallecano",
+    "colors": {
+      "primary": "#FFFFFF",
+      "secondary": "#E53027"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "girona",
+    "name": "Girona FC",
+    "shortName": "GIR",
+    "leagueId": "la-liga",
+    "wikiTitle": "Girona FC",
+    "colors": {
+      "primary": "#D5001C",
+      "secondary": "#FFFFFF"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "granada",
+    "name": "Granada CF",
+    "shortName": "GRA",
+    "leagueId": "la-liga",
+    "wikiTitle": "Granada CF",
+    "colors": {
+      "primary": "#C4122E",
+      "secondary": "#FFFFFF"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "levante",
+    "name": "Levante UD",
+    "shortName": "LEV",
+    "leagueId": "la-liga",
+    "wikiTitle": "Levante UD",
+    "colors": {
+      "primary": "#004C9F",
+      "secondary": "#B4023B"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "mallorca",
+    "name": "RCD Mallorca",
+    "shortName": "MLL",
+    "leagueId": "la-liga",
+    "wikiTitle": "RCD Mallorca",
+    "colors": {
+      "primary": "#E30613",
+      "secondary": "#000000"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "deportivo-alaves",
+    "name": "Deportivo Alavés",
+    "shortName": "ALA",
+    "leagueId": "la-liga",
+    "wikiTitle": "Deportivo Alavés",
+    "colors": {
+      "primary": "#004B9E",
+      "secondary": "#FFFFFF"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "las-palmas",
+    "name": "UD Las Palmas",
+    "shortName": "LPA",
+    "leagueId": "la-liga",
+    "wikiTitle": "UD Las Palmas",
+    "colors": {
+      "primary": "#FEDD00",
+      "secondary": "#0055A4"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "sassuolo",
+    "name": "US Sassuolo",
+    "shortName": "SAS",
+    "leagueId": "serie-a",
+    "wikiTitle": "U.S. Sassuolo Calcio",
+    "colors": {
+      "primary": "#00A752",
+      "secondary": "#000000"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "lecce",
+    "name": "US Lecce",
+    "shortName": "LEC",
+    "leagueId": "serie-a",
+    "wikiTitle": "U.S. Lecce",
+    "colors": {
+      "primary": "#EE2622",
+      "secondary": "#FFE500"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "empoli",
+    "name": "Empoli FC",
+    "shortName": "EMP",
+    "leagueId": "serie-a",
+    "wikiTitle": "Empoli F.C.",
+    "colors": {
+      "primary": "#00579C",
+      "secondary": "#FFFFFF"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "palermo",
+    "name": "Palermo FC",
+    "shortName": "PAL",
+    "leagueId": "serie-a",
+    "wikiTitle": "Palermo F.C.",
+    "colors": {
+      "primary": "#EC98B9",
+      "secondary": "#000000"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "brescia",
+    "name": "Brescia Calcio",
+    "shortName": "BRE",
+    "leagueId": "serie-a",
+    "wikiTitle": "Brescia Calcio",
+    "colors": {
+      "primary": "#0A50A1",
+      "secondary": "#FFFFFF"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "monza",
+    "name": "AC Monza",
+    "shortName": "MON",
+    "leagueId": "serie-a",
+    "wikiTitle": "A.C. Monza",
+    "colors": {
+      "primary": "#E30613",
+      "secondary": "#FFFFFF"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "salernitana",
+    "name": "US Salernitana",
+    "shortName": "SAL",
+    "leagueId": "serie-a",
+    "wikiTitle": "U.S. Salernitana 1919",
+    "colors": {
+      "primary": "#6F1E23",
+      "secondary": "#FFFFFF"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "spezia",
+    "name": "Spezia Calcio",
+    "shortName": "SPE",
+    "leagueId": "serie-a",
+    "wikiTitle": "Spezia Calcio",
+    "colors": {
+      "primary": "#000000",
+      "secondary": "#FFFFFF"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "brest",
+    "name": "Stade Brestois",
+    "shortName": "BRE",
+    "leagueId": "ligue-1",
+    "wikiTitle": "Stade Brestois 29",
+    "colors": {
+      "primary": "#E30613",
+      "secondary": "#FFFFFF"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "lorient",
+    "name": "FC Lorient",
+    "shortName": "LOR",
+    "leagueId": "ligue-1",
+    "wikiTitle": "FC Lorient",
+    "colors": {
+      "primary": "#F58220",
+      "secondary": "#000000"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "metz",
+    "name": "FC Metz",
+    "shortName": "MET",
+    "leagueId": "ligue-1",
+    "wikiTitle": "FC Metz",
+    "colors": {
+      "primary": "#8E1B2A",
+      "secondary": "#FFFFFF"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "auxerre",
+    "name": "AJ Auxerre",
+    "shortName": "AJA",
+    "leagueId": "ligue-1",
+    "wikiTitle": "AJ Auxerre",
+    "colors": {
+      "primary": "#0055A4",
+      "secondary": "#FFFFFF"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "guingamp",
+    "name": "EA Guingamp",
+    "shortName": "GUI",
+    "leagueId": "ligue-1",
+    "wikiTitle": "En Avant Guingamp",
+    "colors": {
+      "primary": "#E30613",
+      "secondary": "#000000"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "sochaux",
+    "name": "FC Sochaux",
+    "shortName": "SOC",
+    "leagueId": "ligue-1",
+    "wikiTitle": "FC Sochaux-Montbéliard",
+    "colors": {
+      "primary": "#FFE500",
+      "secondary": "#004A99"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "caen",
+    "name": "SM Caen",
+    "shortName": "CAE",
+    "leagueId": "ligue-1",
+    "wikiTitle": "Stade Malherbe Caen",
+    "colors": {
+      "primary": "#E30613",
+      "secondary": "#0055A4"
+    },
+    "crestIcon": "shield",
+    "tier": 3
+  },
+  {
+    "id": "troyes",
+    "name": "ES Troyes AC",
+    "shortName": "TRO",
+    "leagueId": "ligue-1",
+    "wikiTitle": "ES Troyes AC",
+    "colors": {
+      "primary": "#00579C",
+      "secondary": "#FFFFFF"
+    },
+    "crestIcon": "shield",
+    "tier": 3
   }
 ]
