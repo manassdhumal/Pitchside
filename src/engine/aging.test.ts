@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { agePlayer, ageSquad, ageDelta } from './aging';
+import { agePlayer, ageSquad, ageDelta, advanceSquad, RETIRE_AGE } from './aging';
 import type { Player } from '../types';
 
 function pl(id: string, overall: number, careerAge?: number): Player {
@@ -41,5 +41,23 @@ describe('aging', () => {
     expect(aged.map((p) => p.id)).toEqual(['a', 'b']);
     expect(aged[0].ratings.overall).toBeGreaterThanOrEqual(70); // 22yo improves or holds
     expect(aged[1].ratings.overall).toBeLessThan(85); // 30yo declines
+  });
+
+  it('retires a player at the retirement age and brings a youth into the same slot', () => {
+    const vet = pl('vet', 80, RETIRE_AGE - 1); // ages to RETIRE_AGE → retires
+    const young = pl('kid', 72, 22);
+    const { players, retirements } = advanceSquad([vet, young]);
+    expect(players).toHaveLength(2); // XI stays 11 (2 here)
+    expect(retirements).toHaveLength(1);
+    expect(retirements[0].position).toBe('CM');
+    expect(retirements[0].replacedBy).toBeTruthy();
+    // The retiree's slot holds a fresh, young, procedural regen (new id, low working age).
+    const regen = players[0];
+    expect(regen.id).not.toBe('vet');
+    expect(regen.isProcedural).toBe(true);
+    expect(regen.position).toBe('CM');
+    expect(regen.careerAge!).toBeLessThan(21);
+    // The younger player just ages normally.
+    expect(players[1].id).toBe('kid');
   });
 });

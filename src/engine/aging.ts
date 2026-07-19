@@ -1,5 +1,6 @@
-import type { Player, PlayerRatings } from '../types';
+import type { Player, PlayerRatings, Position } from '../types';
 import { hashString } from './rng';
+import { generatePlayer } from '../data/playerGenerator';
 
 // Career-mode aging. The scraped data has no real dates of birth, so each player gets a deterministic
 // pseudo-age (seeded from their id) the first time they're aged, then advances one year per season.
@@ -49,4 +50,43 @@ export function agePlayer(p: Player): Player {
 /** Age a whole squad one season. */
 export function ageSquad(players: Player[]): Player[] {
   return players.map(agePlayer);
+}
+
+/** Players retire at this working age, opening the slot for a youth academy graduate. */
+export const RETIRE_AGE = 37;
+
+export interface SquadChange {
+  name: string;
+  position: Position;
+  /** For a regen, the youth who came in. */
+  replacedBy?: string;
+}
+
+export interface SquadAdvance {
+  /** The next season's squad (aged survivors + youth regens), same slot order. */
+  players: Player[];
+  /** Veterans who retired this year, with the youth who replaced them. */
+  retirements: SquadChange[];
+}
+
+/**
+ * Advance a squad one season: age everyone, and when a player reaches `RETIRE_AGE` retire them and
+ * bring through a young academy graduate in the same slot (procedural — fictional, not a real name).
+ * Keeps the XI at 11 and the squad viable over a long career.
+ */
+export function advanceSquad(players: Player[]): SquadAdvance {
+  const next: Player[] = [];
+  const retirements: SquadChange[] = [];
+  for (const p of players) {
+    const aged = agePlayer(p);
+    if ((aged.careerAge ?? 0) >= RETIRE_AGE) {
+      const youth = generatePlayer({ position: p.position, minAge: 17, maxAge: 20, potentialRange: [60, 84] });
+      const age = youth.born ? new Date().getFullYear() - youth.born.year : 18;
+      next.push({ ...youth, careerAge: age, sourceNote: 'Youth academy graduate (procedurally generated).' });
+      retirements.push({ name: `${p.firstName} ${p.lastName}`.trim(), position: p.position, replacedBy: `${youth.firstName} ${youth.lastName}`.trim() });
+    } else {
+      next.push(aged);
+    }
+  }
+  return { players: next, retirements };
 }

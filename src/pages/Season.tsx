@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAppState, useAppDispatch } from '../state/AppContext';
 import { getTeam, getPlayers, putSeason, putPlayers, putTeam } from '../storage/cache';
-import { ageSquad } from '../engine/aging';
+import { advanceSquad, type SquadChange } from '../engine/aging';
 import { loadIndex, type ClubSeasonIndexEntry } from '../data/historicalData';
 import { loadLeagueOpponents } from '../data/leagueOpponents';
 import { computeTeamOvr, type TeamOvr } from '../engine/teamRatings';
@@ -228,6 +228,7 @@ export default function Season() {
 
   const [chosenLeague, setChosenLeague] = useState<string | null>(null);
   const [advancing, setAdvancing] = useState(false);
+  const [retirements, setRetirements] = useState<SquadChange[]>([]);
   const careerSeason = userTeam?.careerSeason ?? 1;
   const [phase, setPhase] = useState<'league' | 'building' | 'ready' | 'revealing' | 'transfer' | 'done' | 'cup-reveal' | 'cup-done'>('league');
   const [buildError, setBuildError] = useState<string | null>(null);
@@ -337,13 +338,16 @@ export default function Season() {
   const advanceSeason = async () => {
     if (!userTeam || advancing) return;
     setAdvancing(true);
-    const aged = ageSquad(userPlayers);
-    await putPlayers(aged); // seed the cache so putTeam persists the aged squad
-    const updatedTeam: Team = { ...userTeam, careerSeason: (userTeam.careerSeason ?? 1) + 1 };
+    // Age the squad and bring youth through for anyone retiring; squad ids may change (regens), so
+    // the team's squad list is rewritten to match.
+    const { players: nextSquad, retirements: retired } = advanceSquad(userPlayers);
+    await putPlayers(nextSquad); // seed the cache so putTeam persists the new squad
+    const updatedTeam: Team = { ...userTeam, careerSeason: (userTeam.careerSeason ?? 1) + 1, squad: nextSquad.map((p) => p.id) };
     await putTeam(updatedTeam);
 
-    setUserPlayers(aged);
+    setUserPlayers(nextSquad);
     setUserTeam(updatedTeam);
+    setRetirements(retired);
     // Wipe last season's state and drop back to league selection.
     setUserXi([]); setMatches([]); setTable([]); setFinalStats(null);
     setCup(null); setCupReveal(0); setRevealCount(0); setPlaying(true);
@@ -579,6 +583,16 @@ export default function Season() {
             <div className="font-display my-3 text-center text-[30px] font-extrabold sm:text-[40px]" style={{ color: '#1D2B45' }}>
               Which league do you enter?
             </div>
+            {retirements.length > 0 && (
+              <div className="mx-auto mb-6 max-w-[560px] border-l-[4px] px-4 py-3" style={{ borderColor: '#A83E2C', background: '#FBF3DA' }}>
+                <div className="text-[10px] font-bold uppercase tracking-[0.14em]" style={{ color: '#8C6A1D' }}>Transfer news · retirements</div>
+                {retirements.map((r, i) => (
+                  <div key={i} className="mt-1 text-[12.5px]" style={{ color: '#3C3325' }}>
+                    <b>{r.name}</b> ({r.position}) hangs up the boots — youngster <b>{r.replacedBy}</b> steps up.
+                  </div>
+                ))}
+              </div>
+            )}
             <p className="mx-auto mb-8 max-w-[56ch] text-center text-[14px] leading-relaxed" style={{ color: '#3C3325' }}>
               You'll play a full home-and-away season against that league's real current clubs — each fielding their actual squad. Your team OVR of <b style={{ color: '#A83E2C' }}>{userOvr.overall}</b> meets theirs, line by line.
             </p>
