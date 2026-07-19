@@ -1,8 +1,9 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ProgrammeNav, ProgrammeFooter } from '../components/chrome/ProgrammeChrome';
 import { RaffleDrum, LEAGUE_INKS } from '../components/chrome/RaffleDrum';
 import { loadIndex } from '../data/historicalData';
+import { dailyDraftSettings, getDailyResult, dailyStreak, type DailyResult } from '../state/daily';
 
 const LEAGUE_BADGES = [
   { id: 'premier-league', code: 'EN', label: 'PREMIER' },
@@ -20,10 +21,15 @@ const ACTS = [
 ];
 
 export default function Home() {
+  const navigate = useNavigate();
   const [ticketCount, setTicketCount] = useState<number | null>(null);
+  const [todayResult, setTodayResult] = useState<DailyResult | null>(null);
   useEffect(() => {
     loadIndex().then((entries) => setTicketCount(entries.length)).catch(() => setTicketCount(null));
+    setTodayResult(getDailyResult());
   }, []);
+  const streak = dailyStreak();
+  const playDaily = () => navigate('/draft', { state: dailyDraftSettings() });
 
   return (
     <div className="flex min-h-svh flex-col">
@@ -75,6 +81,26 @@ export default function Home() {
               <span className="text-[12.5px]" style={{ color: 'var(--soft)' }}>
                 Free · in your browser · one sitting
               </span>
+            </div>
+
+            {/* Daily Challenge */}
+            <div className="mt-6 flex flex-wrap items-center gap-4 border-[1.5px] px-5 py-4" style={{ borderColor: 'var(--line)', background: '#FDFAF1', boxShadow: '4px 4px 0 var(--card-shadow)' }}>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2">
+                  <span className="font-stamp text-[12px] uppercase tracking-[0.12em]" style={{ color: 'var(--brick)' }}>★ Daily Challenge</span>
+                  {streak > 0 && <span className="text-[11px]" style={{ color: 'var(--soft)' }}>🔥 {streak}-day streak</span>}
+                </div>
+                <p className="mt-1 text-[13px] leading-snug" style={{ color: 'var(--text)' }}>
+                  {todayResult
+                    ? <>Today’s done — your XI scored <b style={{ color: 'var(--brick)' }}>OVR {todayResult.ovr}</b>. New draw tomorrow.</>
+                    : <>Same eleven forced draws for everyone today. No re-rolls — build the best XI you can.</>}
+                </p>
+              </div>
+              <button type="button" onClick={playDaily}
+                className="font-stamp shrink-0 cursor-pointer px-5 py-3 text-[13px] uppercase tracking-[0.08em] no-underline"
+                style={{ background: 'var(--btn-bg)', color: 'var(--btn-fg)', boxShadow: '3px 3px 0 var(--btn-shadow)' }}>
+                {todayResult ? 'Replay today' : "Play today's →"}
+              </button>
             </div>
           </div>
 

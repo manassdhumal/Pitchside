@@ -9,6 +9,8 @@ import {
   isPositionCompatible, inferSpecificPosition, realPlayerToEnginePlayer, type ClubSeasonIndexEntry,
 } from '../data/historicalData';
 import { computeTeamOvr } from '../engine/teamRatings';
+import { mulberry32 } from '../engine/rng';
+import { saveDailyResult, dailyStreak, type DailyState } from '../state/daily';
 import { putPlayers, putTeam } from '../storage/cache';
 import { useAppDispatch } from '../state/AppContext';
 import { ProgrammeNav, ProgrammeFooter } from '../components/chrome/ProgrammeChrome';
@@ -78,7 +80,8 @@ export default function Draft() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const location = useLocation();
-  const settings = location.state as DraftSettings | null;
+  const settings = location.state as (DraftSettings & { daily?: DailyState }) | null;
+  const daily = settings?.daily ?? null;
 
   const [entries, setEntries] = useState<ClubSeasonIndexEntry[] | null>(null);
   const [filled, setFilled] = useState<(FilledSlot | null)[]>([]);
@@ -96,13 +99,20 @@ export default function Draft() {
 
   const spinTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastClubIdRef = useRef<string | null>(null);
+  // Daily mode: a seeded RNG drives the club-season draw so everyone gets the same sequence. Only the
+  // draw uses it (never the cosmetic drum spin), so placement order can't perturb the sequence.
+  const rngRef = useRef<(() => number) | null>(null);
+  const rand = () => (rngRef.current ? rngRef.current() : Math.random());
+  const [dailyDone, setDailyDone] = useState(false);
 
   useEffect(() => {
     if (!settings) { navigate('/setup'); return; }
     loadIndex().then(setEntries);
     setFilled(new Array(FORMATION_SLOTS[settings.formation].length).fill(null));
     setRerollsLeft(REROLLS_BY_DIFFICULTY[settings.difficulty]);
-  }, [settings, navigate]);
+    rngRef.current = daily ? mulberry32(daily.seed) : null;
+    lastClubIdRef.current = null;
+  }, [settings, navigate, daily]);
 
   useEffect(() => () => { if (spinTimer.current) clearTimeout(spinTimer.current); }, []);
 
@@ -133,9 +143,9 @@ export default function Draft() {
     if (clubIds.length > 1 && lastClubIdRef.current) {
       clubIds = clubIds.filter((id) => id !== lastClubIdRef.current);
     }
-    const clubId = clubIds[Math.floor(Math.random() * clubIds.length)];
+    const clubId = clubIds[Math.floor(rand() * clubIds.length)];
     const seasons = byClub.get(clubId)!;
-    return seasons[Math.floor(Math.random() * seasons.length)];
+    return seasons[Math.floor(rand() * seasons.length)];
   };
 
   const canSpin = settings?.draftMode === 'squad-first' ? openSlotIndexes.length > 0 : selectedSlot !== null;
@@ -293,6 +303,20 @@ export default function Draft() {
     });
   };
 
+  // Daily Challenge: score is the deterministic team OVR — no season sim (that has variance and
+  // wouldn't be fair to compare). Lock the result for today and reveal the shareable summary.
+  const submitDaily = () => {
+    if (!daily) return;
+    saveDailyResult({ date: daily.date, ovr: teamOvr.overall, def: teamOvr.def, mid: teamOvr.mid, atk: teamOvr.atk, playedAt: Date.now() });
+    setDailyDone(true);
+  };
+
+  const shareDaily = async () => {
+    if (!daily) return;
+    const text = `⚽ PitchSide Daily — ${daily.date}\nMy XI: OVR ${teamOvr.overall} (DEF ${teamOvr.def} · MID ${teamOvr.mid} · ATK ${teamOvr.atk})\nBuilt from 11 forced draws. Can you beat it?`;
+    try { await navigator.clipboard.writeText(text); } catch { /* clipboard unavailable */ }
+  };
+
   if (!settings) return null;
 
   const kit = KITS[kitIdx];
@@ -375,6 +399,17 @@ export default function Draft() {
           className="px-5 pb-10 pt-7 sm:px-8 lg:border-r-[3px]"
           style={{ borderColor: 'var(--line)', borderRightStyle: 'double' }}
         >
+          {daily ? (
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+              <div className="flex flex-col gap-0.5">
+                <span className="font-stamp -rotate-[1deg] self-start border-[1.5px] px-2 py-0.5 text-[11px]" style={{ borderColor: 'var(--brick)', color: 'var(--brick)' }}>DAILY CHALLENGE</span>
+                <span className="font-display text-[26px] font-extrabold sm:text-[30px]" style={{ color: 'var(--ink)' }}>{daily.date}</span>
+              </div>
+              <span className="max-w-[220px] text-right text-[11px] italic" style={{ color: 'var(--soft)' }}>
+                Same eleven draws for everyone today. No re-rolls — build the best XI you can.
+              </span>
+            </div>
+          ) : (
           <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
             <div className="flex flex-col gap-0.5">
               <label className="text-[10px] uppercase tracking-[0.18em]" style={{ color: 'var(--soft)' }}>
@@ -411,6 +446,7 @@ export default function Draft() {
               </div>
             </div>
           </div>
+          )}
 
           {/* live team OVR — updates as the XI fills, and feeds the season simulator */}
           <div className="mx-auto mb-4 grid max-w-[560px] grid-cols-4 gap-2">
@@ -617,7 +653,38 @@ export default function Draft() {
             </div>
           )}
 
-          {allFilled && (
+          {allFilled && daily && (
+            <div className="mx-auto mt-5 max-w-[560px] text-center">
+              {!dailyDone ? (
+                <>
+                  <div className="font-display mb-3.5 text-[19px] italic" style={{ color: 'var(--text)' }}>
+                    Your XI is set. Lock in today’s score.
+                  </div>
+                  <button type="button" onClick={submitDaily}
+                    className="font-stamp foil-bg relative inline-block cursor-pointer overflow-hidden px-7 py-4 text-[17px] tracking-[0.1em] hover:brightness-105"
+                    style={{ color: '#3B2C08', border: '1.5px solid #8C6A1D' }}>
+                    LOCK IN · OVR {teamOvr.overall} →
+                  </button>
+                </>
+              ) : (
+                <div className="border-[3px] px-6 py-7" style={{ borderColor: 'var(--ink)', borderStyle: 'double', background: 'var(--card)' }}>
+                  <div className="text-[10px] font-bold uppercase tracking-[0.18em]" style={{ color: 'var(--soft)' }}>Daily Challenge · {daily.date}</div>
+                  <div className="font-stamp my-1 text-[52px] leading-none" style={{ color: 'var(--brick)' }}>{teamOvr.overall}</div>
+                  <div className="text-[12px]" style={{ color: 'var(--soft)' }}>DEF {teamOvr.def} · MID {teamOvr.mid} · ATK {teamOvr.atk}</div>
+                  <div className="font-display mt-3 text-[15px] italic" style={{ color: 'var(--text)' }}>🔥 {dailyStreak(daily.date)}-day streak — come back tomorrow for a new draw.</div>
+                  <div className="mt-4 flex justify-center gap-2.5">
+                    <button type="button" onClick={() => void shareDaily()}
+                      className="font-stamp cursor-pointer px-5 py-3 text-[13px] uppercase tracking-[0.08em]" style={{ background: 'var(--btn-bg)', color: 'var(--btn-fg)', boxShadow: '3px 3px 0 var(--btn-shadow)' }}>
+                      Copy result
+                    </button>
+                    <Link to="/" className="border-[1.5px] px-4 py-3 text-[13px] font-bold uppercase tracking-[0.06em] no-underline" style={{ borderColor: 'var(--ink)', color: 'var(--ink)' }}>Home</Link>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {allFilled && !daily && (
             <div className="mx-auto mt-5 max-w-[560px] text-center">
               <div className="font-display mb-3.5 text-[19px] italic" style={{ color: 'var(--text)' }}>
                 The page is complete. Eleven stickers, one season ahead.
