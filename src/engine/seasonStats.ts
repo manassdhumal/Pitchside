@@ -41,16 +41,35 @@ export interface SeasonStats {
   form: ('W' | 'D' | 'L')[];
   /** Cumulative points after each matchday, for a progression chart. */
   cumulativePoints: number[];
+  /** Total expected goals for/against, summed from each match's model xG. */
+  xgFor?: number;
+  xgAgainst?: number;
   /**
    * Per-player goal/assist tallies for the user's XI, present only when the XI is passed to
    * `computeSeasonStats`. The sim produces team scores only, so these are a deterministic
    * attribution of each real goal to a likely scorer/assister (see `attributePlayerStats`).
    */
   players?: PlayerStatLine[];
+  /** The standout performer of the user's XI, position-weighted so a big-contributing defender counts. */
+  playerOfSeason?: PlayerStatLine;
+  /** League-wide top scorers (all teams), present when a golden-boot table is computed and attached. */
+  goldenBoot?: GoldenBootEntry[];
   /** A headline "how did the season go" verdict, present when league context is supplied. */
   verdict?: SeasonVerdict;
   /** Bulleted takeaways about the campaign, present when league context is supplied. */
   insights?: SeasonInsight[];
+}
+
+/** A league-wide golden-boot row: a scorer from any team, tagged if it's one of the user's players. */
+export interface GoldenBootEntry {
+  playerId: string;
+  name: string;
+  position: Position;
+  teamId: string;
+  teamName: string;
+  goals: number;
+  assists: number;
+  isUser: boolean;
 }
 
 export interface PlayerStatLine {
@@ -135,11 +154,14 @@ export function computeSeasonStats(matches: Match[], userTeamId: string, opts: S
   const form: ('W' | 'D' | 'L')[] = [];
   const cumulativePoints: number[] = [];
   let running = 0;
+  let xgFor = 0, xgAgainst = 0;
 
   for (const m of matches) {
     const u = fromUser(m, userTeamId);
     goalsFor += u.forGoals;
     goalsAgainst += u.againstGoals;
+    xgFor += u.home ? m.homeXG : m.awayXG;
+    xgAgainst += u.home ? m.awayXG : m.homeXG;
     if (u.againstGoals === 0) cleanSheets += 1;
     if (u.forGoals === 0) failedToScore += 1;
 
@@ -178,10 +200,12 @@ export function computeSeasonStats(matches: Match[], userTeamId: string, opts: S
     goalsForPerGame: played ? goalsFor / played : 0,
     goalsAgainstPerGame: played ? goalsAgainst / played : 0,
     biggestWin, heaviestDefeat, form, cumulativePoints,
+    xgFor, xgAgainst,
   };
 
   if (opts.xi && opts.xi.length > 0) {
     stats.players = attributePlayerStats(matches, userTeamId, opts.xi);
+    stats.playerOfSeason = pickPlayerOfSeason(stats.players);
   }
   if (opts.context) {
     const { verdict, insights } = deriveSeasonInsights(stats, opts.context);
@@ -273,6 +297,55 @@ function attributePlayerStats(matches: Match[], userTeamId: string, xi: Player[]
     .sort((a, b) => b.goals - a.goals || b.assists - a.assists || a.name.localeCompare(b.name));
 }
 
+// Prestige of a goal contribution by position: goals are rarer for defensive players, so a
+// defender/keeper who chips in is a bigger story than a striker doing their job. Used to pick a
+// position-fair Player of the Season rather than always crowning the top striker.
+const POTS_PRESTIGE: Record<Position, number> = {
+  GK: 1.7, CB: 1.5, LB: 1.35, RB: 1.35, LWB: 1.35, RWB: 1.35,
+  CDM: 1.28, CM: 1.12, CAM: 1.0, LM: 1.02, RM: 1.02, LW: 0.96, RW: 0.96, ST: 0.9,
+};
+
+/** The standout performer: highest position-weighted (goals + 0.6·assists). */
+function pickPlayerOfSeason(players: PlayerStatLine[]): PlayerStatLine | undefined {
+  let best: PlayerStatLine | undefined;
+  let bestScore = 0;
+  for (const p of players) {
+    const score = (p.goals + 0.6 * p.assists) * POTS_PRESTIGE[p.position];
+    if (score > bestScore) { bestScore = score; best = p; }
+  }
+  return best;
+}
+
+/**
+ * League-wide golden-boot table: attribute goals for EVERY team from its XI (same deterministic
+ * method as the user's), then rank all scorers. The user's own players resolve identically to their
+ * `stats.players` because the same matches/XI/seed feed both. Returns the top `limit`.
+ */
+export function computeGoldenBoot(
+  matches: Match[],
+  xiByTeam: Map<string, Player[]>,
+  teamNames: Map<string, string>,
+  userTeamId: string,
+  limit = 10,
+): GoldenBootEntry[] {
+  const entries: GoldenBootEntry[] = [];
+  for (const [teamId, xi] of xiByTeam) {
+    if (!xi || xi.length === 0) continue;
+    const teamMatches = matches.filter((m) => m.homeTeamId === teamId || m.awayTeamId === teamId);
+    for (const l of attributePlayerStats(teamMatches, teamId, xi)) {
+      if (l.goals <= 0) continue;
+      entries.push({
+        playerId: l.playerId, name: l.name, position: l.position, teamId,
+        teamName: teamNames.get(teamId) ?? teamId, goals: l.goals, assists: l.assists,
+        isUser: teamId === userTeamId,
+      });
+    }
+  }
+  return entries
+    .sort((a, b) => b.goals - a.goals || b.assists - a.assists || a.name.localeCompare(b.name))
+    .slice(0, limit);
+}
+
 // ---- Narrative insights ---------------------------------------------------------------------
 
 const pct = (position: number, teamCount: number) => (teamCount > 1 ? (position - 1) / (teamCount - 1) : 0);
@@ -301,6 +374,16 @@ export function deriveSeasonInsights(stats: SeasonStats, ctx: SeasonContext): { 
     insights.push({ tone: 'good', title: 'Defensively resolute', detail: `${stats.cleanSheets} clean sheets in ${played} games.` });
   } else if (played > 0 && stats.goalsAgainstPerGame > 1.6) {
     insights.push({ tone: 'bad', title: 'Leaky at the back', detail: `${stats.goalsAgainst} conceded (${stats.goalsAgainstPerGame.toFixed(1)}/game).` });
+  }
+
+  // Finishing vs expected goals (the model's xG proxy) — only when xG data is present.
+  if (stats.xgFor && stats.xgFor > 0 && played > 0) {
+    const diff = stats.goalsFor - stats.xgFor;
+    if (diff / played > 0.25) {
+      insights.push({ tone: 'good', title: 'Clinical finishers', detail: `Scored ${Math.round(diff)} more than expected (${stats.goalsFor} from ~${Math.round(stats.xgFor)} xG).` });
+    } else if (diff / played < -0.25) {
+      insights.push({ tone: 'bad', title: 'Profligate up front', detail: `${Math.round(-diff)} fewer goals than your ~${Math.round(stats.xgFor)} xG deserved.` });
+    }
   }
 
   // Home & away character.

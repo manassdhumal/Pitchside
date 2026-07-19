@@ -1,5 +1,5 @@
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
-import type { SeasonStats, InsightTone, PlayerStatLine } from '../engine/seasonStats';
+import type { SeasonStats, InsightTone, PlayerStatLine, GoldenBootEntry } from '../engine/seasonStats';
 import { POSITION_TO_BROAD, type Position } from '../types';
 
 const CREAM = '#FDFAF1';
@@ -66,6 +66,16 @@ export function SeasonStatsPanel({ stats, teamNames }: { stats: SeasonStats; tea
         <Tile label="Unbeaten run" value={stats.longestUnbeatenRun} sub="games" />
       </div>
 
+      {/* expected goals */}
+      {stats.xgFor != null && stats.xgFor > 0 && (
+        <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-4">
+          <Tile label="xG for" value={stats.xgFor.toFixed(1)} sub={`${stats.goalsFor} scored`} />
+          <Tile label="xG against" value={(stats.xgAgainst ?? 0).toFixed(1)} sub={`${stats.goalsAgainst} conceded`} />
+          <Tile label="Finishing" value={`${stats.goalsFor - stats.xgFor >= 0 ? '+' : ''}${(stats.goalsFor - stats.xgFor).toFixed(1)}`} sub="vs xG" ink={stats.goalsFor - stats.xgFor >= 0 ? GREEN : BRICK} />
+          <Tile label="Defending" value={`${(stats.xgAgainst ?? 0) - stats.goalsAgainst >= 0 ? '+' : ''}${((stats.xgAgainst ?? 0) - stats.goalsAgainst).toFixed(1)}`} sub="vs xG" ink={(stats.xgAgainst ?? 0) - stats.goalsAgainst >= 0 ? GREEN : BRICK} />
+        </div>
+      )}
+
       {/* points progression chart */}
       {chartData.length > 1 && (
         <div className="mt-3 border px-3 pt-3 pb-1" style={{ borderColor: LINE, background: CREAM }}>
@@ -127,8 +137,14 @@ export function SeasonStatsPanel({ stats, teamNames }: { stats: SeasonStats; tea
         </div>
       </div>
 
+      {/* player of the season */}
+      {stats.playerOfSeason && <PlayerOfSeason p={stats.playerOfSeason} />}
+
       {/* top scorers + playmaker */}
       {stats.players && stats.players.length > 0 && <TopScorers players={stats.players} />}
+
+      {/* league golden boot */}
+      {stats.goldenBoot && stats.goldenBoot.length > 0 && <GoldenBoot rows={stats.goldenBoot} />}
 
       {/* narrative insights */}
       {stats.insights && stats.insights.length > 0 && (
@@ -191,3 +207,58 @@ function TopScorers({ players }: { players: PlayerStatLine[] }) {
     </>
   );
 }
+
+/** Player of the Season — a highlighted foil-style card for the standout performer. */
+function PlayerOfSeason({ p }: { p: PlayerStatLine }) {
+  return (
+    <div className="mt-5 flex items-center gap-4 border-l-[5px] px-4 py-3" style={{ borderColor: GOLD, background: 'linear-gradient(100deg, #FBF3DA, #FDFAF1)', boxShadow: '3px 3px 0 var(--card-shadow, #E4D9BE)' }}>
+      <div className="font-stamp grid h-[42px] w-[42px] shrink-0 place-items-center text-[20px]" style={{ background: GOLD, color: '#3B2C08', borderRadius: 4 }}>★</div>
+      <div className="min-w-0 flex-1">
+        <div className="text-[10px] font-bold uppercase tracking-[0.16em]" style={{ color: '#8C6A1D' }}>Player of the season</div>
+        <div className="font-display truncate text-[20px] font-extrabold leading-tight" style={{ color: INK }}>{p.name}</div>
+        <div className="text-[11.5px]" style={{ color: SOFT }}>
+          <span className="font-bold" style={{ color: posInk(p.position) }}>{p.position}</span> · {p.goals} goal{p.goals === 1 ? '' : 's'}, {p.assists} assist{p.assists === 1 ? '' : 's'}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/** League-wide golden boot: top scorers across every club, the user's own players highlighted. */
+function GoldenBoot({ rows }: { rows: GoldenBootEntry[] }) {
+  const userBest = rows.find((r) => r.isUser);
+  const userRank = userBest ? rows.indexOf(userBest) + 1 : null;
+  return (
+    <>
+      <div className="mb-3 mt-5 flex items-center gap-2.5">
+        <span className="font-display text-[19px] font-bold" style={{ color: INK }}>The Golden Boot race</span>
+        <span className="h-px flex-1" style={{ background: LINE }} />
+      </div>
+      <div style={{ background: CREAM, border: `1px solid ${LINE}` }}>
+        {rows.map((r, i) => (
+          <div key={`${r.teamId}:${r.playerId}`} className="grid grid-cols-[24px_1fr_auto] items-center gap-3 px-3 py-2"
+            style={{ borderTop: i === 0 ? 'none' : `1px solid #EDE3CB`, background: r.isUser ? '#FBF3DA' : undefined }}>
+            <span className="font-stamp grid h-[20px] w-[20px] place-items-center text-[11px]" style={{ background: i === 0 ? GOLD : INK, color: CREAM, borderRadius: 3 }}>{i + 1}</span>
+            <span className="flex min-w-0 items-center gap-2">
+              <span className="text-[11px] font-bold uppercase" style={{ color: posInk(r.position) }}>{r.position}</span>
+              <span className="truncate text-[13.5px] font-semibold" style={{ color: INK }}>{r.isUser ? '★ ' : ''}{r.name}</span>
+              <span className="truncate text-[11px]" style={{ color: SOFT }}>· {r.teamName}</span>
+            </span>
+            <span className="font-stamp text-right text-[15px]" style={{ color: BRICK }}>{r.goals}</span>
+          </div>
+        ))}
+      </div>
+      {userRank && userBest && (
+        <div className="mt-2 text-[11.5px]" style={{ color: SOFT }}>
+          Your top scorer <b style={{ color: INK }}>{userBest.name}</b> finished {userRank === 1 ? 'top of the scoring charts 🏆' : `${ordinalLabel(userRank)} in the race`} with {userBest.goals}.
+        </div>
+      )}
+    </>
+  );
+}
+
+const ordinalLabel = (n: number) => {
+  const s = ['th', 'st', 'nd', 'rd'];
+  const v = n % 100;
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
+};

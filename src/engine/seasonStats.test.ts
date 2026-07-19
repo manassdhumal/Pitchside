@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { computeSeasonStats, deriveSeasonInsights } from './seasonStats';
+import { computeSeasonStats, deriveSeasonInsights, computeGoldenBoot } from './seasonStats';
 import type { Match, Player, Position } from '../types';
 
 // Minimal match factory from the user's perspective. `home` = user plays at home. A fixed id keeps
@@ -80,6 +80,24 @@ describe('computeSeasonStats', () => {
     expect(s.verdict?.title).toBe('The Invincibles');
     expect(s.insights?.some((i) => i.title.includes('attack'))).toBe(true);
     expect(s.insights?.some((i) => i.title.includes('defence'))).toBe(true);
+  });
+
+  it('crowns a position-fair Player of the Season and a consistent golden boot', () => {
+    const u = 'me';
+    const xi = [pl('gk', 'GK', 20), pl('cb', 'CB', 45), pl('cm', 'CM', 65), pl('st', 'ST', 92)];
+    const matches = [m(u, 'a', 4, 0, true, 'gb-1'), m(u, 'b', 3, 1, false, 'gb-2'), m(u, 'c', 2, 0, true, 'gb-3')];
+    const s = computeSeasonStats(matches, u, { xi });
+    expect(s.playerOfSeason).toBeDefined();
+    expect((s.players ?? []).some((p) => p.playerId === s.playerOfSeason!.playerId)).toBe(true);
+
+    // Golden boot must attribute the user's own goals identically to their stats.players — same
+    // matches, XI and seed. (Opponents with no XI in the map are skipped.)
+    const gb = computeGoldenBoot(matches, new Map([[u, xi]]), new Map([[u, 'My XI']]), u);
+    expect(gb.length).toBeGreaterThan(0);
+    expect(gb.every((r) => r.isUser)).toBe(true);
+    const userTop = (s.players ?? [])[0];
+    const gbUser = gb.find((r) => r.playerId === userTop.playerId);
+    expect(gbUser?.goals).toBe(userTop.goals);
   });
 
   it('gives a relegation-tone verdict for a last-place finish', () => {

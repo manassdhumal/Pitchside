@@ -9,7 +9,7 @@ import { buildStandingsTable, generateRoundRobinFixtures, simulateLeagueFixtures
 import { simulateCup, type CupResult } from '../engine/cup';
 import { CupBracket } from '../components/CupBracket';
 import { SeasonStatsPanel } from '../components/SeasonStats';
-import { computeSeasonStats, type SeasonStats, type SeasonContext } from '../engine/seasonStats';
+import { computeSeasonStats, computeGoldenBoot, type SeasonStats, type SeasonContext } from '../engine/seasonStats';
 import { getLeague } from '../data/leagues';
 import { getManager, applyManagerToXI, managerTactics } from '../data/managers';
 import type { TacticalShape } from '../engine/matchEngine';
@@ -52,10 +52,12 @@ function ordinalSuffix(n: number): string {
   return ['th', 'st', 'nd', 'rd'][n % 10] ?? 'th';
 }
 
-function ResultCardPanel({ team, row, position, totalTeams, leagueName }: { team: Team; row: StandingsRow; position: number; totalTeams: number; leagueName: string }) {
+function ResultCardPanel({ team, row, position, totalTeams, leagueName, stats }: { team: Team; row: StandingsRow; position: number; totalTeams: number; leagueName: string; stats?: SeasonStats | null }) {
   const unbeaten = row.played > 0 && row.lost === 0;
   const perfect = row.played > 0 && row.won === row.played;
   const title = perfect ? `★ PERFECTION · ${row.played}-0 ★` : unbeaten ? '★ THE INVINCIBLES ★' : `№ ${position} OF ${totalTeams}`;
+  const topScorer = stats?.playerOfSeason ?? stats?.players?.[0];
+  const scorerLine = topScorer ? `${topScorer.name} · ${topScorer.goals}G ${topScorer.assists}A` : null;
 
   const download = () => {
     const canvas = document.createElement('canvas');
@@ -104,9 +106,15 @@ function ResultCardPanel({ team, row, position, totalTeams, leagueName }: { team
       480,
     );
 
+    if (scorerLine) {
+      ctx.fillStyle = gold;
+      ctx.font = '600 26px Archivo, sans-serif';
+      ctx.fillText(`★ Star man: ${scorerLine}`, 600, 540);
+    }
+
     ctx.fillStyle = unbeaten ? 'rgba(246,239,223,.5)' : '#6B5F4A';
     ctx.font = '18px Archivo, sans-serif';
-    ctx.fillText('Fan-made game · not affiliated with any league, club or player', 600, 580);
+    ctx.fillText('Fan-made game · not affiliated with any league, club or player', 600, 588);
 
     const link = document.createElement('a');
     link.download = `${team.name.replace(/\s+/g, '-').toLowerCase()}-season.png`;
@@ -122,6 +130,11 @@ function ResultCardPanel({ team, row, position, totalTeams, leagueName }: { team
         <div className={`font-stamp text-[13px] ${unbeaten ? 'foil-text' : ''}`} style={unbeaten ? undefined : { color: '#E5C96B' }}>
           {title}
         </div>
+        {scorerLine && (
+          <div className="mt-2 text-[10.5px] tracking-[0.08em]" style={{ color: 'rgba(246,239,223,.75)' }}>
+            <span style={{ color: '#E5C96B' }}>★ STAR MAN</span> · {scorerLine}
+          </div>
+        )}
       </div>
       <div className="border-l border-dashed pl-5 text-center" style={{ borderColor: 'rgba(246,239,223,.35)' }}>
         <div className="font-stamp text-[38px] leading-none" style={{ color: '#F0DE9A' }}>
@@ -331,6 +344,12 @@ export default function Season() {
     // Precompute the full stats panel (players + verdict + insights) + the team names it references,
     // so both this done screen and My Career render exactly the same thing without the raw match blob.
     const stats = computeSeasonStats(userMs, userTeam.id, { xi, context });
+    // League-wide golden boot: attribute goals for every side, with the user fielding the XI they played.
+    if (xiByTeam) {
+      const gbXi = new Map(xiByTeam);
+      gbXi.set(userTeam.id, xi);
+      stats.goldenBoot = computeGoldenBoot(allMatches, gbXi, teamNames, userTeam.id);
+    }
     setFinalStats(stats);
     void putSeason(
       {
@@ -784,7 +803,7 @@ export default function Season() {
         {phase === 'done' && (
           <div className="mt-8 grid items-start gap-7 lg:grid-cols-[1fr_1.1fr]">
             <div className="flex flex-col gap-5">
-              {userRow && <ResultCardPanel team={userTeam} row={userRow} position={userPosition} totalTeams={table.length} leagueName={leagueName} />}
+              {userRow && <ResultCardPanel team={userTeam} row={userRow} position={userPosition} totalTeams={table.length} leagueName={leagueName} stats={finalStats} />}
               <button
                 type="button"
                 onClick={enterCup}
