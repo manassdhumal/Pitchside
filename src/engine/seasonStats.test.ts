@@ -1,14 +1,23 @@
 import { describe, it, expect } from 'vitest';
-import { computeSeasonStats } from './seasonStats';
-import type { Match } from '../types';
+import { computeSeasonStats, deriveSeasonInsights } from './seasonStats';
+import type { Match, Player, Position } from '../types';
 
-// Minimal match factory from the user's perspective. `home` = user plays at home.
-function m(userId: string, oppId: string, forG: number, againstG: number, home: boolean): Match {
+// Minimal match factory from the user's perspective. `home` = user plays at home. A fixed id keeps
+// the deterministic scorer attribution stable across runs.
+function m(userId: string, oppId: string, forG: number, againstG: number, home: boolean, id = Math.random().toString(36)): Match {
   return {
-    id: Math.random().toString(36), competitionId: 'c', round: 'r',
+    id, competitionId: 'c', round: 'r',
     homeTeamId: home ? userId : oppId, awayTeamId: home ? oppId : userId,
     homeScore: home ? forG : againstG, awayScore: home ? againstG : forG,
     homeXG: 0, awayXG: 0, homeWinProbability: 0, drawProbability: 0, awayWinProbability: 0, simulated: true,
+  };
+}
+
+function pl(id: string, position: Position, shooting: number, passing = 70): Player {
+  return {
+    id, firstName: 'P', lastName: id, nationality: 'X', retired: false, position, era: 'modern',
+    ratings: { overall: 75, pace: 70, shooting, passing, dribbling: 70, defending: 60, physical: 70 },
+    ratingsHistory: [], isLegend: false, isProcedural: false,
   };
 }
 
@@ -43,6 +52,41 @@ describe('computeSeasonStats', () => {
     expect(s.heaviestDefeat?.oppId).toBe('d');
     expect(s.form).toEqual(['W', 'D', 'W', 'L', 'W', 'D']);
     expect(s.cumulativePoints).toEqual([3, 4, 7, 7, 10, 11]);
+  });
+
+  it('attributes every goal to a scorer (goals sum to goals-for) and is deterministic', () => {
+    const u = 'me';
+    const xi = [pl('gk', 'GK', 20), pl('cb', 'CB', 40), pl('cm', 'CM', 65), pl('st', 'ST', 90)];
+    const matches = [m(u, 'a', 3, 0, true, 'fixed-1'), m(u, 'b', 2, 1, false, 'fixed-2')];
+    const s1 = computeSeasonStats(matches, u, { xi });
+    const totalGoals = (s1.players ?? []).reduce((t, p) => t + p.goals, 0);
+    expect(totalGoals).toBe(5); // 3 + 2 goals for
+    expect((s1.players ?? [])[0].goals).toBeGreaterThan(0); // a top scorer exists
+    // Assists never exceed goals; scorers are a subset of the XI.
+    const totalAssists = (s1.players ?? []).reduce((t, p) => t + p.assists, 0);
+    expect(totalAssists).toBeLessThanOrEqual(totalGoals);
+    // Deterministic: same matches + XI → identical attribution.
+    const s2 = computeSeasonStats(matches, u, { xi });
+    expect(s2.players).toEqual(s1.players);
+  });
+
+  it('derives a verdict + insights from league context', () => {
+    const u = 'me';
+    const matches = Array.from({ length: 6 }, (_, i) => m(u, `o${i}`, 3, 0, i % 2 === 0));
+    const s = computeSeasonStats(matches, u, {
+      context: { position: 1, teamCount: 20, goalsForRank: 1, goalsAgainstRank: 1, competition: 'Test League' },
+    });
+    // Unbeaten season → the Invincibles verdict wins over plain "Champions".
+    expect(s.verdict?.title).toBe('The Invincibles');
+    expect(s.insights?.some((i) => i.title.includes('attack'))).toBe(true);
+    expect(s.insights?.some((i) => i.title.includes('defence'))).toBe(true);
+  });
+
+  it('gives a relegation-tone verdict for a last-place finish', () => {
+    const s = computeSeasonStats([], 'me', {});
+    const { verdict } = deriveSeasonInsights(s, { position: 20, teamCount: 20, goalsForRank: 20, goalsAgainstRank: 20 });
+    expect(verdict.tone).toBe('bad');
+    expect(verdict.title).toBe('The wooden spoon');
   });
 
   it('handles a perfect unbeaten run', () => {

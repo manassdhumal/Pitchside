@@ -9,7 +9,7 @@ import { buildStandingsTable, generateRoundRobinFixtures, simulateLeagueFixtures
 import { simulateCup, type CupResult } from '../engine/cup';
 import { CupBracket } from '../components/CupBracket';
 import { SeasonStatsPanel } from '../components/SeasonStats';
-import { computeSeasonStats } from '../engine/seasonStats';
+import { computeSeasonStats, type SeasonStats, type SeasonContext } from '../engine/seasonStats';
 import { getLeague } from '../data/leagues';
 import { getManager, applyManagerToXI, managerTactics } from '../data/managers';
 import type { TacticalShape } from '../engine/matchEngine';
@@ -227,6 +227,9 @@ export default function Season() {
 
   const [matches, setMatches] = useState<Match[]>([]);
   const [table, setTable] = useState<StandingsRow[]>([]);
+  // The enriched end-of-season stats (players + verdict + insights), computed once at save time so the
+  // done screen shows exactly what's persisted for My Career.
+  const [finalStats, setFinalStats] = useState<SeasonStats | null>(null);
   const [revealCount, setRevealCount] = useState(0);
   const [playing, setPlaying] = useState(true);
 
@@ -312,15 +315,23 @@ export default function Season() {
     if (!managersEnabled || !userTeam || !managerId) return undefined;
     return new Map([[userTeam.id, managerTactics(getManager(managerId))]]);
   };
-  const saveSeason = (allMatches: Match[], finalTable: StandingsRow[]) => {
-    const pos = userTeam ? finalTable.findIndex((r) => r.teamId === userTeam.id) + 1 : 0;
-    const row = userTeam ? finalTable.find((r) => r.teamId === userTeam.id) : undefined;
-    // Precompute the full stats panel + the team names it references, so My Career can re-render it
-    // later without keeping the raw match blob or the live name map around.
-    const userMs = userTeam ? allMatches.filter((m) => m.homeTeamId === userTeam.id || m.awayTeamId === userTeam.id) : [];
-    const summary = userTeam
-      ? { stats: computeSeasonStats(userMs, userTeam.id), teamNames: Object.fromEntries(teamNames) }
-      : undefined;
+  const saveSeason = (allMatches: Match[], finalTable: StandingsRow[], xi: Player[]) => {
+    if (!userTeam) return;
+    const pos = finalTable.findIndex((r) => r.teamId === userTeam.id) + 1;
+    const row = finalTable.find((r) => r.teamId === userTeam.id);
+    const userMs = allMatches.filter((m) => m.homeTeamId === userTeam.id || m.awayTeamId === userTeam.id);
+    // League context for the verdict + rank-based insights (1 = best in each category).
+    const context: SeasonContext = {
+      position: pos,
+      teamCount: finalTable.length,
+      goalsForRank: 1 + finalTable.filter((r) => r.goalsFor > (row?.goalsFor ?? 0)).length,
+      goalsAgainstRank: 1 + finalTable.filter((r) => r.goalsAgainst < (row?.goalsAgainst ?? Infinity)).length,
+      competition: leagueName,
+    };
+    // Precompute the full stats panel (players + verdict + insights) + the team names it references,
+    // so both this done screen and My Career render exactly the same thing without the raw match blob.
+    const stats = computeSeasonStats(userMs, userTeam.id, { xi, context });
+    setFinalStats(stats);
     void putSeason(
       {
         id: `season-${Date.now()}`,
@@ -328,7 +339,7 @@ export default function Season() {
         competitionInstances: [{ templateId: COMPETITION_ID, teams: teamIdsRef.current, matches: allMatches, table: finalTable }],
       },
       // Denormalized bits for the My Career history list.
-      { teamId: userTeam?.id, competition: leagueName, position: pos || undefined, played: row?.played, points: row?.points, summary },
+      { teamId: userTeam.id, competition: leagueName, position: pos || undefined, played: row?.played, points: row?.points, summary: { stats, teamNames: Object.fromEntries(teamNames) } },
     );
   };
 
@@ -363,7 +374,7 @@ export default function Season() {
       setMatches(all);
       const t = buildStandingsTable(all, teamIds, POINTS_SYSTEM);
       setTable(t);
-      saveSeason(all, t);
+      saveSeason(all, t, startXi);
     }
   };
 
@@ -407,7 +418,7 @@ export default function Season() {
     const t = buildStandingsTable(all, teamIdsRef.current, POINTS_SYSTEM);
     setMatches(all);
     setTable(t);
-    saveSeason(all, t);
+    saveSeason(all, t, userXi);
     setPhase('revealing');
     setPlaying(true);
   };
@@ -832,7 +843,7 @@ export default function Season() {
 
         {phase === 'done' && userMatches.length > 0 && (
           <div className="mt-9">
-            <SeasonStatsPanel stats={computeSeasonStats(userMatches, userTeam.id)} teamNames={teamNames} />
+            <SeasonStatsPanel stats={finalStats ?? computeSeasonStats(userMatches, userTeam.id, { xi: userXi })} teamNames={teamNames} />
           </div>
         )}
 
