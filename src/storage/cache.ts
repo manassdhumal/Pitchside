@@ -1,63 +1,105 @@
 import type { Player, Team, Season } from '../types';
-import * as db from './db';
+import { api } from '../api/client';
 
-// In-memory cache over IndexedDB so repeated reads within a session (e.g. simulating
-// many seasons back-to-back) don't round-trip to disk every time.
+// Session caches over the accounts API so repeated reads within a session don't re-fetch. Players are
+// persisted embedded with their team on the server, so `putPlayers` just seeds this cache and `putTeam`
+// gathers the team's players from it to save alongside the team; `getTeam` re-seeds it from the server.
 const playerCache = new Map<string, Player>();
 const teamCache = new Map<string, Team>();
 const seasonCache = new Map<string, Season>();
 
+export interface TeamSummary {
+  id: string;
+  name: string;
+  createdAt: number;
+  team: Team;
+}
+
+export interface SeasonSummary {
+  id: string;
+  teamId: string | null;
+  competition: string | null;
+  position: number | null;
+  played: number | null;
+  points: number | null;
+  summary: Record<string, unknown> | null;
+  createdAt: number;
+}
+
+/** Extra denormalized fields for the history list, sent alongside the full season blob. */
+export interface SeasonMeta {
+  teamId?: string;
+  competition?: string;
+  position?: number;
+  played?: number;
+  points?: number;
+  summary?: Record<string, unknown>;
+}
+
 export async function getPlayer(id: string): Promise<Player | undefined> {
-  if (playerCache.has(id)) return playerCache.get(id);
-  const [player] = await db.getPlayersByIds([id]);
-  if (player) playerCache.set(id, player);
-  return player;
+  return playerCache.get(id);
 }
 
 export async function getPlayers(ids: string[]): Promise<Player[]> {
-  const cached: Player[] = [];
-  const missing: string[] = [];
-  for (const id of ids) {
-    const hit = playerCache.get(id);
-    if (hit) cached.push(hit);
-    else missing.push(id);
-  }
-  if (missing.length > 0) {
-    const fetched = await db.getPlayersByIds(missing);
-    for (const p of fetched) playerCache.set(p.id, p);
-    cached.push(...fetched);
-  }
-  const byId = new Map(cached.map((p) => [p.id, p]));
-  return ids.map((id) => byId.get(id)).filter((p): p is Player => p !== undefined);
+  return ids.map((id) => playerCache.get(id)).filter((p): p is Player => p !== undefined);
 }
 
 export async function putPlayers(players: Player[]): Promise<void> {
   for (const p of players) playerCache.set(p.id, p);
-  await db.savePlayers(players);
 }
 
 export async function getTeam(id: string): Promise<Team | undefined> {
-  if (teamCache.has(id)) return teamCache.get(id);
-  const team = await db.getTeam(id);
-  if (team) teamCache.set(id, team);
-  return team;
+  const cached = teamCache.get(id);
+  if (cached) return cached;
+  try {
+    const { team, players } = await api.get<{ team: Team; players: Player[] }>(`/api/teams/${id}`);
+    for (const p of players) playerCache.set(p.id, p);
+    teamCache.set(team.id, team);
+    return team;
+  } catch {
+    return undefined;
+  }
 }
 
 export async function putTeam(team: Team): Promise<void> {
+  const players = team.squad.map((pid) => playerCache.get(pid)).filter((p): p is Player => p !== undefined);
+  await api.post('/api/teams', { team, players });
   teamCache.set(team.id, team);
-  await db.saveTeam(team);
+}
+
+export async function deleteTeam(id: string): Promise<void> {
+  await api.del(`/api/teams/${id}`);
+  teamCache.delete(id);
+}
+
+export async function getAllTeams(): Promise<TeamSummary[]> {
+  return api.get<TeamSummary[]>('/api/teams');
 }
 
 export async function getSeason(id: string): Promise<Season | undefined> {
-  if (seasonCache.has(id)) return seasonCache.get(id);
-  const season = await db.getSeason(id);
-  if (season) seasonCache.set(id, season);
-  return season;
+  const cached = seasonCache.get(id);
+  if (cached) return cached;
+  try {
+    const { season } = await api.get<{ season: Season }>(`/api/seasons/${id}`);
+    seasonCache.set(season.id, season);
+    return season;
+  } catch {
+    return undefined;
+  }
 }
 
-export async function putSeason(season: Season): Promise<void> {
+export async function putSeason(season: Season, meta: SeasonMeta = {}): Promise<void> {
+  await api.post('/api/seasons', { season, ...meta });
   seasonCache.set(season.id, season);
-  await db.saveSeason(season);
+}
+
+export async function deleteSeason(id: string): Promise<void> {
+  await api.del(`/api/seasons/${id}`);
+  seasonCache.delete(id);
+}
+
+export async function getAllSeasons(): Promise<SeasonSummary[]> {
+  return api.get<SeasonSummary[]>('/api/seasons');
 }
 
 export function clearCache(): void {

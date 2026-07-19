@@ -1,6 +1,27 @@
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { useFloodlights } from '../../state/useFloodlights';
+import { useAuth } from '../../state/AuthContext';
+
+/** The signed-in manager's controls in the nav: a link to their history + sign-out. */
+function UserMenu() {
+  const { user, logout } = useAuth();
+  if (!user) return null;
+  return (
+    <div className="flex items-center gap-2.5">
+      <Link to="/career" className="text-[11px] uppercase tracking-[0.12em] no-underline hover:text-[var(--brick)]" style={{ color: 'var(--ink)' }}>My Career</Link>
+      <span className="opacity-40">·</span>
+      <span className="text-[11px] normal-case" style={{ color: 'var(--soft)' }} title={`Signed in as ${user.username}`}>{user.username}</span>
+      <button
+        type="button" onClick={() => void logout()}
+        className="cursor-pointer border-[1.5px] bg-transparent px-2 py-0.5 text-[9.5px] uppercase tracking-[0.08em] hover:border-[var(--brick)]"
+        style={{ borderColor: 'var(--toggle-border)', color: 'var(--ink)' }}
+      >
+        Sign out
+      </button>
+    </div>
+  );
+}
 
 /** The brand lockup: the "P" monogram mark + PitchSide wordmark, linking home. Shown in every nav. */
 export function BrandMark() {
@@ -62,6 +83,7 @@ export function ProgrammeNav({ left, right }: NavProps) {
       </div>
       <div className="flex flex-wrap items-center gap-4">
         {right}
+        <UserMenu />
         <FloodlightsToggle />
       </div>
     </div>

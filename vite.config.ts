@@ -11,6 +11,11 @@ export default defineConfig({
     // taken (strictPort) rather than silently drifting to 5174.
     port: process.env.PORT ? Number(process.env.PORT) : 5173,
     strictPort: true,
+    // Proxy the accounts API to the local backend so the browser talks same-origin in dev (no CORS,
+    // and the session cookie is set on the 5173 origin). In production the frontend calls VITE_API_URL.
+    proxy: {
+      '/api': { target: process.env.API_ORIGIN ?? 'http://localhost:3001', changeOrigin: true },
+    },
     // The scraper pipeline (scripts/scrape) continuously writes into this directory in the
     // background; without this, every scraped file triggers a dev-server full reload
     // mid-session (public/ changes normally cause one). Function form because glob patterns

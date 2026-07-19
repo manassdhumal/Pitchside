@@ -313,11 +313,17 @@ export default function Season() {
     return new Map([[userTeam.id, managerTactics(getManager(managerId))]]);
   };
   const saveSeason = (allMatches: Match[], finalTable: StandingsRow[]) => {
-    putSeason({
-      id: `season-${Date.now()}`,
-      year: new Date().getFullYear(),
-      competitionInstances: [{ templateId: COMPETITION_ID, teams: teamIdsRef.current, matches: allMatches, table: finalTable }],
-    });
+    const pos = userTeam ? finalTable.findIndex((r) => r.teamId === userTeam.id) + 1 : 0;
+    const row = userTeam ? finalTable.find((r) => r.teamId === userTeam.id) : undefined;
+    void putSeason(
+      {
+        id: `season-${Date.now()}`,
+        year: new Date().getFullYear(),
+        competitionInstances: [{ templateId: COMPETITION_ID, teams: teamIdsRef.current, matches: allMatches, table: finalTable }],
+      },
+      // Denormalized bits for the My Career history list.
+      { teamId: userTeam?.id, competition: leagueName, position: pos || undefined, played: row?.played, points: row?.points },
+    );
   };
 
   const runSeason = () => {
