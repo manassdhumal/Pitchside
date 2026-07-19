@@ -40,4 +40,6 @@ export interface Player {
   isLegend: boolean;
   isProcedural: boolean;
   sourceNote?: string;
+  /** Working age for career mode's aging curve. Seeded pseudo-age on first advance if unset. */
+  careerAge?: number;
 }

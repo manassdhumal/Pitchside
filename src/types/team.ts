@@ -21,4 +21,6 @@ export interface Team {
   formation: Formation;
   isUserCreated: boolean;
   isProcedural: boolean;
+  /** Career mode: how many seasons this drafted squad has played (undefined/1 = the first). */
+  careerSeason?: number;
 }

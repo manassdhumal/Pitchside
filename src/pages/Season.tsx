@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAppState, useAppDispatch } from '../state/AppContext';
-import { getTeam, getPlayers, putSeason } from '../storage/cache';
+import { getTeam, getPlayers, putSeason, putPlayers, putTeam } from '../storage/cache';
+import { ageSquad } from '../engine/aging';
 import { loadIndex, type ClubSeasonIndexEntry } from '../data/historicalData';
 import { loadLeagueOpponents } from '../data/leagueOpponents';
 import { computeTeamOvr, type TeamOvr } from '../engine/teamRatings';
@@ -226,6 +227,8 @@ export default function Season() {
   const [entries, setEntries] = useState<ClubSeasonIndexEntry[] | null>(null);
 
   const [chosenLeague, setChosenLeague] = useState<string | null>(null);
+  const [advancing, setAdvancing] = useState(false);
+  const careerSeason = userTeam?.careerSeason ?? 1;
   const [phase, setPhase] = useState<'league' | 'building' | 'ready' | 'revealing' | 'transfer' | 'done' | 'cup-reveal' | 'cup-done'>('league');
   const [buildError, setBuildError] = useState<string | null>(null);
 
@@ -327,6 +330,30 @@ export default function Season() {
   const buildTactics = (): Map<string, TacticalShape> | undefined => {
     if (!managersEnabled || !userTeam || !managerId) return undefined;
     return new Map([[userTeam.id, managerTactics(getManager(managerId))]]);
+  };
+
+  // Career mode: age the drafted squad a year, persist it, and reset to a fresh season with the same
+  // (now older) XI. Each completed season is already saved to My Career, so the record accumulates.
+  const advanceSeason = async () => {
+    if (!userTeam || advancing) return;
+    setAdvancing(true);
+    const aged = ageSquad(userPlayers);
+    await putPlayers(aged); // seed the cache so putTeam persists the aged squad
+    const updatedTeam: Team = { ...userTeam, careerSeason: (userTeam.careerSeason ?? 1) + 1 };
+    await putTeam(updatedTeam);
+
+    setUserPlayers(aged);
+    setUserTeam(updatedTeam);
+    // Wipe last season's state and drop back to league selection.
+    setUserXi([]); setMatches([]); setTable([]); setFinalStats(null);
+    setCup(null); setCupReveal(0); setRevealCount(0); setPlaying(true);
+    setChosenLeague(null); setBuildError(null);
+    setXiByTeam(null); setTeamNames(new Map()); setOvrByTeam(new Map());
+    opponentsRef.current = []; fixturesRef.current = []; teamIdsRef.current = [];
+    awaitingTransferRef.current = false;
+    setPhase('league');
+    setAdvancing(false);
+    window.scrollTo({ top: 0 });
   };
   const saveSeason = (allMatches: Match[], finalTable: StandingsRow[], xi: Player[]) => {
     if (!userTeam) return;
@@ -546,7 +573,9 @@ export default function Season() {
         {/* ============ LEAGUE PICKER ============ */}
         {phase === 'league' && (
           <div className="mt-10 border-[3px] px-6 py-12 sm:px-10" style={{ borderColor: '#1D2B45', borderStyle: 'double', background: '#FDFAF1', boxShadow: '6px 6px 0 var(--card-shadow)' }}>
-            <div className="text-center text-[11px] uppercase tracking-[0.2em]" style={{ color: '#6B5F4A' }}>Your XI is signed · Now choose your division</div>
+            <div className="text-center text-[11px] uppercase tracking-[0.2em]" style={{ color: '#6B5F4A' }}>
+              {careerSeason > 1 ? `Career · Season ${careerSeason} · your squad is a year older` : 'Your XI is signed · Now choose your division'}
+            </div>
             <div className="font-display my-3 text-center text-[30px] font-extrabold sm:text-[40px]" style={{ color: '#1D2B45' }}>
               Which league do you enter?
             </div>
@@ -827,6 +856,24 @@ export default function Season() {
                   Finished {userPosition}{ordinalSuffix(userPosition)} — top 4 needed for the Champions League. Maybe next season.
                 </div>
               )}
+              {/* Career mode: age the squad and roll into the next season with the same XI. */}
+              <div className="border-[1.5px] px-4 py-3.5" style={{ borderColor: '#1D2B45', background: '#FDFAF1', boxShadow: '3px 3px 0 var(--card-shadow)' }}>
+                <div className="flex items-center gap-2">
+                  <span className="font-stamp text-[12px] uppercase tracking-[0.12em]" style={{ color: '#A83E2C' }}>Career · Season {careerSeason}</span>
+                </div>
+                <p className="mt-1 text-[12.5px] leading-snug" style={{ color: '#3C3325' }}>
+                  Keep this XI and play on — your squad ages a year (youngsters improve, veterans decline).
+                </p>
+                <button
+                  type="button"
+                  onClick={() => void advanceSeason()}
+                  disabled={advancing}
+                  className="font-stamp mt-2.5 w-full cursor-pointer border-0 px-6 py-3 text-[14px] uppercase tracking-[0.08em] disabled:opacity-60"
+                  style={{ background: 'var(--btn-bg, #1D2B45)', color: 'var(--btn-fg, #F6EFDF)', boxShadow: '3px 3px 0 var(--btn-shadow, #A83E2C)' }}
+                >
+                  {advancing ? 'Ageing the squad…' : `Advance to Season ${careerSeason + 1} →`}
+                </button>
+              </div>
             </div>
             <section style={{ background: '#FDFAF1', border: '1px solid #D8CBAD', boxShadow: '5px 5px 0 var(--card-shadow)' }}>
               <div className="flex items-center justify-between border-b-[3px] px-4 py-3.5" style={{ borderColor: '#1D2B45', borderBottomStyle: 'double' }}>
