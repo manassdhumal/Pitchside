@@ -1,9 +1,10 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useMemo, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { ProgrammeNav, ProgrammeFooter } from '../components/chrome/ProgrammeChrome';
 import { getAllTeams, getAllSeasons, getTeam, getPlayers, deleteSeason, deleteTeam, type TeamSummary, type SeasonSummary } from '../storage/cache';
 import { SeasonStatsPanel } from '../components/SeasonStats';
 import type { StoredSeasonStats } from '../engine/seasonStats';
+import { computeCareerSummary } from '../engine/careerSummary';
 import { POSITION_TO_BROAD, type BroadPosition, type Player } from '../types';
 
 const CREAM = '#FDFAF1';
@@ -72,6 +73,7 @@ export default function Career() {
   };
 
   const teamName = (id: string | null) => teams.find((t) => t.id === id)?.name ?? 'Team';
+  const career = useMemo(() => computeCareerSummary(seasons), [seasons]);
 
   return (
     <div className="flex min-h-svh flex-col">
@@ -86,6 +88,9 @@ export default function Career() {
           <div className="mt-10 border border-dashed px-5 py-16 text-center text-sm italic" style={{ borderColor: LINE, color: SOFT }}>Loading your history…</div>
         ) : (
           <>
+            {/* CAREER DASHBOARD */}
+            {seasons.length > 0 && <CareerDashboard c={career} />}
+
             {/* TEAMS */}
             <div className="mb-3 mt-9 flex items-center gap-2.5">
               <span className="font-display text-[20px] font-bold" style={{ color: INK }}>Your teams</span>
@@ -218,6 +223,51 @@ function TeamXI({ players, formation }: { players: Player[] | undefined; formati
           </div>
         );
       })}
+    </div>
+  );
+}
+
+const GOLD = '#C7A63E';
+
+/** Whole-career overview: headline record tiles + an all-time top-scorers list. */
+function CareerDashboard({ c }: { c: ReturnType<typeof computeCareerSummary> }) {
+  const played = c.wins + c.draws + c.losses;
+  const winRate = played ? Math.round((c.wins / played) * 100) : 0;
+  const Stat = ({ label, value, ink = INK }: { label: string; value: string | number; ink?: string }) => (
+    <div className="flex flex-col items-center justify-center border px-2 py-3 text-center" style={{ borderColor: LINE, background: CREAM }}>
+      <div className="font-stamp text-[22px] leading-none" style={{ color: ink }}>{value}</div>
+      <div className="mt-1 text-[9px] font-bold uppercase tracking-[0.1em]" style={{ color: SOFT }}>{label}</div>
+    </div>
+  );
+  return (
+    <div className="mb-4 mt-8">
+      <div className="mb-3 flex items-center gap-2.5">
+        <span className="font-display text-[20px] font-bold" style={{ color: INK }}>Career record</span>
+        <span className="h-px flex-1" style={{ background: LINE }} />
+      </div>
+      <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
+        <Stat label="Seasons" value={c.seasonsPlayed} />
+        <Stat label="Titles" value={c.titles} ink={c.titles > 0 ? GOLD : INK} />
+        <Stat label="Best finish" value={c.bestFinish ? `${c.bestFinish}${ord(c.bestFinish)}` : '–'} />
+        <Stat label="Total points" value={c.totalPoints} ink={BRICK} />
+        <Stat label="Win rate" value={`${winRate}%`} />
+        <Stat label="Goals" value={c.goalsFor} ink={GREEN} />
+      </div>
+      {c.topScorers.length > 0 && (
+        <div className="mt-3">
+          <div className="mb-2 text-[10px] font-bold uppercase tracking-[0.14em]" style={{ color: SOFT }}>All-time top scorers</div>
+          <div style={{ background: CREAM, border: `1px solid ${LINE}` }}>
+            {c.topScorers.map((s, i) => (
+              <div key={s.name} className="grid grid-cols-[24px_1fr_auto_auto] items-center gap-3 px-3 py-2" style={{ borderTop: i === 0 ? 'none' : `1px solid #EDE3CB` }}>
+                <span className="font-stamp grid h-[20px] w-[20px] place-items-center text-[11px]" style={{ background: i === 0 ? GOLD : INK, color: CREAM, borderRadius: 3 }}>{i + 1}</span>
+                <span className="truncate text-[13.5px] font-semibold" style={{ color: INK }}>{s.name}</span>
+                <span className="font-stamp w-9 text-center text-[15px]" style={{ color: BRICK }}>{s.goals}</span>
+                <span className="w-9 text-center text-[12px]" style={{ color: SOFT }}>{s.assists}a</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
