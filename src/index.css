@@ -38,6 +38,14 @@
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.3 0 0 0 0 0.2 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
+/* Accessibility: a clear keyboard focus ring on every interactive element. :focus-visible is
+   only matched for keyboard/AT focus, so pointer users never see it — this just makes tabbing
+   through the many custom-styled buttons legible. */
+:focus-visible {
+  outline: 2px solid var(--brick);
+  outline-offset: 2px;
+}
+
 /* Floodlights (night mode): mown-grass stripes, chalk-cream ink. Physical print objects
    (stickers, tickets, drum hub) intentionally stay cream via hardcoded colors. */
 :root[data-floodlights="on"] {

@@ -57,6 +57,9 @@ export function FloodlightsToggle() {
     <button
       type="button"
       onClick={toggle}
+      role="switch"
+      aria-checked={night}
+      aria-label="Floodlights night mode"
       title="Toggle green night mode"
       className="flex cursor-pointer items-center gap-2 border-[1.5px] bg-transparent px-2.5 py-1 hover:border-[var(--brick)]"
       style={{ borderColor: 'var(--toggle-border)', color: 'var(--ink)' }}

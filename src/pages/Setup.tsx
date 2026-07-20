@@ -44,10 +44,13 @@ function CardSection({ title, hint, children }: { title: string; hint?: string; 
   );
 }
 
-function Knob({ on, onClick, disabled }: { on: boolean; onClick?: () => void; disabled?: boolean }) {
+function Knob({ on, onClick, disabled, label }: { on: boolean; onClick?: () => void; disabled?: boolean; label: string }) {
   return (
     <button
       type="button"
+      role="switch"
+      aria-checked={on}
+      aria-label={label}
       onClick={onClick}
       disabled={disabled}
       className="relative h-7 w-[52px] cursor-pointer border-[1.5px] p-0 disabled:cursor-not-allowed"
@@ -57,6 +60,7 @@ function Knob({ on, onClick, disabled }: { on: boolean; onClick?: () => void; di
       }}
     >
       <span
+        aria-hidden="true"
         className="font-stamp absolute top-0.5 grid h-5 w-5 place-items-center text-[8px] transition-[left] duration-150"
         style={{
           left: on ? 26 : 2,
@@ -262,6 +266,7 @@ export default function Setup() {
                 <div className="mt-4 flex items-center justify-between border-t border-dashed pt-3.5" style={{ borderColor: '#C9B98F' }}>
                   <span className="text-[13px] font-bold" style={{ color: '#3C3325' }}>Show ratings</span>
                   <Knob
+                    label="Show player ratings"
                     on={difficulty === 'hard' ? false : showRatings}
                     onClick={() => setShowRatings((r) => !r)}
                     disabled={difficulty === 'hard'}
@@ -308,13 +313,13 @@ export default function Setup() {
                   <div className="mb-2.5 text-[11px] uppercase tracking-[0.14em]" style={{ color: '#A83E2C' }}>Advanced</div>
                   <div className="mb-2.5 flex items-center justify-between">
                     <span className="text-[13px] font-semibold" style={{ color: '#3C3325' }}>Managers</span>
-                    <Knob on={managersEnabled} onClick={() => setManagersEnabled((m) => !m)} />
+                    <Knob label="Managers" on={managersEnabled} onClick={() => setManagersEnabled((m) => !m)} />
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-[13px] font-semibold" style={{ color: '#3C3325' }}>
                       January transfer window
                     </span>
-                    <Knob on={transferWindowEnabled} onClick={() => setTransferWindowEnabled((t) => !t)} />
+                    <Knob label="January transfer window" on={transferWindowEnabled} onClick={() => setTransferWindowEnabled((t) => !t)} />
                   </div>
                 </div>
               </CardSection>
