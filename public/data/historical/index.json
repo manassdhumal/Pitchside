@@ -1128,6 +1128,552 @@
       },
       "crestIcon": "shield",
       "tier": 4
+    },
+    {
+      "id": "brighton-hove-albion",
+      "name": "Brighton & Hove Albion",
+      "shortName": "BHA",
+      "leagueId": "premier-league",
+      "wikiTitle": "Brighton & Hove Albion F.C.",
+      "colors": {
+        "primary": "#0057B8",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 2
+    },
+    {
+      "id": "brentford",
+      "name": "Brentford",
+      "shortName": "BRE",
+      "leagueId": "premier-league",
+      "wikiTitle": "Brentford F.C.",
+      "colors": {
+        "primary": "#E30613",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "nottingham-forest",
+      "name": "Nottingham Forest",
+      "shortName": "NFO",
+      "leagueId": "premier-league",
+      "wikiTitle": "Nottingham Forest F.C.",
+      "colors": {
+        "primary": "#DD0000",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "tower",
+      "tier": 2
+    },
+    {
+      "id": "norwich-city",
+      "name": "Norwich City",
+      "shortName": "NOR",
+      "leagueId": "premier-league",
+      "wikiTitle": "Norwich City F.C.",
+      "colors": {
+        "primary": "#FFF200",
+        "secondary": "#00A650"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "watford",
+      "name": "Watford",
+      "shortName": "WAT",
+      "leagueId": "premier-league",
+      "wikiTitle": "Watford F.C.",
+      "colors": {
+        "primary": "#FBEE23",
+        "secondary": "#ED2127"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "stoke-city",
+      "name": "Stoke City",
+      "shortName": "STK",
+      "leagueId": "premier-league",
+      "wikiTitle": "Stoke City F.C.",
+      "colors": {
+        "primary": "#E03A3E",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "swansea-city",
+      "name": "Swansea City",
+      "shortName": "SWA",
+      "leagueId": "premier-league",
+      "wikiTitle": "Swansea City A.F.C.",
+      "colors": {
+        "primary": "#000000",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "burnley",
+      "name": "Burnley",
+      "shortName": "BUR",
+      "leagueId": "premier-league",
+      "wikiTitle": "Burnley F.C.",
+      "colors": {
+        "primary": "#6C1D45",
+        "secondary": "#99D6EA"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "queens-park-rangers",
+      "name": "Queens Park Rangers",
+      "shortName": "QPR",
+      "leagueId": "premier-league",
+      "wikiTitle": "Queens Park Rangers F.C.",
+      "colors": {
+        "primary": "#1D5BA4",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "ipswich-town",
+      "name": "Ipswich Town",
+      "shortName": "IPS",
+      "leagueId": "premier-league",
+      "wikiTitle": "Ipswich Town F.C.",
+      "colors": {
+        "primary": "#3A64A3",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "sc-freiburg",
+      "name": "SC Freiburg",
+      "shortName": "SCF",
+      "leagueId": "bundesliga",
+      "wikiTitle": "SC Freiburg",
+      "colors": {
+        "primary": "#000000",
+        "secondary": "#E30613"
+      },
+      "crestIcon": "shield",
+      "tier": 2
+    },
+    {
+      "id": "union-berlin",
+      "name": "Union Berlin",
+      "shortName": "FCU",
+      "leagueId": "bundesliga",
+      "wikiTitle": "1. FC Union Berlin",
+      "colors": {
+        "primary": "#E30613",
+        "secondary": "#FFE500"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "augsburg",
+      "name": "FC Augsburg",
+      "shortName": "FCA",
+      "leagueId": "bundesliga",
+      "wikiTitle": "FC Augsburg",
+      "colors": {
+        "primary": "#BA3733",
+        "secondary": "#46714D"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "hannover-96",
+      "name": "Hannover 96",
+      "shortName": "H96",
+      "leagueId": "bundesliga",
+      "wikiTitle": "Hannover 96",
+      "colors": {
+        "primary": "#00679A",
+        "secondary": "#000000"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "kaiserslautern",
+      "name": "1. FC Kaiserslautern",
+      "shortName": "FCK",
+      "leagueId": "bundesliga",
+      "wikiTitle": "1. FC Kaiserslautern",
+      "colors": {
+        "primary": "#E30613",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "nurnberg",
+      "name": "1. FC Nürnberg",
+      "shortName": "FCN",
+      "leagueId": "bundesliga",
+      "wikiTitle": "1. FC Nürnberg",
+      "colors": {
+        "primary": "#8B0000",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "fortuna-dusseldorf",
+      "name": "Fortuna Düsseldorf",
+      "shortName": "F95",
+      "leagueId": "bundesliga",
+      "wikiTitle": "Fortuna Düsseldorf",
+      "colors": {
+        "primary": "#E30613",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "arminia-bielefeld",
+      "name": "Arminia Bielefeld",
+      "shortName": "DSC",
+      "leagueId": "bundesliga",
+      "wikiTitle": "Arminia Bielefeld",
+      "colors": {
+        "primary": "#004E9E",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "osasuna",
+      "name": "CA Osasuna",
+      "shortName": "OSA",
+      "leagueId": "la-liga",
+      "wikiTitle": "CA Osasuna",
+      "colors": {
+        "primary": "#0A346F",
+        "secondary": "#D91A21"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "rayo-vallecano",
+      "name": "Rayo Vallecano",
+      "shortName": "RAY",
+      "leagueId": "la-liga",
+      "wikiTitle": "Rayo Vallecano",
+      "colors": {
+        "primary": "#FFFFFF",
+        "secondary": "#E53027"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "girona",
+      "name": "Girona FC",
+      "shortName": "GIR",
+      "leagueId": "la-liga",
+      "wikiTitle": "Girona FC",
+      "colors": {
+        "primary": "#D5001C",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "granada",
+      "name": "Granada CF",
+      "shortName": "GRA",
+      "leagueId": "la-liga",
+      "wikiTitle": "Granada CF",
+      "colors": {
+        "primary": "#C4122E",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "levante",
+      "name": "Levante UD",
+      "shortName": "LEV",
+      "leagueId": "la-liga",
+      "wikiTitle": "Levante UD",
+      "colors": {
+        "primary": "#004C9F",
+        "secondary": "#B4023B"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "mallorca",
+      "name": "RCD Mallorca",
+      "shortName": "MLL",
+      "leagueId": "la-liga",
+      "wikiTitle": "RCD Mallorca",
+      "colors": {
+        "primary": "#E30613",
+        "secondary": "#000000"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "deportivo-alaves",
+      "name": "Deportivo Alavés",
+      "shortName": "ALA",
+      "leagueId": "la-liga",
+      "wikiTitle": "Deportivo Alavés",
+      "colors": {
+        "primary": "#004B9E",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "las-palmas",
+      "name": "UD Las Palmas",
+      "shortName": "LPA",
+      "leagueId": "la-liga",
+      "wikiTitle": "UD Las Palmas",
+      "colors": {
+        "primary": "#FEDD00",
+        "secondary": "#0055A4"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "sassuolo",
+      "name": "US Sassuolo",
+      "shortName": "SAS",
+      "leagueId": "serie-a",
+      "wikiTitle": "U.S. Sassuolo Calcio",
+      "colors": {
+        "primary": "#00A752",
+        "secondary": "#000000"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "lecce",
+      "name": "US Lecce",
+      "shortName": "LEC",
+      "leagueId": "serie-a",
+      "wikiTitle": "U.S. Lecce",
+      "colors": {
+        "primary": "#EE2622",
+        "secondary": "#FFE500"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "empoli",
+      "name": "Empoli FC",
+      "shortName": "EMP",
+      "leagueId": "serie-a",
+      "wikiTitle": "Empoli F.C.",
+      "colors": {
+        "primary": "#00579C",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "palermo",
+      "name": "Palermo FC",
+      "shortName": "PAL",
+      "leagueId": "serie-a",
+      "wikiTitle": "Palermo F.C.",
+      "colors": {
+        "primary": "#EC98B9",
+        "secondary": "#000000"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "brescia",
+      "name": "Brescia Calcio",
+      "shortName": "BRE",
+      "leagueId": "serie-a",
+      "wikiTitle": "Brescia Calcio",
+      "colors": {
+        "primary": "#0A50A1",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "monza",
+      "name": "AC Monza",
+      "shortName": "MON",
+      "leagueId": "serie-a",
+      "wikiTitle": "A.C. Monza",
+      "colors": {
+        "primary": "#E30613",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "salernitana",
+      "name": "US Salernitana",
+      "shortName": "SAL",
+      "leagueId": "serie-a",
+      "wikiTitle": "U.S. Salernitana 1919",
+      "colors": {
+        "primary": "#6F1E23",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "spezia",
+      "name": "Spezia Calcio",
+      "shortName": "SPE",
+      "leagueId": "serie-a",
+      "wikiTitle": "Spezia Calcio",
+      "colors": {
+        "primary": "#000000",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "brest",
+      "name": "Stade Brestois",
+      "shortName": "BRE",
+      "leagueId": "ligue-1",
+      "wikiTitle": "Stade Brestois 29",
+      "colors": {
+        "primary": "#E30613",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "lorient",
+      "name": "FC Lorient",
+      "shortName": "LOR",
+      "leagueId": "ligue-1",
+      "wikiTitle": "FC Lorient",
+      "colors": {
+        "primary": "#F58220",
+        "secondary": "#000000"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "metz",
+      "name": "FC Metz",
+      "shortName": "MET",
+      "leagueId": "ligue-1",
+      "wikiTitle": "FC Metz",
+      "colors": {
+        "primary": "#8E1B2A",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "auxerre",
+      "name": "AJ Auxerre",
+      "shortName": "AJA",
+      "leagueId": "ligue-1",
+      "wikiTitle": "AJ Auxerre",
+      "colors": {
+        "primary": "#0055A4",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "guingamp",
+      "name": "EA Guingamp",
+      "shortName": "GUI",
+      "leagueId": "ligue-1",
+      "wikiTitle": "En Avant Guingamp",
+      "colors": {
+        "primary": "#E30613",
+        "secondary": "#000000"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "sochaux",
+      "name": "FC Sochaux",
+      "shortName": "SOC",
+      "leagueId": "ligue-1",
+      "wikiTitle": "FC Sochaux-Montbéliard",
+      "colors": {
+        "primary": "#FFE500",
+        "secondary": "#004A99"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "caen",
+      "name": "SM Caen",
+      "shortName": "CAE",
+      "leagueId": "ligue-1",
+      "wikiTitle": "Stade Malherbe Caen",
+      "colors": {
+        "primary": "#E30613",
+        "secondary": "#0055A4"
+      },
+      "crestIcon": "shield",
+      "tier": 3
+    },
+    {
+      "id": "troyes",
+      "name": "ES Troyes AC",
+      "shortName": "TRO",
+      "leagueId": "ligue-1",
+      "wikiTitle": "ES Troyes AC",
+      "colors": {
+        "primary": "#00579C",
+        "secondary": "#FFFFFF"
+      },
+      "crestIcon": "shield",
+      "tier": 3
     }
   ],
   "entries": [
@@ -1321,7 +1867,7 @@
       "season": "2024-25",
       "playerCount": 35,
       "maxApps": 54,
-      "strength": 74
+      "strength": 73
     },
     {
       "leagueId": "premier-league",
@@ -1337,7 +1883,7 @@
       "season": "2011-12",
       "playerCount": 31,
       "maxApps": 56,
-      "strength": 84
+      "strength": 85
     },
     {
       "leagueId": "premier-league",
@@ -1585,7 +2131,7 @@
       "season": "2021-22",
       "playerCount": 29,
       "maxApps": 36,
-      "strength": 55
+      "strength": 54
     },
     {
       "leagueId": "premier-league",
@@ -1761,7 +2307,7 @@
       "season": "2020-21",
       "playerCount": 34,
       "maxApps": 51,
-      "strength": 77
+      "strength": 78
     },
     {
       "leagueId": "premier-league",
@@ -2089,7 +2635,7 @@
       "season": "2017-18",
       "playerCount": 33,
       "maxApps": 38,
-      "strength": 76
+      "strength": 77
     },
     {
       "leagueId": "premier-league",
@@ -2121,7 +2667,7 @@
       "season": "2021-22",
       "playerCount": 29,
       "maxApps": 37,
-      "strength": 73
+      "strength": 74
     },
     {
       "leagueId": "premier-league",
@@ -2153,7 +2699,7 @@
       "season": "2025-26",
       "playerCount": 27,
       "maxApps": 57,
-      "strength": 77
+      "strength": 78
     },
     {
       "leagueId": "premier-league",
@@ -2169,7 +2715,7 @@
       "season": "2013-14",
       "playerCount": 33,
       "maxApps": 3,
-      "strength": 54
+      "strength": 55
     },
     {
       "leagueId": "premier-league",
@@ -2201,7 +2747,7 @@
       "season": "2017-18",
       "playerCount": 32,
       "maxApps": 41,
-      "strength": 74
+      "strength": 75
     },
     {
       "leagueId": "premier-league",
@@ -2353,7 +2899,7 @@
       "season": "2023-24",
       "playerCount": 31,
       "maxApps": 41,
-      "strength": 79
+      "strength": 80
     },
     {
       "leagueId": "premier-league",
@@ -2401,7 +2947,7 @@
       "season": "2015-16",
       "playerCount": 31,
       "maxApps": 47,
-      "strength": 73
+      "strength": 72
     },
     {
       "leagueId": "premier-league",
@@ -2505,7 +3051,7 @@
       "season": "2019-20",
       "playerCount": 39,
       "maxApps": 57,
-      "strength": 76
+      "strength": 77
     },
     {
       "leagueId": "premier-league",
@@ -2529,7 +3075,7 @@
       "season": "2022-23",
       "playerCount": 49,
       "maxApps": 43,
-      "strength": 75
+      "strength": 74
     },
     {
       "leagueId": "premier-league",
@@ -2594,6 +3140,22 @@
       "playerCount": 34,
       "maxApps": 38,
       "strength": 72
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "fulham",
+      "season": "2022-23",
+      "playerCount": 43,
+      "maxApps": 42,
+      "strength": 74
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "fulham",
+      "season": "2023-24",
+      "playerCount": 35,
+      "maxApps": 44,
+      "strength": 74
     },
     {
       "leagueId": "premier-league",
@@ -2689,7 +3251,7 @@
       "season": "2022-23",
       "playerCount": 29,
       "maxApps": 39,
-      "strength": 77
+      "strength": 76
     },
     {
       "leagueId": "premier-league",
@@ -2721,7 +3283,7 @@
       "season": "2011-12",
       "playerCount": 33,
       "maxApps": 41,
-      "strength": 70
+      "strength": 71
     },
     {
       "leagueId": "premier-league",
@@ -2777,7 +3339,7 @@
       "season": "2011-12",
       "playerCount": 35,
       "maxApps": 38,
-      "strength": 72
+      "strength": 73
     },
     {
       "leagueId": "premier-league",
@@ -2945,7 +3507,7 @@
       "season": "2014-15",
       "playerCount": 32,
       "maxApps": 46,
-      "strength": 79
+      "strength": 80
     },
     {
       "leagueId": "bundesliga",
@@ -2961,7 +3523,7 @@
       "season": "2016-17",
       "playerCount": 31,
       "maxApps": 49,
-      "strength": 82
+      "strength": 81
     },
     {
       "leagueId": "bundesliga",
@@ -3054,6 +3616,14 @@
     {
       "leagueId": "bundesliga",
       "clubId": "bayer-leverkusen",
+      "season": "2013-14",
+      "playerCount": 29,
+      "maxApps": 33,
+      "strength": 78
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "bayer-leverkusen",
       "season": "2015-16",
       "playerCount": 29,
       "maxApps": 49,
@@ -3073,7 +3643,7 @@
       "season": "2017-18",
       "playerCount": 28,
       "maxApps": 39,
-      "strength": 79
+      "strength": 78
     },
     {
       "leagueId": "bundesliga",
@@ -3137,7 +3707,7 @@
       "season": "2025-26",
       "playerCount": 32,
       "maxApps": 50,
-      "strength": 78
+      "strength": 79
     },
     {
       "leagueId": "bundesliga",
@@ -3257,7 +3827,7 @@
       "season": "2016-17",
       "playerCount": 31,
       "maxApps": 50,
-      "strength": 75
+      "strength": 76
     },
     {
       "leagueId": "bundesliga",
@@ -3313,7 +3883,7 @@
       "season": "2023-24",
       "playerCount": 35,
       "maxApps": 26,
-      "strength": 76
+      "strength": 77
     },
     {
       "leagueId": "bundesliga",
@@ -3433,7 +4003,7 @@
       "season": "2011-12",
       "playerCount": 30,
       "maxApps": 50,
-      "strength": 74
+      "strength": 75
     },
     {
       "leagueId": "bundesliga",
@@ -3441,7 +4011,31 @@
       "season": "2012-13",
       "playerCount": 29,
       "maxApps": 43,
-      "strength": 75
+      "strength": 76
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "schalke-04",
+      "season": "2013-14",
+      "playerCount": 33,
+      "maxApps": 44,
+      "strength": 74
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "schalke-04",
+      "season": "2014-15",
+      "playerCount": 33,
+      "maxApps": 40,
+      "strength": 74
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "schalke-04",
+      "season": "2015-16",
+      "playerCount": 35,
+      "maxApps": 43,
+      "strength": 76
     },
     {
       "leagueId": "bundesliga",
@@ -3545,7 +4139,7 @@
       "season": "2017-18",
       "playerCount": 33,
       "maxApps": 38,
-      "strength": 75
+      "strength": 74
     },
     {
       "leagueId": "bundesliga",
@@ -3633,7 +4227,7 @@
       "season": "2015-16",
       "playerCount": 33,
       "maxApps": 44,
-      "strength": 75
+      "strength": 74
     },
     {
       "leagueId": "bundesliga",
@@ -3665,7 +4259,7 @@
       "season": "2019-20",
       "playerCount": 35,
       "maxApps": 44,
-      "strength": 74
+      "strength": 75
     },
     {
       "leagueId": "bundesliga",
@@ -3785,7 +4379,7 @@
       "season": "2019-20",
       "playerCount": 36,
       "maxApps": 33,
-      "strength": 72
+      "strength": 73
     },
     {
       "leagueId": "bundesliga",
@@ -3793,7 +4387,7 @@
       "season": "2020-21",
       "playerCount": 35,
       "maxApps": 34,
-      "strength": 71
+      "strength": 72
     },
     {
       "leagueId": "bundesliga",
@@ -3897,7 +4491,7 @@
       "season": "2022-23",
       "playerCount": 36,
       "maxApps": 48,
-      "strength": 74
+      "strength": 75
     },
     {
       "leagueId": "bundesliga",
@@ -3905,7 +4499,7 @@
       "season": "2023-24",
       "playerCount": 47,
       "maxApps": 44,
-      "strength": 76
+      "strength": 77
     },
     {
       "leagueId": "bundesliga",
@@ -3953,7 +4547,7 @@
       "season": "2014-15",
       "playerCount": 31,
       "maxApps": 37,
-      "strength": 74
+      "strength": 75
     },
     {
       "leagueId": "bundesliga",
@@ -4081,7 +4675,7 @@
       "season": "2020-21",
       "playerCount": 33,
       "maxApps": 39,
-      "strength": 70
+      "strength": 71
     },
     {
       "leagueId": "bundesliga",
@@ -4166,6 +4760,14 @@
     {
       "leagueId": "bundesliga",
       "clubId": "vfl-bochum",
+      "season": "2012-13",
+      "playerCount": 34,
+      "maxApps": 36,
+      "strength": 71
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "vfl-bochum",
       "season": "2013-14",
       "playerCount": 42,
       "maxApps": 36,
@@ -4177,7 +4779,7 @@
       "season": "2014-15",
       "playerCount": 40,
       "maxApps": 34,
-      "strength": 72
+      "strength": 73
     },
     {
       "leagueId": "bundesliga",
@@ -4193,7 +4795,7 @@
       "season": "2017-18",
       "playerCount": 42,
       "maxApps": 33,
-      "strength": 72
+      "strength": 73
     },
     {
       "leagueId": "bundesliga",
@@ -4209,7 +4811,7 @@
       "season": "2019-20",
       "playerCount": 38,
       "maxApps": 35,
-      "strength": 72
+      "strength": 73
     },
     {
       "leagueId": "bundesliga",
@@ -4257,7 +4859,7 @@
       "season": "2011-12",
       "playerCount": 29,
       "maxApps": 38,
-      "strength": 73
+      "strength": 74
     },
     {
       "leagueId": "bundesliga",
@@ -4313,7 +4915,7 @@
       "season": "2018-19",
       "playerCount": 32,
       "maxApps": 31,
-      "strength": 74
+      "strength": 75
     },
     {
       "leagueId": "bundesliga",
@@ -4361,7 +4963,7 @@
       "season": "2011-12",
       "playerCount": 25,
       "maxApps": 53,
-      "strength": 85
+      "strength": 86
     },
     {
       "leagueId": "la-liga",
@@ -4385,7 +4987,7 @@
       "season": "2014-15",
       "playerCount": 30,
       "maxApps": 55,
-      "strength": 87
+      "strength": 88
     },
     {
       "leagueId": "la-liga",
@@ -4609,7 +5211,7 @@
       "season": "2012-13",
       "playerCount": 28,
       "maxApps": 46,
-      "strength": 83
+      "strength": 82
     },
     {
       "leagueId": "la-liga",
@@ -4625,7 +5227,7 @@
       "season": "2014-15",
       "playerCount": 24,
       "maxApps": 53,
-      "strength": 76
+      "strength": 77
     },
     {
       "leagueId": "la-liga",
@@ -4665,7 +5267,7 @@
       "season": "2019-20",
       "playerCount": 13,
       "maxApps": 16,
-      "strength": 60
+      "strength": 61
     },
     {
       "leagueId": "la-liga",
@@ -4753,7 +5355,7 @@
       "season": "2015-16",
       "playerCount": 34,
       "maxApps": 50,
-      "strength": 77
+      "strength": 78
     },
     {
       "leagueId": "la-liga",
@@ -4769,7 +5371,7 @@
       "season": "2017-18",
       "playerCount": 30,
       "maxApps": 44,
-      "strength": 78
+      "strength": 79
     },
     {
       "leagueId": "la-liga",
@@ -5305,7 +5907,7 @@
       "season": "2018-19",
       "playerCount": 27,
       "maxApps": 48,
-      "strength": 75
+      "strength": 76
     },
     {
       "leagueId": "la-liga",
@@ -5377,7 +5979,7 @@
       "season": "2013-14",
       "playerCount": 28,
       "maxApps": 37,
-      "strength": 75
+      "strength": 76
     },
     {
       "leagueId": "la-liga",
@@ -5681,7 +6283,7 @@
       "season": "2018-19",
       "playerCount": 28,
       "maxApps": 36,
-      "strength": 73
+      "strength": 74
     },
     {
       "leagueId": "la-liga",
@@ -5745,7 +6347,7 @@
       "season": "2014-15",
       "playerCount": 29,
       "maxApps": 40,
-      "strength": 69
+      "strength": 70
     },
     {
       "leagueId": "la-liga",
@@ -5777,7 +6379,7 @@
       "season": "2019-20",
       "playerCount": 31,
       "maxApps": 46,
-      "strength": 74
+      "strength": 75
     },
     {
       "leagueId": "la-liga",
@@ -5817,7 +6419,7 @@
       "season": "2012-13",
       "playerCount": 27,
       "maxApps": 44,
-      "strength": 85
+      "strength": 86
     },
     {
       "leagueId": "serie-a",
@@ -5977,7 +6579,7 @@
       "season": "2018-19",
       "playerCount": 31,
       "maxApps": 46,
-      "strength": 80
+      "strength": 81
     },
     {
       "leagueId": "serie-a",
@@ -6041,7 +6643,7 @@
       "season": "2011-12",
       "playerCount": 33,
       "maxApps": 46,
-      "strength": 80
+      "strength": 81
     },
     {
       "leagueId": "serie-a",
@@ -6241,7 +6843,7 @@
       "season": "2021-22",
       "playerCount": 34,
       "maxApps": 54,
-      "strength": 79
+      "strength": 80
     },
     {
       "leagueId": "serie-a",
@@ -6249,7 +6851,7 @@
       "season": "2022-23",
       "playerCount": 29,
       "maxApps": 54,
-      "strength": 79
+      "strength": 80
     },
     {
       "leagueId": "serie-a",
@@ -6321,7 +6923,7 @@
       "season": "2016-17",
       "playerCount": 30,
       "maxApps": 41,
-      "strength": 77
+      "strength": 78
     },
     {
       "leagueId": "serie-a",
@@ -6569,7 +7171,7 @@
       "season": "2017-18",
       "playerCount": 32,
       "maxApps": 40,
-      "strength": 74
+      "strength": 75
     },
     {
       "leagueId": "serie-a",
@@ -6649,7 +7251,7 @@
       "season": "2012-13",
       "playerCount": 36,
       "maxApps": 38,
-      "strength": 74
+      "strength": 75
     },
     {
       "leagueId": "serie-a",
@@ -6745,7 +7347,7 @@
       "season": "2024-25",
       "playerCount": 33,
       "maxApps": 50,
-      "strength": 79
+      "strength": 78
     },
     {
       "leagueId": "serie-a",
@@ -6921,7 +7523,7 @@
       "season": "2019-20",
       "playerCount": 29,
       "maxApps": 39,
-      "strength": 75
+      "strength": 76
     },
     {
       "leagueId": "serie-a",
@@ -6969,7 +7571,7 @@
       "season": "2012-13",
       "playerCount": 28,
       "maxApps": 35,
-      "strength": 72
+      "strength": 73
     },
     {
       "leagueId": "serie-a",
@@ -7009,7 +7611,7 @@
       "season": "2017-18",
       "playerCount": 30,
       "maxApps": 40,
-      "strength": 73
+      "strength": 74
     },
     {
       "leagueId": "serie-a",
@@ -7241,7 +7843,7 @@
       "season": "2015-16",
       "playerCount": 33,
       "maxApps": 35,
-      "strength": 72
+      "strength": 73
     },
     {
       "leagueId": "serie-a",
@@ -7257,7 +7859,7 @@
       "season": "2017-18",
       "playerCount": 33,
       "maxApps": 35,
-      "strength": 75
+      "strength": 76
     },
     {
       "leagueId": "serie-a",
@@ -7289,7 +7891,7 @@
       "season": "2021-22",
       "playerCount": 38,
       "maxApps": 37,
-      "strength": 75
+      "strength": 76
     },
     {
       "leagueId": "serie-a",
@@ -7329,7 +7931,7 @@
       "season": "2012-13",
       "playerCount": 29,
       "maxApps": 37,
-      "strength": 72
+      "strength": 73
     },
     {
       "leagueId": "serie-a",
@@ -7713,7 +8315,7 @@
       "season": "2022-23",
       "playerCount": 34,
       "maxApps": 48,
-      "strength": 79
+      "strength": 80
     },
     {
       "leagueId": "ligue-1",
@@ -8745,7 +9347,7 @@
       "season": "2019-20",
       "playerCount": 31,
       "maxApps": 35,
-      "strength": 73
+      "strength": 74
     },
     {
       "leagueId": "ligue-1",
@@ -9008,6 +9610,1710 @@
       "clubId": "angers",
       "season": "2024-25",
       "playerCount": 30,
+      "maxApps": 0,
+      "strength": 62
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "brighton-hove-albion",
+      "season": "2017-18",
+      "playerCount": 32,
+      "maxApps": 40,
+      "strength": 77
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "brighton-hove-albion",
+      "season": "2018-19",
+      "playerCount": 29,
+      "maxApps": 42,
+      "strength": 77
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "brighton-hove-albion",
+      "season": "2019-20",
+      "playerCount": 39,
+      "maxApps": 38,
+      "strength": 78
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "brighton-hove-albion",
+      "season": "2020-21",
+      "playerCount": 39,
+      "maxApps": 40,
+      "strength": 78
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "brighton-hove-albion",
+      "season": "2021-22",
+      "playerCount": 40,
+      "maxApps": 38,
+      "strength": 80
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "brighton-hove-albion",
+      "season": "2022-23",
+      "playerCount": 42,
+      "maxApps": 44,
+      "strength": 79
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "brighton-hove-albion",
+      "season": "2023-24",
+      "playerCount": 39,
+      "maxApps": 47,
+      "strength": 77
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "brighton-hove-albion",
+      "season": "2024-25",
+      "playerCount": 38,
+      "maxApps": 41,
+      "strength": 79
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "brentford",
+      "season": "2021-22",
+      "playerCount": 29,
+      "maxApps": 39,
+      "strength": 74
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "brentford",
+      "season": "2022-23",
+      "playerCount": 28,
+      "maxApps": 40,
+      "strength": 74
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "brentford",
+      "season": "2023-24",
+      "playerCount": 27,
+      "maxApps": 42,
+      "strength": 75
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "brentford",
+      "season": "2024-25",
+      "playerCount": 27,
+      "maxApps": 43,
+      "strength": 77
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "nottingham-forest",
+      "season": "2022-23",
+      "playerCount": 44,
+      "maxApps": 44,
+      "strength": 76
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "nottingham-forest",
+      "season": "2023-24",
+      "playerCount": 34,
+      "maxApps": 42,
+      "strength": 77
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "nottingham-forest",
+      "season": "2024-25",
+      "playerCount": 26,
+      "maxApps": 43,
+      "strength": 81
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "norwich-city",
+      "season": "2011-12",
+      "playerCount": 33,
+      "maxApps": 33,
+      "strength": 75
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "watford",
+      "season": "2017-18",
+      "playerCount": 34,
+      "maxApps": 41,
+      "strength": 74
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "watford",
+      "season": "2018-19",
+      "playerCount": 27,
+      "maxApps": 41,
+      "strength": 77
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "watford",
+      "season": "2019-20",
+      "playerCount": 38,
+      "maxApps": 39,
+      "strength": 75
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "watford",
+      "season": "2021-22",
+      "playerCount": 33,
+      "maxApps": 38,
+      "strength": 72
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "stoke-city",
+      "season": "2011-12",
+      "playerCount": 36,
+      "maxApps": 54,
+      "strength": 74
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "stoke-city",
+      "season": "2012-13",
+      "playerCount": 33,
+      "maxApps": 42,
+      "strength": 75
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "stoke-city",
+      "season": "2013-14",
+      "playerCount": 31,
+      "maxApps": 43,
+      "strength": 74
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "stoke-city",
+      "season": "2014-15",
+      "playerCount": 32,
+      "maxApps": 42,
+      "strength": 75
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "stoke-city",
+      "season": "2015-16",
+      "playerCount": 28,
+      "maxApps": 42,
+      "strength": 74
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "stoke-city",
+      "season": "2016-17",
+      "playerCount": 28,
+      "maxApps": 39,
+      "strength": 74
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "stoke-city",
+      "season": "2017-18",
+      "playerCount": 34,
+      "maxApps": 38,
+      "strength": 75
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "swansea-city",
+      "season": "2011-12",
+      "playerCount": 37,
+      "maxApps": 40,
+      "strength": 75
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "swansea-city",
+      "season": "2012-13",
+      "playerCount": 39,
+      "maxApps": 44,
+      "strength": 74
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "swansea-city",
+      "season": "2013-14",
+      "playerCount": 30,
+      "maxApps": 48,
+      "strength": 73
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "swansea-city",
+      "season": "2014-15",
+      "playerCount": 34,
+      "maxApps": 0,
+      "strength": 65
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "swansea-city",
+      "season": "2015-16",
+      "playerCount": 32,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "swansea-city",
+      "season": "2016-17",
+      "playerCount": 30,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "swansea-city",
+      "season": "2017-18",
+      "playerCount": 25,
+      "maxApps": 0,
+      "strength": 65
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "burnley",
+      "season": "2014-15",
+      "playerCount": 43,
+      "maxApps": 41,
+      "strength": 73
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "burnley",
+      "season": "2016-17",
+      "playerCount": 38,
+      "maxApps": 42,
+      "strength": 75
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "burnley",
+      "season": "2017-18",
+      "playerCount": 32,
+      "maxApps": 41,
+      "strength": 75
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "burnley",
+      "season": "2018-19",
+      "playerCount": 33,
+      "maxApps": 46,
+      "strength": 75
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "burnley",
+      "season": "2019-20",
+      "playerCount": 36,
+      "maxApps": 40,
+      "strength": 75
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "burnley",
+      "season": "2020-21",
+      "playerCount": 31,
+      "maxApps": 42,
+      "strength": 75
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "burnley",
+      "season": "2021-22",
+      "playerCount": 33,
+      "maxApps": 40,
+      "strength": 75
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "burnley",
+      "season": "2023-24",
+      "playerCount": 31,
+      "maxApps": 40,
+      "strength": 73
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "queens-park-rangers",
+      "season": "2011-12",
+      "playerCount": 40,
+      "maxApps": 35,
+      "strength": 73
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "queens-park-rangers",
+      "season": "2012-13",
+      "playerCount": 32,
+      "maxApps": 34,
+      "strength": 74
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "queens-park-rangers",
+      "season": "2014-15",
+      "playerCount": 37,
+      "maxApps": 38,
+      "strength": 72
+    },
+    {
+      "leagueId": "premier-league",
+      "clubId": "ipswich-town",
+      "season": "2024-25",
+      "playerCount": 33,
+      "maxApps": 40,
+      "strength": 72
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "sc-freiburg",
+      "season": "2011-12",
+      "playerCount": 36,
+      "maxApps": 34,
+      "strength": 74
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "sc-freiburg",
+      "season": "2012-13",
+      "playerCount": 29,
+      "maxApps": 28,
+      "strength": 74
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "sc-freiburg",
+      "season": "2013-14",
+      "playerCount": 22,
+      "maxApps": 0,
+      "strength": 68
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "sc-freiburg",
+      "season": "2014-15",
+      "playerCount": 30,
+      "maxApps": 35,
+      "strength": 76
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "sc-freiburg",
+      "season": "2016-17",
+      "playerCount": 31,
+      "maxApps": 36,
+      "strength": 76
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "sc-freiburg",
+      "season": "2017-18",
+      "playerCount": 32,
+      "maxApps": 0,
+      "strength": 69
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "sc-freiburg",
+      "season": "2018-19",
+      "playerCount": 32,
+      "maxApps": 36,
+      "strength": 78
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "sc-freiburg",
+      "season": "2019-20",
+      "playerCount": 31,
+      "maxApps": 32,
+      "strength": 79
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "sc-freiburg",
+      "season": "2020-21",
+      "playerCount": 32,
+      "maxApps": 36,
+      "strength": 80
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "sc-freiburg",
+      "season": "2021-22",
+      "playerCount": 29,
+      "maxApps": 40,
+      "strength": 80
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "sc-freiburg",
+      "season": "2022-23",
+      "playerCount": 30,
+      "maxApps": 47,
+      "strength": 80
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "sc-freiburg",
+      "season": "2023-24",
+      "playerCount": 30,
+      "maxApps": 34,
+      "strength": 79
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "sc-freiburg",
+      "season": "2024-25",
+      "playerCount": 28,
+      "maxApps": 37,
+      "strength": 79
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "union-berlin",
+      "season": "2019-20",
+      "playerCount": 32,
+      "maxApps": 34,
+      "strength": 76
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "union-berlin",
+      "season": "2020-21",
+      "playerCount": 31,
+      "maxApps": 23,
+      "strength": 75
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "union-berlin",
+      "season": "2021-22",
+      "playerCount": 34,
+      "maxApps": 46,
+      "strength": 76
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "union-berlin",
+      "season": "2022-23",
+      "playerCount": 36,
+      "maxApps": 48,
+      "strength": 75
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "union-berlin",
+      "season": "2023-24",
+      "playerCount": 32,
+      "maxApps": 33,
+      "strength": 73
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "augsburg",
+      "season": "2011-12",
+      "playerCount": 30,
+      "maxApps": 34,
+      "strength": 70
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "augsburg",
+      "season": "2012-13",
+      "playerCount": 30,
+      "maxApps": 2,
+      "strength": 48
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "augsburg",
+      "season": "2014-15",
+      "playerCount": 32,
+      "maxApps": 0,
+      "strength": 65
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "augsburg",
+      "season": "2016-17",
+      "playerCount": 31,
+      "maxApps": 36,
+      "strength": 73
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "augsburg",
+      "season": "2017-18",
+      "playerCount": 26,
+      "maxApps": 0,
+      "strength": 65
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "augsburg",
+      "season": "2018-19",
+      "playerCount": 33,
+      "maxApps": 36,
+      "strength": 75
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "augsburg",
+      "season": "2019-20",
+      "playerCount": 37,
+      "maxApps": 34,
+      "strength": 74
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "augsburg",
+      "season": "2020-21",
+      "playerCount": 29,
+      "maxApps": 36,
+      "strength": 74
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "augsburg",
+      "season": "2021-22",
+      "playerCount": 31,
+      "maxApps": 36,
+      "strength": 76
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "augsburg",
+      "season": "2022-23",
+      "playerCount": 42,
+      "maxApps": 25,
+      "strength": 75
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "augsburg",
+      "season": "2023-24",
+      "playerCount": 37,
+      "maxApps": 25,
+      "strength": 76
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hannover-96",
+      "season": "2011-12",
+      "playerCount": 52,
+      "maxApps": 0,
+      "strength": 65
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hannover-96",
+      "season": "2013-14",
+      "playerCount": 34,
+      "maxApps": 33,
+      "strength": 73
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hannover-96",
+      "season": "2014-15",
+      "playerCount": 34,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hannover-96",
+      "season": "2015-16",
+      "playerCount": 38,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hannover-96",
+      "season": "2017-18",
+      "playerCount": 35,
+      "maxApps": 35,
+      "strength": 76
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "hannover-96",
+      "season": "2018-19",
+      "playerCount": 37,
+      "maxApps": 36,
+      "strength": 71
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "nurnberg",
+      "season": "2018-19",
+      "playerCount": 29,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "fortuna-dusseldorf",
+      "season": "2012-13",
+      "playerCount": 20,
+      "maxApps": 0,
+      "strength": 65
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "fortuna-dusseldorf",
+      "season": "2018-19",
+      "playerCount": 31,
+      "maxApps": 32,
+      "strength": 74
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "fortuna-dusseldorf",
+      "season": "2019-20",
+      "playerCount": 34,
+      "maxApps": 37,
+      "strength": 72
+    },
+    {
+      "leagueId": "bundesliga",
+      "clubId": "arminia-bielefeld",
+      "season": "2020-21",
+      "playerCount": 28,
+      "maxApps": 35,
+      "strength": 72
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "osasuna",
+      "season": "2012-13",
+      "playerCount": 26,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "osasuna",
+      "season": "2013-14",
+      "playerCount": 27,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "osasuna",
+      "season": "2016-17",
+      "playerCount": 30,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "osasuna",
+      "season": "2019-20",
+      "playerCount": 34,
+      "maxApps": 39,
+      "strength": 74
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "osasuna",
+      "season": "2020-21",
+      "playerCount": 35,
+      "maxApps": 39,
+      "strength": 76
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "osasuna",
+      "season": "2021-22",
+      "playerCount": 30,
+      "maxApps": 38,
+      "strength": 77
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "osasuna",
+      "season": "2022-23",
+      "playerCount": 26,
+      "maxApps": 44,
+      "strength": 74
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "osasuna",
+      "season": "2023-24",
+      "playerCount": 27,
+      "maxApps": 0,
+      "strength": 65
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "osasuna",
+      "season": "2024-25",
+      "playerCount": 28,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "rayo-vallecano",
+      "season": "2011-12",
+      "playerCount": 23,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "rayo-vallecano",
+      "season": "2013-14",
+      "playerCount": 31,
+      "maxApps": 41,
+      "strength": 74
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "rayo-vallecano",
+      "season": "2014-15",
+      "playerCount": 28,
+      "maxApps": 38,
+      "strength": 73
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "rayo-vallecano",
+      "season": "2015-16",
+      "playerCount": 28,
+      "maxApps": 0,
+      "strength": 65
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "rayo-vallecano",
+      "season": "2018-19",
+      "playerCount": 32,
+      "maxApps": 26,
+      "strength": 74
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "rayo-vallecano",
+      "season": "2021-22",
+      "playerCount": 29,
+      "maxApps": 41,
+      "strength": 75
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "rayo-vallecano",
+      "season": "2022-23",
+      "playerCount": 29,
+      "maxApps": 41,
+      "strength": 76
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "rayo-vallecano",
+      "season": "2023-24",
+      "playerCount": 25,
+      "maxApps": 9,
+      "strength": 64
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "girona",
+      "season": "2017-18",
+      "playerCount": 27,
+      "maxApps": 38,
+      "strength": 74
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "girona",
+      "season": "2018-19",
+      "playerCount": 29,
+      "maxApps": 37,
+      "strength": 75
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "girona",
+      "season": "2022-23",
+      "playerCount": 25,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "girona",
+      "season": "2023-24",
+      "playerCount": 30,
+      "maxApps": 41,
+      "strength": 78
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "girona",
+      "season": "2024-25",
+      "playerCount": 24,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "granada",
+      "season": "2011-12",
+      "playerCount": 26,
+      "maxApps": 18,
+      "strength": 70
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "granada",
+      "season": "2014-15",
+      "playerCount": 34,
+      "maxApps": 38,
+      "strength": 73
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "granada",
+      "season": "2015-16",
+      "playerCount": 38,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "granada",
+      "season": "2016-17",
+      "playerCount": 34,
+      "maxApps": 35,
+      "strength": 70
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "granada",
+      "season": "2019-20",
+      "playerCount": 31,
+      "maxApps": 43,
+      "strength": 74
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "granada",
+      "season": "2020-21",
+      "playerCount": 36,
+      "maxApps": 53,
+      "strength": 76
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "granada",
+      "season": "2021-22",
+      "playerCount": 41,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "granada",
+      "season": "2023-24",
+      "playerCount": 42,
+      "maxApps": 0,
+      "strength": 65
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "levante",
+      "season": "2011-12",
+      "playerCount": 28,
+      "maxApps": 22,
+      "strength": 74
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "levante",
+      "season": "2012-13",
+      "playerCount": 29,
+      "maxApps": 37,
+      "strength": 74
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "levante",
+      "season": "2013-14",
+      "playerCount": 31,
+      "maxApps": 39,
+      "strength": 75
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "levante",
+      "season": "2014-15",
+      "playerCount": 30,
+      "maxApps": 38,
+      "strength": 72
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "levante",
+      "season": "2015-16",
+      "playerCount": 26,
+      "maxApps": 0,
+      "strength": 65
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "levante",
+      "season": "2017-18",
+      "playerCount": 35,
+      "maxApps": 39,
+      "strength": 73
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "levante",
+      "season": "2018-19",
+      "playerCount": 27,
+      "maxApps": 39,
+      "strength": 75
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "levante",
+      "season": "2019-20",
+      "playerCount": 31,
+      "maxApps": 41,
+      "strength": 74
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "levante",
+      "season": "2020-21",
+      "playerCount": 30,
+      "maxApps": 44,
+      "strength": 75
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "levante",
+      "season": "2021-22",
+      "playerCount": 35,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "mallorca",
+      "season": "2011-12",
+      "playerCount": 19,
+      "maxApps": 0,
+      "strength": 65
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "mallorca",
+      "season": "2013-14",
+      "playerCount": 31,
+      "maxApps": 0,
+      "strength": 64
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "mallorca",
+      "season": "2019-20",
+      "playerCount": 32,
+      "maxApps": 38,
+      "strength": 75
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "mallorca",
+      "season": "2021-22",
+      "playerCount": 40,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "mallorca",
+      "season": "2022-23",
+      "playerCount": 30,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "mallorca",
+      "season": "2023-24",
+      "playerCount": 38,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "mallorca",
+      "season": "2024-25",
+      "playerCount": 23,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "deportivo-alaves",
+      "season": "2020-21",
+      "playerCount": 31,
+      "maxApps": 38,
+      "strength": 75
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "deportivo-alaves",
+      "season": "2021-22",
+      "playerCount": 22,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "deportivo-alaves",
+      "season": "2023-24",
+      "playerCount": 39,
+      "maxApps": 0,
+      "strength": 65
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "deportivo-alaves",
+      "season": "2024-25",
+      "playerCount": 32,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "las-palmas",
+      "season": "2015-16",
+      "playerCount": 35,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "las-palmas",
+      "season": "2016-17",
+      "playerCount": 37,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "las-palmas",
+      "season": "2017-18",
+      "playerCount": 37,
+      "maxApps": 41,
+      "strength": 69
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "las-palmas",
+      "season": "2023-24",
+      "playerCount": 28,
+      "maxApps": 19,
+      "strength": 71
+    },
+    {
+      "leagueId": "la-liga",
+      "clubId": "las-palmas",
+      "season": "2024-25",
+      "playerCount": 28,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "sassuolo",
+      "season": "2013-14",
+      "playerCount": 32,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "sassuolo",
+      "season": "2014-15",
+      "playerCount": 31,
+      "maxApps": 36,
+      "strength": 77
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "sassuolo",
+      "season": "2015-16",
+      "playerCount": 27,
+      "maxApps": 38,
+      "strength": 76
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "sassuolo",
+      "season": "2016-17",
+      "playerCount": 34,
+      "maxApps": 49,
+      "strength": 73
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "sassuolo",
+      "season": "2017-18",
+      "playerCount": 31,
+      "maxApps": 41,
+      "strength": 73
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "sassuolo",
+      "season": "2018-19",
+      "playerCount": 32,
+      "maxApps": 38,
+      "strength": 76
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "sassuolo",
+      "season": "2019-20",
+      "playerCount": 36,
+      "maxApps": 37,
+      "strength": 76
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "sassuolo",
+      "season": "2020-21",
+      "playerCount": 30,
+      "maxApps": 37,
+      "strength": 76
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "sassuolo",
+      "season": "2021-22",
+      "playerCount": 24,
+      "maxApps": 8,
+      "strength": 63
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "sassuolo",
+      "season": "2022-23",
+      "playerCount": 54,
+      "maxApps": 0,
+      "strength": 64
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "sassuolo",
+      "season": "2023-24",
+      "playerCount": 52,
+      "maxApps": 0,
+      "strength": 65
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "lecce",
+      "season": "2011-12",
+      "playerCount": 32,
+      "maxApps": 34,
+      "strength": 75
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "lecce",
+      "season": "2015-16",
+      "playerCount": 25,
+      "maxApps": 0,
+      "strength": 61
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "lecce",
+      "season": "2016-17",
+      "playerCount": 31,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "lecce",
+      "season": "2017-18",
+      "playerCount": 29,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "lecce",
+      "season": "2019-20",
+      "playerCount": 35,
+      "maxApps": 37,
+      "strength": 74
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "lecce",
+      "season": "2022-23",
+      "playerCount": 36,
+      "maxApps": 0,
+      "strength": 65
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "lecce",
+      "season": "2023-24",
+      "playerCount": 40,
+      "maxApps": 0,
+      "strength": 65
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "lecce",
+      "season": "2024-25",
+      "playerCount": 30,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "empoli",
+      "season": "2014-15",
+      "playerCount": 30,
+      "maxApps": 39,
+      "strength": 76
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "empoli",
+      "season": "2015-16",
+      "playerCount": 29,
+      "maxApps": 39,
+      "strength": 74
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "empoli",
+      "season": "2016-17",
+      "playerCount": 30,
+      "maxApps": 36,
+      "strength": 75
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "empoli",
+      "season": "2018-19",
+      "playerCount": 35,
+      "maxApps": 32,
+      "strength": 73
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "empoli",
+      "season": "2021-22",
+      "playerCount": 26,
+      "maxApps": 13,
+      "strength": 68
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "empoli",
+      "season": "2022-23",
+      "playerCount": 32,
+      "maxApps": 37,
+      "strength": 74
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "empoli",
+      "season": "2023-24",
+      "playerCount": 51,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "empoli",
+      "season": "2024-25",
+      "playerCount": 28,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "palermo",
+      "season": "2011-12",
+      "playerCount": 41,
+      "maxApps": 36,
+      "strength": 73
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "palermo",
+      "season": "2012-13",
+      "playerCount": 39,
+      "maxApps": 35,
+      "strength": 73
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "palermo",
+      "season": "2014-15",
+      "playerCount": 35,
+      "maxApps": 39,
+      "strength": 72
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "palermo",
+      "season": "2015-16",
+      "playerCount": 33,
+      "maxApps": 39,
+      "strength": 73
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "palermo",
+      "season": "2016-17",
+      "playerCount": 32,
+      "maxApps": 38,
+      "strength": 72
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "brescia",
+      "season": "2019-20",
+      "playerCount": 32,
+      "maxApps": 37,
+      "strength": 72
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "monza",
+      "season": "2022-23",
+      "playerCount": 43,
+      "maxApps": 38,
+      "strength": 76
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "monza",
+      "season": "2023-24",
+      "playerCount": 35,
+      "maxApps": 39,
+      "strength": 74
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "monza",
+      "season": "2024-25",
+      "playerCount": 29,
+      "maxApps": 0,
+      "strength": 64
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "salernitana",
+      "season": "2021-22",
+      "playerCount": 53,
+      "maxApps": 0,
+      "strength": 67
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "salernitana",
+      "season": "2022-23",
+      "playerCount": 31,
+      "maxApps": 0,
+      "strength": 65
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "salernitana",
+      "season": "2023-24",
+      "playerCount": 43,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "spezia",
+      "season": "2020-21",
+      "playerCount": 35,
+      "maxApps": 39,
+      "strength": 73
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "spezia",
+      "season": "2021-22",
+      "playerCount": 25,
+      "maxApps": 9,
+      "strength": 61
+    },
+    {
+      "leagueId": "serie-a",
+      "clubId": "spezia",
+      "season": "2022-23",
+      "playerCount": 42,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "ligue-1",
+      "clubId": "brest",
+      "season": "2019-20",
+      "playerCount": 28,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "ligue-1",
+      "clubId": "brest",
+      "season": "2020-21",
+      "playerCount": 30,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "ligue-1",
+      "clubId": "brest",
+      "season": "2021-22",
+      "playerCount": 30,
+      "maxApps": 40,
+      "strength": 75
+    },
+    {
+      "leagueId": "ligue-1",
+      "clubId": "brest",
+      "season": "2022-23",
+      "playerCount": 31,
+      "maxApps": 40,
+      "strength": 75
+    },
+    {
+      "leagueId": "ligue-1",
+      "clubId": "brest",
+      "season": "2023-24",
+      "playerCount": 28,
+      "maxApps": 36,
+      "strength": 79
+    },
+    {
+      "leagueId": "ligue-1",
+      "clubId": "brest",
+      "season": "2024-25",
+      "playerCount": 30,
+      "maxApps": 0,
+      "strength": 65
+    },
+    {
+      "leagueId": "ligue-1",
+      "clubId": "lorient",
+      "season": "2014-15",
+      "playerCount": 29,
+      "maxApps": 0,
+      "strength": 65
+    },
+    {
+      "leagueId": "ligue-1",
+      "clubId": "lorient",
+      "season": "2015-16",
+      "playerCount": 32,
+      "maxApps": 0,
+      "strength": 65
+    },
+    {
+      "leagueId": "ligue-1",
+      "clubId": "lorient",
+      "season": "2016-17",
+      "playerCount": 42,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "ligue-1",
+      "clubId": "lorient",
+      "season": "2020-21",
+      "playerCount": 37,
+      "maxApps": 0,
+      "strength": 65
+    },
+    {
+      "leagueId": "ligue-1",
+      "clubId": "lorient",
+      "season": "2021-22",
+      "playerCount": 33,
+      "maxApps": 11,
+      "strength": 65
+    },
+    {
+      "leagueId": "ligue-1",
+      "clubId": "lorient",
+      "season": "2022-23",
+      "playerCount": 25,
+      "maxApps": 0,
+      "strength": 65
+    },
+    {
+      "leagueId": "ligue-1",
+      "clubId": "lorient",
+      "season": "2023-24",
+      "playerCount": 36,
+      "maxApps": 0,
+      "strength": 65
+    },
+    {
+      "leagueId": "ligue-1",
+      "clubId": "metz",
+      "season": "2014-15",
+      "playerCount": 37,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "ligue-1",
+      "clubId": "metz",
+      "season": "2016-17",
+      "playerCount": 32,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "ligue-1",
+      "clubId": "metz",
+      "season": "2019-20",
+      "playerCount": 38,
+      "maxApps": 0,
+      "strength": 65
+    },
+    {
+      "leagueId": "ligue-1",
+      "clubId": "metz",
+      "season": "2020-21",
+      "playerCount": 48,
+      "maxApps": 0,
+      "strength": 65
+    },
+    {
+      "leagueId": "ligue-1",
+      "clubId": "metz",
+      "season": "2021-22",
+      "playerCount": 44,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "ligue-1",
+      "clubId": "metz",
+      "season": "2023-24",
+      "playerCount": 38,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "ligue-1",
+      "clubId": "auxerre",
+      "season": "2022-23",
+      "playerCount": 41,
+      "maxApps": 0,
+      "strength": 65
+    },
+    {
+      "leagueId": "ligue-1",
+      "clubId": "auxerre",
+      "season": "2024-25",
+      "playerCount": 28,
+      "maxApps": 0,
+      "strength": 65
+    },
+    {
+      "leagueId": "ligue-1",
+      "clubId": "caen",
+      "season": "2014-15",
+      "playerCount": 28,
+      "maxApps": 0,
+      "strength": 66
+    },
+    {
+      "leagueId": "ligue-1",
+      "clubId": "caen",
+      "season": "2015-16",
+      "playerCount": 29,
+      "maxApps": 0,
+      "strength": 65
+    },
+    {
+      "leagueId": "ligue-1",
+      "clubId": "caen",
+      "season": "2016-17",
+      "playerCount": 29,
+      "maxApps": 0,
+      "strength": 65
+    },
+    {
+      "leagueId": "ligue-1",
+      "clubId": "caen",
+      "season": "2017-18",
+      "playerCount": 31,
+      "maxApps": 43,
+      "strength": 72
+    },
+    {
+      "leagueId": "ligue-1",
+      "clubId": "caen",
+      "season": "2018-19",
+      "playerCount": 30,
+      "maxApps": 0,
+      "strength": 65
+    },
+    {
+      "leagueId": "ligue-1",
+      "clubId": "troyes",
+      "season": "2015-16",
+      "playerCount": 32,
+      "maxApps": 0,
+      "strength": 62
+    },
+    {
+      "leagueId": "ligue-1",
+      "clubId": "troyes",
+      "season": "2021-22",
+      "playerCount": 50,
+      "maxApps": 0,
+      "strength": 62
+    },
+    {
+      "leagueId": "ligue-1",
+      "clubId": "troyes",
+      "season": "2022-23",
+      "playerCount": 40,
       "maxApps": 0,
       "strength": 62
     }

@@ -1,0 +1,799 @@
+{
+  "leagueId": "la-liga",
+  "clubId": "osasuna",
+  "season": "2013-14",
+  "division": "top-flight",
+  "squad": [
+    {
+      "id": "riesgo-spa",
+      "name": "Riesgo",
+      "nationality": "SPA",
+      "broadPosition": "GK",
+      "shirtNumber": 1,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 66,
+        "pace": 46,
+        "shooting": 20,
+        "passing": 51,
+        "dribbling": 36,
+        "defending": 48,
+        "physical": 62,
+        "goalkeeping": 73
+      },
+      "primeRatings": {
+        "overall": 69,
+        "pace": 46,
+        "shooting": 15,
+        "passing": 53,
+        "dribbling": 40,
+        "defending": 47,
+        "physical": 64,
+        "goalkeeping": 76
+      }
+    },
+    {
+      "id": "bertr-n-spa",
+      "name": "Bertrán",
+      "nationality": "SPA",
+      "broadPosition": "DF",
+      "shirtNumber": 2,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 66,
+        "pace": 62,
+        "shooting": 43,
+        "passing": 62,
+        "dribbling": 58,
+        "defending": 73,
+        "physical": 71
+      },
+      "primeRatings": {
+        "overall": 69,
+        "pace": 63,
+        "shooting": 48,
+        "passing": 62,
+        "dribbling": 57,
+        "defending": 78,
+        "physical": 72
+      }
+    },
+    {
+      "id": "j-oriol-spa",
+      "name": "J. Oriol",
+      "nationality": "SPA",
+      "broadPosition": "DF",
+      "shirtNumber": 3,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 66,
+        "pace": 60,
+        "shooting": 49,
+        "passing": 63,
+        "dribbling": 59,
+        "defending": 73,
+        "physical": 68
+      },
+      "primeRatings": {
+        "overall": 69,
+        "pace": 63,
+        "shooting": 48,
+        "passing": 67,
+        "dribbling": 62,
+        "defending": 77,
+        "physical": 70
+      }
+    },
+    {
+      "id": "m-fla-o-spa",
+      "name": "M. Flaño",
+      "nationality": "SPA",
+      "broadPosition": "DF",
+      "shirtNumber": 4,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 65,
+        "pace": 58,
+        "shooting": 45,
+        "passing": 60,
+        "dribbling": 55,
+        "defending": 72,
+        "physical": 68
+      },
+      "primeRatings": {
+        "overall": 68,
+        "pace": 66,
+        "shooting": 49,
+        "passing": 63,
+        "dribbling": 55,
+        "defending": 76,
+        "physical": 72
+      }
+    },
+    {
+      "id": "lolo-spa",
+      "name": "Lolo",
+      "nationality": "SPA",
+      "broadPosition": "MF",
+      "shirtNumber": 5,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 66,
+        "pace": 62,
+        "shooting": 60,
+        "passing": 71,
+        "dribbling": 69,
+        "defending": 57,
+        "physical": 60
+      },
+      "primeRatings": {
+        "overall": 69,
+        "pace": 67,
+        "shooting": 60,
+        "passing": 72,
+        "dribbling": 67,
+        "defending": 62,
+        "physical": 69
+      }
+    },
+    {
+      "id": "nino-spa",
+      "name": "Nino",
+      "nationality": "SPA",
+      "broadPosition": "FW",
+      "shirtNumber": 6,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 67,
+        "pace": 73,
+        "shooting": 75,
+        "passing": 62,
+        "dribbling": 71,
+        "defending": 41,
+        "physical": 64
+      },
+      "primeRatings": {
+        "overall": 70,
+        "pace": 71,
+        "shooting": 76,
+        "passing": 62,
+        "dribbling": 75,
+        "defending": 47,
+        "physical": 69
+      }
+    },
+    {
+      "id": "j-acu-a-pry",
+      "name": "J. Acuña",
+      "nationality": "PRY",
+      "broadPosition": "FW",
+      "shirtNumber": 7,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 67,
+        "pace": 72,
+        "shooting": 74,
+        "passing": 60,
+        "dribbling": 71,
+        "defending": 42,
+        "physical": 64
+      },
+      "primeRatings": {
+        "overall": 70,
+        "pace": 70,
+        "shooting": 79,
+        "passing": 63,
+        "dribbling": 75,
+        "defending": 45,
+        "physical": 65
+      }
+    },
+    {
+      "id": "de-las-cuevas-spa",
+      "name": "De las Cuevas",
+      "nationality": "SPA",
+      "broadPosition": "MF",
+      "shirtNumber": 8,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 65,
+        "pace": 60,
+        "shooting": 55,
+        "passing": 67,
+        "dribbling": 65,
+        "defending": 56,
+        "physical": 64
+      },
+      "primeRatings": {
+        "overall": 68,
+        "pace": 67,
+        "shooting": 60,
+        "passing": 73,
+        "dribbling": 68,
+        "defending": 57,
+        "physical": 67
+      }
+    },
+    {
+      "id": "armenteros-arg",
+      "name": "Armenteros",
+      "nationality": "ARG",
+      "broadPosition": "FW",
+      "shirtNumber": 9,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 67,
+        "pace": 71,
+        "shooting": 72,
+        "passing": 62,
+        "dribbling": 72,
+        "defending": 40,
+        "physical": 65
+      },
+      "primeRatings": {
+        "overall": 70,
+        "pace": 75,
+        "shooting": 77,
+        "passing": 64,
+        "dribbling": 71,
+        "defending": 42,
+        "physical": 69
+      }
+    },
+    {
+      "id": "pu-al-spa",
+      "name": "Puñal",
+      "nationality": "SPA",
+      "broadPosition": "MF",
+      "shirtNumber": 10,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 66,
+        "pace": 62,
+        "shooting": 60,
+        "passing": 69,
+        "dribbling": 63,
+        "defending": 57,
+        "physical": 62
+      },
+      "primeRatings": {
+        "overall": 69,
+        "pace": 69,
+        "shooting": 60,
+        "passing": 72,
+        "dribbling": 70,
+        "defending": 61,
+        "physical": 67
+      }
+    },
+    {
+      "id": "sisi-spa",
+      "name": "Sisi",
+      "nationality": "SPA",
+      "broadPosition": "FW",
+      "shirtNumber": 11,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 66,
+        "pace": 70,
+        "shooting": 71,
+        "passing": 55,
+        "dribbling": 68,
+        "defending": 38,
+        "physical": 60
+      },
+      "primeRatings": {
+        "overall": 69,
+        "pace": 73,
+        "shooting": 76,
+        "passing": 63,
+        "dribbling": 72,
+        "defending": 42,
+        "physical": 68
+      }
+    },
+    {
+      "id": "satr-stegui-spa",
+      "name": "Satrústegui",
+      "nationality": "SPA",
+      "broadPosition": "DF",
+      "shirtNumber": 12,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 62,
+        "pace": 55,
+        "shooting": 42,
+        "passing": 59,
+        "dribbling": 52,
+        "defending": 72,
+        "physical": 64
+      },
+      "primeRatings": {
+        "overall": 65,
+        "pace": 59,
+        "shooting": 42,
+        "passing": 58,
+        "dribbling": 54,
+        "defending": 76,
+        "physical": 66
+      }
+    },
+    {
+      "id": "andr-s-spa",
+      "name": "Andrés",
+      "nationality": "SPA",
+      "broadPosition": "GK",
+      "shirtNumber": 13,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 62,
+        "pace": 43,
+        "shooting": 17,
+        "passing": 46,
+        "dribbling": 33,
+        "defending": 40,
+        "physical": 58,
+        "goalkeeping": 71
+      },
+      "primeRatings": {
+        "overall": 66,
+        "pace": 45,
+        "shooting": 16,
+        "passing": 50,
+        "dribbling": 37,
+        "defending": 45,
+        "physical": 63,
+        "goalkeeping": 76
+      }
+    },
+    {
+      "id": "arribas-spa",
+      "name": "Arribas",
+      "nationality": "SPA",
+      "broadPosition": "DF",
+      "shirtNumber": 14,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 62,
+        "pace": 54,
+        "shooting": 39,
+        "passing": 58,
+        "dribbling": 51,
+        "defending": 68,
+        "physical": 66
+      },
+      "primeRatings": {
+        "overall": 65,
+        "pace": 62,
+        "shooting": 43,
+        "passing": 60,
+        "dribbling": 53,
+        "defending": 72,
+        "physical": 71
+      }
+    },
+    {
+      "id": "oier-spa",
+      "name": "Oier",
+      "nationality": "SPA",
+      "broadPosition": "DF",
+      "shirtNumber": 15,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 62,
+        "pace": 55,
+        "shooting": 40,
+        "passing": 59,
+        "dribbling": 53,
+        "defending": 68,
+        "physical": 63
+      },
+      "primeRatings": {
+        "overall": 78,
+        "pace": 71,
+        "shooting": 58,
+        "passing": 72,
+        "dribbling": 67,
+        "defending": 84,
+        "physical": 82
+      }
+    },
+    {
+      "id": "cejudo-spa",
+      "name": "Cejudo",
+      "nationality": "SPA",
+      "broadPosition": "FW",
+      "shirtNumber": 16,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 64,
+        "pace": 68,
+        "shooting": 70,
+        "passing": 54,
+        "dribbling": 69,
+        "defending": 40,
+        "physical": 60
+      },
+      "primeRatings": {
+        "overall": 67,
+        "pace": 70,
+        "shooting": 72,
+        "passing": 58,
+        "dribbling": 71,
+        "defending": 44,
+        "physical": 65
+      }
+    },
+    {
+      "id": "lobato-spa",
+      "name": "Lobato",
+      "nationality": "SPA",
+      "broadPosition": "MF",
+      "shirtNumber": 17,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 63,
+        "pace": 59,
+        "shooting": 56,
+        "passing": 70,
+        "dribbling": 63,
+        "defending": 50,
+        "physical": 57
+      },
+      "primeRatings": {
+        "overall": 66,
+        "pace": 66,
+        "shooting": 59,
+        "passing": 74,
+        "dribbling": 65,
+        "defending": 57,
+        "physical": 61
+      }
+    },
+    {
+      "id": "onwu-spa",
+      "name": "Onwu",
+      "nationality": "SPA",
+      "broadPosition": "FW",
+      "shirtNumber": 18,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 64,
+        "pace": 69,
+        "shooting": 73,
+        "passing": 57,
+        "dribbling": 69,
+        "defending": 40,
+        "physical": 63
+      },
+      "primeRatings": {
+        "overall": 67,
+        "pace": 71,
+        "shooting": 72,
+        "passing": 59,
+        "dribbling": 71,
+        "defending": 43,
+        "physical": 64
+      }
+    },
+    {
+      "id": "riera-spa",
+      "name": "Riera",
+      "nationality": "SPA",
+      "broadPosition": "FW",
+      "shirtNumber": 19,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 63,
+        "pace": 66,
+        "shooting": 73,
+        "passing": 56,
+        "dribbling": 68,
+        "defending": 39,
+        "physical": 60
+      },
+      "primeRatings": {
+        "overall": 66,
+        "pace": 68,
+        "shooting": 75,
+        "passing": 58,
+        "dribbling": 68,
+        "defending": 41,
+        "physical": 65
+      }
+    },
+    {
+      "id": "silva-chi",
+      "name": "Silva",
+      "nationality": "CHI",
+      "broadPosition": "MF",
+      "shirtNumber": 20,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 64,
+        "pace": 63,
+        "shooting": 57,
+        "passing": 72,
+        "dribbling": 63,
+        "defending": 55,
+        "physical": 63
+      },
+      "primeRatings": {
+        "overall": 67,
+        "pace": 66,
+        "shooting": 58,
+        "passing": 72,
+        "dribbling": 65,
+        "defending": 57,
+        "physical": 67
+      }
+    },
+    {
+      "id": "torres-spa",
+      "name": "Torres",
+      "nationality": "SPA",
+      "broadPosition": "MF",
+      "shirtNumber": 21,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 61,
+        "pace": 60,
+        "shooting": 50,
+        "passing": 64,
+        "dribbling": 64,
+        "defending": 53,
+        "physical": 58
+      },
+      "primeRatings": {
+        "overall": 75,
+        "pace": 74,
+        "shooting": 66,
+        "passing": 80,
+        "dribbling": 73,
+        "defending": 65,
+        "physical": 73
+      }
+    },
+    {
+      "id": "loti-s-fra",
+      "name": "Lotiès",
+      "nationality": "FRA",
+      "broadPosition": "DF",
+      "shirtNumber": 22,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 59,
+        "pace": 51,
+        "shooting": 37,
+        "passing": 53,
+        "dribbling": 51,
+        "defending": 65,
+        "physical": 60
+      },
+      "primeRatings": {
+        "overall": 62,
+        "pace": 56,
+        "shooting": 42,
+        "passing": 59,
+        "dribbling": 51,
+        "defending": 68,
+        "physical": 62
+      }
+    },
+    {
+      "id": "lo-cmr",
+      "name": "Loé",
+      "nationality": "CMR",
+      "broadPosition": "MF",
+      "shirtNumber": 23,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 60,
+        "pace": 57,
+        "shooting": 52,
+        "passing": 66,
+        "dribbling": 58,
+        "defending": 52,
+        "physical": 54
+      },
+      "primeRatings": {
+        "overall": 63,
+        "pace": 58,
+        "shooting": 54,
+        "passing": 67,
+        "dribbling": 64,
+        "defending": 53,
+        "physical": 62
+      }
+    },
+    {
+      "id": "dami-spa",
+      "name": "Damià",
+      "nationality": "SPA",
+      "broadPosition": "DF",
+      "shirtNumber": 24,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 60,
+        "pace": 54,
+        "shooting": 41,
+        "passing": 57,
+        "dribbling": 49,
+        "defending": 66,
+        "physical": 61
+      },
+      "primeRatings": {
+        "overall": 63,
+        "pace": 57,
+        "shooting": 46,
+        "passing": 56,
+        "dribbling": 52,
+        "defending": 71,
+        "physical": 69
+      }
+    },
+    {
+      "id": "cantero-spa",
+      "name": "Cantero",
+      "nationality": "SPA",
+      "broadPosition": "GK",
+      "shirtNumber": 26,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 59,
+        "pace": 44,
+        "shooting": 20,
+        "passing": 45,
+        "dribbling": 28,
+        "defending": 39,
+        "physical": 54,
+        "goalkeeping": 66
+      },
+      "primeRatings": {
+        "overall": 62,
+        "pace": 45,
+        "shooting": 17,
+        "passing": 50,
+        "dribbling": 34,
+        "defending": 43,
+        "physical": 55,
+        "goalkeeping": 71
+      }
+    },
+    {
+      "id": "g-mez-spa",
+      "name": "Gómez",
+      "nationality": "SPA",
+      "broadPosition": "MF",
+      "shirtNumber": 30,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 59,
+        "pace": 54,
+        "shooting": 49,
+        "passing": 67,
+        "dribbling": 60,
+        "defending": 46,
+        "physical": 58
+      },
+      "primeRatings": {
+        "overall": 62,
+        "pace": 61,
+        "shooting": 56,
+        "passing": 64,
+        "dribbling": 64,
+        "defending": 51,
+        "physical": 58
+      }
+    },
+    {
+      "id": "j-garc-a-spa",
+      "name": "J. García",
+      "nationality": "SPA",
+      "broadPosition": "MF",
+      "shirtNumber": 31,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 60,
+        "pace": 57,
+        "shooting": 50,
+        "passing": 68,
+        "dribbling": 61,
+        "defending": 48,
+        "physical": 55
+      },
+      "primeRatings": {
+        "overall": 63,
+        "pace": 58,
+        "shooting": 54,
+        "passing": 69,
+        "dribbling": 62,
+        "defending": 53,
+        "physical": 59
+      }
+    }
+  ],
+  "sourceUrl": "https://en.wikipedia.org/wiki/2013%E2%80%9314_CA_Osasuna_season",
+  "scrapedAt": "2026-07-19T18:29:16.038Z"
+}

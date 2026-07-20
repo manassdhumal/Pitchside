@@ -1,0 +1,917 @@
+{
+  "leagueId": "serie-a",
+  "clubId": "sassuolo",
+  "season": "2017-18",
+  "division": "top-flight",
+  "squad": [
+    {
+      "id": "andrea-consigli-ita",
+      "name": "Andrea Consigli",
+      "nationality": "ITA",
+      "broadPosition": "GK",
+      "shirtNumber": 47,
+      "stats": {
+        "appearances": 38,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 73,
+        "pace": 43,
+        "shooting": 18,
+        "passing": 60,
+        "dribbling": 42,
+        "defending": 51,
+        "physical": 66,
+        "goalkeeping": 78
+      },
+      "primeRatings": {
+        "overall": 83,
+        "pace": 44,
+        "shooting": 15,
+        "passing": 68,
+        "dribbling": 52,
+        "defending": 66,
+        "physical": 81,
+        "goalkeeping": 89
+      }
+    },
+    {
+      "id": "leonardo-marson-ita",
+      "name": "Leonardo Marson",
+      "nationality": "ITA",
+      "broadPosition": "GK",
+      "shirtNumber": 70,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 45,
+        "pace": 43,
+        "shooting": 21,
+        "passing": 28,
+        "dribbling": 17,
+        "defending": 23,
+        "physical": 42,
+        "goalkeeping": 53
+      },
+      "primeRatings": {
+        "overall": 49,
+        "pace": 44,
+        "shooting": 17,
+        "passing": 36,
+        "dribbling": 19,
+        "defending": 28,
+        "physical": 45,
+        "goalkeeping": 55
+      }
+    },
+    {
+      "id": "giacomo-satalino-ita",
+      "name": "Giacomo Satalino",
+      "nationality": "ITA",
+      "broadPosition": "GK",
+      "shirtNumber": 76,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 47,
+        "pace": 46,
+        "shooting": 18,
+        "passing": 34,
+        "dribbling": 20,
+        "defending": 28,
+        "physical": 41,
+        "goalkeeping": 56
+      },
+      "primeRatings": {
+        "overall": 65,
+        "pace": 47,
+        "shooting": 16,
+        "passing": 53,
+        "dribbling": 37,
+        "defending": 47,
+        "physical": 58,
+        "goalkeeping": 71
+      }
+    },
+    {
+      "id": "gianluca-pegolo-ita",
+      "name": "Gianluca Pegolo",
+      "nationality": "ITA",
+      "broadPosition": "GK",
+      "shirtNumber": 79,
+      "stats": {
+        "appearances": 4,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 51,
+        "pace": 45,
+        "shooting": 17,
+        "passing": 34,
+        "dribbling": 22,
+        "defending": 32,
+        "physical": 46,
+        "goalkeeping": 58
+      },
+      "primeRatings": {
+        "overall": 64,
+        "pace": 42,
+        "shooting": 16,
+        "passing": 50,
+        "dribbling": 36,
+        "defending": 43,
+        "physical": 58,
+        "goalkeeping": 73
+      }
+    },
+    {
+      "id": "mauricio-lemos-uru",
+      "name": "Mauricio Lemos",
+      "nationality": "URU",
+      "broadPosition": "DF",
+      "shirtNumber": 5,
+      "stats": {
+        "appearances": 8,
+        "goals": 1
+      },
+      "seasonRatings": {
+        "overall": 57,
+        "pace": 52,
+        "shooting": 40,
+        "passing": 55,
+        "dribbling": 50,
+        "defending": 63,
+        "physical": 60
+      },
+      "primeRatings": {
+        "overall": 70,
+        "pace": 62,
+        "shooting": 51,
+        "passing": 63,
+        "dribbling": 58,
+        "defending": 80,
+        "physical": 71
+      }
+    },
+    {
+      "id": "federico-peluso-ita",
+      "name": "Federico Peluso",
+      "nationality": "ITA",
+      "broadPosition": "DF",
+      "shirtNumber": 13,
+      "stats": {
+        "appearances": 33,
+        "goals": 1
+      },
+      "seasonRatings": {
+        "overall": 74,
+        "pace": 70,
+        "shooting": 55,
+        "passing": 71,
+        "dribbling": 66,
+        "defending": 83,
+        "physical": 77
+      },
+      "primeRatings": {
+        "overall": 81,
+        "pace": 77,
+        "shooting": 60,
+        "passing": 74,
+        "dribbling": 68,
+        "defending": 87,
+        "physical": 83
+      }
+    },
+    {
+      "id": "francesco-acerbi-ita",
+      "name": "Francesco Acerbi",
+      "nationality": "ITA",
+      "broadPosition": "DF",
+      "shirtNumber": 15,
+      "stats": {
+        "appearances": 41,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 75,
+        "pace": 67,
+        "shooting": 56,
+        "passing": 73,
+        "dribbling": 65,
+        "defending": 84,
+        "physical": 80
+      },
+      "primeRatings": {
+        "overall": 87,
+        "pace": 84,
+        "shooting": 69,
+        "passing": 81,
+        "dribbling": 75,
+        "defending": 95,
+        "physical": 90
+      }
+    },
+    {
+      "id": "pol-lirola-esp",
+      "name": "Pol Lirola",
+      "nationality": "ESP",
+      "broadPosition": "DF",
+      "shirtNumber": 21,
+      "stats": {
+        "appearances": 26,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 67,
+        "pace": 61,
+        "shooting": 47,
+        "passing": 63,
+        "dribbling": 60,
+        "defending": 76,
+        "physical": 70
+      },
+      "primeRatings": {
+        "overall": 83,
+        "pace": 78,
+        "shooting": 66,
+        "passing": 80,
+        "dribbling": 73,
+        "defending": 94,
+        "physical": 87
+      }
+    },
+    {
+      "id": "edoardo-goldaniga-ita",
+      "name": "Edoardo Goldaniga",
+      "nationality": "ITA",
+      "broadPosition": "DF",
+      "shirtNumber": 24,
+      "stats": {
+        "appearances": 14,
+        "goals": 1
+      },
+      "seasonRatings": {
+        "overall": 62,
+        "pace": 59,
+        "shooting": 42,
+        "passing": 54,
+        "dribbling": 53,
+        "defending": 67,
+        "physical": 64
+      },
+      "primeRatings": {
+        "overall": 75,
+        "pace": 68,
+        "shooting": 53,
+        "passing": 68,
+        "dribbling": 63,
+        "defending": 82,
+        "physical": 78
+      }
+    },
+    {
+      "id": "rog-rio-bra",
+      "name": "Rogério",
+      "nationality": "BRA",
+      "broadPosition": "DF",
+      "shirtNumber": 26,
+      "stats": {
+        "appearances": 14,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 61,
+        "pace": 56,
+        "shooting": 42,
+        "passing": 54,
+        "dribbling": 52,
+        "defending": 72,
+        "physical": 61
+      },
+      "primeRatings": {
+        "overall": 77,
+        "pace": 73,
+        "shooting": 56,
+        "passing": 74,
+        "dribbling": 68,
+        "defending": 83,
+        "physical": 80
+      }
+    },
+    {
+      "id": "cristian-dell-orco-ita",
+      "name": "Cristian Dell'Orco",
+      "nationality": "ITA",
+      "broadPosition": "DF",
+      "shirtNumber": 39,
+      "stats": {
+        "appearances": 8,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 54,
+        "pace": 48,
+        "shooting": 35,
+        "passing": 50,
+        "dribbling": 46,
+        "defending": 61,
+        "physical": 55
+      },
+      "primeRatings": {
+        "overall": 64,
+        "pace": 60,
+        "shooting": 44,
+        "passing": 62,
+        "dribbling": 57,
+        "defending": 71,
+        "physical": 66
+      }
+    },
+    {
+      "id": "timo-letschert-ned",
+      "name": "Timo Letschert",
+      "nationality": "NED",
+      "broadPosition": "DF",
+      "shirtNumber": 55,
+      "stats": {
+        "appearances": 7,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 53,
+        "pace": 47,
+        "shooting": 36,
+        "passing": 45,
+        "dribbling": 42,
+        "defending": 63,
+        "physical": 58
+      },
+      "primeRatings": {
+        "overall": 59,
+        "pace": 53,
+        "shooting": 36,
+        "passing": 57,
+        "dribbling": 46,
+        "defending": 66,
+        "physical": 62
+      }
+    },
+    {
+      "id": "claud-adjapong-ita",
+      "name": "Claud Adjapong",
+      "nationality": "ITA",
+      "broadPosition": "DF",
+      "shirtNumber": 98,
+      "stats": {
+        "appearances": 16,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 61,
+        "pace": 57,
+        "shooting": 43,
+        "passing": 53,
+        "dribbling": 51,
+        "defending": 69,
+        "physical": 65
+      },
+      "primeRatings": {
+        "overall": 64,
+        "pace": 58,
+        "shooting": 44,
+        "passing": 60,
+        "dribbling": 55,
+        "defending": 71,
+        "physical": 69
+      }
+    },
+    {
+      "id": "francesco-magnanelli-ita",
+      "name": "Francesco Magnanelli",
+      "nationality": "ITA",
+      "broadPosition": "MF",
+      "shirtNumber": 4,
+      "stats": {
+        "appearances": 34,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 73,
+        "pace": 73,
+        "shooting": 64,
+        "passing": 76,
+        "dribbling": 72,
+        "defending": 66,
+        "physical": 71
+      },
+      "primeRatings": {
+        "overall": 77,
+        "pace": 75,
+        "shooting": 67,
+        "passing": 84,
+        "dribbling": 74,
+        "defending": 64,
+        "physical": 76
+      }
+    },
+    {
+      "id": "luca-mazzitelli-ita",
+      "name": "Luca Mazzitelli",
+      "nationality": "ITA",
+      "broadPosition": "MF",
+      "shirtNumber": 6,
+      "stats": {
+        "appearances": 23,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 62,
+        "pace": 56,
+        "shooting": 52,
+        "passing": 65,
+        "dribbling": 61,
+        "defending": 51,
+        "physical": 56
+      },
+      "primeRatings": {
+        "overall": 67,
+        "pace": 63,
+        "shooting": 60,
+        "passing": 70,
+        "dribbling": 65,
+        "defending": 60,
+        "physical": 66
+      }
+    },
+    {
+      "id": "simone-missiroli-ita",
+      "name": "Simone Missiroli",
+      "nationality": "ITA",
+      "broadPosition": "MF",
+      "shirtNumber": 7,
+      "stats": {
+        "appearances": 37,
+        "goals": 2
+      },
+      "seasonRatings": {
+        "overall": 76,
+        "pace": 74,
+        "shooting": 70,
+        "passing": 83,
+        "dribbling": 77,
+        "defending": 64,
+        "physical": 72
+      },
+      "primeRatings": {
+        "overall": 84,
+        "pace": 80,
+        "shooting": 75,
+        "passing": 89,
+        "dribbling": 83,
+        "defending": 74,
+        "physical": 83
+      }
+    },
+    {
+      "id": "davide-biondini-ita",
+      "name": "Davide Biondini",
+      "nationality": "ITA",
+      "broadPosition": "MF",
+      "shirtNumber": 8,
+      "stats": {
+        "appearances": 8,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 57,
+        "pace": 54,
+        "shooting": 47,
+        "passing": 60,
+        "dribbling": 58,
+        "defending": 47,
+        "physical": 56
+      },
+      "primeRatings": {
+        "overall": 74,
+        "pace": 71,
+        "shooting": 69,
+        "passing": 80,
+        "dribbling": 75,
+        "defending": 63,
+        "physical": 72
+      }
+    },
+    {
+      "id": "stefano-sensi-ita",
+      "name": "Stefano Sensi",
+      "nationality": "ITA",
+      "broadPosition": "MF",
+      "shirtNumber": 12,
+      "stats": {
+        "appearances": 19,
+        "goals": 2
+      },
+      "seasonRatings": {
+        "overall": 67,
+        "pace": 62,
+        "shooting": 61,
+        "passing": 72,
+        "dribbling": 68,
+        "defending": 55,
+        "physical": 67
+      },
+      "primeRatings": {
+        "overall": 79,
+        "pace": 76,
+        "shooting": 71,
+        "passing": 84,
+        "dribbling": 77,
+        "defending": 71,
+        "physical": 78
+      }
+    },
+    {
+      "id": "davide-frattesi-ita",
+      "name": "Davide Frattesi",
+      "nationality": "ITA",
+      "broadPosition": "MF",
+      "shirtNumber": 22,
+      "stats": {
+        "appearances": 1,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 49,
+        "pace": 46,
+        "shooting": 39,
+        "passing": 53,
+        "dribbling": 47,
+        "defending": 38,
+        "physical": 46
+      },
+      "primeRatings": {
+        "overall": 87,
+        "pace": 81,
+        "shooting": 81,
+        "passing": 94,
+        "dribbling": 85,
+        "defending": 78,
+        "physical": 85
+      }
+    },
+    {
+      "id": "francesco-cassata-ita",
+      "name": "Francesco Cassata",
+      "nationality": "ITA",
+      "broadPosition": "MF",
+      "shirtNumber": 29,
+      "stats": {
+        "appearances": 12,
+        "goals": 1
+      },
+      "seasonRatings": {
+        "overall": 62,
+        "pace": 62,
+        "shooting": 56,
+        "passing": 66,
+        "dribbling": 62,
+        "defending": 53,
+        "physical": 62
+      },
+      "primeRatings": {
+        "overall": 72,
+        "pace": 66,
+        "shooting": 62,
+        "passing": 79,
+        "dribbling": 73,
+        "defending": 64,
+        "physical": 69
+      }
+    },
+    {
+      "id": "alfred-duncan-gha",
+      "name": "Alfred Duncan",
+      "nationality": "GHA",
+      "broadPosition": "MF",
+      "shirtNumber": 32,
+      "stats": {
+        "appearances": 26,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 67,
+        "pace": 64,
+        "shooting": 62,
+        "passing": 74,
+        "dribbling": 66,
+        "defending": 56,
+        "physical": 65
+      },
+      "primeRatings": {
+        "overall": 82,
+        "pace": 81,
+        "shooting": 72,
+        "passing": 87,
+        "dribbling": 82,
+        "defending": 73,
+        "physical": 80
+      }
+    },
+    {
+      "id": "alessandro-matri-ita",
+      "name": "Alessandro Matri",
+      "nationality": "ITA",
+      "broadPosition": "FW",
+      "shirtNumber": 10,
+      "stats": {
+        "appearances": 25,
+        "goals": 3
+      },
+      "seasonRatings": {
+        "overall": 69,
+        "pace": 71,
+        "shooting": 76,
+        "passing": 61,
+        "dribbling": 75,
+        "defending": 46,
+        "physical": 68
+      },
+      "primeRatings": {
+        "overall": 85,
+        "pace": 87,
+        "shooting": 92,
+        "passing": 74,
+        "dribbling": 89,
+        "defending": 60,
+        "physical": 82
+      }
+    },
+    {
+      "id": "matteo-politano-ita",
+      "name": "Matteo Politano",
+      "nationality": "ITA",
+      "broadPosition": "FW",
+      "shirtNumber": 16,
+      "stats": {
+        "appearances": 39,
+        "goals": 11
+      },
+      "seasonRatings": {
+        "overall": 84,
+        "pace": 89,
+        "shooting": 95,
+        "passing": 77,
+        "dribbling": 88,
+        "defending": 60,
+        "physical": 78
+      },
+      "primeRatings": {
+        "overall": 87,
+        "pace": 92,
+        "shooting": 94,
+        "passing": 81,
+        "dribbling": 88,
+        "defending": 60,
+        "physical": 84
+      }
+    },
+    {
+      "id": "nicholas-pierini-ita",
+      "name": "Nicholas Pierini",
+      "nationality": "ITA",
+      "broadPosition": "FW",
+      "shirtNumber": 17,
+      "stats": {
+        "appearances": 4,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 51,
+        "pace": 54,
+        "shooting": 61,
+        "passing": 46,
+        "dribbling": 57,
+        "defending": 24,
+        "physical": 47
+      },
+      "primeRatings": {
+        "overall": 54,
+        "pace": 58,
+        "shooting": 65,
+        "passing": 45,
+        "dribbling": 54,
+        "defending": 30,
+        "physical": 53
+      }
+    },
+    {
+      "id": "domenico-berardi-ita",
+      "name": "Domenico Berardi",
+      "nationality": "ITA",
+      "broadPosition": "FW",
+      "shirtNumber": 25,
+      "stats": {
+        "appearances": 33,
+        "goals": 5
+      },
+      "seasonRatings": {
+        "overall": 74,
+        "pace": 74,
+        "shooting": 85,
+        "passing": 67,
+        "dribbling": 80,
+        "defending": 49,
+        "physical": 70
+      },
+      "primeRatings": {
+        "overall": 87,
+        "pace": 88,
+        "shooting": 98,
+        "passing": 79,
+        "dribbling": 90,
+        "defending": 59,
+        "physical": 84
+      }
+    },
+    {
+      "id": "khouma-babacar-sen",
+      "name": "Khouma Babacar",
+      "nationality": "SEN",
+      "broadPosition": "FW",
+      "shirtNumber": 30,
+      "stats": {
+        "appearances": 13,
+        "goals": 2
+      },
+      "seasonRatings": {
+        "overall": 64,
+        "pace": 66,
+        "shooting": 73,
+        "passing": 56,
+        "dribbling": 64,
+        "defending": 39,
+        "physical": 58
+      },
+      "primeRatings": {
+        "overall": 85,
+        "pace": 90,
+        "shooting": 94,
+        "passing": 76,
+        "dribbling": 85,
+        "defending": 61,
+        "physical": 81
+      }
+    },
+    {
+      "id": "antonino-ragusa-ita",
+      "name": "Antonino Ragusa",
+      "nationality": "ITA",
+      "broadPosition": "FW",
+      "shirtNumber": 90,
+      "stats": {
+        "appearances": 32,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 68,
+        "pace": 71,
+        "shooting": 78,
+        "passing": 62,
+        "dribbling": 70,
+        "defending": 46,
+        "physical": 63
+      },
+      "primeRatings": {
+        "overall": 74,
+        "pace": 80,
+        "shooting": 79,
+        "passing": 66,
+        "dribbling": 79,
+        "defending": 48,
+        "physical": 69
+      }
+    },
+    {
+      "id": "diego-falcinelli-ita",
+      "name": "Diego Falcinelli",
+      "nationality": "ITA",
+      "broadPosition": "FW",
+      "shirtNumber": 11,
+      "stats": {
+        "appearances": 23,
+        "goals": 3
+      },
+      "seasonRatings": {
+        "overall": 70,
+        "pace": 76,
+        "shooting": 79,
+        "passing": 62,
+        "dribbling": 73,
+        "defending": 46,
+        "physical": 67
+      },
+      "primeRatings": {
+        "overall": 73,
+        "pace": 77,
+        "shooting": 79,
+        "passing": 65,
+        "dribbling": 77,
+        "defending": 49,
+        "physical": 72
+      }
+    },
+    {
+      "id": "gianluca-scamacca-ita",
+      "name": "Gianluca Scamacca",
+      "nationality": "ITA",
+      "broadPosition": "FW",
+      "shirtNumber": 14,
+      "stats": {
+        "appearances": 3,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 52,
+        "pace": 56,
+        "shooting": 62,
+        "passing": 45,
+        "dribbling": 57,
+        "defending": 27,
+        "physical": 49
+      },
+      "primeRatings": {
+        "overall": 87,
+        "pace": 92,
+        "shooting": 92,
+        "passing": 77,
+        "dribbling": 93,
+        "defending": 63,
+        "physical": 84
+      }
+    },
+    {
+      "id": "marcello-gazzola-ita",
+      "name": "Marcello Gazzola",
+      "nationality": "ITA",
+      "broadPosition": "DF",
+      "shirtNumber": 23,
+      "stats": {
+        "appearances": 10,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 56,
+        "pace": 50,
+        "shooting": 38,
+        "passing": 48,
+        "dribbling": 47,
+        "defending": 66,
+        "physical": 60
+      },
+      "primeRatings": {
+        "overall": 67,
+        "pace": 62,
+        "shooting": 47,
+        "passing": 62,
+        "dribbling": 57,
+        "defending": 74,
+        "physical": 69
+      }
+    },
+    {
+      "id": "paolo-cannavaro-ita",
+      "name": "Paolo Cannavaro",
+      "nationality": "ITA",
+      "broadPosition": "DF",
+      "shirtNumber": 28,
+      "stats": {
+        "appearances": 21,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 66,
+        "pace": 63,
+        "shooting": 47,
+        "passing": 61,
+        "dribbling": 58,
+        "defending": 76,
+        "physical": 71
+      },
+      "primeRatings": {
+        "overall": 80,
+        "pace": 76,
+        "shooting": 60,
+        "passing": 75,
+        "dribbling": 70,
+        "defending": 87,
+        "physical": 80
+      }
+    }
+  ],
+  "sourceUrl": "https://en.wikipedia.org/wiki/2017%E2%80%9318_US_Sassuolo_Calcio_season",
+  "scrapedAt": "2026-07-20T13:09:09.147Z"
+}

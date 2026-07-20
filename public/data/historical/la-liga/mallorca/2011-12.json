@@ -1,0 +1,565 @@
+{
+  "leagueId": "la-liga",
+  "clubId": "mallorca",
+  "season": "2011-12",
+  "division": "top-flight",
+  "squad": [
+    {
+      "id": "juan-calatayud-spain",
+      "name": "Juan Calatayud",
+      "nationality": "Spain",
+      "broadPosition": "GK",
+      "shirtNumber": 1,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 67,
+        "pace": 47,
+        "shooting": 19,
+        "passing": 54,
+        "dribbling": 39,
+        "defending": 49,
+        "physical": 59,
+        "goalkeeping": 76
+      },
+      "primeRatings": {
+        "overall": 70,
+        "pace": 44,
+        "shooting": 20,
+        "passing": 53,
+        "dribbling": 41,
+        "defending": 52,
+        "physical": 64,
+        "goalkeeping": 75
+      }
+    },
+    {
+      "id": "jo-o-victor-brazil",
+      "name": "João Victor",
+      "nationality": "Brazil",
+      "broadPosition": "MF",
+      "shirtNumber": 3,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 66,
+        "pace": 63,
+        "shooting": 60,
+        "passing": 69,
+        "dribbling": 68,
+        "defending": 58,
+        "physical": 61
+      },
+      "primeRatings": {
+        "overall": 77,
+        "pace": 72,
+        "shooting": 67,
+        "passing": 82,
+        "dribbling": 76,
+        "defending": 66,
+        "physical": 71
+      }
+    },
+    {
+      "id": "iv-n-ramis-spain",
+      "name": "Iván Ramis",
+      "nationality": "Spain",
+      "broadPosition": "DF",
+      "shirtNumber": 4,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 66,
+        "pace": 61,
+        "shooting": 48,
+        "passing": 62,
+        "dribbling": 58,
+        "defending": 72,
+        "physical": 71
+      },
+      "primeRatings": {
+        "overall": 69,
+        "pace": 61,
+        "shooting": 50,
+        "passing": 63,
+        "dribbling": 62,
+        "defending": 76,
+        "physical": 71
+      }
+    },
+    {
+      "id": "tom-s-pina-spain",
+      "name": "Tomás Pina",
+      "nationality": "Spain",
+      "broadPosition": "MF",
+      "shirtNumber": 5,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 66,
+        "pace": 63,
+        "shooting": 55,
+        "passing": 71,
+        "dribbling": 68,
+        "defending": 55,
+        "physical": 64
+      },
+      "primeRatings": {
+        "overall": 82,
+        "pace": 81,
+        "shooting": 74,
+        "passing": 87,
+        "dribbling": 80,
+        "defending": 73,
+        "physical": 78
+      }
+    },
+    {
+      "id": "sergio-tejera-spain",
+      "name": "Sergio Tejera",
+      "nationality": "Spain",
+      "broadPosition": "MF",
+      "shirtNumber": 6,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 65,
+        "pace": 59,
+        "shooting": 58,
+        "passing": 69,
+        "dribbling": 68,
+        "defending": 58,
+        "physical": 64
+      },
+      "primeRatings": {
+        "overall": 68,
+        "pace": 64,
+        "shooting": 60,
+        "passing": 73,
+        "dribbling": 66,
+        "defending": 57,
+        "physical": 68
+      }
+    },
+    {
+      "id": "michael-pereira-france",
+      "name": "Michael Pereira",
+      "nationality": "France",
+      "broadPosition": "MF",
+      "shirtNumber": 7,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 67,
+        "pace": 65,
+        "shooting": 57,
+        "passing": 72,
+        "dribbling": 70,
+        "defending": 58,
+        "physical": 64
+      },
+      "primeRatings": {
+        "overall": 70,
+        "pace": 65,
+        "shooting": 63,
+        "passing": 77,
+        "dribbling": 68,
+        "defending": 61,
+        "physical": 68
+      }
+    },
+    {
+      "id": "emilio-nsue-equatorial-guinea",
+      "name": "Emilio Nsue",
+      "nationality": "Equatorial Guinea",
+      "broadPosition": "FW",
+      "shirtNumber": 8,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 65,
+        "pace": 67,
+        "shooting": 72,
+        "passing": 56,
+        "dribbling": 69,
+        "defending": 41,
+        "physical": 60
+      },
+      "primeRatings": {
+        "overall": 68,
+        "pace": 68,
+        "shooting": 79,
+        "passing": 58,
+        "dribbling": 70,
+        "defending": 43,
+        "physical": 64
+      }
+    },
+    {
+      "id": "tomer-hemed-israel",
+      "name": "Tomer Hemed",
+      "nationality": "Israel",
+      "broadPosition": "FW",
+      "shirtNumber": 10,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 67,
+        "pace": 72,
+        "shooting": 73,
+        "passing": 59,
+        "dribbling": 72,
+        "defending": 42,
+        "physical": 64
+      },
+      "primeRatings": {
+        "overall": 70,
+        "pace": 71,
+        "shooting": 76,
+        "passing": 65,
+        "dribbling": 70,
+        "defending": 44,
+        "physical": 65
+      }
+    },
+    {
+      "id": "chory-castro-uruguay",
+      "name": "Chory Castro",
+      "nationality": "Uruguay",
+      "broadPosition": "MF",
+      "shirtNumber": 11,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 65,
+        "pace": 60,
+        "shooting": 56,
+        "passing": 69,
+        "dribbling": 63,
+        "defending": 56,
+        "physical": 63
+      },
+      "primeRatings": {
+        "overall": 81,
+        "pace": 76,
+        "shooting": 75,
+        "passing": 89,
+        "dribbling": 84,
+        "defending": 71,
+        "physical": 77
+      }
+    },
+    {
+      "id": "dudu-aouate-israel",
+      "name": "Dudu Aouate",
+      "nationality": "Israel",
+      "broadPosition": "GK",
+      "shirtNumber": 13,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 64,
+        "pace": 47,
+        "shooting": 18,
+        "passing": 51,
+        "dribbling": 37,
+        "defending": 42,
+        "physical": 59,
+        "goalkeeping": 71
+      },
+      "primeRatings": {
+        "overall": 67,
+        "pace": 45,
+        "shooting": 18,
+        "passing": 50,
+        "dribbling": 37,
+        "defending": 48,
+        "physical": 65,
+        "goalkeeping": 77
+      }
+    },
+    {
+      "id": "akihiro-ienaga-japan",
+      "name": "Akihiro Ienaga",
+      "nationality": "Japan",
+      "broadPosition": "MF",
+      "shirtNumber": 14,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 64,
+        "pace": 63,
+        "shooting": 54,
+        "passing": 72,
+        "dribbling": 63,
+        "defending": 55,
+        "physical": 60
+      },
+      "primeRatings": {
+        "overall": 67,
+        "pace": 66,
+        "shooting": 60,
+        "passing": 71,
+        "dribbling": 66,
+        "defending": 57,
+        "physical": 66
+      }
+    },
+    {
+      "id": "pablo-c-ceres-uruguay",
+      "name": "Pablo Cáceres",
+      "nationality": "Uruguay",
+      "broadPosition": "DF",
+      "shirtNumber": 15,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 63,
+        "pace": 57,
+        "shooting": 43,
+        "passing": 56,
+        "dribbling": 52,
+        "defending": 70,
+        "physical": 66
+      },
+      "primeRatings": {
+        "overall": 66,
+        "pace": 59,
+        "shooting": 49,
+        "passing": 60,
+        "dribbling": 53,
+        "defending": 74,
+        "physical": 71
+      }
+    },
+    {
+      "id": "jos-nunes-portugal",
+      "name": "José Nunes",
+      "nationality": "Portugal",
+      "broadPosition": "DF",
+      "shirtNumber": 16,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 62,
+        "pace": 54,
+        "shooting": 45,
+        "passing": 60,
+        "dribbling": 49,
+        "defending": 70,
+        "physical": 68
+      },
+      "primeRatings": {
+        "overall": 65,
+        "pace": 60,
+        "shooting": 46,
+        "passing": 59,
+        "dribbling": 56,
+        "defending": 74,
+        "physical": 70
+      }
+    },
+    {
+      "id": "v-ctor-casades-s-spain",
+      "name": "Víctor Casadesús",
+      "nationality": "Spain",
+      "broadPosition": "FW",
+      "shirtNumber": 18,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 63,
+        "pace": 66,
+        "shooting": 69,
+        "passing": 52,
+        "dribbling": 66,
+        "defending": 38,
+        "physical": 60
+      },
+      "primeRatings": {
+        "overall": 81,
+        "pace": 83,
+        "shooting": 90,
+        "passing": 71,
+        "dribbling": 83,
+        "defending": 53,
+        "physical": 76
+      }
+    },
+    {
+      "id": "jos-luis-mart-spain",
+      "name": "José Luis Martí",
+      "nationality": "Spain",
+      "broadPosition": "MF",
+      "shirtNumber": 19,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 63,
+        "pace": 60,
+        "shooting": 56,
+        "passing": 70,
+        "dribbling": 61,
+        "defending": 51,
+        "physical": 59
+      },
+      "primeRatings": {
+        "overall": 66,
+        "pace": 65,
+        "shooting": 56,
+        "passing": 68,
+        "dribbling": 68,
+        "defending": 53,
+        "physical": 65
+      }
+    },
+    {
+      "id": "mart-cresp-spain",
+      "name": "Martí Crespí",
+      "nationality": "Spain",
+      "broadPosition": "DF",
+      "shirtNumber": 21,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 59,
+        "pace": 51,
+        "shooting": 39,
+        "passing": 57,
+        "dribbling": 52,
+        "defending": 67,
+        "physical": 65
+      },
+      "primeRatings": {
+        "overall": 62,
+        "pace": 59,
+        "shooting": 41,
+        "passing": 55,
+        "dribbling": 51,
+        "defending": 69,
+        "physical": 67
+      }
+    },
+    {
+      "id": "pau-cendr-s-spain",
+      "name": "Pau Cendrós",
+      "nationality": "Spain",
+      "broadPosition": "DF",
+      "shirtNumber": 22,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 59,
+        "pace": 53,
+        "shooting": 42,
+        "passing": 56,
+        "dribbling": 49,
+        "defending": 70,
+        "physical": 60
+      },
+      "primeRatings": {
+        "overall": 62,
+        "pace": 56,
+        "shooting": 41,
+        "passing": 60,
+        "dribbling": 55,
+        "defending": 69,
+        "physical": 63
+      }
+    },
+    {
+      "id": "fernando-tissone-argentina",
+      "name": "Fernando Tissone",
+      "nationality": "Argentina",
+      "broadPosition": "MF",
+      "shirtNumber": 23,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 61,
+        "pace": 60,
+        "shooting": 55,
+        "passing": 65,
+        "dribbling": 60,
+        "defending": 53,
+        "physical": 59
+      },
+      "primeRatings": {
+        "overall": 67,
+        "pace": 66,
+        "shooting": 58,
+        "passing": 72,
+        "dribbling": 68,
+        "defending": 59,
+        "physical": 63
+      }
+    },
+    {
+      "id": "kevin-spain",
+      "name": "Kevin",
+      "nationality": "Spain",
+      "broadPosition": "DF",
+      "shirtNumber": null,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 61,
+        "pace": 57,
+        "shooting": 39,
+        "passing": 56,
+        "dribbling": 49,
+        "defending": 71,
+        "physical": 65
+      },
+      "primeRatings": {
+        "overall": 64,
+        "pace": 61,
+        "shooting": 42,
+        "passing": 59,
+        "dribbling": 52,
+        "defending": 70,
+        "physical": 67
+      }
+    }
+  ],
+  "sourceUrl": "https://en.wikipedia.org/wiki/2011%E2%80%9312_RCD_Mallorca_season",
+  "scrapedAt": "2026-07-19T22:00:06.415Z"
+}

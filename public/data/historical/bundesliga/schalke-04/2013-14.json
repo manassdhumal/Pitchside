@@ -1,0 +1,940 @@
+{
+  "leagueId": "bundesliga",
+  "clubId": "schalke-04",
+  "season": "2013-14",
+  "division": "top-flight",
+  "squad": [
+    {
+      "id": "ralf-f-hrmann",
+      "name": "Ralf Fährmann",
+      "nationality": "",
+      "broadPosition": "GK",
+      "stats": {
+        "appearances": 27,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 66,
+        "pace": 43,
+        "shooting": 17,
+        "passing": 52,
+        "dribbling": 33,
+        "defending": 47,
+        "physical": 59,
+        "goalkeeping": 71
+      },
+      "primeRatings": {
+        "overall": 79,
+        "pace": 48,
+        "shooting": 18,
+        "passing": 67,
+        "dribbling": 49,
+        "defending": 62,
+        "physical": 74,
+        "goalkeeping": 88
+      }
+    },
+    {
+      "id": "timo-hildebrand",
+      "name": "Timo Hildebrand",
+      "nationality": "",
+      "broadPosition": "GK",
+      "stats": {
+        "appearances": 20,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 61,
+        "pace": 45,
+        "shooting": 17,
+        "passing": 47,
+        "dribbling": 30,
+        "defending": 42,
+        "physical": 58,
+        "goalkeeping": 69
+      },
+      "primeRatings": {
+        "overall": 68,
+        "pace": 46,
+        "shooting": 19,
+        "passing": 52,
+        "dribbling": 35,
+        "defending": 50,
+        "physical": 62,
+        "goalkeeping": 77
+      }
+    },
+    {
+      "id": "lars-unnerstall",
+      "name": "Lars Unnerstall",
+      "nationality": "",
+      "broadPosition": "GK",
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 47,
+        "pace": 47,
+        "shooting": 18,
+        "passing": 33,
+        "dribbling": 17,
+        "defending": 29,
+        "physical": 43,
+        "goalkeeping": 57
+      },
+      "primeRatings": {
+        "overall": 67,
+        "pace": 45,
+        "shooting": 20,
+        "passing": 50,
+        "dribbling": 38,
+        "defending": 45,
+        "physical": 61,
+        "goalkeeping": 75
+      }
+    },
+    {
+      "id": "tim-hoogland",
+      "name": "Tim Hoogland",
+      "nationality": "",
+      "broadPosition": "DF",
+      "stats": {
+        "appearances": 22,
+        "goals": 1
+      },
+      "seasonRatings": {
+        "overall": 67,
+        "pace": 64,
+        "shooting": 49,
+        "passing": 63,
+        "dribbling": 56,
+        "defending": 75,
+        "physical": 67
+      },
+      "primeRatings": {
+        "overall": 77,
+        "pace": 72,
+        "shooting": 56,
+        "passing": 75,
+        "dribbling": 69,
+        "defending": 86,
+        "physical": 81
+      }
+    },
+    {
+      "id": "benedikt-h-wedes",
+      "name": "Benedikt Höwedes",
+      "nationality": "",
+      "broadPosition": "DF",
+      "stats": {
+        "appearances": 32,
+        "goals": 2
+      },
+      "seasonRatings": {
+        "overall": 73,
+        "pace": 71,
+        "shooting": 53,
+        "passing": 66,
+        "dribbling": 62,
+        "defending": 81,
+        "physical": 73
+      },
+      "primeRatings": {
+        "overall": 80,
+        "pace": 73,
+        "shooting": 60,
+        "passing": 78,
+        "dribbling": 68,
+        "defending": 90,
+        "physical": 81
+      }
+    },
+    {
+      "id": "felipe-santana",
+      "name": "Felipe Santana",
+      "nationality": "",
+      "broadPosition": "DF",
+      "stats": {
+        "appearances": 26,
+        "goals": 1
+      },
+      "seasonRatings": {
+        "overall": 67,
+        "pace": 61,
+        "shooting": 44,
+        "passing": 65,
+        "dribbling": 59,
+        "defending": 73,
+        "physical": 71
+      },
+      "primeRatings": {
+        "overall": 78,
+        "pace": 73,
+        "shooting": 58,
+        "passing": 75,
+        "dribbling": 66,
+        "defending": 84,
+        "physical": 82
+      }
+    },
+    {
+      "id": "sead-kola-inac",
+      "name": "Sead Kolašinac",
+      "nationality": "",
+      "broadPosition": "DF",
+      "stats": {
+        "appearances": 30,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 68,
+        "pace": 62,
+        "shooting": 49,
+        "passing": 63,
+        "dribbling": 57,
+        "defending": 78,
+        "physical": 68
+      },
+      "primeRatings": {
+        "overall": 86,
+        "pace": 79,
+        "shooting": 64,
+        "passing": 81,
+        "dribbling": 78,
+        "defending": 92,
+        "physical": 88
+      }
+    },
+    {
+      "id": "kyriakos-papadopoulos",
+      "name": "Kyriakos Papadopoulos",
+      "nationality": "",
+      "broadPosition": "DF",
+      "stats": {
+        "appearances": 5,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 51,
+        "pace": 45,
+        "shooting": 31,
+        "passing": 48,
+        "dribbling": 40,
+        "defending": 58,
+        "physical": 56
+      },
+      "primeRatings": {
+        "overall": 78,
+        "pace": 72,
+        "shooting": 60,
+        "passing": 70,
+        "dribbling": 71,
+        "defending": 86,
+        "physical": 83
+      }
+    },
+    {
+      "id": "atsuto-uchida",
+      "name": "Atsuto Uchida",
+      "nationality": "",
+      "broadPosition": "DF",
+      "stats": {
+        "appearances": 27,
+        "goals": 1
+      },
+      "seasonRatings": {
+        "overall": 67,
+        "pace": 60,
+        "shooting": 50,
+        "passing": 61,
+        "dribbling": 58,
+        "defending": 73,
+        "physical": 67
+      },
+      "primeRatings": {
+        "overall": 74,
+        "pace": 71,
+        "shooting": 55,
+        "passing": 71,
+        "dribbling": 62,
+        "defending": 82,
+        "physical": 76
+      }
+    },
+    {
+      "id": "christian-fuchs",
+      "name": "Christian Fuchs",
+      "nationality": "",
+      "broadPosition": "DF",
+      "stats": {
+        "appearances": 25,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 66,
+        "pace": 60,
+        "shooting": 47,
+        "passing": 64,
+        "dribbling": 56,
+        "defending": 76,
+        "physical": 69
+      },
+      "primeRatings": {
+        "overall": 81,
+        "pace": 75,
+        "shooting": 63,
+        "passing": 78,
+        "dribbling": 69,
+        "defending": 89,
+        "physical": 83
+      }
+    },
+    {
+      "id": "kaan-ayhan",
+      "name": "Kaan Ayhan",
+      "nationality": "",
+      "broadPosition": "DF",
+      "stats": {
+        "appearances": 15,
+        "goals": 1
+      },
+      "seasonRatings": {
+        "overall": 60,
+        "pace": 53,
+        "shooting": 39,
+        "passing": 58,
+        "dribbling": 51,
+        "defending": 67,
+        "physical": 66
+      },
+      "primeRatings": {
+        "overall": 78,
+        "pace": 76,
+        "shooting": 56,
+        "passing": 75,
+        "dribbling": 68,
+        "defending": 85,
+        "physical": 79
+      }
+    },
+    {
+      "id": "philipp-max",
+      "name": "Philipp Max",
+      "nationality": "",
+      "broadPosition": "DF",
+      "stats": {
+        "appearances": 2,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 49,
+        "pace": 44,
+        "shooting": 27,
+        "passing": 42,
+        "dribbling": 38,
+        "defending": 55,
+        "physical": 52
+      },
+      "primeRatings": {
+        "overall": 52,
+        "pace": 48,
+        "shooting": 33,
+        "passing": 47,
+        "dribbling": 40,
+        "defending": 61,
+        "physical": 54
+      }
+    },
+    {
+      "id": "jo-l-matip",
+      "name": "Joël Matip",
+      "nationality": "",
+      "broadPosition": "DF",
+      "stats": {
+        "appearances": 42,
+        "goals": 4
+      },
+      "seasonRatings": {
+        "overall": 78,
+        "pace": 73,
+        "shooting": 57,
+        "passing": 76,
+        "dribbling": 70,
+        "defending": 84,
+        "physical": 83
+      },
+      "primeRatings": {
+        "overall": 81,
+        "pace": 73,
+        "shooting": 63,
+        "passing": 76,
+        "dribbling": 69,
+        "defending": 90,
+        "physical": 85
+      }
+    },
+    {
+      "id": "jan-kirchhoff",
+      "name": "Jan Kirchhoff",
+      "nationality": "",
+      "broadPosition": "MF",
+      "stats": {
+        "appearances": 2,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 50,
+        "pace": 50,
+        "shooting": 42,
+        "passing": 55,
+        "dribbling": 53,
+        "defending": 42,
+        "physical": 45
+      },
+      "primeRatings": {
+        "overall": 65,
+        "pace": 64,
+        "shooting": 57,
+        "passing": 69,
+        "dribbling": 68,
+        "defending": 56,
+        "physical": 63
+      }
+    },
+    {
+      "id": "max-meyer",
+      "name": "Max Meyer",
+      "nationality": "",
+      "broadPosition": "MF",
+      "stats": {
+        "appearances": 41,
+        "goals": 7
+      },
+      "seasonRatings": {
+        "overall": 79,
+        "pace": 74,
+        "shooting": 73,
+        "passing": 87,
+        "dribbling": 77,
+        "defending": 69,
+        "physical": 74
+      },
+      "primeRatings": {
+        "overall": 83,
+        "pace": 81,
+        "shooting": 75,
+        "passing": 86,
+        "dribbling": 80,
+        "defending": 71,
+        "physical": 79
+      }
+    },
+    {
+      "id": "leon-goretzka",
+      "name": "Leon Goretzka",
+      "nationality": "",
+      "broadPosition": "MF",
+      "stats": {
+        "appearances": 32,
+        "goals": 5
+      },
+      "seasonRatings": {
+        "overall": 76,
+        "pace": 76,
+        "shooting": 67,
+        "passing": 82,
+        "dribbling": 79,
+        "defending": 64,
+        "physical": 76
+      },
+      "primeRatings": {
+        "overall": 86,
+        "pace": 84,
+        "shooting": 81,
+        "passing": 92,
+        "dribbling": 87,
+        "defending": 76,
+        "physical": 86
+      }
+    },
+    {
+      "id": "kevin-prince-boateng",
+      "name": "Kevin-Prince Boateng",
+      "nationality": "",
+      "broadPosition": "MF",
+      "stats": {
+        "appearances": 35,
+        "goals": 7
+      },
+      "seasonRatings": {
+        "overall": 77,
+        "pace": 73,
+        "shooting": 70,
+        "passing": 80,
+        "dribbling": 77,
+        "defending": 67,
+        "physical": 76
+      },
+      "primeRatings": {
+        "overall": 83,
+        "pace": 82,
+        "shooting": 75,
+        "passing": 86,
+        "dribbling": 80,
+        "defending": 75,
+        "physical": 77
+      }
+    },
+    {
+      "id": "julian-draxler",
+      "name": "Julian Draxler",
+      "nationality": "",
+      "broadPosition": "MF",
+      "stats": {
+        "appearances": 38,
+        "goals": 6
+      },
+      "seasonRatings": {
+        "overall": 79,
+        "pace": 78,
+        "shooting": 73,
+        "passing": 86,
+        "dribbling": 76,
+        "defending": 71,
+        "physical": 73
+      },
+      "primeRatings": {
+        "overall": 87,
+        "pace": 82,
+        "shooting": 78,
+        "passing": 94,
+        "dribbling": 90,
+        "defending": 76,
+        "physical": 86
+      }
+    },
+    {
+      "id": "christian-clemens",
+      "name": "Christian Clemens",
+      "nationality": "",
+      "broadPosition": "MF",
+      "stats": {
+        "appearances": 18,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 60,
+        "pace": 57,
+        "shooting": 55,
+        "passing": 65,
+        "dribbling": 61,
+        "defending": 52,
+        "physical": 55
+      },
+      "primeRatings": {
+        "overall": 63,
+        "pace": 61,
+        "shooting": 55,
+        "passing": 70,
+        "dribbling": 61,
+        "defending": 50,
+        "physical": 61
+      }
+    },
+    {
+      "id": "marco-h-ger",
+      "name": "Marco Höger",
+      "nationality": "",
+      "broadPosition": "MF",
+      "stats": {
+        "appearances": 14,
+        "goals": 2
+      },
+      "seasonRatings": {
+        "overall": 65,
+        "pace": 61,
+        "shooting": 59,
+        "passing": 70,
+        "dribbling": 68,
+        "defending": 53,
+        "physical": 59
+      },
+      "primeRatings": {
+        "overall": 76,
+        "pace": 72,
+        "shooting": 69,
+        "passing": 84,
+        "dribbling": 74,
+        "defending": 67,
+        "physical": 72
+      }
+    },
+    {
+      "id": "leroy-san",
+      "name": "Leroy Sané",
+      "nationality": "",
+      "broadPosition": "MF",
+      "stats": {
+        "appearances": 1,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 69,
+        "pace": 65,
+        "shooting": 59,
+        "passing": 77,
+        "dribbling": 70,
+        "defending": 57,
+        "physical": 65
+      },
+      "primeRatings": {
+        "overall": 87,
+        "pace": 82,
+        "shooting": 76,
+        "passing": 89,
+        "dribbling": 89,
+        "defending": 75,
+        "physical": 83
+      }
+    },
+    {
+      "id": "jermaine-jones",
+      "name": "Jermaine Jones",
+      "nationality": "",
+      "broadPosition": "MF",
+      "stats": {
+        "appearances": 22,
+        "goals": 1
+      },
+      "seasonRatings": {
+        "overall": 65,
+        "pace": 61,
+        "shooting": 57,
+        "passing": 67,
+        "dribbling": 65,
+        "defending": 52,
+        "physical": 60
+      },
+      "primeRatings": {
+        "overall": 74,
+        "pace": 71,
+        "shooting": 65,
+        "passing": 77,
+        "dribbling": 74,
+        "defending": 63,
+        "physical": 71
+      }
+    },
+    {
+      "id": "dennis-aogo",
+      "name": "Dennis Aogo",
+      "nationality": "",
+      "broadPosition": "MF",
+      "stats": {
+        "appearances": 16,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 61,
+        "pace": 59,
+        "shooting": 54,
+        "passing": 67,
+        "dribbling": 63,
+        "defending": 52,
+        "physical": 55
+      },
+      "primeRatings": {
+        "overall": 73,
+        "pace": 71,
+        "shooting": 68,
+        "passing": 81,
+        "dribbling": 72,
+        "defending": 63,
+        "physical": 68
+      }
+    },
+    {
+      "id": "jefferson-farf-n",
+      "name": "Jefferson Farfán",
+      "nationality": "",
+      "broadPosition": "MF",
+      "stats": {
+        "appearances": 28,
+        "goals": 12
+      },
+      "seasonRatings": {
+        "overall": 78,
+        "pace": 76,
+        "shooting": 72,
+        "passing": 81,
+        "dribbling": 78,
+        "defending": 69,
+        "physical": 74
+      },
+      "primeRatings": {
+        "overall": 81,
+        "pace": 80,
+        "shooting": 74,
+        "passing": 85,
+        "dribbling": 81,
+        "defending": 69,
+        "physical": 76
+      }
+    },
+    {
+      "id": "tranquillo-barnetta",
+      "name": "Tranquillo Barnetta",
+      "nationality": "",
+      "broadPosition": "MF",
+      "stats": {
+        "appearances": 2,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 50,
+        "pace": 46,
+        "shooting": 41,
+        "passing": 54,
+        "dribbling": 49,
+        "defending": 38,
+        "physical": 49
+      },
+      "primeRatings": {
+        "overall": 75,
+        "pace": 73,
+        "shooting": 67,
+        "passing": 78,
+        "dribbling": 73,
+        "defending": 62,
+        "physical": 71
+      }
+    },
+    {
+      "id": "ren-klingenburg",
+      "name": "René Klingenburg",
+      "nationality": "",
+      "broadPosition": "MF",
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 45,
+        "pace": 40,
+        "shooting": 36,
+        "passing": 49,
+        "dribbling": 46,
+        "defending": 37,
+        "physical": 44
+      },
+      "primeRatings": {
+        "overall": 49,
+        "pace": 44,
+        "shooting": 43,
+        "passing": 52,
+        "dribbling": 49,
+        "defending": 40,
+        "physical": 47
+      }
+    },
+    {
+      "id": "roman-neust-dter",
+      "name": "Roman Neustädter",
+      "nationality": "",
+      "broadPosition": "MF",
+      "stats": {
+        "appearances": 44,
+        "goals": 2
+      },
+      "seasonRatings": {
+        "overall": 76,
+        "pace": 71,
+        "shooting": 65,
+        "passing": 79,
+        "dribbling": 74,
+        "defending": 69,
+        "physical": 70
+      },
+      "primeRatings": {
+        "overall": 80,
+        "pace": 76,
+        "shooting": 73,
+        "passing": 85,
+        "dribbling": 83,
+        "defending": 70,
+        "physical": 78
+      }
+    },
+    {
+      "id": "anthony-annan",
+      "name": "Anthony Annan",
+      "nationality": "",
+      "broadPosition": "MF",
+      "stats": {
+        "appearances": 4,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 51,
+        "pace": 49,
+        "shooting": 45,
+        "passing": 58,
+        "dribbling": 49,
+        "defending": 42,
+        "physical": 48
+      },
+      "primeRatings": {
+        "overall": 54,
+        "pace": 53,
+        "shooting": 44,
+        "passing": 58,
+        "dribbling": 53,
+        "defending": 46,
+        "physical": 49
+      }
+    },
+    {
+      "id": "gerald-asamoah",
+      "name": "Gerald Asamoah",
+      "nationality": "",
+      "broadPosition": "FW",
+      "stats": {
+        "appearances": 1,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 47,
+        "pace": 49,
+        "shooting": 56,
+        "passing": 42,
+        "dribbling": 53,
+        "defending": 24,
+        "physical": 43
+      },
+      "primeRatings": {
+        "overall": 50,
+        "pace": 51,
+        "shooting": 55,
+        "passing": 40,
+        "dribbling": 53,
+        "defending": 23,
+        "physical": 47
+      }
+    },
+    {
+      "id": "chinedu-obasi",
+      "name": "Chinedu Obasi",
+      "nationality": "",
+      "broadPosition": "FW",
+      "stats": {
+        "appearances": 19,
+        "goals": 3
+      },
+      "seasonRatings": {
+        "overall": 65,
+        "pace": 67,
+        "shooting": 74,
+        "passing": 59,
+        "dribbling": 69,
+        "defending": 41,
+        "physical": 60
+      },
+      "primeRatings": {
+        "overall": 68,
+        "pace": 71,
+        "shooting": 74,
+        "passing": 58,
+        "dribbling": 69,
+        "defending": 43,
+        "physical": 68
+      }
+    },
+    {
+      "id": "teemu-pukki",
+      "name": "Teemu Pukki",
+      "nationality": "",
+      "broadPosition": "FW",
+      "stats": {
+        "appearances": 2,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 49,
+        "pace": 54,
+        "shooting": 59,
+        "passing": 44,
+        "dribbling": 50,
+        "defending": 22,
+        "physical": 49
+      },
+      "primeRatings": {
+        "overall": 72,
+        "pace": 78,
+        "shooting": 79,
+        "passing": 63,
+        "dribbling": 73,
+        "defending": 45,
+        "physical": 72
+      }
+    },
+    {
+      "id": "klaas-jan-huntelaar",
+      "name": "Klaas-Jan Huntelaar",
+      "nationality": "",
+      "broadPosition": "FW",
+      "stats": {
+        "appearances": 21,
+        "goals": 14
+      },
+      "seasonRatings": {
+        "overall": 78,
+        "pace": 79,
+        "shooting": 87,
+        "passing": 67,
+        "dribbling": 79,
+        "defending": 52,
+        "physical": 75
+      },
+      "primeRatings": {
+        "overall": 87,
+        "pace": 90,
+        "shooting": 96,
+        "passing": 76,
+        "dribbling": 93,
+        "defending": 63,
+        "physical": 81
+      }
+    },
+    {
+      "id": "d-m-szalai",
+      "name": "Ádám Szalai",
+      "nationality": "",
+      "broadPosition": "FW",
+      "stats": {
+        "appearances": 40,
+        "goals": 9
+      },
+      "seasonRatings": {
+        "overall": 78,
+        "pace": 82,
+        "shooting": 85,
+        "passing": 69,
+        "dribbling": 79,
+        "defending": 54,
+        "physical": 73
+      },
+      "primeRatings": {
+        "overall": 81,
+        "pace": 81,
+        "shooting": 89,
+        "passing": 71,
+        "dribbling": 82,
+        "defending": 58,
+        "physical": 80
+      }
+    }
+  ],
+  "sourceUrl": "https://en.wikipedia.org/wiki/2013%E2%80%9314_FC_Schalke_04_season",
+  "scrapedAt": "2026-07-19T17:49:07.775Z"
+}

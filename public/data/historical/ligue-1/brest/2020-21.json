@@ -1,0 +1,886 @@
+{
+  "leagueId": "ligue-1",
+  "clubId": "brest",
+  "season": "2020-21",
+  "division": "top-flight",
+  "squad": [
+    {
+      "id": "gautier-larsonneur-fra",
+      "name": "Gautier Larsonneur",
+      "nationality": "FRA",
+      "broadPosition": "GK",
+      "shirtNumber": 1,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 66,
+        "pace": 44,
+        "shooting": 17,
+        "passing": 50,
+        "dribbling": 36,
+        "defending": 47,
+        "physical": 58,
+        "goalkeeping": 74
+      },
+      "primeRatings": {
+        "overall": 69,
+        "pace": 44,
+        "shooting": 16,
+        "passing": 53,
+        "dribbling": 39,
+        "defending": 46,
+        "physical": 61,
+        "goalkeeping": 76
+      }
+    },
+    {
+      "id": "jean-k-vin-duverne-fra",
+      "name": "Jean-Kévin Duverne",
+      "nationality": "FRA",
+      "broadPosition": "DF",
+      "shirtNumber": 2,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 66,
+        "pace": 62,
+        "shooting": 47,
+        "passing": 61,
+        "dribbling": 53,
+        "defending": 74,
+        "physical": 70
+      },
+      "primeRatings": {
+        "overall": 78,
+        "pace": 72,
+        "shooting": 58,
+        "passing": 73,
+        "dribbling": 71,
+        "defending": 88,
+        "physical": 78
+      }
+    },
+    {
+      "id": "lilian-brassier-fra",
+      "name": "Lilian Brassier",
+      "nationality": "FRA",
+      "broadPosition": "DF",
+      "shirtNumber": 3,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 66,
+        "pace": 62,
+        "shooting": 46,
+        "passing": 63,
+        "dribbling": 57,
+        "defending": 74,
+        "physical": 69
+      },
+      "primeRatings": {
+        "overall": 79,
+        "pace": 75,
+        "shooting": 58,
+        "passing": 75,
+        "dribbling": 67,
+        "defending": 86,
+        "physical": 80
+      }
+    },
+    {
+      "id": "idrissa-dioh-fra",
+      "name": "Idrissa Dioh",
+      "nationality": "FRA",
+      "broadPosition": "MF",
+      "shirtNumber": 4,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 67,
+        "pace": 65,
+        "shooting": 57,
+        "passing": 75,
+        "dribbling": 66,
+        "defending": 55,
+        "physical": 64
+      },
+      "primeRatings": {
+        "overall": 70,
+        "pace": 66,
+        "shooting": 65,
+        "passing": 75,
+        "dribbling": 68,
+        "defending": 62,
+        "physical": 69
+      }
+    },
+    {
+      "id": "brendan-chardonnet-fra",
+      "name": "Brendan Chardonnet",
+      "nationality": "FRA",
+      "broadPosition": "DF",
+      "shirtNumber": 5,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 65,
+        "pace": 57,
+        "shooting": 45,
+        "passing": 60,
+        "dribbling": 56,
+        "defending": 71,
+        "physical": 67
+      },
+      "primeRatings": {
+        "overall": 81,
+        "pace": 79,
+        "shooting": 60,
+        "passing": 74,
+        "dribbling": 74,
+        "defending": 87,
+        "physical": 86
+      }
+    },
+    {
+      "id": "jean-lucas-bra",
+      "name": "Jean Lucas",
+      "nationality": "BRA",
+      "broadPosition": "MF",
+      "shirtNumber": 6,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 67,
+        "pace": 65,
+        "shooting": 61,
+        "passing": 73,
+        "dribbling": 69,
+        "defending": 59,
+        "physical": 62
+      },
+      "primeRatings": {
+        "overall": 75,
+        "pace": 70,
+        "shooting": 69,
+        "passing": 77,
+        "dribbling": 77,
+        "defending": 62,
+        "physical": 70
+      }
+    },
+    {
+      "id": "haris-belkebla-alg",
+      "name": "Haris Belkebla",
+      "nationality": "ALG",
+      "broadPosition": "MF",
+      "shirtNumber": 7,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 67,
+        "pace": 67,
+        "shooting": 61,
+        "passing": 69,
+        "dribbling": 68,
+        "defending": 54,
+        "physical": 65
+      },
+      "primeRatings": {
+        "overall": 82,
+        "pace": 79,
+        "shooting": 77,
+        "passing": 90,
+        "dribbling": 79,
+        "defending": 75,
+        "physical": 80
+      }
+    },
+    {
+      "id": "paul-lasne-fra",
+      "name": "Paul Lasne",
+      "nationality": "FRA",
+      "broadPosition": "MF",
+      "shirtNumber": 8,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 65,
+        "pace": 59,
+        "shooting": 58,
+        "passing": 72,
+        "dribbling": 66,
+        "defending": 56,
+        "physical": 64
+      },
+      "primeRatings": {
+        "overall": 78,
+        "pace": 73,
+        "shooting": 73,
+        "passing": 85,
+        "dribbling": 76,
+        "defending": 69,
+        "physical": 74
+      }
+    },
+    {
+      "id": "franck-honorat-fra",
+      "name": "Franck Honorat",
+      "nationality": "FRA",
+      "broadPosition": "FW",
+      "shirtNumber": 9,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 67,
+        "pace": 72,
+        "shooting": 76,
+        "passing": 57,
+        "dribbling": 71,
+        "defending": 40,
+        "physical": 65
+      },
+      "primeRatings": {
+        "overall": 85,
+        "pace": 88,
+        "shooting": 93,
+        "passing": 80,
+        "dribbling": 86,
+        "defending": 58,
+        "physical": 80
+      }
+    },
+    {
+      "id": "ga-tan-charbonnier-fra",
+      "name": "Gaëtan Charbonnier",
+      "nationality": "FRA",
+      "broadPosition": "FW",
+      "shirtNumber": 10,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 67,
+        "pace": 72,
+        "shooting": 77,
+        "passing": 61,
+        "dribbling": 68,
+        "defending": 43,
+        "physical": 67
+      },
+      "primeRatings": {
+        "overall": 78,
+        "pace": 78,
+        "shooting": 85,
+        "passing": 68,
+        "dribbling": 78,
+        "defending": 53,
+        "physical": 76
+      }
+    },
+    {
+      "id": "romain-philippoteaux-fra",
+      "name": "Romain Philippoteaux",
+      "nationality": "FRA",
+      "broadPosition": "MF",
+      "shirtNumber": 12,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 62,
+        "pace": 57,
+        "shooting": 54,
+        "passing": 64,
+        "dribbling": 61,
+        "defending": 51,
+        "physical": 59
+      },
+      "primeRatings": {
+        "overall": 67,
+        "pace": 66,
+        "shooting": 59,
+        "passing": 71,
+        "dribbling": 65,
+        "defending": 55,
+        "physical": 64
+      }
+    },
+    {
+      "id": "irvin-cardona-fra",
+      "name": "Irvin Cardona",
+      "nationality": "FRA",
+      "broadPosition": "FW",
+      "shirtNumber": 14,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 63,
+        "pace": 67,
+        "shooting": 69,
+        "passing": 55,
+        "dribbling": 67,
+        "defending": 41,
+        "physical": 61
+      },
+      "primeRatings": {
+        "overall": 77,
+        "pace": 82,
+        "shooting": 87,
+        "passing": 71,
+        "dribbling": 79,
+        "defending": 53,
+        "physical": 74
+      }
+    },
+    {
+      "id": "steve-mouni-ben",
+      "name": "Steve Mounié",
+      "nationality": "BEN",
+      "broadPosition": "FW",
+      "shirtNumber": 15,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 64,
+        "pace": 69,
+        "shooting": 71,
+        "passing": 58,
+        "dribbling": 66,
+        "defending": 36,
+        "physical": 63
+      },
+      "primeRatings": {
+        "overall": 86,
+        "pace": 86,
+        "shooting": 93,
+        "passing": 79,
+        "dribbling": 90,
+        "defending": 58,
+        "physical": 82
+      }
+    },
+    {
+      "id": "s-bastien-cibois-fra",
+      "name": "Sébastien Cibois",
+      "nationality": "FRA",
+      "broadPosition": "GK",
+      "shirtNumber": 16,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 64,
+        "pace": 46,
+        "shooting": 21,
+        "passing": 47,
+        "dribbling": 37,
+        "defending": 43,
+        "physical": 60,
+        "goalkeeping": 74
+      },
+      "primeRatings": {
+        "overall": 67,
+        "pace": 45,
+        "shooting": 17,
+        "passing": 55,
+        "dribbling": 35,
+        "defending": 45,
+        "physical": 62,
+        "goalkeeping": 75
+      }
+    },
+    {
+      "id": "d-nys-bain-fra",
+      "name": "Dénys Bain",
+      "nationality": "FRA",
+      "broadPosition": "DF",
+      "shirtNumber": 17,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 64,
+        "pace": 60,
+        "shooting": 42,
+        "passing": 59,
+        "dribbling": 57,
+        "defending": 69,
+        "physical": 66
+      },
+      "primeRatings": {
+        "overall": 67,
+        "pace": 63,
+        "shooting": 49,
+        "passing": 60,
+        "dribbling": 55,
+        "defending": 72,
+        "physical": 72
+      }
+    },
+    {
+      "id": "romain-perraud-fra",
+      "name": "Romain Perraud",
+      "nationality": "FRA",
+      "broadPosition": "DF",
+      "shirtNumber": 18,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 64,
+        "pace": 60,
+        "shooting": 41,
+        "passing": 58,
+        "dribbling": 56,
+        "defending": 73,
+        "physical": 68
+      },
+      "primeRatings": {
+        "overall": 81,
+        "pace": 77,
+        "shooting": 63,
+        "passing": 76,
+        "dribbling": 69,
+        "defending": 87,
+        "physical": 86
+      }
+    },
+    {
+      "id": "ferris-n-goma-fra",
+      "name": "Ferris N'Goma",
+      "nationality": "FRA",
+      "broadPosition": "MF",
+      "shirtNumber": 19,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 63,
+        "pace": 59,
+        "shooting": 58,
+        "passing": 69,
+        "dribbling": 63,
+        "defending": 55,
+        "physical": 60
+      },
+      "primeRatings": {
+        "overall": 67,
+        "pace": 66,
+        "shooting": 57,
+        "passing": 69,
+        "dribbling": 65,
+        "defending": 59,
+        "physical": 62
+      }
+    },
+    {
+      "id": "rona-l-pierre-gabriel-fra",
+      "name": "Ronaël Pierre-Gabriel",
+      "nationality": "FRA",
+      "broadPosition": "DF",
+      "shirtNumber": 20,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 62,
+        "pace": 56,
+        "shooting": 42,
+        "passing": 59,
+        "dribbling": 53,
+        "defending": 71,
+        "physical": 65
+      },
+      "primeRatings": {
+        "overall": 72,
+        "pace": 67,
+        "shooting": 51,
+        "passing": 66,
+        "dribbling": 62,
+        "defending": 83,
+        "physical": 77
+      }
+    },
+    {
+      "id": "romain-faivre-fra",
+      "name": "Romain Faivre",
+      "nationality": "FRA",
+      "broadPosition": "MF",
+      "shirtNumber": 21,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 60,
+        "pace": 56,
+        "shooting": 52,
+        "passing": 64,
+        "dribbling": 61,
+        "defending": 52,
+        "physical": 56
+      },
+      "primeRatings": {
+        "overall": 78,
+        "pace": 77,
+        "shooting": 71,
+        "passing": 81,
+        "dribbling": 75,
+        "defending": 68,
+        "physical": 77
+      }
+    },
+    {
+      "id": "julien-faussurier-fra",
+      "name": "Julien Faussurier",
+      "nationality": "FRA",
+      "broadPosition": "MF",
+      "shirtNumber": 22,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 59,
+        "pace": 54,
+        "shooting": 48,
+        "passing": 65,
+        "dribbling": 60,
+        "defending": 50,
+        "physical": 59
+      },
+      "primeRatings": {
+        "overall": 64,
+        "pace": 60,
+        "shooting": 58,
+        "passing": 69,
+        "dribbling": 67,
+        "defending": 53,
+        "physical": 62
+      }
+    },
+    {
+      "id": "christophe-h-relle-fra",
+      "name": "Christophe Hérelle",
+      "nationality": "FRA",
+      "broadPosition": "DF",
+      "shirtNumber": 23,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 61,
+        "pace": 58,
+        "shooting": 43,
+        "passing": 55,
+        "dribbling": 48,
+        "defending": 70,
+        "physical": 63
+      },
+      "primeRatings": {
+        "overall": 75,
+        "pace": 72,
+        "shooting": 54,
+        "passing": 73,
+        "dribbling": 66,
+        "defending": 80,
+        "physical": 77
+      }
+    },
+    {
+      "id": "ludovic-baal-gyf",
+      "name": "Ludovic Baal",
+      "nationality": "GYF",
+      "broadPosition": "DF",
+      "shirtNumber": 24,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 60,
+        "pace": 55,
+        "shooting": 42,
+        "passing": 54,
+        "dribbling": 47,
+        "defending": 69,
+        "physical": 61
+      },
+      "primeRatings": {
+        "overall": 64,
+        "pace": 60,
+        "shooting": 41,
+        "passing": 57,
+        "dribbling": 57,
+        "defending": 71,
+        "physical": 68
+      }
+    },
+    {
+      "id": "j-r-my-le-douaron-fra",
+      "name": "Jérémy Le Douaron",
+      "nationality": "FRA",
+      "broadPosition": "FW",
+      "shirtNumber": 26,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 61,
+        "pace": 66,
+        "shooting": 67,
+        "passing": 53,
+        "dribbling": 62,
+        "defending": 35,
+        "physical": 61
+      },
+      "primeRatings": {
+        "overall": 84,
+        "pace": 90,
+        "shooting": 91,
+        "passing": 77,
+        "dribbling": 84,
+        "defending": 60,
+        "physical": 81
+      }
+    },
+    {
+      "id": "hugo-magnetti-fra",
+      "name": "Hugo Magnetti",
+      "nationality": "FRA",
+      "broadPosition": "MF",
+      "shirtNumber": 27,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 61,
+        "pace": 60,
+        "shooting": 52,
+        "passing": 68,
+        "dribbling": 63,
+        "defending": 52,
+        "physical": 56
+      },
+      "primeRatings": {
+        "overall": 81,
+        "pace": 77,
+        "shooting": 74,
+        "passing": 83,
+        "dribbling": 78,
+        "defending": 73,
+        "physical": 77
+      }
+    },
+    {
+      "id": "hiang-a-mbock-fra",
+      "name": "Hiang'a Mbock",
+      "nationality": "FRA",
+      "broadPosition": "MF",
+      "shirtNumber": 28,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 59,
+        "pace": 55,
+        "shooting": 51,
+        "passing": 62,
+        "dribbling": 58,
+        "defending": 48,
+        "physical": 53
+      },
+      "primeRatings": {
+        "overall": 63,
+        "pace": 60,
+        "shooting": 58,
+        "passing": 68,
+        "dribbling": 61,
+        "defending": 54,
+        "physical": 60
+      }
+    },
+    {
+      "id": "bandiougou-fadiga-fra",
+      "name": "Bandiougou Fadiga",
+      "nationality": "FRA",
+      "broadPosition": "MF",
+      "shirtNumber": 29,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 59,
+        "pace": 53,
+        "shooting": 53,
+        "passing": 66,
+        "dribbling": 58,
+        "defending": 46,
+        "physical": 58
+      },
+      "primeRatings": {
+        "overall": 62,
+        "pace": 57,
+        "shooting": 56,
+        "passing": 66,
+        "dribbling": 63,
+        "defending": 50,
+        "physical": 57
+      }
+    },
+    {
+      "id": "mouez-hassen-tun",
+      "name": "Mouez Hassen",
+      "nationality": "TUN",
+      "broadPosition": "GK",
+      "shirtNumber": 30,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 59,
+        "pace": 43,
+        "shooting": 15,
+        "passing": 44,
+        "dribbling": 31,
+        "defending": 39,
+        "physical": 54,
+        "goalkeeping": 69
+      },
+      "primeRatings": {
+        "overall": 70,
+        "pace": 44,
+        "shooting": 19,
+        "passing": 56,
+        "dribbling": 38,
+        "defending": 47,
+        "physical": 65,
+        "goalkeeping": 77
+      }
+    },
+    {
+      "id": "guillaume-buon-fra",
+      "name": "Guillaume Buon",
+      "nationality": "FRA",
+      "broadPosition": "DF",
+      "shirtNumber": null,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 61,
+        "pace": 56,
+        "shooting": 41,
+        "passing": 57,
+        "dribbling": 53,
+        "defending": 68,
+        "physical": 66
+      },
+      "primeRatings": {
+        "overall": 64,
+        "pace": 58,
+        "shooting": 47,
+        "passing": 61,
+        "dribbling": 54,
+        "defending": 74,
+        "physical": 68
+      }
+    },
+    {
+      "id": "heriberto-tavares-por",
+      "name": "Heriberto Tavares",
+      "nationality": "POR",
+      "broadPosition": "MF",
+      "shirtNumber": null,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 60,
+        "pace": 56,
+        "shooting": 54,
+        "passing": 65,
+        "dribbling": 60,
+        "defending": 50,
+        "physical": 57
+      },
+      "primeRatings": {
+        "overall": 63,
+        "pace": 60,
+        "shooting": 53,
+        "passing": 65,
+        "dribbling": 62,
+        "defending": 55,
+        "physical": 60
+      }
+    },
+    {
+      "id": "rafiki-sa-d-com",
+      "name": "Rafiki Saïd",
+      "nationality": "COM",
+      "broadPosition": "FW",
+      "shirtNumber": null,
+      "stats": {
+        "appearances": 0,
+        "goals": 0
+      },
+      "seasonRatings": {
+        "overall": 60,
+        "pace": 61,
+        "shooting": 68,
+        "passing": 51,
+        "dribbling": 60,
+        "defending": 33,
+        "physical": 58
+      },
+      "primeRatings": {
+        "overall": 63,
+        "pace": 65,
+        "shooting": 70,
+        "passing": 54,
+        "dribbling": 68,
+        "defending": 38,
+        "physical": 58
+      }
+    }
+  ],
+  "sourceUrl": "https://en.wikipedia.org/wiki/2020%E2%80%9321_Stade_Brestois_29_season",
+  "scrapedAt": "2026-07-20T13:43:04.552Z"
+}
