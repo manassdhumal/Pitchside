@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import { useFloodlights } from '../../state/useFloodlights';
+import { useTheme, THEMES } from '../../state/useTheme';
 import { useAuth } from '../../state/AuthContext';
 
 /** The manager's controls in the nav: history link, plus who they are — a signed-in username with
@@ -51,32 +51,31 @@ export function BrandMark() {
   );
 }
 
-export function FloodlightsToggle() {
-  const [night, toggle] = useFloodlights();
+/** Theme picker: keeps the old toggle's shell, but clicking cycles through all UI themes and a small
+ * three-stripe swatch previews the current palette (ink / accent / button). */
+export function ThemePicker() {
+  const [theme, , cycle] = useTheme();
+  const current = THEMES.find((t) => t.id === theme) ?? THEMES[0];
   return (
     <button
       type="button"
-      onClick={toggle}
-      role="switch"
-      aria-checked={night}
-      aria-label="Floodlights night mode"
-      title="Toggle green night mode"
+      onClick={cycle}
+      aria-label={`Change theme, currently ${current.name}`}
+      title={`Theme: ${current.name} — click to change`}
       className="flex cursor-pointer items-center gap-2 border-[1.5px] bg-transparent px-2.5 py-1 hover:border-[var(--brick)]"
       style={{ borderColor: 'var(--toggle-border)', color: 'var(--ink)' }}
     >
       <span className="font-stamp text-[9.5px] tracking-[0.08em]">
-        {night ? 'FLOODLIGHTS ON' : 'FLOODLIGHTS OFF'}
+        THEME · {current.name.toUpperCase()}
       </span>
       <span
-        className="relative inline-block h-[18px] w-[34px] border"
+        className="inline-flex h-[18px] w-[34px] items-center justify-center gap-[3px] border"
         style={{ background: 'var(--toggle-track)', borderColor: 'var(--toggle-border)' }}
+        aria-hidden="true"
       >
-        <span
-          className="absolute top-[1px] grid h-[14px] w-[14px] place-items-center text-[8px] leading-none transition-[left] duration-150"
-          style={{ left: night ? 17 : 1, background: 'var(--knob-bg)' }}
-        >
-          {night ? '☾' : '☀'}
-        </span>
+        <span className="h-[10px] w-[3px]" style={{ background: 'var(--ink)' }} />
+        <span className="h-[10px] w-[3px]" style={{ background: 'var(--brick)' }} />
+        <span className="h-[10px] w-[3px]" style={{ background: 'var(--btn-bg)' }} />
       </span>
     </button>
   );
@@ -85,7 +84,7 @@ export function FloodlightsToggle() {
 interface NavProps {
   /** Left side content (breadcrumb / back link). Defaults to the programme masthead line. */
   left?: ReactNode;
-  /** Extra content rendered before the floodlights toggle on the right. */
+  /** Extra content rendered before the theme picker on the right. */
   right?: ReactNode;
 }
 
@@ -103,7 +102,7 @@ export function ProgrammeNav({ left, right }: NavProps) {
       <div className="flex flex-wrap items-center gap-4">
         {right}
         <UserMenu />
-        <FloodlightsToggle />
+        <ThemePicker />
       </div>
     </div>
   );

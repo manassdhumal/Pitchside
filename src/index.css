@@ -46,11 +46,14 @@
   outline-offset: 2px;
 }
 
-/* Floodlights (night mode): mown-grass stripes, chalk-cream ink. Physical print objects
-   (stickers, tickets, drum hub) intentionally stay cream via hardcoded colors. */
-:root[data-floodlights="on"] {
-  color-scheme: dark;
+/* ============ Themes — pure colour-variable swaps, no layout changes ============
+   Each block overrides the same tokens as :root. `matchday` is the default (base :root, no
+   attribute). Physical print objects (stickers, tickets, drum hub, foil) intentionally keep their
+   hardcoded cream/gold across themes by design. */
 
+/* Floodlights: mown-grass stripes, chalk-cream ink (green night mode). */
+:root[data-theme="floodlights"] {
+  color-scheme: dark;
   --paper: #16301f;
   --card: #1e3a28;
   --paper-deep: #0d1d12;
@@ -80,8 +83,182 @@
   --toggle-border: #4a6a52;
   --toggle-track: #2f5b3c;
   --knob-bg: #f2ead3;
-
   --app-bg: repeating-linear-gradient(0deg, #16301f 0 84px, #122818 84px 168px);
+}
+
+/* Broadsheet: black ink on newsprint, one restrained red spot colour, halftone dot texture. */
+:root[data-theme="broadsheet"] {
+  color-scheme: light;
+  --paper: #ecebe6;
+  --card: #f5f4ef;
+  --paper-deep: #dcdad2;
+  --panel: #e6e4dc;
+  --ink: #1a1a1a;
+  --ink-hover: #000000;
+  --text: #24231f;
+  --soft: #6b6a63;
+  --line: #b8b6ac;
+  --border: #cbc9bf;
+  --brick: #8a2b1e;
+  --brick-hover: #6f2116;
+  --card-shadow: #cbc9bf;
+  --grass-a: #c9c7bd;
+  --grass-b: #c0beb4;
+  --btn-bg: #1a1a1a;
+  --btn-fg: #ecebe6;
+  --btn-shadow: #b8b6ac;
+  --btn-divider: rgba(236, 235, 230, 0.4);
+  --hint-border: #8a2b1e;
+  --hint-bg: #e6e4dc;
+  --hint-fg: #5a1a12;
+  --pip-border: #1a1a1a;
+  --pip-empty: #ecebe6;
+  --pip-filled: #8a2b1e;
+  --drum-rim: #1a1a1a;
+  --toggle-border: #b8b6ac;
+  --toggle-track: #dcdad2;
+  --knob-bg: #6b6a63;
+  --app-bg: radial-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px) 0 0 / 4px 4px, #ecebe6;
+}
+
+/* European Nights: midnight blue and silver, an away-night-under-the-lights feel. */
+:root[data-theme="european"] {
+  color-scheme: dark;
+  --paper: #0e1830;
+  --card: #16213f;
+  --paper-deep: #0a1226;
+  --panel: #121c38;
+  --ink: #dfe6f2;
+  --ink-hover: #eef2f9;
+  --text: #c3ccdd;
+  --soft: #8894ac;
+  --line: #2a3860;
+  --border: #24314f;
+  --brick: #7fb0e8;
+  --brick-hover: #6699d8;
+  --card-shadow: #060b18;
+  --grass-a: #17324a;
+  --grass-b: #142c42;
+  --btn-bg: #dfe6f2;
+  --btn-fg: #0e1830;
+  --btn-shadow: #060b18;
+  --btn-divider: rgba(14, 24, 48, 0.4);
+  --hint-border: #7fb0e8;
+  --hint-bg: #16223f;
+  --hint-fg: #bcd4f2;
+  --pip-border: #dfe6f2;
+  --pip-empty: #121c38;
+  --pip-filled: #7fb0e8;
+  --drum-rim: #dfe6f2;
+  --toggle-border: #3a4a72;
+  --toggle-track: #17324a;
+  --knob-bg: #dfe6f2;
+  --app-bg: radial-gradient(circle at 50% -10%, #1a2748, #0e1830 60%);
+}
+
+/* Teletext / Ceefax: bright amber and green on black, retro scoreboard with scanlines. */
+:root[data-theme="teletext"] {
+  color-scheme: dark;
+  --paper: #0a0a0a;
+  --card: #101010;
+  --paper-deep: #000000;
+  --panel: #0d0d0d;
+  --ink: #ffcc00;
+  --ink-hover: #ffe066;
+  --text: #c8f7d0;
+  --soft: #6fae7f;
+  --line: #244a2e;
+  --border: #1e3d27;
+  --brick: #ff5555;
+  --brick-hover: #ff7777;
+  --card-shadow: #000000;
+  --grass-a: #0e2416;
+  --grass-b: #0a1c11;
+  --btn-bg: #ffcc00;
+  --btn-fg: #0a0a0a;
+  --btn-shadow: #000000;
+  --btn-divider: rgba(10, 10, 10, 0.4);
+  --hint-border: #ff5555;
+  --hint-bg: #101a12;
+  --hint-fg: #ffb3b3;
+  --pip-border: #ffcc00;
+  --pip-empty: #0d0d0d;
+  --pip-filled: #33ff66;
+  --drum-rim: #ffcc00;
+  --toggle-border: #2a5a38;
+  --toggle-track: #0e2416;
+  --knob-bg: #ffcc00;
+  --app-bg: repeating-linear-gradient(0deg, #0a0a0a 0 2px, #060606 2px 4px);
+}
+
+/* Sepia Archive: aged brown paper and burnt-sienna ink, a 1950s photograph. */
+:root[data-theme="sepia"] {
+  color-scheme: light;
+  --paper: #e8dcc2;
+  --card: #f2e9d4;
+  --paper-deep: #d8c9a8;
+  --panel: #e3d6ba;
+  --ink: #3d2c1a;
+  --ink-hover: #2a1e11;
+  --text: #4a3826;
+  --soft: #8a745a;
+  --line: #c3ad86;
+  --border: #cdb894;
+  --brick: #9c5a2c;
+  --brick-hover: #834a22;
+  --card-shadow: #cdb894;
+  --grass-a: #a99a6e;
+  --grass-b: #9f8f63;
+  --btn-bg: #3d2c1a;
+  --btn-fg: #f2e9d4;
+  --btn-shadow: #c3ad86;
+  --btn-divider: rgba(242, 233, 212, 0.4);
+  --hint-border: #9c5a2c;
+  --hint-bg: #e3d6ba;
+  --hint-fg: #6e3f1e;
+  --pip-border: #3d2c1a;
+  --pip-empty: #e8dcc2;
+  --pip-filled: #9c5a2c;
+  --drum-rim: #3d2c1a;
+  --toggle-border: #c3ad86;
+  --toggle-track: #d8c9a8;
+  --knob-bg: #8a745a;
+  --app-bg: radial-gradient(circle at 50% 0%, #efe4cb, #e8dcc2 55%, #ddceb0);
+}
+
+/* High Contrast: pure black/white with strong borders and a bold red accent, for maximum legibility. */
+:root[data-theme="contrast"] {
+  color-scheme: light;
+  --paper: #ffffff;
+  --card: #ffffff;
+  --paper-deep: #f0f0f0;
+  --panel: #f7f7f7;
+  --ink: #000000;
+  --ink-hover: #000000;
+  --text: #000000;
+  --soft: #333333;
+  --line: #000000;
+  --border: #000000;
+  --brick: #b00018;
+  --brick-hover: #8c0013;
+  --card-shadow: #999999;
+  --grass-a: #006622;
+  --grass-b: #00551c;
+  --btn-bg: #000000;
+  --btn-fg: #ffffff;
+  --btn-shadow: #000000;
+  --btn-divider: rgba(255, 255, 255, 0.5);
+  --hint-border: #b00018;
+  --hint-bg: #fff0f0;
+  --hint-fg: #8c0013;
+  --pip-border: #000000;
+  --pip-empty: #ffffff;
+  --pip-filled: #b00018;
+  --drum-rim: #000000;
+  --toggle-border: #000000;
+  --toggle-track: #dddddd;
+  --knob-bg: #000000;
+  --app-bg: #ffffff;
 }
 
 body {
