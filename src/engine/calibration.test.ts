@@ -41,4 +41,31 @@ describe('match engine calibration', () => {
     const result = simulateMatch(squad, squad, NEUTRAL_ERA_RULES, false);
     expect(result.homeWinProbability).toBeGreaterThan(result.awayWinProbability);
   });
+
+  it('produces realistic outcome, clean-sheet and scoreline distributions', () => {
+    const trials = 5000;
+    let homeWins = 0, awayWins = 0, homeCleanSheets = 0, blowouts = 0, nilNil = 0;
+    for (let i = 0; i < trials; i++) {
+      const squad = generateSquadPool({ potentialRange: [65, 80] });
+      const r = simulateMatch(squad, squad, NEUTRAL_ERA_RULES, false);
+      if (r.homeGoals > r.awayGoals) homeWins++;
+      else if (r.awayGoals > r.homeGoals) awayWins++;
+      if (r.awayGoals === 0) homeCleanSheets++;
+      if (r.homeGoals + r.awayGoals >= 6) blowouts++;
+      if (r.homeGoals === 0 && r.awayGoals === 0) nilNil++;
+    }
+    // Home edge: real leagues sit ~45% home wins / ~28% away for balanced sides.
+    expect(homeWins / trials).toBeGreaterThan(0.38);
+    expect(homeWins / trials).toBeLessThan(0.52);
+    expect(awayWins / trials).toBeGreaterThan(0.18);
+    expect(awayWins / trials).toBeLessThan(0.32);
+    expect(homeWins).toBeGreaterThan(awayWins);
+    // Clean sheets happen in roughly a quarter to a third of games.
+    expect(homeCleanSheets / trials).toBeGreaterThan(0.2);
+    expect(homeCleanSheets / trials).toBeLessThan(0.4);
+    // High-scoring games (6+ total) and 0-0s are both uncommon but not vanishing.
+    expect(blowouts / trials).toBeLessThan(0.08);
+    expect(nilNil / trials).toBeGreaterThan(0.03);
+    expect(nilNil / trials).toBeLessThan(0.13);
+  });
 });
