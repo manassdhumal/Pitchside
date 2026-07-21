@@ -161,6 +161,16 @@ body {
   70% { transform: translateY(3px); opacity: 1; }
   100% { transform: translateY(0); }
 }
+/* Match timeline: the clock hand sweeping 0'→90' as the game "plays". */
+@keyframes clockSweep {
+  from { width: 0; }
+  to { width: 100%; }
+}
+/* Each goal marker pops in as the sweeping hand reaches its minute. */
+@keyframes goalPop {
+  0% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
 @keyframes drumIdle {
   0%, 100% { transform: rotate(-2.5deg); }
   50% { transform: rotate(2.5deg); }

@@ -9,6 +9,7 @@ import { computeTeamOvr, type TeamOvr } from '../engine/teamRatings';
 import { buildStandingsTable, generateRoundRobinFixtures, simulateLeagueFixtures } from '../engine/competitions';
 import { simulateCup, type CupResult } from '../engine/cup';
 import { CupBracket } from '../components/CupBracket';
+import { MatchTimeline } from '../components/MatchTimeline';
 import { SeasonStatsPanel } from '../components/SeasonStats';
 import { computeSeasonStats, computeGoldenBoot, type SeasonStats, type SeasonContext } from '../engine/seasonStats';
 import { getLeague } from '../data/leagues';
@@ -202,7 +203,6 @@ function OvrChip({ ovr, ink }: { ovr: number; ink: string }) {
     </span>
   );
 }
-
 
 export default function Season() {
   const navigate = useNavigate();
@@ -696,7 +696,10 @@ export default function Season() {
               const oppWin = Math.round((userHome ? m.awayWinProbability : m.homeWinProbability) * 100);
               const drawP = Math.max(0, 100 - userWin - oppWin);
               const res = forGoals > agGoals ? 'WON' : forGoals === agGoals ? 'DREW' : 'LOST';
-              const resInk = res === 'WON' ? '#3E7A4E' : res === 'DREW' ? '#8A7D63' : '#A83E2C';
+              // Card is colour-coded by result: green win, yellow draw, red loss.
+              const resInk = res === 'WON' ? '#3E7A4E' : res === 'DREW' ? '#A8863E' : '#A83E2C';
+              const resBorder = res === 'WON' ? '#3E7A4E' : res === 'DREW' ? '#C7A63E' : '#A83E2C';
+              const resTint = res === 'WON' ? '#EAF3EC' : res === 'DREW' ? '#F8F1DA' : '#F8EAE5';
               const venue = userHome ? 'H' : 'A';
               const leagueInk = chosenLeague ? LEAGUE_INKS[chosenLeague] ?? '#1D2B45' : '#1D2B45';
               const teamCell = (id: string, isUser: boolean, align: 'left' | 'right') => (
@@ -711,7 +714,7 @@ export default function Season() {
                 <div
                   key={m.id}
                   className="w-full max-w-[620px]"
-                  style={{ background: '#FDFAF1', border: '1px solid #D8CBAD', boxShadow: '6px 6px 0 var(--card-shadow)', animation: 'ticketOut .35s cubic-bezier(.2,1.1,.4,1)' }}
+                  style={{ background: resTint, border: `2px solid ${resBorder}`, boxShadow: '6px 6px 0 var(--card-shadow)', animation: 'ticketOut .35s cubic-bezier(.2,1.1,.4,1)' }}
                 >
                   <div className="flex items-center justify-between px-4 py-2" style={{ background: leagueInk, color: '#FDFAF1' }}>
                     <span className="font-stamp text-[12px] tracking-[0.1em]">
@@ -740,7 +743,11 @@ export default function Season() {
                       <span>{oppWin}% {teamNames.get(oppId)?.slice(0, 14)}</span>
                     </div>
                   </div>
-                  <div className="flex items-center justify-center border-t py-2.5" style={{ borderColor: '#EDE3CB' }}>
+                  {/* the match clock: goals pop in at their minute as the hand sweeps 0'→90' */}
+                  {(m.goals?.length ?? 0) > 0
+                    ? <MatchTimeline goals={m.goals!} userTeamId={userTeam.id} />
+                    : <div className="mx-5 mb-1 mt-2 h-10 text-center text-[9.5px] italic leading-[2.6rem]" style={{ color: '#6B5F4A' }}>No goals — a quiet afternoon.</div>}
+                  <div className="flex items-center justify-center border-t py-2.5" style={{ borderColor: resBorder + '55' }}>
                     <span className="font-stamp px-3 py-1 text-[14px]" style={{ background: resInk, color: '#FDFAF1', borderRadius: 3 }}>
                       {userTeam.name.toUpperCase()} {res} · {userHome ? 'HOME' : 'AWAY'}
                     </span>
