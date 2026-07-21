@@ -1,3 +1,13 @@
+/** A goal as it happened in the event-based sim: when, which side, who scored and who assisted. */
+export interface GoalEvent {
+  minute: number;
+  teamId: string;
+  scorerId: string;
+  scorerName: string;
+  assistId?: string;
+  assistName?: string;
+}
+
 export interface Match {
   id: string;
   competitionId: string;
@@ -14,6 +24,8 @@ export interface Match {
   simulated: boolean;
   extraTime?: boolean;
   penalties?: { home: number; away: number };
+  /** Goal-by-goal detail from the event sim (real scorers/assists), when available. */
+  goals?: GoalEvent[];
 }
 
 export interface StandingsRow {

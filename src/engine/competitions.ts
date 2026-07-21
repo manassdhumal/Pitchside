@@ -36,6 +36,11 @@ export function simulateLeagueFixtures(
       drawProbability: result.drawProbability,
       awayWinProbability: result.awayWinProbability,
       simulated: true,
+      goals: result.goals.map((g) => ({
+        minute: g.minute,
+        teamId: g.side === 'home' ? fixture.homeTeamId : fixture.awayTeamId,
+        scorerId: g.scorerId, scorerName: g.scorerName, assistId: g.assistId, assistName: g.assistName,
+      })),
     };
   });
 }

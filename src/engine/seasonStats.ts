@@ -204,7 +204,7 @@ export function computeSeasonStats(matches: Match[], userTeamId: string, opts: S
   };
 
   if (opts.xi && opts.xi.length > 0) {
-    stats.players = attributePlayerStats(matches, userTeamId, opts.xi);
+    stats.players = playerStatsFromEvents(matches, userTeamId, opts.xi);
     stats.playerOfSeason = pickPlayerOfSeason(stats.players);
   }
   if (opts.context) {
@@ -215,84 +215,33 @@ export function computeSeasonStats(matches: Match[], userTeamId: string, opts: S
   return stats;
 }
 
-// ---- Per-player scorer/assist attribution ---------------------------------------------------
+// ---- Per-player stats from the event sim ----------------------------------------------------
 //
-// The match engine only outputs team scores, so we can't know who actually scored. Instead we
-// deterministically hand each real goal to a plausible scorer (and often an assister), weighted by
-// position and finishing/creativity rating. Seeding the RNG from the match id makes it stable: the
-// live results screen and the persisted-then-reopened Career view attribute identically.
+// The match engine records who scored and assisted each goal (Match.goals), so we just tally those
+// events — the scorers are causally consistent with the scorelines, no attribution guessing. Position
+// (for the display chip and the Player-of-the-Season weighting) is resolved from the team's XI.
 
-/** Finishing propensity by position — how likely a player in that slot is to be the goalscorer. */
-const GOAL_WEIGHT: Record<Position, number> = {
-  GK: 0.02, CB: 0.35, LB: 0.25, RB: 0.25, LWB: 0.3, RWB: 0.3,
-  CDM: 0.4, CM: 0.75, CAM: 1.25, LM: 0.9, RM: 0.9, LW: 1.55, RW: 1.55, ST: 2.0,
-};
-/** Chance-creation propensity by position — how likely a player is to lay on the assist. */
-const ASSIST_WEIGHT: Record<Position, number> = {
-  GK: 0.02, CB: 0.2, LB: 0.5, RB: 0.5, LWB: 0.7, RWB: 0.7,
-  CDM: 0.6, CM: 1.1, CAM: 1.6, LM: 1.2, RM: 1.2, LW: 1.35, RW: 1.35, ST: 0.7,
-};
-/** Share of goals that get an assist attributed (the rest are solo efforts / unassisted). */
-const ASSIST_SHARE = 0.78;
-
-function hashString(s: string): number {
-  let h = 2166136261 >>> 0;
-  for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619);
-  return h >>> 0;
+function positionById(xi: Player[]): Map<string, Position> {
+  return new Map(xi.map((p) => [p.id, p.position]));
 }
 
-/** Small deterministic PRNG (mulberry32) → a `() => [0,1)` stream from a seed. */
-function mulberry32(seed: number): () => number {
-  let a = seed >>> 0;
-  return () => {
-    a = (a + 0x6d2b79f5) | 0;
-    let t = Math.imul(a ^ (a >>> 15), 1 | a);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+/** Tally a team's goals/assists from the goal events on its matches. */
+function playerStatsFromEvents(matches: Match[], teamId: string, xi: Player[]): PlayerStatLine[] {
+  const pos = positionById(xi);
+  const lines = new Map<string, PlayerStatLine>();
+  const bump = (id: string, name: string, dg: number, da: number) => {
+    let cur = lines.get(id);
+    if (!cur) { cur = { playerId: id, name, position: pos.get(id) ?? 'CM', goals: 0, assists: 0 }; lines.set(id, cur); }
+    cur.goals += dg; cur.assists += da;
   };
-}
-
-/** Weighted pick from `players` using `weights[i]`; returns the chosen index, or -1 if all zero. */
-function weightedPick(weights: number[], roll: number): number {
-  const total = weights.reduce((s, w) => s + w, 0);
-  if (total <= 0) return -1;
-  let r = roll * total;
-  for (let i = 0; i < weights.length; i++) {
-    r -= weights[i];
-    if (r <= 0) return i;
-  }
-  return weights.length - 1;
-}
-
-const playerName = (p: Player) => `${p.firstName} ${p.lastName}`.trim();
-
-function attributePlayerStats(matches: Match[], userTeamId: string, xi: Player[]): PlayerStatLine[] {
-  const lines: PlayerStatLine[] = xi.map((p) => ({
-    playerId: p.id, name: playerName(p), position: p.position, goals: 0, assists: 0,
-  }));
-  const goalW = xi.map((p) => GOAL_WEIGHT[p.position] * (0.55 + 0.9 * (p.ratings.shooting / 100)));
-  const assistW = xi.map((p) => ASSIST_WEIGHT[p.position] * (0.55 + 0.9 * (p.ratings.passing / 100)));
-
-  for (const match of matches) {
-    const home = match.homeTeamId === userTeamId;
-    const goalsFor = home ? match.homeScore : match.awayScore;
-    if (goalsFor <= 0) continue;
-    const rng = mulberry32(hashString(match.id));
-    for (let g = 0; g < goalsFor; g++) {
-      const scorer = weightedPick(goalW, rng());
-      if (scorer < 0) continue;
-      lines[scorer].goals += 1;
-      // Assist: sometimes, and never the scorer themselves.
-      if (rng() < ASSIST_SHARE) {
-        const aw = assistW.slice();
-        aw[scorer] = 0;
-        const assister = weightedPick(aw, rng());
-        if (assister >= 0) lines[assister].assists += 1;
-      }
+  for (const m of matches) {
+    for (const g of m.goals ?? []) {
+      if (g.teamId !== teamId) continue;
+      bump(g.scorerId, g.scorerName, 1, 0);
+      if (g.assistId) bump(g.assistId, g.assistName ?? g.assistId, 0, 1);
     }
   }
-
-  return lines
+  return [...lines.values()]
     .filter((l) => l.goals > 0 || l.assists > 0)
     .sort((a, b) => b.goals - a.goals || b.assists - a.assists || a.name.localeCompare(b.name));
 }
@@ -317,9 +266,8 @@ function pickPlayerOfSeason(players: PlayerStatLine[]): PlayerStatLine | undefin
 }
 
 /**
- * League-wide golden-boot table: attribute goals for EVERY team from its XI (same deterministic
- * method as the user's), then rank all scorers. The user's own players resolve identically to their
- * `stats.players` because the same matches/XI/seed feed both. Returns the top `limit`.
+ * League-wide golden-boot table straight from every match's goal events, ranked across all teams.
+ * `xiByTeam` is used only to resolve each scorer's position; `teamNames` for the club label.
  */
 export function computeGoldenBoot(
   matches: Match[],
@@ -328,20 +276,27 @@ export function computeGoldenBoot(
   userTeamId: string,
   limit = 10,
 ): GoldenBootEntry[] {
-  const entries: GoldenBootEntry[] = [];
-  for (const [teamId, xi] of xiByTeam) {
-    if (!xi || xi.length === 0) continue;
-    const teamMatches = matches.filter((m) => m.homeTeamId === teamId || m.awayTeamId === teamId);
-    for (const l of attributePlayerStats(teamMatches, teamId, xi)) {
-      if (l.goals <= 0) continue;
-      entries.push({
-        playerId: l.playerId, name: l.name, position: l.position, teamId,
-        teamName: teamNames.get(teamId) ?? teamId, goals: l.goals, assists: l.assists,
-        isUser: teamId === userTeamId,
-      });
+  const pos = new Map<string, Position>();
+  for (const xi of xiByTeam.values()) for (const p of xi) pos.set(p.id, p.position);
+
+  const entries = new Map<string, GoldenBootEntry>(); // key: `${teamId}:${playerId}`
+  const entry = (teamId: string, id: string, name: string): GoldenBootEntry => {
+    const key = `${teamId}:${id}`;
+    let e = entries.get(key);
+    if (!e) {
+      e = { playerId: id, name, position: pos.get(id) ?? 'CM', teamId, teamName: teamNames.get(teamId) ?? teamId, goals: 0, assists: 0, isUser: teamId === userTeamId };
+      entries.set(key, e);
+    }
+    return e;
+  };
+  for (const m of matches) {
+    for (const g of m.goals ?? []) {
+      entry(g.teamId, g.scorerId, g.scorerName).goals += 1;
+      if (g.assistId) entry(g.teamId, g.assistId, g.assistName ?? g.assistId).assists += 1;
     }
   }
-  return entries
+  return [...entries.values()]
+    .filter((e) => e.goals > 0)
     .sort((a, b) => b.goals - a.goals || b.assists - a.assists || a.name.localeCompare(b.name))
     .slice(0, limit);
 }

@@ -2,8 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { computeSeasonStats, deriveSeasonInsights, computeGoldenBoot } from './seasonStats';
 import type { Match, Player, Position } from '../types';
 
-// Minimal match factory from the user's perspective. `home` = user plays at home. A fixed id keeps
-// the deterministic scorer attribution stable across runs.
+// Minimal match factory from the user's perspective. `home` = user plays at home.
 function m(userId: string, oppId: string, forG: number, againstG: number, home: boolean, id = Math.random().toString(36)): Match {
   return {
     id, competitionId: 'c', round: 'r',
@@ -12,6 +11,10 @@ function m(userId: string, oppId: string, forG: number, againstG: number, home: 
     homeXG: 0, awayXG: 0, homeWinProbability: 0, drawProbability: 0, awayWinProbability: 0, simulated: true,
   };
 }
+
+/** A goal event helper. */
+const goal = (teamId: string, scorerId: string, scorerName: string, assistId?: string) =>
+  ({ minute: 1, teamId, scorerId, scorerName, assistId, assistName: assistId ? `A ${assistId}` : undefined });
 
 function pl(id: string, position: Position, shooting: number, passing = 70): Player {
   return {
@@ -54,20 +57,24 @@ describe('computeSeasonStats', () => {
     expect(s.cumulativePoints).toEqual([3, 4, 7, 7, 10, 11]);
   });
 
-  it('attributes every goal to a scorer (goals sum to goals-for) and is deterministic', () => {
+  it('tallies scorers and assists from the goal events on each match', () => {
     const u = 'me';
     const xi = [pl('gk', 'GK', 20), pl('cb', 'CB', 40), pl('cm', 'CM', 65), pl('st', 'ST', 90)];
-    const matches = [m(u, 'a', 3, 0, true, 'fixed-1'), m(u, 'b', 2, 1, false, 'fixed-2')];
-    const s1 = computeSeasonStats(matches, u, { xi });
-    const totalGoals = (s1.players ?? []).reduce((t, p) => t + p.goals, 0);
-    expect(totalGoals).toBe(5); // 3 + 2 goals for
-    expect((s1.players ?? [])[0].goals).toBeGreaterThan(0); // a top scorer exists
-    // Assists never exceed goals; scorers are a subset of the XI.
-    const totalAssists = (s1.players ?? []).reduce((t, p) => t + p.assists, 0);
-    expect(totalAssists).toBeLessThanOrEqual(totalGoals);
-    // Deterministic: same matches + XI → identical attribution.
-    const s2 = computeSeasonStats(matches, u, { xi });
-    expect(s2.players).toEqual(s1.players);
+    const matches: Match[] = [
+      { ...m(u, 'a', 2, 0, true, 'e1'), goals: [goal(u, 'st', 'Striker', 'cm'), goal(u, 'st', 'Striker')] },
+      { ...m(u, 'b', 1, 1, false, 'e2'), goals: [goal(u, 'cm', 'Mid', 'st'), goal('b', 'oz', 'Opp')] },
+    ];
+    const s = computeSeasonStats(matches, u, { xi });
+    const st = s.players!.find((p) => p.playerId === 'st')!;
+    const cm = s.players!.find((p) => p.playerId === 'cm')!;
+    expect(st.goals).toBe(2);
+    expect(st.assists).toBe(1);
+    expect(st.position).toBe('ST'); // resolved from the XI
+    expect(cm.goals).toBe(1);
+    expect(cm.assists).toBe(1);
+    expect(s.players![0].playerId).toBe('st'); // ranked by goals
+    // Opponent goals (team 'b') are not counted for the user.
+    expect(s.players!.some((p) => p.playerId === 'oz')).toBe(false);
   });
 
   it('derives a verdict + insights from league context', () => {
@@ -82,22 +89,20 @@ describe('computeSeasonStats', () => {
     expect(s.insights?.some((i) => i.title.includes('defence'))).toBe(true);
   });
 
-  it('crowns a position-fair Player of the Season and a consistent golden boot', () => {
+  it('picks a position-fair Player of the Season and builds a league golden boot from events', () => {
     const u = 'me';
-    const xi = [pl('gk', 'GK', 20), pl('cb', 'CB', 45), pl('cm', 'CM', 65), pl('st', 'ST', 92)];
-    const matches = [m(u, 'a', 4, 0, true, 'gb-1'), m(u, 'b', 3, 1, false, 'gb-2'), m(u, 'c', 2, 0, true, 'gb-3')];
+    const xi = [pl('gk', 'GK', 20), pl('def', 'CB', 45), pl('st', 'ST', 92)];
+    // A defender who chips in 8 should be able to pip a striker on 9 via the position weighting.
+    const defGoals = Array.from({ length: 8 }, () => goal(u, 'def', 'Defender'));
+    const stGoals = Array.from({ length: 9 }, () => goal(u, 'st', 'Striker'));
+    const matches: Match[] = [{ ...m(u, 'opp', 17, 2, true, 'gb'), goals: [...defGoals, ...stGoals, goal('opp', 'oz', 'Rival'), goal('opp', 'oz', 'Rival')] }];
     const s = computeSeasonStats(matches, u, { xi });
     expect(s.playerOfSeason).toBeDefined();
-    expect((s.players ?? []).some((p) => p.playerId === s.playerOfSeason!.playerId)).toBe(true);
+    expect(s.playerOfSeason!.playerId).toBe('def'); // 8×1.5 prestige beats 9×0.9
 
-    // Golden boot must attribute the user's own goals identically to their stats.players — same
-    // matches, XI and seed. (Opponents with no XI in the map are skipped.)
-    const gb = computeGoldenBoot(matches, new Map([[u, xi]]), new Map([[u, 'My XI']]), u);
-    expect(gb.length).toBeGreaterThan(0);
-    expect(gb.every((r) => r.isUser)).toBe(true);
-    const userTop = (s.players ?? [])[0];
-    const gbUser = gb.find((r) => r.playerId === userTop.playerId);
-    expect(gbUser?.goals).toBe(userTop.goals);
+    const gb = computeGoldenBoot(matches, new Map([[u, xi], ['opp', [pl('oz', 'ST', 80)]]]), new Map([[u, 'My XI'], ['opp', 'Rivals']]), u);
+    expect(gb[0]).toMatchObject({ playerId: 'st', goals: 9, isUser: true }); // top scorer overall
+    expect(gb.find((e) => e.playerId === 'oz')).toMatchObject({ goals: 2, isUser: false });
   });
 
   it('gives a relegation-tone verdict for a last-place finish', () => {
