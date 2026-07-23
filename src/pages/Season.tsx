@@ -10,6 +10,7 @@ import { buildStandingsTable, generateRoundRobinFixtures, simulateLeagueFixtures
 import { simulateCup, type CupResult } from '../engine/cup';
 import { CupBracket } from '../components/CupBracket';
 import { MatchTimeline } from '../components/MatchTimeline';
+import { KnockoutTieCard, RevealControls } from '../components/KnockoutReveal';
 import { SeasonStatsPanel } from '../components/SeasonStats';
 import { computeSeasonStats, computeGoldenBoot, type SeasonStats, type SeasonContext } from '../engine/seasonStats';
 import { getLeague } from '../data/leagues';
@@ -236,6 +237,7 @@ export default function Season() {
   // Knockout cup run (after the league).
   const [cup, setCup] = useState<CupResult | null>(null);
   const [cupReveal, setCupReveal] = useState(0);
+  const [cupPlaying, setCupPlaying] = useState(true);
   const cupTickerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const [teamNames, setTeamNames] = useState<Map<string, string>>(new Map());
@@ -504,16 +506,19 @@ export default function Season() {
     const entrants = Array.from(xiByTeam.entries()).map(([id, xi]) => ({ id, xi: id === userTeam.id ? userXi : xi }));
     setCup(simulateCup(entrants, userTeam.id, buildTactics()));
     setCupReveal(0);
+    setCupPlaying(true);
     setPhase('cup-reveal');
   };
 
+  // Reveal one round at a time, paused-aware, at a matchday pace (slower than the league so each
+  // tie's timeline can play out).
   useEffect(() => {
-    if (phase !== 'cup-reveal' || !cup) return;
+    if (phase !== 'cup-reveal' || !cup || !cupPlaying) return;
     cupTickerRef.current = setInterval(() => {
       setCupReveal((c) => (c >= cup.rounds.length ? c : c + 1));
-    }, 1600);
+    }, 2600);
     return () => { if (cupTickerRef.current) clearInterval(cupTickerRef.current); };
-  }, [phase, cup]);
+  }, [phase, cup, cupPlaying]);
 
   useEffect(() => {
     if (phase === 'cup-reveal' && cup && cupReveal >= cup.rounds.length) setPhase('cup-done');
@@ -948,54 +953,21 @@ export default function Season() {
                 <div className="font-display text-[26px] font-extrabold sm:text-[32px]" style={{ color: '#1D2B45' }}>{userTeam.name}'s cup run</div>
               </div>
 
-              {/* prominent card for the user's tie in the round just revealed */}
-              {tie && (() => {
-                const userHome = tie.homeId === userTeam.id;
-                const oppId = userHome ? tie.awayId : tie.homeId;
-                const uG = userHome ? tie.result.homeGoals : tie.result.awayGoals;
-                const oG = userHome ? tie.result.awayGoals : tie.result.homeGoals;
-                const won = tie.winnerId === userTeam.id;
-                const pens = tie.result.penalties;
-                const uP = pens ? (userHome ? pens.home : pens.away) : null;
-                const oP = pens ? (userHome ? pens.away : pens.home) : null;
-                return (
-                  <div key={cupReveal} className="mb-6 w-full max-w-[560px]" style={{ background: '#FDFAF1', border: '1px solid #D8CBAD', boxShadow: '6px 6px 0 var(--card-shadow)', animation: 'ticketOut .35s cubic-bezier(.2,1.1,.4,1)' }}>
-                    <div className="flex items-center justify-between px-4 py-2" style={{ background: leagueInk, color: '#FDFAF1' }}>
-                      <span className="font-stamp text-[12px] tracking-[0.1em]">{tie.round}</span>
-                      <span className="text-[10px] tracking-[0.14em] opacity-85">round {cupReveal} / {cup.rounds.length}</span>
-                    </div>
-                    <div className="grid items-center gap-3 px-5 py-7" style={{ gridTemplateColumns: '1fr auto 1fr' }}>
-                      <div className="flex flex-col items-start gap-1 text-left">
-                        <span className="font-display text-[20px] font-extrabold leading-tight" style={{ color: '#A83E2C' }}>★ {userTeam.name}</span>
-                        <OvrChip ovr={ovrByTeam.get(userTeam.id)?.overall ?? 0} ink="#A83E2C" />
-                      </div>
-                      <div className="flex flex-col items-center">
-                        <span className="font-stamp text-[40px] leading-none" style={{ color: '#1D2B45' }}>{uG}–{oG}</span>
-                        {pens && <span className="mt-1 text-[10.5px]" style={{ color: '#3C3325' }}>pens {uP}–{oP}</span>}
-                      </div>
-                      <div className="flex flex-col items-end gap-1 text-right">
-                        <span className="font-display text-[20px] font-extrabold leading-tight" style={{ color: '#1D2B45' }}>{teamNames.get(oppId)}</span>
-                        <OvrChip ovr={ovrByTeam.get(oppId)?.overall ?? 0} ink={leagueInk} />
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-center border-t py-2.5" style={{ borderColor: '#EDE3CB' }}>
-                      <span className="font-stamp px-3 py-1 text-[14px]" style={{ background: won ? '#3E7A4E' : '#A83E2C', color: '#FDFAF1', borderRadius: 3 }}>
-                        {won ? 'THROUGH' : 'KNOCKED OUT'}{pens ? ' · ON PENALTIES' : ''}
-                      </span>
-                    </div>
-                  </div>
-                );
-              })()}
+              {/* the user's tie in the round just revealed — a full matchday card with timeline */}
+              {tie && (
+                <KnockoutTieCard tie={tie} userId={userTeam.id} userName={userTeam.name} teamNames={teamNames}
+                  ovrOf={(id) => ovrByTeam.get(id)?.overall} roundIndex={cupReveal} totalRounds={cup.rounds.length} leagueInk={leagueInk} />
+              )}
 
               {/* the full seeded bracket, revealed round by round */}
               <CupBracket rounds={cup.rounds} revealed={revealedRounds} userId={userTeam.id}
                 teamNames={teamNames} seedById={cup.seedById} />
 
               {phase === 'cup-reveal' && (
-                <button type="button" onClick={() => { if (cupTickerRef.current) clearInterval(cupTickerRef.current); setCupReveal(cup.rounds.length); }}
-                  className="mt-5 cursor-pointer border-0 px-4 py-2 text-[12px] font-bold uppercase" style={{ background: '#A83E2C', color: '#FDFAF1' }}>
-                  Skip to final ⏭
-                </button>
+                <RevealControls playing={cupPlaying} atEnd={cupReveal >= cup.rounds.length}
+                  onToggle={() => setCupPlaying((p) => !p)}
+                  onNext={() => setCupReveal((c) => Math.min(cup.rounds.length, c + 1))}
+                  onSkip={() => { if (cupTickerRef.current) clearInterval(cupTickerRef.current); setCupReveal(cup.rounds.length); }} />
               )}
 
               {phase === 'cup-done' && (

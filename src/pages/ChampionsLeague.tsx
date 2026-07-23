@@ -8,7 +8,9 @@ import { simulateLeaguePhase, simulatePlayoffRound, MATCHES_PER_TEAM, type Leagu
 import { simulateCup, type CupResult } from '../engine/cup';
 import { getManager, applyManagerToXI, managerTactics } from '../data/managers';
 import type { TacticalShape } from '../engine/matchEngine';
+import { computeTeamOvr } from '../engine/teamRatings';
 import { CupBracket } from '../components/CupBracket';
+import { KnockoutTieCard, RevealControls } from '../components/KnockoutReveal';
 import { ProgrammeNav, ProgrammeFooter } from '../components/chrome/ProgrammeChrome';
 import type { Team, Player, RatingsMode, StandingsRow } from '../types';
 
@@ -56,6 +58,8 @@ export default function ChampionsLeague() {
   const [userPlayoffTie, setUserPlayoffTie] = useState<PlayoffTie | null>(null);
   const [userInR16, setUserInR16] = useState(false);
   const [cupReveal, setCupReveal] = useState(0);
+  const [koPlaying, setKoPlaying] = useState(true);
+  const [ovrById, setOvrById] = useState<Map<string, number>>(new Map());
   const tickerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const fieldRef = useRef<Field | null>(null);
   const setupDone = useRef(false);
@@ -71,8 +75,9 @@ export default function ChampionsLeague() {
 
     const names = new Map<string, string>();
     const xis = new Map<string, Player[]>();
-    names.set(team.id, team.name); xis.set(team.id, userXi);
-    for (const o of opponents) { names.set(o.id, o.name); xis.set(o.id, o.players); }
+    const ovrs = new Map<string, number>();
+    names.set(team.id, team.name); xis.set(team.id, userXi); ovrs.set(team.id, computeTeamOvr(userXi).overall);
+    for (const o of opponents) { names.set(o.id, o.name); xis.set(o.id, o.players); ovrs.set(o.id, o.ovr); }
     const tactics: Map<string, TacticalShape> | undefined = manager ? new Map([[team.id, managerTactics(manager)]]) : undefined;
 
     const fieldIds = [team.id, ...opponents.map((o) => o.id)];
@@ -83,6 +88,7 @@ export default function ChampionsLeague() {
     const cupResult = simulateCup(r16.map((id) => ({ id, xi: xis.get(id)! })), team.id, tactics);
 
     setTeamNames(names);
+    setOvrById(ovrs);
     setLp(phaseResult);
     setCup(cupResult);
     setUserPos(phaseResult.table.findIndex((r) => r.teamId === team.id) + 1);
@@ -116,12 +122,12 @@ export default function ChampionsLeague() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTeamId, navigate, seasonMax, ratingsMode, managerId]);
 
-  // Reveal the knockout one round at a time, like the domestic cup.
+  // Reveal the knockout one round at a time, paused-aware, at a matchday pace (like the domestic cup).
   useEffect(() => {
-    if (phase !== 'knockout' || !cup) return;
-    tickerRef.current = setInterval(() => setCupReveal((c) => (c >= cup.rounds.length ? c : c + 1)), 1600);
+    if (phase !== 'knockout' || !cup || !koPlaying) return;
+    tickerRef.current = setInterval(() => setCupReveal((c) => (c >= cup.rounds.length ? c : c + 1)), 2600);
     return () => { if (tickerRef.current) clearInterval(tickerRef.current); };
-  }, [phase, cup]);
+  }, [phase, cup, koPlaying]);
   useEffect(() => {
     if (phase === 'knockout' && cup && cupReveal >= cup.rounds.length) setPhase('done');
   }, [phase, cupReveal, cup]);
@@ -130,7 +136,7 @@ export default function ChampionsLeague() {
   const inTop8 = lp ? lp.directIds.includes(userTeam?.id ?? '') : false;
   const inPlayoff = lp ? lp.playoffIds.includes(userTeam?.id ?? '') : false;
   const wonPlayoff = userPlayoffTie?.winnerId === userTeam?.id;
-  const goToKnockout = () => { setCupReveal(0); setPhase('knockout'); };
+  const goToKnockout = () => { setCupReveal(0); setKoPlaying(true); setPhase('knockout'); };
   const afterLeague = () => setPhase(inPlayoff ? 'playoff' : 'knockout');
 
   const exitLabel = cup && userTeam
@@ -272,6 +278,15 @@ export default function ChampionsLeague() {
               <div className="font-display text-[26px] font-extrabold sm:text-[30px]" style={{ color: INK }}>The road to the final</div>
             </div>
 
+            {/* the user's tie in the round just revealed — a full matchday card with timeline */}
+            {phase === 'knockout' && cupReveal > 0 && (() => {
+              const tie = cup.rounds[cupReveal - 1]?.find((t) => t.userInvolved) ?? null;
+              return tie ? (
+                <KnockoutTieCard tie={tie} userId={userTeam.id} userName={userTeam.name} teamNames={teamNames}
+                  ovrOf={(id) => ovrById.get(id)} roundIndex={cupReveal} totalRounds={cup.rounds.length} leagueInk={INK} />
+              ) : null;
+            })()}
+
             <CupBracket
               rounds={cup.rounds}
               revealed={phase === 'done' ? cup.rounds.length : cupReveal}
@@ -281,10 +296,10 @@ export default function ChampionsLeague() {
             />
 
             {phase === 'knockout' && (
-              <button type="button" onClick={() => { if (tickerRef.current) clearInterval(tickerRef.current); setCupReveal(cup.rounds.length); }}
-                className="mt-5 cursor-pointer border-0 px-4 py-2 text-[12px] font-bold uppercase" style={{ background: BRICK, color: CREAM }}>
-                Skip to final ⏭
-              </button>
+              <RevealControls playing={koPlaying} atEnd={cupReveal >= cup.rounds.length}
+                onToggle={() => setKoPlaying((p) => !p)}
+                onNext={() => setCupReveal((c) => Math.min(cup.rounds.length, c + 1))}
+                onSkip={() => { if (tickerRef.current) clearInterval(tickerRef.current); setCupReveal(cup.rounds.length); }} />
             )}
 
             {phase === 'done' && (
