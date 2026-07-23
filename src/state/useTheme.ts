@@ -12,12 +12,19 @@ export interface Theme {
 export const THEMES: Theme[] = [
   { id: 'matchday', name: 'Matchday', swatch: ['#f6efdf', '#1d2b45', '#a83e2c'] },
   { id: 'sepia', name: 'Sepia', swatch: ['#e8dcc2', '#3d2c1a', '#9c5a2c'] },
+  { id: 'ice', name: 'Ice', swatch: ['#dce7ef', '#1b3a52', '#2f8fb0'] },
   { id: 'floodlights', name: 'Floodlights', swatch: ['#16301f', '#f2ead3', '#e0876b'] },
+  { id: 'emerald', name: 'Emerald', swatch: ['#0c3d2a', '#eef6ee', '#e8c05a'] },
   { id: 'european', name: 'European', swatch: ['#0e1830', '#dfe6f2', '#7fb0e8'] },
+  { id: 'blueprint', name: 'Blueprint', swatch: ['#0b2a4a', '#d6ecff', '#58c8e8'] },
   { id: 'chalkboard', name: 'Chalkboard', swatch: ['#22282b', '#eef2ee', '#e8b04a'] },
   { id: 'claret', name: 'Claret', swatch: ['#4a1f2b', '#f4e9dd', '#6fb7d6'] },
+  { id: 'rossoneri', name: 'Rossoneri', swatch: ['#1c1416', '#f2e8e8', '#d4202f'] },
+  { id: 'sunset', name: 'Sunset', swatch: ['#3a1e33', '#ffe6cf', '#ff8a3d'] },
+  { id: 'retro70s', name: 'Retro 70s', swatch: ['#3a2817', '#f5e0b0', '#d9622a'] },
   { id: 'teletext', name: 'Teletext', swatch: ['#0a0a0a', '#ffcc00', '#33ff66'] },
   { id: 'neon', name: 'Neon', swatch: ['#0d0b1a', '#ff3d8b', '#22d3ee'] },
+  { id: 'gold', name: 'Gold', swatch: ['#14120c', '#f0e2b8', '#d4af37'] },
 ];
 
 const STORAGE_KEY = 'pitchside-theme';

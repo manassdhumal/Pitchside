@@ -299,6 +299,254 @@
   --app-bg: radial-gradient(circle at 50% -10%, #241a52, #0d0b1a 60%);
 }
 
+/* Ice: cold pale steel-blue with a deep-blue ink and teal accent — a crisp winter light theme. */
+:root[data-theme="ice"] {
+  color-scheme: light;
+  --paper: #dce7ef;
+  --card: #eaf1f6;
+  --paper-deep: #c6d4df;
+  --panel: #d3e0ea;
+  --ink: #1b3a52;
+  --ink-hover: #12293c;
+  --text: #33556e;
+  --soft: #6d8798;
+  --line: #a9c0d1;
+  --border: #b6cad9;
+  --brick: #2f8fb0;
+  --brick-hover: #257a99;
+  --card-shadow: #b6cad9;
+  --grass-a: #b8ccd6;
+  --grass-b: #aec4d0;
+  --btn-bg: #1b3a52;
+  --btn-fg: #eaf1f6;
+  --btn-shadow: #a9c0d1;
+  --btn-divider: rgba(234, 241, 246, 0.4);
+  --hint-border: #2f8fb0;
+  --hint-bg: #d3e0ea;
+  --hint-fg: #1d5c73;
+  --pip-border: #1b3a52;
+  --pip-empty: #dce7ef;
+  --pip-filled: #2f8fb0;
+  --drum-rim: #1b3a52;
+  --toggle-border: #a9c0d1;
+  --toggle-track: #c6d4df;
+  --knob-bg: #6d8798;
+  --app-bg: linear-gradient(#e6eef4, #dce7ef 55%, #d0dde7);
+}
+
+/* Emerald Baize: rich snooker-felt green with a brass-gold accent. */
+:root[data-theme="emerald"] {
+  color-scheme: dark;
+  --paper: #0c3d2a;
+  --card: #114a34;
+  --paper-deep: #082c1e;
+  --panel: #0f4430;
+  --ink: #eef6ee;
+  --ink-hover: #ffffff;
+  --text: #c5ddc9;
+  --soft: #7fa88c;
+  --line: #235c44;
+  --border: #1d5039;
+  --brick: #e8c05a;
+  --brick-hover: #d8af48;
+  --card-shadow: #04170f;
+  --grass-a: #124a33;
+  --grass-b: #0f4230;
+  --btn-bg: #eef6ee;
+  --btn-fg: #0c3d2a;
+  --btn-shadow: #04170f;
+  --btn-divider: rgba(12, 61, 42, 0.4);
+  --hint-border: #e8c05a;
+  --hint-bg: #0f4430;
+  --hint-fg: #f2d78f;
+  --pip-border: #eef6ee;
+  --pip-empty: #0f4430;
+  --pip-filled: #e8c05a;
+  --drum-rim: #eef6ee;
+  --toggle-border: #2e6b4e;
+  --toggle-track: #124a33;
+  --knob-bg: #eef6ee;
+  --app-bg: radial-gradient(circle at 50% 0%, #0f472f, #0c3d2a 60%);
+}
+
+/* Blueprint: cyan hairlines on deep technical blue, a drawing-board look. */
+:root[data-theme="blueprint"] {
+  color-scheme: dark;
+  --paper: #0b2a4a;
+  --card: #103457;
+  --paper-deep: #071e37;
+  --panel: #0e2e4d;
+  --ink: #d6ecff;
+  --ink-hover: #ffffff;
+  --text: #a9cbe6;
+  --soft: #6f93b3;
+  --line: #2a5580;
+  --border: #234a70;
+  --brick: #58c8e8;
+  --brick-hover: #40b6d8;
+  --card-shadow: #04101f;
+  --grass-a: #123a5c;
+  --grass-b: #0f3350;
+  --btn-bg: #d6ecff;
+  --btn-fg: #0b2a4a;
+  --btn-shadow: #04101f;
+  --btn-divider: rgba(11, 42, 74, 0.4);
+  --hint-border: #58c8e8;
+  --hint-bg: #0e2e4d;
+  --hint-fg: #b7e6f5;
+  --pip-border: #d6ecff;
+  --pip-empty: #0e2e4d;
+  --pip-filled: #58c8e8;
+  --drum-rim: #d6ecff;
+  --toggle-border: #34597e;
+  --toggle-track: #123a5c;
+  --knob-bg: #d6ecff;
+  --app-bg:
+    linear-gradient(rgba(88, 200, 232, 0.08) 1px, transparent 1px) 0 0 / 26px 26px,
+    linear-gradient(90deg, rgba(88, 200, 232, 0.08) 1px, transparent 1px) 0 0 / 26px 26px,
+    #0b2a4a;
+}
+
+/* Rossoneri: bold red on charcoal-black, vertical club-kit stripes. */
+:root[data-theme="rossoneri"] {
+  color-scheme: dark;
+  --paper: #1c1416;
+  --card: #241a1c;
+  --paper-deep: #120c0e;
+  --panel: #20171a;
+  --ink: #f2e8e8;
+  --ink-hover: #ffffff;
+  --text: #d3c4c4;
+  --soft: #9a8686;
+  --line: #43302f;
+  --border: #3a2827;
+  --brick: #d4202f;
+  --brick-hover: #b81a27;
+  --card-shadow: #0a0607;
+  --grass-a: #2a1a1c;
+  --grass-b: #241618;
+  --btn-bg: #d4202f;
+  --btn-fg: #f2e8e8;
+  --btn-shadow: #0a0607;
+  --btn-divider: rgba(20, 12, 14, 0.4);
+  --hint-border: #d4202f;
+  --hint-bg: #241416;
+  --hint-fg: #f0a5ab;
+  --pip-border: #f2e8e8;
+  --pip-empty: #20171a;
+  --pip-filled: #d4202f;
+  --drum-rim: #f2e8e8;
+  --toggle-border: #4d3634;
+  --toggle-track: #2a1a1c;
+  --knob-bg: #f2e8e8;
+  --app-bg: repeating-linear-gradient(90deg, #1c1416 0 40px, #241a1c 40px 80px);
+}
+
+/* Sunset: a plum-to-amber dusk, warm orange accent over twilight. */
+:root[data-theme="sunset"] {
+  color-scheme: dark;
+  --paper: #3a1e33;
+  --card: #4a2740;
+  --paper-deep: #2a1526;
+  --panel: #40213a;
+  --ink: #ffe6cf;
+  --ink-hover: #fff5ea;
+  --text: #e7c9b8;
+  --soft: #b78e86;
+  --line: #6a3a55;
+  --border: #5c3349;
+  --brick: #ff8a3d;
+  --brick-hover: #f0762a;
+  --card-shadow: #1c0d18;
+  --grass-a: #5a3048;
+  --grass-b: #4f2940;
+  --btn-bg: #ff8a3d;
+  --btn-fg: #2a1526;
+  --btn-shadow: #1c0d18;
+  --btn-divider: rgba(42, 21, 38, 0.4);
+  --hint-border: #ff8a3d;
+  --hint-bg: #40213a;
+  --hint-fg: #ffcfa8;
+  --pip-border: #ffe6cf;
+  --pip-empty: #40213a;
+  --pip-filled: #ff8a3d;
+  --drum-rim: #ffe6cf;
+  --toggle-border: #7a4560;
+  --toggle-track: #5a3048;
+  --knob-bg: #ffe6cf;
+  --app-bg: radial-gradient(circle at 50% -20%, #7a3a2e, #3a1e33 55%, #2a1526);
+}
+
+/* Retro 70s: burnt orange and mustard on rich brown, vintage-broadcast warmth. */
+:root[data-theme="retro70s"] {
+  color-scheme: dark;
+  --paper: #3a2817;
+  --card: #47331f;
+  --paper-deep: #281a0e;
+  --panel: #402d1b;
+  --ink: #f5e0b0;
+  --ink-hover: #fff0cf;
+  --text: #e0c48c;
+  --soft: #b39865;
+  --line: #5f4526;
+  --border: #543c21;
+  --brick: #d9622a;
+  --brick-hover: #c5541f;
+  --card-shadow: #180f07;
+  --grass-a: #4a3720;
+  --grass-b: #40301c;
+  --btn-bg: #d9622a;
+  --btn-fg: #f5e0b0;
+  --btn-shadow: #180f07;
+  --btn-divider: rgba(40, 26, 14, 0.4);
+  --hint-border: #d9622a;
+  --hint-bg: #402d1b;
+  --hint-fg: #f0b58a;
+  --pip-border: #f5e0b0;
+  --pip-empty: #402d1b;
+  --pip-filled: #d9622a;
+  --drum-rim: #f5e0b0;
+  --toggle-border: #6e5330;
+  --toggle-track: #4a3720;
+  --knob-bg: #f5e0b0;
+  --app-bg: repeating-linear-gradient(0deg, #3a2817 0 60px, #402d1b 60px 120px);
+}
+
+/* Gold Programme: near-black with warm gold foil accents, a premium matchday feel. */
+:root[data-theme="gold"] {
+  color-scheme: dark;
+  --paper: #14120c;
+  --card: #1d1a10;
+  --paper-deep: #0c0a06;
+  --panel: #191509;
+  --ink: #f0e2b8;
+  --ink-hover: #fff6dc;
+  --text: #d4c290;
+  --soft: #9a8a5e;
+  --line: #443a1e;
+  --border: #3a3119;
+  --brick: #d4af37;
+  --brick-hover: #c29e2b;
+  --card-shadow: #060503;
+  --grass-a: #26210f;
+  --grass-b: #201c0d;
+  --btn-bg: #d4af37;
+  --btn-fg: #14120c;
+  --btn-shadow: #060503;
+  --btn-divider: rgba(20, 18, 12, 0.4);
+  --hint-border: #d4af37;
+  --hint-bg: #1d1a10;
+  --hint-fg: #ecd68a;
+  --pip-border: #f0e2b8;
+  --pip-empty: #1d1a10;
+  --pip-filled: #d4af37;
+  --drum-rim: #f0e2b8;
+  --toggle-border: #55491f;
+  --toggle-track: #26210f;
+  --knob-bg: #f0e2b8;
+  --app-bg: radial-gradient(circle at 50% -10%, #26200f, #14120c 60%);
+}
+
 body {
   margin: 0;
   font-family: Archivo, system-ui, sans-serif;

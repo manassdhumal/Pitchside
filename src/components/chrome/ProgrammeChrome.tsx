@@ -100,7 +100,7 @@ export function ThemePicker() {
         <div
           role="listbox"
           aria-label="Choose a theme"
-          className="absolute right-0 z-50 mt-1 w-[188px] border py-1"
+          className="absolute right-0 z-50 mt-1 max-h-[70vh] w-[188px] overflow-y-auto border py-1"
           style={{ background: 'var(--card)', borderColor: 'var(--line)', boxShadow: '4px 4px 0 var(--card-shadow)' }}
         >
           {THEMES.map((t) => {
