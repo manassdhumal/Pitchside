@@ -10,7 +10,7 @@ import { getManager, applyManagerToXI, managerTactics } from '../data/managers';
 import type { TacticalShape } from '../engine/matchEngine';
 import { computeTeamOvr } from '../engine/teamRatings';
 import { CupBracket } from '../components/CupBracket';
-import { KnockoutTieCard, RevealControls } from '../components/KnockoutReveal';
+import { LiveMatchSim, tieToLive } from '../components/LiveMatchSim';
 import { ProgrammeNav, ProgrammeFooter } from '../components/chrome/ProgrammeChrome';
 import type { Team, Player, RatingsMode, StandingsRow } from '../types';
 
@@ -57,10 +57,11 @@ export default function ChampionsLeague() {
   const [userPos, setUserPos] = useState(0);
   const [userPlayoffTie, setUserPlayoffTie] = useState<PlayoffTie | null>(null);
   const [userInR16, setUserInR16] = useState(false);
-  const [cupReveal, setCupReveal] = useState(0);
-  const [koPlaying, setKoPlaying] = useState(true);
+  const [cupReveal, setCupReveal] = useState(0); // bracket rounds revealed
+  const [koTieIdx, setKoTieIdx] = useState(0); // which of the user's knockout ties is up next
+  const [koSimming, setKoSimming] = useState(false);
+  const [koMatchDone, setKoMatchDone] = useState(false);
   const [ovrById, setOvrById] = useState<Map<string, number>>(new Map());
-  const tickerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const fieldRef = useRef<Field | null>(null);
   const setupDone = useRef(false);
 
@@ -122,21 +123,24 @@ export default function ChampionsLeague() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTeamId, navigate, seasonMax, ratingsMode, managerId]);
 
-  // Reveal the knockout one round at a time, paused-aware, at a matchday pace (like the domestic cup).
-  useEffect(() => {
-    if (phase !== 'knockout' || !cup || !koPlaying) return;
-    tickerRef.current = setInterval(() => setCupReveal((c) => (c >= cup.rounds.length ? c : c + 1)), 2600);
-    return () => { if (tickerRef.current) clearInterval(tickerRef.current); };
-  }, [phase, cup, koPlaying]);
-  useEffect(() => {
-    if (phase === 'knockout' && cup && cupReveal >= cup.rounds.length) setPhase('done');
-  }, [phase, cupReveal, cup]);
-  useEffect(() => () => { if (tickerRef.current) clearInterval(tickerRef.current); }, []);
+  // After a live knockout match finishes, reveal its round in the bracket and queue the next tie.
+  const advanceKoTie = () => {
+    if (!cup) return;
+    const tie = cup.userTies[koTieIdx];
+    const roundIdx = cup.rounds.findIndex((r) => r.includes(tie));
+    const nextIdx = koTieIdx + 1;
+    setKoTieIdx(nextIdx);
+    setKoSimming(false);
+    setKoMatchDone(false);
+    if (nextIdx >= cup.userTies.length) { setCupReveal(cup.rounds.length); setPhase('done'); }
+    else setCupReveal(roundIdx + 1);
+  };
+  const skipKo = () => { if (cup) { setCupReveal(cup.rounds.length); setPhase('done'); } };
 
   const inTop8 = lp ? lp.directIds.includes(userTeam?.id ?? '') : false;
   const inPlayoff = lp ? lp.playoffIds.includes(userTeam?.id ?? '') : false;
   const wonPlayoff = userPlayoffTie?.winnerId === userTeam?.id;
-  const goToKnockout = () => { setCupReveal(0); setKoPlaying(true); setPhase('knockout'); };
+  const goToKnockout = () => { setCupReveal(0); setKoTieIdx(0); setKoSimming(false); setKoMatchDone(false); setPhase('knockout'); };
   const afterLeague = () => setPhase(inPlayoff ? 'playoff' : 'knockout');
 
   const exitLabel = cup && userTeam
@@ -270,22 +274,50 @@ export default function ChampionsLeague() {
           );
         })()}
 
-        {/* ============ KNOCKOUT + FINAL ============ */}
-        {(phase === 'knockout' || phase === 'done') && cup && userTeam && (
+        {/* ============ KNOCKOUT + FINAL (user's ties played live, one at a time) ============ */}
+        {(phase === 'knockout' || phase === 'done') && cup && userTeam && (() => {
+          const nextTie = phase === 'knockout' && koTieIdx < cup.userTies.length ? cup.userTies[koTieIdx] : null;
+          const isLast = cup.userTies.length > 0 && koTieIdx === cup.userTies.length - 1;
+          const oppOf = (tie: typeof cup.userTies[number]) => (tie.homeId === userTeam.id ? tie.awayId : tie.homeId);
+          return (
           <div className="mt-9 flex flex-col items-center">
             <div className="mb-5 text-center">
               <div className="text-[11px] uppercase tracking-[0.2em]" style={{ color: '#6B5F4A' }}>Champions League · knockout</div>
               <div className="font-display text-[26px] font-extrabold sm:text-[30px]" style={{ color: INK }}>The road to the final</div>
+              {nextTie && <div className="mt-1 text-[12px] italic" style={{ color: '#6B5F4A' }}>Match {koTieIdx + 1} of {cup.userTies.length} · {nextTie.round}</div>}
             </div>
 
-            {/* the user's tie in the round just revealed — a full matchday card with timeline */}
-            {phase === 'knockout' && cupReveal > 0 && (() => {
-              const tie = cup.rounds[cupReveal - 1]?.find((t) => t.userInvolved) ?? null;
-              return tie ? (
-                <KnockoutTieCard tie={tie} userId={userTeam.id} userName={userTeam.name} teamNames={teamNames}
-                  ovrOf={(id) => ovrById.get(id)} roundIndex={cupReveal} totalRounds={cup.rounds.length} leagueInk={INK} />
-              ) : null;
-            })()}
+            {/* the user's next knockout tie — played live over ~7s */}
+            {nextTie && koSimming && (
+              <LiveMatchSim
+                {...tieToLive(nextTie, userTeam.id, teamNames.get(oppOf(nextTie)) ?? '', userTeam.name, ovrById.get(userTeam.id), ovrById.get(oppOf(nextTie)), INK)}
+                onDone={() => setKoMatchDone(true)}
+              />
+            )}
+
+            {phase === 'knockout' && (
+              <div className="mb-6 flex items-center gap-2.5">
+                {!koSimming && (
+                  <button type="button" onClick={() => { setKoMatchDone(false); setKoSimming(true); }}
+                    className="font-stamp foil-bg relative cursor-pointer overflow-hidden px-6 py-3 text-[14px] uppercase tracking-[0.08em] hover:brightness-105"
+                    style={{ color: '#3B2C08', border: '1.5px solid #8C6A1D' }}>
+                    ▶ Play the {nextTie?.round}
+                  </button>
+                )}
+                {koSimming && koMatchDone && (
+                  <button type="button" onClick={advanceKoTie}
+                    className="font-stamp cursor-pointer border-0 px-6 py-3 text-[14px] uppercase tracking-[0.08em]"
+                    style={{ background: INK, color: CREAM, boxShadow: `3px 3px 0 ${BRICK}` }}>
+                    {isLast ? 'Final result →' : 'Next match ▸'}
+                  </button>
+                )}
+                {!koSimming && (
+                  <button type="button" onClick={skipKo} className="cursor-pointer border px-4 py-3 text-[12px] font-bold uppercase" style={{ borderColor: BRICK, color: BRICK }}>
+                    Skip ⏭
+                  </button>
+                )}
+              </div>
+            )}
 
             <CupBracket
               rounds={cup.rounds}
@@ -294,13 +326,6 @@ export default function ChampionsLeague() {
               teamNames={teamNames}
               seedById={cup.seedById}
             />
-
-            {phase === 'knockout' && (
-              <RevealControls playing={koPlaying} atEnd={cupReveal >= cup.rounds.length}
-                onToggle={() => setKoPlaying((p) => !p)}
-                onNext={() => setCupReveal((c) => Math.min(cup.rounds.length, c + 1))}
-                onSkip={() => { if (tickerRef.current) clearInterval(tickerRef.current); setCupReveal(cup.rounds.length); }} />
-            )}
 
             {phase === 'done' && (
               <div className="mt-7 w-full max-w-[560px]">
@@ -326,7 +351,8 @@ export default function ChampionsLeague() {
               </div>
             )}
           </div>
-        )}
+          );
+        })()}
       </main>
       <ProgrammeFooter />
     </div>

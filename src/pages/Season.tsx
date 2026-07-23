@@ -10,7 +10,7 @@ import { buildStandingsTable, generateRoundRobinFixtures, simulateLeagueFixtures
 import { simulateCup, type CupResult } from '../engine/cup';
 import { CupBracket } from '../components/CupBracket';
 import { MatchTimeline } from '../components/MatchTimeline';
-import { KnockoutTieCard, RevealControls } from '../components/KnockoutReveal';
+import { LiveMatchSim, tieToLive } from '../components/LiveMatchSim';
 import { SeasonStatsPanel } from '../components/SeasonStats';
 import { computeSeasonStats, computeGoldenBoot, type SeasonStats, type SeasonContext } from '../engine/seasonStats';
 import { getLeague } from '../data/leagues';
@@ -234,11 +234,12 @@ export default function Season() {
   const [phase, setPhase] = useState<'league' | 'building' | 'ready' | 'revealing' | 'transfer' | 'done' | 'cup-reveal' | 'cup-done'>('league');
   const [buildError, setBuildError] = useState<string | null>(null);
 
-  // Knockout cup run (after the league).
+  // Knockout cup run (after the league) — the user's ties are played live, one at a time.
   const [cup, setCup] = useState<CupResult | null>(null);
-  const [cupReveal, setCupReveal] = useState(0);
-  const [cupPlaying, setCupPlaying] = useState(true);
-  const cupTickerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [cupReveal, setCupReveal] = useState(0); // bracket rounds revealed
+  const [cupTieIdx, setCupTieIdx] = useState(0); // which of the user's ties is up next
+  const [cupSimming, setCupSimming] = useState(false); // a live match is playing
+  const [cupMatchDone, setCupMatchDone] = useState(false); // that match has reached full time
 
   const [teamNames, setTeamNames] = useState<Map<string, string>>(new Map());
   const [ovrByTeam, setOvrByTeam] = useState<Map<string, TeamOvr>>(new Map());
@@ -506,25 +507,27 @@ export default function Season() {
     const entrants = Array.from(xiByTeam.entries()).map(([id, xi]) => ({ id, xi: id === userTeam.id ? userXi : xi }));
     setCup(simulateCup(entrants, userTeam.id, buildTactics()));
     setCupReveal(0);
-    setCupPlaying(true);
+    setCupTieIdx(0);
+    setCupSimming(false);
+    setCupMatchDone(false);
     setPhase('cup-reveal');
   };
 
-  // Reveal one round at a time, paused-aware, at a matchday pace (slower than the league so each
-  // tie's timeline can play out).
-  useEffect(() => {
-    if (phase !== 'cup-reveal' || !cup || !cupPlaying) return;
-    cupTickerRef.current = setInterval(() => {
-      setCupReveal((c) => (c >= cup.rounds.length ? c : c + 1));
-    }, 2600);
-    return () => { if (cupTickerRef.current) clearInterval(cupTickerRef.current); };
-  }, [phase, cup, cupPlaying]);
+  // After a live cup match finishes, reveal that round in the bracket and queue the next tie (or end
+  // the run once the user's ties are all played).
+  const advanceCupTie = () => {
+    if (!cup) return;
+    const tie = cup.userTies[cupTieIdx];
+    const roundIdx = cup.rounds.findIndex((r) => r.includes(tie));
+    const nextIdx = cupTieIdx + 1;
+    setCupTieIdx(nextIdx);
+    setCupSimming(false);
+    setCupMatchDone(false);
+    if (nextIdx >= cup.userTies.length) { setCupReveal(cup.rounds.length); setPhase('cup-done'); }
+    else setCupReveal(roundIdx + 1);
+  };
 
-  useEffect(() => {
-    if (phase === 'cup-reveal' && cup && cupReveal >= cup.rounds.length) setPhase('cup-done');
-  }, [phase, cupReveal, cup]);
-
-  useEffect(() => () => { if (cupTickerRef.current) clearInterval(cupTickerRef.current); }, []);
+  const skipCup = () => { if (cup) { setCupReveal(cup.rounds.length); setPhase('cup-done'); } };
 
   if (!userTeam) {
     return (
@@ -939,36 +942,56 @@ export default function Season() {
           </div>
         )}
 
-        {/* ============ CUP RUN (knockout, revealed round by round) ============ */}
+        {/* ============ CUP RUN (user's ties played live, one at a time) ============ */}
         {(phase === 'cup-reveal' || phase === 'cup-done') && cup && (() => {
           const leagueInk = chosenLeague ? LEAGUE_INKS[chosenLeague] ?? '#1D2B45' : '#1D2B45';
           const revealedRounds = phase === 'cup-done' ? cup.rounds.length : cupReveal;
-          // The user's tie in the most-recently-revealed round, shown prominently for drama.
-          const latest = cupReveal > 0 ? cup.rounds[cupReveal - 1] : null;
-          const tie = phase === 'cup-reveal' ? latest?.find((t) => t.userInvolved) ?? null : null;
+          const nextTie = phase === 'cup-reveal' && cupTieIdx < cup.userTies.length ? cup.userTies[cupTieIdx] : null;
+          const isLast = cup.userTies.length > 0 && cupTieIdx === cup.userTies.length - 1;
+          const oppOf = (tie: typeof cup.userTies[number]) => (tie.homeId === userTeam.id ? tie.awayId : tie.homeId);
           return (
             <div className="mt-8 flex flex-col items-center">
               <div className="mb-4 text-center">
                 <div className="text-[11px] uppercase tracking-[0.2em]" style={{ color: '#6B5F4A' }}>{leagueName} Cup · knockout</div>
                 <div className="font-display text-[26px] font-extrabold sm:text-[32px]" style={{ color: '#1D2B45' }}>{userTeam.name}'s cup run</div>
+                {nextTie && <div className="mt-1 text-[12px] italic" style={{ color: '#6B5F4A' }}>Match {cupTieIdx + 1} of {cup.userTies.length} · {nextTie.round}</div>}
               </div>
 
-              {/* the user's tie in the round just revealed — a full matchday card with timeline */}
-              {tie && (
-                <KnockoutTieCard tie={tie} userId={userTeam.id} userName={userTeam.name} teamNames={teamNames}
-                  ovrOf={(id) => ovrByTeam.get(id)?.overall} roundIndex={cupReveal} totalRounds={cup.rounds.length} leagueInk={leagueInk} />
+              {/* the user's next tie — played live over ~7s, then the bracket reveals */}
+              {nextTie && cupSimming && (
+                <LiveMatchSim
+                  {...tieToLive(nextTie, userTeam.id, teamNames.get(oppOf(nextTie)) ?? '', userTeam.name, ovrByTeam.get(userTeam.id)?.overall, ovrByTeam.get(oppOf(nextTie))?.overall, leagueInk)}
+                  onDone={() => setCupMatchDone(true)}
+                />
+              )}
+
+              {phase === 'cup-reveal' && (
+                <div className="mb-6 flex items-center gap-2.5">
+                  {!cupSimming && (
+                    <button type="button" onClick={() => { setCupMatchDone(false); setCupSimming(true); }}
+                      className="font-stamp foil-bg relative cursor-pointer overflow-hidden px-6 py-3 text-[14px] uppercase tracking-[0.08em] hover:brightness-105"
+                      style={{ color: '#3B2C08', border: '1.5px solid #8C6A1D' }}>
+                      ▶ Play the {nextTie?.round}
+                    </button>
+                  )}
+                  {cupSimming && cupMatchDone && (
+                    <button type="button" onClick={advanceCupTie}
+                      className="font-stamp cursor-pointer border-0 px-6 py-3 text-[14px] uppercase tracking-[0.08em]"
+                      style={{ background: 'var(--btn-bg,#1D2B45)', color: 'var(--btn-fg,#F6EFDF)', boxShadow: '3px 3px 0 var(--btn-shadow,#A83E2C)' }}>
+                      {isLast ? 'Cup result →' : 'Next match ▸'}
+                    </button>
+                  )}
+                  {!cupSimming && (
+                    <button type="button" onClick={skipCup} className="cursor-pointer border px-4 py-3 text-[12px] font-bold uppercase" style={{ borderColor: '#A83E2C', color: '#A83E2C' }}>
+                      Skip ⏭
+                    </button>
+                  )}
+                </div>
               )}
 
               {/* the full seeded bracket, revealed round by round */}
               <CupBracket rounds={cup.rounds} revealed={revealedRounds} userId={userTeam.id}
                 teamNames={teamNames} seedById={cup.seedById} />
-
-              {phase === 'cup-reveal' && (
-                <RevealControls playing={cupPlaying} atEnd={cupReveal >= cup.rounds.length}
-                  onToggle={() => setCupPlaying((p) => !p)}
-                  onNext={() => setCupReveal((c) => Math.min(cup.rounds.length, c + 1))}
-                  onSkip={() => { if (cupTickerRef.current) clearInterval(cupTickerRef.current); setCupReveal(cup.rounds.length); }} />
-              )}
 
               {phase === 'cup-done' && (
                 <div className="mt-7 w-full max-w-[560px]">
