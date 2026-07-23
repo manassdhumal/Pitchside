@@ -18,9 +18,9 @@ const posInk = (pos: Position) => LINE_INK[POSITION_TO_BROAD[pos]];
 
 function Tile({ label, value, sub, ink = INK }: { label: string; value: string | number; sub?: string; ink?: string }) {
   return (
-    <div className="flex flex-col items-center justify-center border px-2 py-3 text-center" style={{ borderColor: LINE, background: CREAM }}>
-      <div className="font-stamp text-[22px] leading-none" style={{ color: ink }}>{value}</div>
-      <div className="mt-1 text-[9px] font-bold uppercase tracking-[0.1em]" style={{ color: SOFT }}>{label}</div>
+    <div className="flex flex-col items-center justify-center px-2 py-3 text-center" style={{ border: `1px solid ${LINE}`, background: CREAM, boxShadow: `inset 0 3px 0 ${ink}22` }}>
+      <div className="font-stamp text-[25px] leading-none tabular-nums" style={{ color: ink }}>{value}</div>
+      <div className="mt-1.5 text-[9px] font-bold uppercase tracking-[0.1em]" style={{ color: SOFT }}>{label}</div>
       {sub && <div className="mt-0.5 text-[9.5px]" style={{ color: SOFT }}>{sub}</div>}
     </div>
   );

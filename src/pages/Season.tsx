@@ -55,6 +55,22 @@ function ordinalSuffix(n: number): string {
   return ['th', 'st', 'nd', 'rd'][n % 10] ?? 'th';
 }
 
+/** The user's cup ties as `Match[]` (with goal events) so the stats engine can score them like league games. */
+function cupUserMatches(cup: CupResult): Match[] {
+  return cup.userTies.map((t, i) => ({
+    id: `cup-${i}`, competitionId: 'cup', round: t.round,
+    homeTeamId: t.homeId, awayTeamId: t.awayId,
+    homeScore: t.result.homeGoals, awayScore: t.result.awayGoals,
+    homeXG: t.result.xgHome, awayXG: t.result.xgAway,
+    homeWinProbability: t.result.homeWinProbability, drawProbability: t.result.drawProbability, awayWinProbability: t.result.awayWinProbability,
+    simulated: true,
+    goals: t.result.goals.map((g) => ({
+      minute: g.minute, teamId: g.side === 'home' ? t.homeId : t.awayId,
+      scorerId: g.scorerId, scorerName: g.scorerName, assistId: g.assistId, assistName: g.assistName,
+    })),
+  }));
+}
+
 function ResultCardPanel({ team, row, position, totalTeams, leagueName, stats }: { team: Team; row: StandingsRow; position: number; totalTeams: number; leagueName: string; stats?: SeasonStats | null }) {
   const unbeaten = row.played > 0 && row.lost === 0;
   const perfect = row.played > 0 && row.won === row.played;
@@ -250,6 +266,8 @@ export default function Season() {
   // The enriched end-of-season stats (players + verdict + insights), computed once at save time so the
   // done screen shows exactly what's persisted for My Career.
   const [finalStats, setFinalStats] = useState<SeasonStats | null>(null);
+  // Which competition's stats to show on the end screen: everything, the league, or the cup.
+  const [statsScope, setStatsScope] = useState<'total' | 'league' | 'cup'>('total');
   const [revealCount, setRevealCount] = useState(0);
   const [playing, setPlaying] = useState(true);
 
@@ -290,6 +308,20 @@ export default function Season() {
     () => (userTeam ? matches.filter((m) => m.homeTeamId === userTeam.id || m.awayTeamId === userTeam.id) : []),
     [matches, userTeam],
   );
+
+  // Stats for the selected scope (total / league / cup) on the end screen — detailed numbers,
+  // scorers and a golden boot for whichever competitions are in view.
+  const scopedStats = useMemo(() => {
+    if (!userTeam) return null;
+    const cupMs = cup ? cupUserMatches(cup) : [];
+    const ms = statsScope === 'league' ? userMatches : statsScope === 'cup' ? cupMs : [...userMatches, ...cupMs];
+    if (ms.length === 0) return null;
+    const s = computeSeasonStats(ms, userTeam.id, { xi: userXi });
+    if (xiByTeam) s.goldenBoot = computeGoldenBoot(ms, xiByTeam, teamNames, userTeam.id);
+    // The verdict/insights are league-derived, so carry them onto the league and total views.
+    if (statsScope !== 'cup' && finalStats) { s.verdict = finalStats.verdict; s.insights = finalStats.insights; }
+    return s;
+  }, [statsScope, cup, userMatches, userTeam, userXi, xiByTeam, teamNames, finalStats]);
 
   // Build the chosen league's real opponents, then run the season in the worker.
   const startLeague = async (leagueId: string) => {
@@ -1021,6 +1053,48 @@ export default function Season() {
                       Cover
                     </Link>
                   </div>
+                </div>
+              )}
+
+              {/* ---- Season summary: the campaign at a glance + detailed stats by competition ---- */}
+              {phase === 'cup-done' && (
+                <div className="mt-9 w-full max-w-[720px]">
+                  <div className="mb-4 flex items-center gap-2.5">
+                    <span className="font-stamp -rotate-[1.5deg] border-[1.5px] px-2.5 py-1 text-sm" style={{ borderColor: '#A83E2C', color: '#A83E2C' }}>FULL TIME</span>
+                    <span className="font-display text-[22px] font-extrabold sm:text-[26px]" style={{ color: '#1D2B45' }}>Season summary</span>
+                  </div>
+
+                  {/* competitions played */}
+                  <div className="mb-4 grid grid-cols-2 gap-2">
+                    <div className="border-l-[4px] px-4 py-3" style={{ borderColor: '#1D2B45', background: '#FDFAF1' }}>
+                      <div className="text-[9px] font-bold uppercase tracking-[0.14em]" style={{ color: '#6B5F4A' }}>{leagueName}</div>
+                      <div className="font-display text-[20px] font-extrabold" style={{ color: userPosition === 1 ? '#8C6A1D' : '#1D2B45' }}>{userPosition ? `${userPosition}${ordinalSuffix(userPosition)}` : '—'}</div>
+                      <div className="text-[11px]" style={{ color: '#6B5F4A' }}>{userRow ? `${userRow.won}W-${userRow.drawn}D-${userRow.lost}L · ${userRow.points} pts` : ''}</div>
+                    </div>
+                    <div className="border-l-[4px] px-4 py-3" style={{ borderColor: '#A83E2C', background: '#FDFAF1' }}>
+                      <div className="text-[9px] font-bold uppercase tracking-[0.14em]" style={{ color: '#6B5F4A' }}>{leagueName} Cup</div>
+                      <div className="font-display text-[20px] font-extrabold" style={{ color: cup.userExit === 'Winners' ? '#8C6A1D' : '#1D2B45' }}>{cup.userExit === 'Winners' ? '🏆 Winners' : cup.userExit}</div>
+                      <div className="text-[11px]" style={{ color: '#6B5F4A' }}>{cup.userTies.length} tie{cup.userTies.length === 1 ? '' : 's'} played</div>
+                    </div>
+                  </div>
+
+                  {/* scope toggle: total / league / cup */}
+                  <div className="mb-4 inline-flex border" style={{ borderColor: '#D8CBAD' }}>
+                    {(['total', 'league', 'cup'] as const).map((s) => {
+                      const on = statsScope === s;
+                      return (
+                        <button key={s} type="button" onClick={() => setStatsScope(s)}
+                          className="cursor-pointer border-0 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.08em]"
+                          style={{ background: on ? '#1D2B45' : 'transparent', color: on ? '#F6EFDF' : '#6B5F4A' }}>
+                          {s === 'total' ? 'Total' : s === 'league' ? 'League' : 'Cup'}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {scopedStats
+                    ? <SeasonStatsPanel stats={scopedStats} teamNames={teamNames} />
+                    : <div className="border border-dashed px-5 py-8 text-center text-[13px] italic" style={{ borderColor: '#D8CBAD', color: '#6B5F4A' }}>No matches in this competition.</div>}
                 </div>
               )}
             </div>
