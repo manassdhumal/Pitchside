@@ -3,18 +3,21 @@ import { useCallback, useEffect, useState } from 'react';
 export interface Theme {
   id: string;
   name: string;
+  /** [paper, ink, accent] — a 3-stripe preview for the picker menu. */
+  swatch: [string, string, string];
 }
 
 /** All UI themes. `matchday` is the default (the base `:root` palette, no attribute). Each other id
  * has a matching `:root[data-theme="<id>"]` block in index.css that overrides the colour variables. */
 export const THEMES: Theme[] = [
-  { id: 'matchday', name: 'Matchday' },
-  { id: 'floodlights', name: 'Floodlights' },
-  { id: 'broadsheet', name: 'Broadsheet' },
-  { id: 'european', name: 'European' },
-  { id: 'teletext', name: 'Teletext' },
-  { id: 'sepia', name: 'Sepia' },
-  { id: 'contrast', name: 'High Contrast' },
+  { id: 'matchday', name: 'Matchday', swatch: ['#f6efdf', '#1d2b45', '#a83e2c'] },
+  { id: 'sepia', name: 'Sepia', swatch: ['#e8dcc2', '#3d2c1a', '#9c5a2c'] },
+  { id: 'floodlights', name: 'Floodlights', swatch: ['#16301f', '#f2ead3', '#e0876b'] },
+  { id: 'european', name: 'European', swatch: ['#0e1830', '#dfe6f2', '#7fb0e8'] },
+  { id: 'chalkboard', name: 'Chalkboard', swatch: ['#22282b', '#eef2ee', '#e8b04a'] },
+  { id: 'claret', name: 'Claret', swatch: ['#4a1f2b', '#f4e9dd', '#6fb7d6'] },
+  { id: 'teletext', name: 'Teletext', swatch: ['#0a0a0a', '#ffcc00', '#33ff66'] },
+  { id: 'neon', name: 'Neon', swatch: ['#0d0b1a', '#ff3d8b', '#22d3ee'] },
 ];
 
 const STORAGE_KEY = 'pitchside-theme';

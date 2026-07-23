@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { useTheme, THEMES } from '../../state/useTheme';
 import { useAuth } from '../../state/AuthContext';
@@ -51,33 +51,79 @@ export function BrandMark() {
   );
 }
 
-/** Theme picker: keeps the old toggle's shell, but clicking cycles through all UI themes and a small
- * three-stripe swatch previews the current palette (ink / accent / button). */
-export function ThemePicker() {
-  const [theme, , cycle] = useTheme();
-  const current = THEMES.find((t) => t.id === theme) ?? THEMES[0];
+/** A 3-stripe theme swatch: the paper colour with two accent bars, so the picker previews each
+ * palette accurately (not just the currently-active one). */
+function Swatch({ colors }: { colors: [string, string, string] }) {
   return (
-    <button
-      type="button"
-      onClick={cycle}
-      aria-label={`Change theme, currently ${current.name}`}
-      title={`Theme: ${current.name} — click to change`}
-      className="flex cursor-pointer items-center gap-2 border-[1.5px] bg-transparent px-2.5 py-1 hover:border-[var(--brick)]"
-      style={{ borderColor: 'var(--toggle-border)', color: 'var(--ink)' }}
-    >
-      <span className="font-stamp text-[9.5px] tracking-[0.08em]">
-        THEME · {current.name.toUpperCase()}
-      </span>
-      <span
-        className="inline-flex h-[18px] w-[34px] items-center justify-center gap-[3px] border"
-        style={{ background: 'var(--toggle-track)', borderColor: 'var(--toggle-border)' }}
-        aria-hidden="true"
+    <span className="inline-flex h-[18px] w-[28px] items-center justify-center gap-[3px] border" style={{ background: colors[0], borderColor: 'var(--toggle-border)' }} aria-hidden="true">
+      <span className="h-[10px] w-[3px]" style={{ background: colors[1] }} />
+      <span className="h-[10px] w-[3px]" style={{ background: colors[2] }} />
+    </span>
+  );
+}
+
+/** Theme picker: keeps the old control's shell, but opens a dropdown to pick any theme from a list,
+ * each row previewed by its own swatch. Closes on outside click or Escape. */
+export function ThemePicker() {
+  const [theme, setTheme] = useTheme();
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const current = THEMES.find((t) => t.id === theme) ?? THEMES[0];
+
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: MouseEvent) => { if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false); };
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
+    document.addEventListener('mousedown', onDown);
+    document.addEventListener('keydown', onKey);
+    return () => { document.removeEventListener('mousedown', onDown); document.removeEventListener('keydown', onKey); };
+  }, [open]);
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-label={`Theme: ${current.name}. Change theme`}
+        title="Change theme"
+        className="flex cursor-pointer items-center gap-2 border-[1.5px] bg-transparent px-2.5 py-1 hover:border-[var(--brick)]"
+        style={{ borderColor: 'var(--toggle-border)', color: 'var(--ink)' }}
       >
-        <span className="h-[10px] w-[3px]" style={{ background: 'var(--ink)' }} />
-        <span className="h-[10px] w-[3px]" style={{ background: 'var(--brick)' }} />
-        <span className="h-[10px] w-[3px]" style={{ background: 'var(--btn-bg)' }} />
-      </span>
-    </button>
+        <span className="font-stamp text-[9.5px] tracking-[0.08em]">THEME · {current.name.toUpperCase()}</span>
+        <Swatch colors={current.swatch} />
+        <span className="text-[8px] leading-none" aria-hidden="true">▾</span>
+      </button>
+
+      {open && (
+        <div
+          role="listbox"
+          aria-label="Choose a theme"
+          className="absolute right-0 z-50 mt-1 w-[188px] border py-1"
+          style={{ background: 'var(--card)', borderColor: 'var(--line)', boxShadow: '4px 4px 0 var(--card-shadow)' }}
+        >
+          {THEMES.map((t) => {
+            const active = t.id === theme;
+            return (
+              <button
+                key={t.id}
+                type="button"
+                role="option"
+                aria-selected={active}
+                onClick={() => { setTheme(t.id); setOpen(false); }}
+                className="flex w-full cursor-pointer items-center gap-2.5 border-0 bg-transparent px-3 py-1.5 text-left hover:bg-[var(--panel)]"
+                style={{ color: 'var(--ink)' }}
+              >
+                <Swatch colors={t.swatch} />
+                <span className="flex-1 text-[12px] font-semibold">{t.name}</span>
+                {active && <span className="font-stamp text-[11px]" style={{ color: 'var(--brick)' }}>✓</span>}
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
   );
 }
 

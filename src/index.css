@@ -86,39 +86,42 @@
   --app-bg: repeating-linear-gradient(0deg, #16301f 0 84px, #122818 84px 168px);
 }
 
-/* Broadsheet: black ink on newsprint, one restrained red spot colour, halftone dot texture. */
-:root[data-theme="broadsheet"] {
-  color-scheme: light;
-  --paper: #ecebe6;
-  --card: #f5f4ef;
-  --paper-deep: #dcdad2;
-  --panel: #e6e4dc;
-  --ink: #1a1a1a;
-  --ink-hover: #000000;
-  --text: #24231f;
-  --soft: #6b6a63;
-  --line: #b8b6ac;
-  --border: #cbc9bf;
-  --brick: #8a2b1e;
-  --brick-hover: #6f2116;
-  --card-shadow: #cbc9bf;
-  --grass-a: #c9c7bd;
-  --grass-b: #c0beb4;
-  --btn-bg: #1a1a1a;
-  --btn-fg: #ecebe6;
-  --btn-shadow: #b8b6ac;
-  --btn-divider: rgba(236, 235, 230, 0.4);
-  --hint-border: #8a2b1e;
-  --hint-bg: #e6e4dc;
-  --hint-fg: #5a1a12;
-  --pip-border: #1a1a1a;
-  --pip-empty: #ecebe6;
-  --pip-filled: #8a2b1e;
-  --drum-rim: #1a1a1a;
-  --toggle-border: #b8b6ac;
-  --toggle-track: #dcdad2;
-  --knob-bg: #6b6a63;
-  --app-bg: radial-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px) 0 0 / 4px 4px, #ecebe6;
+/* Chalkboard: dark slate tactics board, chalk-white ink, a warm chalk-yellow accent and a faint grid. */
+:root[data-theme="chalkboard"] {
+  color-scheme: dark;
+  --paper: #22282b;
+  --card: #2a3135;
+  --paper-deep: #171b1d;
+  --panel: #262d30;
+  --ink: #eef2ee;
+  --ink-hover: #ffffff;
+  --text: #cdd4cf;
+  --soft: #8a938c;
+  --line: #3f484c;
+  --border: #384044;
+  --brick: #e8b04a;
+  --brick-hover: #d89f38;
+  --card-shadow: #101315;
+  --grass-a: #2b3a2e;
+  --grass-b: #263420;
+  --btn-bg: #eef2ee;
+  --btn-fg: #22282b;
+  --btn-shadow: #101315;
+  --btn-divider: rgba(34, 40, 43, 0.4);
+  --hint-border: #e8b04a;
+  --hint-bg: #262d30;
+  --hint-fg: #f0cf90;
+  --pip-border: #eef2ee;
+  --pip-empty: #262d30;
+  --pip-filled: #e8b04a;
+  --drum-rim: #eef2ee;
+  --toggle-border: #4a5559;
+  --toggle-track: #2b3a2e;
+  --knob-bg: #eef2ee;
+  --app-bg:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px) 0 0 / 28px 28px,
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px) 0 0 / 28px 28px,
+    #22282b;
 }
 
 /* European Nights: midnight blue and silver, an away-night-under-the-lights feel. */
@@ -226,39 +229,74 @@
   --app-bg: radial-gradient(circle at 50% 0%, #efe4cb, #e8dcc2 55%, #ddceb0);
 }
 
-/* High Contrast: pure black/white with strong borders and a bold red accent, for maximum legibility. */
-:root[data-theme="contrast"] {
-  color-scheme: light;
-  --paper: #ffffff;
-  --card: #ffffff;
-  --paper-deep: #f0f0f0;
-  --panel: #f7f7f7;
-  --ink: #000000;
-  --ink-hover: #000000;
-  --text: #000000;
-  --soft: #333333;
-  --line: #000000;
-  --border: #000000;
-  --brick: #b00018;
-  --brick-hover: #8c0013;
-  --card-shadow: #999999;
-  --grass-a: #006622;
-  --grass-b: #00551c;
-  --btn-bg: #000000;
-  --btn-fg: #ffffff;
-  --btn-shadow: #000000;
-  --btn-divider: rgba(255, 255, 255, 0.5);
-  --hint-border: #b00018;
-  --hint-bg: #fff0f0;
-  --hint-fg: #8c0013;
-  --pip-border: #000000;
-  --pip-empty: #ffffff;
-  --pip-filled: #b00018;
-  --drum-rim: #000000;
-  --toggle-border: #000000;
-  --toggle-track: #dddddd;
-  --knob-bg: #000000;
-  --app-bg: #ffffff;
+/* Claret: deep maroon and cream with a sky-blue accent — a classic club warm-dark palette. */
+:root[data-theme="claret"] {
+  color-scheme: dark;
+  --paper: #4a1f2b;
+  --card: #5a2733;
+  --paper-deep: #38161f;
+  --panel: #4f2029;
+  --ink: #f4e9dd;
+  --ink-hover: #ffffff;
+  --text: #e0cdc0;
+  --soft: #b89a8e;
+  --line: #6e3946;
+  --border: #63313d;
+  --brick: #6fb7d6;
+  --brick-hover: #58a6c8;
+  --card-shadow: #2a0f16;
+  --grass-a: #5a3038;
+  --grass-b: #512930;
+  --btn-bg: #f4e9dd;
+  --btn-fg: #4a1f2b;
+  --btn-shadow: #2a0f16;
+  --btn-divider: rgba(74, 31, 43, 0.4);
+  --hint-border: #6fb7d6;
+  --hint-bg: #4f2029;
+  --hint-fg: #b9e0ef;
+  --pip-border: #f4e9dd;
+  --pip-empty: #4f2029;
+  --pip-filled: #6fb7d6;
+  --drum-rim: #f4e9dd;
+  --toggle-border: #7a4450;
+  --toggle-track: #5a3038;
+  --knob-bg: #f4e9dd;
+  --app-bg: repeating-linear-gradient(135deg, #4a1f2b 0 40px, #461d28 40px 80px);
+}
+
+/* Neon: near-black indigo with a vivid magenta accent and cyan highlights, a modern night look. */
+:root[data-theme="neon"] {
+  color-scheme: dark;
+  --paper: #0d0b1a;
+  --card: #16122b;
+  --paper-deep: #08060f;
+  --panel: #120f24;
+  --ink: #f0edff;
+  --ink-hover: #ffffff;
+  --text: #c9c3e6;
+  --soft: #8a83b3;
+  --line: #322a52;
+  --border: #2a2447;
+  --brick: #ff3d8b;
+  --brick-hover: #ff5c9f;
+  --card-shadow: #050308;
+  --grass-a: #1a1440;
+  --grass-b: #150f36;
+  --btn-bg: #ff3d8b;
+  --btn-fg: #0d0b1a;
+  --btn-shadow: #050308;
+  --btn-divider: rgba(13, 11, 26, 0.4);
+  --hint-border: #22d3ee;
+  --hint-bg: #14112a;
+  --hint-fg: #7ff0ff;
+  --pip-border: #f0edff;
+  --pip-empty: #120f24;
+  --pip-filled: #ff3d8b;
+  --drum-rim: #f0edff;
+  --toggle-border: #3a3266;
+  --toggle-track: #1a1440;
+  --knob-bg: #ff3d8b;
+  --app-bg: radial-gradient(circle at 50% -10%, #241a52, #0d0b1a 60%);
 }
 
 body {
