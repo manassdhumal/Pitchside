@@ -11,7 +11,7 @@ import { simulateCup, type CupResult } from '../engine/cup';
 import { CupBracket } from '../components/CupBracket';
 import { MatchTimeline } from '../components/MatchTimeline';
 import { LiveMatchSim, tieToLive } from '../components/LiveMatchSim';
-import { SeasonStatsPanel } from '../components/SeasonStats';
+import { SeasonSummary, tiesToMatches } from '../components/SeasonSummary';
 import { computeSeasonStats, computeGoldenBoot, type SeasonStats, type SeasonContext } from '../engine/seasonStats';
 import { getLeague } from '../data/leagues';
 import { getManager, applyManagerToXI, managerTactics } from '../data/managers';
@@ -33,8 +33,6 @@ const POINTS_SYSTEM = { win: 3, draw: 1, loss: 0 };
 const COMPETITION_ID = 'league-single-division';
 const REVEAL_MS = 950;
 
-const PENNANT_INKS = ['#4A3070', '#A83E2C', '#B4691E', '#2F5D8A', '#3E7A4E', '#6B5F4A', '#7A2E3B'];
-
 interface SeasonNavState {
   leagueIds?: string[];
   seasonMax?: string;
@@ -55,21 +53,6 @@ function ordinalSuffix(n: number): string {
   return ['th', 'st', 'nd', 'rd'][n % 10] ?? 'th';
 }
 
-/** The user's cup ties as `Match[]` (with goal events) so the stats engine can score them like league games. */
-function cupUserMatches(cup: CupResult): Match[] {
-  return cup.userTies.map((t, i) => ({
-    id: `cup-${i}`, competitionId: 'cup', round: t.round,
-    homeTeamId: t.homeId, awayTeamId: t.awayId,
-    homeScore: t.result.homeGoals, awayScore: t.result.awayGoals,
-    homeXG: t.result.xgHome, awayXG: t.result.xgAway,
-    homeWinProbability: t.result.homeWinProbability, drawProbability: t.result.drawProbability, awayWinProbability: t.result.awayWinProbability,
-    simulated: true,
-    goals: t.result.goals.map((g) => ({
-      minute: g.minute, teamId: g.side === 'home' ? t.homeId : t.awayId,
-      scorerId: g.scorerId, scorerName: g.scorerName, assistId: g.assistId, assistName: g.assistName,
-    })),
-  }));
-}
 
 function ResultCardPanel({ team, row, position, totalTeams, leagueName, stats }: { team: Team; row: StandingsRow; position: number; totalTeams: number; leagueName: string; stats?: SeasonStats | null }) {
   const unbeaten = row.played > 0 && row.lost === 0;
@@ -225,7 +208,7 @@ export default function Season() {
   const navigate = useNavigate();
   const location = useLocation();
   const navState = (location.state as SeasonNavState | null) ?? {};
-  const { currentTeamId, managerId } = useAppState();
+  const { currentTeamId, managerId, campaign } = useAppState();
   const appDispatch = useAppDispatch();
   // The gaffer lives in app state, so it survives hopping between competitions (season ↔ UCL).
   const setManagerId = (id: string | null) => appDispatch({ type: 'SET_MANAGER', managerId: id });
@@ -247,7 +230,7 @@ export default function Season() {
   const [advancing, setAdvancing] = useState(false);
   const [retirements, setRetirements] = useState<SquadChange[]>([]);
   const careerSeason = userTeam?.careerSeason ?? 1;
-  const [phase, setPhase] = useState<'league' | 'building' | 'ready' | 'revealing' | 'transfer' | 'done' | 'cup-reveal' | 'cup-done'>('league');
+  const [phase, setPhase] = useState<'league' | 'building' | 'ready' | 'revealing' | 'transfer' | 'done' | 'cup-reveal'>('league');
   const [buildError, setBuildError] = useState<string | null>(null);
 
   // Knockout cup run (after the league) — the user's ties are played live, one at a time.
@@ -266,8 +249,6 @@ export default function Season() {
   // The enriched end-of-season stats (players + verdict + insights), computed once at save time so the
   // done screen shows exactly what's persisted for My Career.
   const [finalStats, setFinalStats] = useState<SeasonStats | null>(null);
-  // Which competition's stats to show on the end screen: everything, the league, or the cup.
-  const [statsScope, setStatsScope] = useState<'total' | 'league' | 'cup'>('total');
   const [revealCount, setRevealCount] = useState(0);
   const [playing, setPlaying] = useState(true);
 
@@ -296,7 +277,11 @@ export default function Season() {
       setUserTeam(team);
       setUserPlayers(players.slice(0, 11));
       setEntries(await loadIndex());
+      // Returning to a season already played (e.g. back from the Champions League) — go straight to
+      // the unified end page, which renders league + cup + CL from the campaign in app state.
+      if (campaign && campaign.teamId === currentTeamId) setPhase('done');
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTeamId, navigate]);
 
   useEffect(() => () => {
@@ -309,19 +294,6 @@ export default function Season() {
     [matches, userTeam],
   );
 
-  // Stats for the selected scope (total / league / cup) on the end screen — detailed numbers,
-  // scorers and a golden boot for whichever competitions are in view.
-  const scopedStats = useMemo(() => {
-    if (!userTeam) return null;
-    const cupMs = cup ? cupUserMatches(cup) : [];
-    const ms = statsScope === 'league' ? userMatches : statsScope === 'cup' ? cupMs : [...userMatches, ...cupMs];
-    if (ms.length === 0) return null;
-    const s = computeSeasonStats(ms, userTeam.id, { xi: userXi });
-    if (xiByTeam) s.goldenBoot = computeGoldenBoot(ms, xiByTeam, teamNames, userTeam.id);
-    // The verdict/insights are league-derived, so carry them onto the league and total views.
-    if (statsScope !== 'cup' && finalStats) { s.verdict = finalStats.verdict; s.insights = finalStats.insights; }
-    return s;
-  }, [statsScope, cup, userMatches, userTeam, userXi, xiByTeam, teamNames, finalStats]);
 
   // Build the chosen league's real opponents, then run the season in the worker.
   const startLeague = async (leagueId: string) => {
@@ -417,6 +389,17 @@ export default function Season() {
       stats.goldenBoot = computeGoldenBoot(allMatches, gbXi, teamNames, userTeam.id);
     }
     setFinalStats(stats);
+    // Start the cross-page campaign (league leg) — the cup and CL merge into this, and the end page
+    // renders league + cup + CL together from it, surviving the trip to the separate CL route.
+    appDispatch({
+      type: 'SET_CAMPAIGN',
+      campaign: {
+        teamId: userTeam.id, teamName: userTeam.name, leagueId: chosenLeague ?? '', leagueName,
+        leaguePosition: pos, table: finalTable,
+        teamNames: [...teamNames], ovrs: [...ovrByTeam].map(([id, o]) => [id, o.overall] as [string, number]),
+        xi, league: userMs,
+      },
+    });
     void putSeason(
       {
         id: `season-${Date.now()}`,
@@ -547,6 +530,13 @@ export default function Season() {
 
   // After a live cup match finishes, reveal that round in the bracket and queue the next tie (or end
   // the run once the user's ties are all played).
+  const finishCup = () => {
+    if (!cup) return;
+    appDispatch({ type: 'SET_CAMPAIGN_CUP', cup: { matches: tiesToMatches(cup.userTies, 'cup'), exit: cup.userExit, champion: cup.champion } });
+    setPhase('done'); // back to the unified end page, now showing the cup
+    window.scrollTo({ top: 0 });
+  };
+
   const advanceCupTie = () => {
     if (!cup) return;
     const tie = cup.userTies[cupTieIdx];
@@ -555,11 +545,11 @@ export default function Season() {
     setCupTieIdx(nextIdx);
     setCupSimming(false);
     setCupMatchDone(false);
-    if (nextIdx >= cup.userTies.length) { setCupReveal(cup.rounds.length); setPhase('cup-done'); }
+    if (nextIdx >= cup.userTies.length) finishCup();
     else setCupReveal(roundIdx + 1);
   };
 
-  const skipCup = () => { if (cup) { setCupReveal(cup.rounds.length); setPhase('cup-done'); } };
+  const skipCup = () => finishCup();
 
   if (!userTeam) {
     return (
@@ -889,96 +879,57 @@ export default function Season() {
           </div>
         )}
 
-        {/* ============ FINAL TABLE + RESULT ============ */}
-        {phase === 'done' && (
-          <div className="mt-8 grid items-start gap-7 lg:grid-cols-[1fr_1.1fr]">
-            <div className="flex flex-col gap-5">
-              {userRow && <ResultCardPanel team={userTeam} row={userRow} position={userPosition} totalTeams={table.length} leagueName={leagueName} stats={finalStats} />}
-              <button
-                type="button"
-                onClick={enterCup}
-                className="font-stamp foil-bg relative cursor-pointer overflow-hidden px-6 py-3.5 text-[15px] uppercase tracking-[0.08em] hover:brightness-105"
-                style={{ color: '#3B2C08', border: '1.5px solid #8C6A1D' }}
-              >
-                🏆 Enter the {leagueName} Cup →
-              </button>
-              {/* Champions League is earned by a top-4 finish. */}
-              {userPosition >= 1 && userPosition <= 4 ? (
-                <button
-                  type="button"
-                  onClick={() => navigate('/champions-league', { state: { leagueIds: candidateLeagues, seasonMax, ratingsMode, managersEnabled, transferWindowEnabled } })}
-                  className="font-stamp foil-bg relative cursor-pointer overflow-hidden px-6 py-3.5 text-[15px] uppercase tracking-[0.08em] hover:brightness-105"
-                  style={{ color: '#1D2B45', border: '1.5px solid #1D2B45' }}
-                >
-                  ★ Qualified! Enter the Champions League →
-                </button>
-              ) : (
-                <div className="border border-dashed px-5 py-3 text-center text-[12px] italic" style={{ borderColor: '#D8CBAD', color: '#6B5F4A' }}>
-                  Finished {userPosition}{ordinalSuffix(userPosition)} — top 4 needed for the Champions League. Maybe next season.
-                </div>
-              )}
-              {/* Career mode: age the squad and roll into the next season with the same XI. */}
-              <div className="border-[1.5px] px-4 py-3.5" style={{ borderColor: '#1D2B45', background: '#FDFAF1', boxShadow: '3px 3px 0 var(--card-shadow)' }}>
-                <div className="flex items-center gap-2">
-                  <span className="font-stamp text-[12px] uppercase tracking-[0.12em]" style={{ color: '#A83E2C' }}>Career · Season {careerSeason}</span>
-                </div>
-                <p className="mt-1 text-[12.5px] leading-snug" style={{ color: '#3C3325' }}>
-                  Keep this XI and play on — your squad ages a year (youngsters improve, veterans decline).
-                </p>
-                <button
-                  type="button"
-                  onClick={() => void advanceSeason()}
-                  disabled={advancing}
-                  className="font-stamp mt-2.5 w-full cursor-pointer border-0 px-6 py-3 text-[14px] uppercase tracking-[0.08em] disabled:opacity-60"
-                  style={{ background: 'var(--btn-bg, #1D2B45)', color: 'var(--btn-fg, #F6EFDF)', boxShadow: '3px 3px 0 var(--btn-shadow, #A83E2C)' }}
-                >
-                  {advancing ? 'Ageing the squad…' : `Advance to Season ${careerSeason + 1} →`}
-                </button>
-              </div>
-            </div>
-            <section style={{ background: '#FDFAF1', border: '1px solid #D8CBAD', boxShadow: '5px 5px 0 var(--card-shadow)' }}>
-              <div className="flex items-center justify-between border-b-[3px] px-4 py-3.5" style={{ borderColor: '#1D2B45', borderBottomStyle: 'double' }}>
-                <span className="font-display text-[19px] font-bold" style={{ color: '#1D2B45' }}>Final table</span>
-                <span className="text-[11px] tracking-[0.12em]" style={{ color: '#6B5F4A' }}>{leagueName.toUpperCase()}</span>
-              </div>
-              <div className="grid items-center gap-x-1.5 border-b-[1.5px] px-3.5 pb-1.5 pt-2 text-[10.5px] tracking-[0.08em]" style={{ gridTemplateColumns: '26px 22px minmax(0,1fr) 30px 30px 30px 38px 42px', color: '#6B5F4A', borderColor: '#1D2B45' }}>
-                <span>#</span><span /><span>CLUB</span>
-                <span className="text-center">W</span><span className="text-center">D</span><span className="text-center">L</span>
-                <span className="text-center">GD</span><span className="text-right">PTS</span>
-              </div>
-              {table.map((row, index) => {
-                const you = row.teamId === userTeam.id;
-                return (
-                  <div key={row.teamId} className="grid items-center gap-x-1.5 border-b px-3.5 py-2" style={{ gridTemplateColumns: '26px 22px minmax(0,1fr) 30px 30px 30px 38px 42px', borderBottomColor: '#EDE3CB', background: you ? 'linear-gradient(90deg,#F5E9C8,#FDFAF1)' : 'transparent', borderLeft: `4px solid ${you ? '#C7A63E' : 'transparent'}` }}>
-                    <span className="font-stamp text-[13px]" style={{ color: you ? '#1D2B45' : '#6B5F4A' }}>{index + 1}</span>
-                    <span className="inline-block h-[19px] w-4" style={{ background: you ? '#1D2B45' : PENNANT_INKS[index % PENNANT_INKS.length], clipPath: 'polygon(0 0,100% 0,100% 68%,50% 100%,0 68%)' }} />
-                    <span className="truncate text-[13px]" style={{ fontWeight: you ? 800 : 400, color: '#1D2B45' }}>
-                      {teamNames.get(row.teamId) ?? row.teamId}
-                      {you && <span className="font-stamp ml-1 text-[10px]" style={{ color: '#8C6A1D' }}>★ YOU</span>}
-                    </span>
-                    <span className="text-center text-[12.5px]" style={{ color: '#3C3325' }}>{row.won}</span>
-                    <span className="text-center text-[12.5px]" style={{ color: '#3C3325' }}>{row.drawn}</span>
-                    <span className="text-center text-[12.5px]" style={{ color: '#3C3325' }}>{row.lost}</span>
-                    <span className="text-center text-[12.5px]" style={{ color: '#3C3325' }}>{row.goalsFor - row.goalsAgainst > 0 ? '+' : ''}{row.goalsFor - row.goalsAgainst}</span>
-                    <span className="font-stamp text-right text-sm" style={{ color: '#1D2B45' }}>{row.points}</span>
-                  </div>
-                );
-              })}
-            </section>
-          </div>
-        )}
+        {/* ============ SEASON END PAGE — league + cup + CL together ============ */}
+        {phase === 'done' && (() => {
+          const pos = campaign?.leaguePosition ?? userPosition;
+          const cupPlayed = !!campaign?.cup;
+          const clPlayed = !!campaign?.cl;
+          return (
+            <div className="mt-8 flex flex-col items-center">
+              {userRow && <div className="w-full max-w-[560px]"><ResultCardPanel team={userTeam} row={userRow} position={userPosition} totalTeams={table.length} leagueName={leagueName} stats={finalStats} /></div>}
 
-        {phase === 'done' && userMatches.length > 0 && (
-          <div className="mt-9">
-            <SeasonStatsPanel stats={finalStats ?? computeSeasonStats(userMatches, userTeam.id, { xi: userXi })} teamNames={teamNames} />
-          </div>
-        )}
+              {/* what next — enter the cup, the Champions League (if qualified), or roll the squad on a year */}
+              <div className="mt-6 flex w-full max-w-[560px] flex-col gap-2.5">
+                {!cupPlayed && xiByTeam && (
+                  <button type="button" onClick={enterCup}
+                    className="font-stamp foil-bg relative cursor-pointer overflow-hidden px-6 py-3.5 text-[15px] uppercase tracking-[0.08em] hover:brightness-105"
+                    style={{ color: '#3B2C08', border: '1.5px solid #8C6A1D' }}>
+                    🏆 Enter the {leagueName} Cup →
+                  </button>
+                )}
+                {!clPlayed && pos >= 1 && pos <= 4 && (
+                  <button type="button" onClick={() => navigate('/champions-league', { state: { leagueIds: candidateLeagues, seasonMax, ratingsMode, managersEnabled, transferWindowEnabled } })}
+                    className="font-stamp foil-bg relative cursor-pointer overflow-hidden px-6 py-3.5 text-[15px] uppercase tracking-[0.08em] hover:brightness-105"
+                    style={{ color: '#1D2B45', border: '1.5px solid #1D2B45' }}>
+                    ★ Qualified! Enter the Champions League →
+                  </button>
+                )}
+                {!clPlayed && pos > 4 && (
+                  <div className="border border-dashed px-5 py-3 text-center text-[12px] italic" style={{ borderColor: '#D8CBAD', color: '#6B5F4A' }}>
+                    Finished {pos}{ordinalSuffix(pos)} — top 4 needed for the Champions League. Maybe next season.
+                  </div>
+                )}
+                <div className="border-[1.5px] px-4 py-3.5" style={{ borderColor: '#1D2B45', background: '#FDFAF1', boxShadow: '3px 3px 0 var(--card-shadow)' }}>
+                  <span className="font-stamp text-[12px] uppercase tracking-[0.12em]" style={{ color: '#A83E2C' }}>Career · Season {careerSeason}</span>
+                  <p className="mt-1 text-[12.5px] leading-snug" style={{ color: '#3C3325' }}>Keep this XI and play on — your squad ages a year (youngsters improve, veterans decline).</p>
+                  <button type="button" onClick={() => void advanceSeason()} disabled={advancing}
+                    className="font-stamp mt-2.5 w-full cursor-pointer border-0 px-6 py-3 text-[14px] uppercase tracking-[0.08em] disabled:opacity-60"
+                    style={{ background: 'var(--btn-bg, #1D2B45)', color: 'var(--btn-fg, #F6EFDF)', boxShadow: '3px 3px 0 var(--btn-shadow, #A83E2C)' }}>
+                    {advancing ? 'Ageing the squad…' : `Advance to Season ${careerSeason + 1} →`}
+                  </button>
+                </div>
+              </div>
+
+              {/* the unified summary: league table + cup + CL + combined and per-competition stats */}
+              {campaign && <div className="mt-9 w-full"><SeasonSummary campaign={campaign} /></div>}
+            </div>
+          );
+        })()}
 
         {/* ============ CUP RUN (user's ties played live, one at a time) ============ */}
-        {(phase === 'cup-reveal' || phase === 'cup-done') && cup && (() => {
+        {phase === 'cup-reveal' && cup && (() => {
           const leagueInk = chosenLeague ? LEAGUE_INKS[chosenLeague] ?? '#1D2B45' : '#1D2B45';
-          const revealedRounds = phase === 'cup-done' ? cup.rounds.length : cupReveal;
-          const nextTie = phase === 'cup-reveal' && cupTieIdx < cup.userTies.length ? cup.userTies[cupTieIdx] : null;
+          const nextTie = cupTieIdx < cup.userTies.length ? cup.userTies[cupTieIdx] : null;
           const isLast = cup.userTies.length > 0 && cupTieIdx === cup.userTies.length - 1;
           const oppOf = (tie: typeof cup.userTies[number]) => (tie.homeId === userTeam.id ? tie.awayId : tie.homeId);
           return (
@@ -1022,81 +973,8 @@ export default function Season() {
               )}
 
               {/* the full seeded bracket, revealed round by round */}
-              <CupBracket rounds={cup.rounds} revealed={revealedRounds} userId={userTeam.id}
+              <CupBracket rounds={cup.rounds} revealed={cupReveal} userId={userTeam.id}
                 teamNames={teamNames} seedById={cup.seedById} />
-
-              {phase === 'cup-done' && (
-                <div className="mt-7 w-full max-w-[560px]">
-                  <div className="p-2.5" style={cup.userExit === 'Winners' ? undefined : { background: '#FDFAF1', border: '1px solid #D8CBAD' }}>
-                    <div className={cup.userExit === 'Winners' ? 'foil-card-bg relative overflow-hidden p-2.5' : ''}>
-                      <div className="px-6 py-6 text-center" style={{ background: '#1D2B45', color: '#F6EFDF' }}>
-                        <div className="text-[10px] tracking-[0.2em]" style={{ color: '#E5C96B' }}>{leagueName.toUpperCase()} CUP</div>
-                        <div className="font-display my-2 text-[30px] font-extrabold">
-                          {cup.userExit === 'Winners' ? '🏆 CHAMPIONS' : `Out in the ${cup.userExit}`}
-                        </div>
-                        <div className="text-[13px]" style={{ color: 'rgba(246,239,223,.85)' }}>
-                          {cup.userExit === 'Winners'
-                            ? `${userTeam.name} lift the cup!`
-                            : `Winners: ${teamNames.get(cup.champion) ?? cup.champion}`}
-                        </div>
-                        <div className="font-stamp mt-3 text-[12px]" style={{ color: '#E5C96B' }}>
-                          {cup.userTies.map((t) => t.round).join(' · ')}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="mt-3 flex gap-2.5">
-                    <Link to="/setup" className="flex-1 border-[1.5px] px-4 py-3 text-center text-[13px] font-bold uppercase tracking-[0.06em] no-underline" style={{ borderColor: 'var(--ink)', color: 'var(--ink)' }}>
-                      New season
-                    </Link>
-                    <Link to="/" className="flex-1 border-[1.5px] px-4 py-3 text-center text-[13px] font-bold uppercase tracking-[0.06em] no-underline" style={{ borderColor: 'var(--ink)', color: 'var(--ink)' }}>
-                      Cover
-                    </Link>
-                  </div>
-                </div>
-              )}
-
-              {/* ---- Season summary: the campaign at a glance + detailed stats by competition ---- */}
-              {phase === 'cup-done' && (
-                <div className="mt-9 w-full max-w-[720px]">
-                  <div className="mb-4 flex items-center gap-2.5">
-                    <span className="font-stamp -rotate-[1.5deg] border-[1.5px] px-2.5 py-1 text-sm" style={{ borderColor: '#A83E2C', color: '#A83E2C' }}>FULL TIME</span>
-                    <span className="font-display text-[22px] font-extrabold sm:text-[26px]" style={{ color: '#1D2B45' }}>Season summary</span>
-                  </div>
-
-                  {/* competitions played */}
-                  <div className="mb-4 grid grid-cols-2 gap-2">
-                    <div className="border-l-[4px] px-4 py-3" style={{ borderColor: '#1D2B45', background: '#FDFAF1' }}>
-                      <div className="text-[9px] font-bold uppercase tracking-[0.14em]" style={{ color: '#6B5F4A' }}>{leagueName}</div>
-                      <div className="font-display text-[20px] font-extrabold" style={{ color: userPosition === 1 ? '#8C6A1D' : '#1D2B45' }}>{userPosition ? `${userPosition}${ordinalSuffix(userPosition)}` : '—'}</div>
-                      <div className="text-[11px]" style={{ color: '#6B5F4A' }}>{userRow ? `${userRow.won}W-${userRow.drawn}D-${userRow.lost}L · ${userRow.points} pts` : ''}</div>
-                    </div>
-                    <div className="border-l-[4px] px-4 py-3" style={{ borderColor: '#A83E2C', background: '#FDFAF1' }}>
-                      <div className="text-[9px] font-bold uppercase tracking-[0.14em]" style={{ color: '#6B5F4A' }}>{leagueName} Cup</div>
-                      <div className="font-display text-[20px] font-extrabold" style={{ color: cup.userExit === 'Winners' ? '#8C6A1D' : '#1D2B45' }}>{cup.userExit === 'Winners' ? '🏆 Winners' : cup.userExit}</div>
-                      <div className="text-[11px]" style={{ color: '#6B5F4A' }}>{cup.userTies.length} tie{cup.userTies.length === 1 ? '' : 's'} played</div>
-                    </div>
-                  </div>
-
-                  {/* scope toggle: total / league / cup */}
-                  <div className="mb-4 inline-flex border" style={{ borderColor: '#D8CBAD' }}>
-                    {(['total', 'league', 'cup'] as const).map((s) => {
-                      const on = statsScope === s;
-                      return (
-                        <button key={s} type="button" onClick={() => setStatsScope(s)}
-                          className="cursor-pointer border-0 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.08em]"
-                          style={{ background: on ? '#1D2B45' : 'transparent', color: on ? '#F6EFDF' : '#6B5F4A' }}>
-                          {s === 'total' ? 'Total' : s === 'league' ? 'League' : 'Cup'}
-                        </button>
-                      );
-                    })}
-                  </div>
-
-                  {scopedStats
-                    ? <SeasonStatsPanel stats={scopedStats} teamNames={teamNames} />
-                    : <div className="border border-dashed px-5 py-8 text-center text-[13px] italic" style={{ borderColor: '#D8CBAD', color: '#6B5F4A' }}>No matches in this competition.</div>}
-                </div>
-              )}
             </div>
           );
         })()}

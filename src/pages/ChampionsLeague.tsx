@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useAppState } from '../state/AppContext';
+import { useAppState, useAppDispatch } from '../state/AppContext';
 import { getTeam, getPlayers } from '../storage/cache';
 import { loadIndex } from '../data/historicalData';
 import { loadEuropeanField } from '../data/leagueOpponents';
@@ -11,6 +11,7 @@ import type { TacticalShape } from '../engine/matchEngine';
 import { computeTeamOvr } from '../engine/teamRatings';
 import { CupBracket } from '../components/CupBracket';
 import { LiveMatchSim, tieToLive } from '../components/LiveMatchSim';
+import { tiesToMatches } from '../components/SeasonSummary';
 import { ProgrammeNav, ProgrammeFooter } from '../components/chrome/ProgrammeChrome';
 import type { Team, Player, RatingsMode, StandingsRow } from '../types';
 
@@ -44,6 +45,7 @@ export default function ChampionsLeague() {
   const navigate = useNavigate();
   const location = useLocation();
   const { currentTeamId, managerId } = useAppState();
+  const dispatch = useAppDispatch();
   const nav = (location.state as NavState | null) ?? {};
   const seasonMax = nav.seasonMax ?? '2025-26';
   const ratingsMode: RatingsMode = nav.ratingsMode ?? 'season';
@@ -149,6 +151,15 @@ export default function ChampionsLeague() {
       : inPlayoff ? 'Play-off round'
       : `League phase (${userPos}th)`)
     : '';
+
+  // Write the CL result into the shared campaign so the Season end page can show league + cup + CL
+  // together once the user routes back.
+  useEffect(() => {
+    if (phase === 'done' && cup && userTeam) {
+      dispatch({ type: 'SET_CAMPAIGN_CL', cl: { matches: tiesToMatches(cup.userTies, 'cl'), exit: exitLabel, champion: cup.champion } });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase, cup, userTeam]);
 
   const name = (id: string) => teamNames.get(id) ?? id;
 
@@ -344,9 +355,11 @@ export default function ChampionsLeague() {
                     </div>
                   </div>
                 </div>
-                <div className="mt-3 flex gap-2.5">
-                  <Link to="/season" state={nav} className="flex-1 border-[1.5px] px-4 py-3 text-center text-[13px] font-bold uppercase tracking-[0.06em] no-underline" style={{ borderColor: 'var(--ink)', color: 'var(--ink)' }}>Competitions</Link>
-                  <Link to="/setup" className="flex-1 border-[1.5px] px-4 py-3 text-center text-[13px] font-bold uppercase tracking-[0.06em] no-underline" style={{ borderColor: 'var(--ink)', color: 'var(--ink)' }}>New draft</Link>
+                <Link to="/season" state={nav} className="font-stamp mt-3 block cursor-pointer border-0 px-6 py-3.5 text-center text-[14px] uppercase tracking-[0.08em] no-underline" style={{ background: INK, color: CREAM, boxShadow: `3px 3px 0 ${BRICK}` }}>
+                  ← Back to the season summary
+                </Link>
+                <div className="mt-2.5 text-center">
+                  <Link to="/setup" className="text-[12px] font-bold uppercase tracking-[0.06em] no-underline" style={{ color: 'var(--soft)' }}>New draft</Link>
                 </div>
               </div>
             )}
